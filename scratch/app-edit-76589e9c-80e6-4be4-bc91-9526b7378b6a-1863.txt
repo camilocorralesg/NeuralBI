@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "2130",
+    "StartLine": "2080",
+    "toolAction": "\"View middle of MethodologyDiagram components\"",
+    "toolSummary": "\"View MethodologyDiagram middle\""
+  }
+}

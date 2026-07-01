@@ -1,0 +1,78 @@
+
+Created At: 2026-06-29T16:03:26Z
+Completed At: 2026-06-29T16:03:26Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 2583
+Total Bytes: 126333
+Showing lines 2050 to 2360
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+2050:     </section>
+2051:   );
+2052: }
+2053: 
+2054: // ─── SECTION 8: METHODOLOGY (THE DEPLOYMENT PROTOCOL) ───
+2055: function Methodology({ activeHero }) {
+2056:   const phases = [
+2057:     {
+2058:       num: "01",
+2059:       title: "Audit & Blueprint",
+2060:       desc: "We map your data infrastructure, identify latency bottlenecks, and define the strategic roadmap for maximum ROI."
+2061:     },
+2062:     {
+2063:       num: "02",
+2064:       title: "Architect & Build",
+2065:       desc: "We construct the semantic layer, clean datasets, and build custom Power Apps tailored to your exact operational reality."
+2066:     },
+2067:     {
+2068:       num: "03",
+2069:       title: "Deploy & Scale",
+2070:       desc: "We launch intuitive dashboards, train your team, and activate Copilot environments to ensure exponential growth."
+2071:     }
+2072:   ];
+2073: 
+2074:   if (activeHero === 'spline1') {
+2075:     return (
+2076:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+2077:         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem' }}>
+2078:           <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+2079:             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, color: '#ffffff', marginBottom: '1.5rem' }}>
+2080:               The Neural Protocol.
+2081:             </h2>
+2082:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '500px', margin: '0 auto' }}>
+2083:               A surgic
+<truncated 12453 bytes>
+    }}>
+2328:                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--color-accent)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+2329:                     STAGE_0{index + 1} // STATUS: READY
+2330:                   </div>
+2331:                   <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+2332:                     {p.title}
+2333:                   </h3>
+2334:                   <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '1.1rem' }}>
+2335:                     {p.desc}
+2336:                   </p>
+2337:                 </div>
+2338:               </div>
+2339:             ))}
+2340:           </div>
+2341:         </div>
+2342:       </section>
+2343:     );
+2344:   }
+2345: 
+2346:   return (
+2347:     <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+2348:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+2349:         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+2350:           <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 3.5vw, 3.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em' }}>
+2351:             The Neural Protocol.
+2352:           </h2>
+2353:           <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: 'rgba(255,255,255,0.6)', marginTop: '1rem' }}>
+2354:             A surgically precise deployment process. Zero guesswork.
+2355:           </p>
+2356:         </div>
+2357: 
+2358:         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+2359:           {phases.map((p, index) => (
+2360:             <div key={index} style={{
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

@@ -1,0 +1,4 @@
+
+Created At: 2026-06-29T16:03:18Z
+Completed At: 2026-06-29T16:03:19Z
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2055,"LineContent":"function Methodology({ activeHero }) {"}

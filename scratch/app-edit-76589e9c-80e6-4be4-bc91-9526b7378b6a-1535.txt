@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "915",
+    "StartLine": "890",
+    "toolAction": "\"View Manifesto tech_v4 eyebrow in App.jsx\"",
+    "toolSummary": "\"View Manifesto tech_v4 eyebrow\""
+  }
+}

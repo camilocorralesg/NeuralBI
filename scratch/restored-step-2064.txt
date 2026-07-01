@@ -1,0 +1,82 @@
+
+Created At: 2026-06-29T16:43:51Z
+Completed At: 2026-06-29T16:43:52Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 3625
+Total Bytes: 180294
+Showing lines 3320 to 3490
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+3320:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+3321:             </svg>
+3322:           </div>
+3323:         </button>
+3324:       </div>
+3325:     </section>
+3326:   );
+3327: }
+3328: 
+3329: // ─── SECTION 10: PREMIUM STYLE-SPECIFIC FOOTER (SUI & RAYCAST DNA) ───
+3330: function Footer({ activeHero }) {
+3331:   const [lang, setLang] = React.useState('English');
+3332: 
+3333:   const links = {
+3334:     platform: [
+3335:       { name: "About Power Platform", href: "#" },
+3336:       { name: "Enterprise Blueprint", href: "#" },
+3337:       { name: "AI Integration", href: "#" }
+3338:     ],
+3339:     solutions: [
+3340:       { name: "Fintech Engine", href: "#" },
+3341:       { name: "Retail Pipeline", href: "#" },
+3342:       { name: "Health Telemetry", href: "#" }
+3343:     ],
+3344:     company: [
+3345:       { name: "About Us", href: "#" },
+3346:       { name: "Careers", href: "#" },
+3347:       { name: "Manifesto", href: "#" }
+3348:     ],
+3349:     developers: [
+3350:       { name: "PowerApps SDK", href: "#" },
+3351:       { name: "Developer APIs", href: "#" },
+3352:       { name: "Copilot Studio", href: "#" }
+3353:     ],
+3354:     resources: [
+3355:       { name: "Incident History", href: "#" },
+3356:       { name: "Terms of Service", href: "#" },
+3357:       { name: "Privacy Policy", href: "#" }
+3358:     ]
+3359:   };
+3360: 
+3361:   const isSuiStyle = activeHero === 'sui_fork' || activeHero === 'spline1';
+3362: 
+3363:   if (isSuiStyle) {
+3364:     // ─── SUI-INSP
+<truncated 7415 bytes>
+tyle={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
+3465:                   <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.6.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z"/></svg>
+3466:                 </a>
+3467:               </div>
+3468:               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.05em' }}>
+3469:                 © 2026 Copyright NeuralBI. All rights reserved.
+3470:               </span>
+3471:             </div>
+3472: 
+3473:             <div style={{ position: 'relative' }}>
+3474:               <button 
+3475:                 onClick={() => setLang(lang === 'English' ? 'Español' : 'English')}
+3476:                 style={{
+3477:                   background: 'rgba(255, 255, 255, 0.03)',
+3478:                   border: '1px solid rgba(255, 255, 255, 0.08)',
+3479:                   borderRadius: '16px',
+3480:                   padding: '0.5rem 1.25rem',
+3481:                   color: '#ffffff',
+3482:                   fontFamily: 'var(--font-sans)',
+3483:                   fontSize: '0.85rem',
+3484:                   display: 'flex',
+3485:                   alignItems: 'center',
+3486:                   gap: '0.5rem',
+3487:                   cursor: 'pointer',
+3488:                   transition: 'all 0.3s'
+3489:                 }}
+3490:                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(198, 255, 52, 0.3)'; e.currentTarget.style.background = 'rgba(198, 255, 52, 0.02)'; }}
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

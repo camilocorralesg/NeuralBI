@@ -1,0 +1,11 @@
+
+Created At: 2026-06-29T16:35:51Z
+Completed At: 2026-06-29T16:35:51Z
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\index.css","LineNumber":2,"LineContent":" * nav: N5 · footer: Ft2"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\index.css","LineNumber":596,"LineContent":"/* Footer Ft2 */"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\index.css","LineNumber":597,"LineContent":".footer-ft2 {"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\index.css","LineNumber":603,"LineContent":".footer-ft2-content {"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\index.css","LineNumber":610,"LineContent":"  .footer-ft2-content {"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":408,"LineContent":"            \u003cFooterCTA activeHero={activeHero} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":3137,"LineContent":"// ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":3138,"LineContent":"function FooterCTA({ activeHero }) {"}

@@ -1,0 +1,648 @@
+function FooterCTA({ activeHero }) {
+  if (activeHero === 'spline1') {
+    return (
+      <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+// --- MISSING LINE 2686 ---
+// --- MISSING LINE 2687 ---
+// --- MISSING LINE 2688 ---
+// --- MISSING LINE 2689 ---
+// --- MISSING LINE 2690 ---
+// --- MISSING LINE 2691 ---
+// --- MISSING LINE 2692 ---
+// --- MISSING LINE 2693 ---
+// --- MISSING LINE 2694 ---
+// --- MISSING LINE 2695 ---
+// --- MISSING LINE 2696 ---
+// --- MISSING LINE 2697 ---
+// --- MISSING LINE 2698 ---
+// --- MISSING LINE 2699 ---
+// --- MISSING LINE 2700 ---
+// --- MISSING LINE 2701 ---
+// --- MISSING LINE 2702 ---
+// --- MISSING LINE 2703 ---
+// --- MISSING LINE 2704 ---
+// --- MISSING LINE 2705 ---
+// --- MISSING LINE 2706 ---
+// --- MISSING LINE 2707 ---
+// --- MISSING LINE 2708 ---
+// --- MISSING LINE 2709 ---
+// --- MISSING LINE 2710 ---
+// --- MISSING LINE 2711 ---
+// --- MISSING LINE 2712 ---
+// --- MISSING LINE 2713 ---
+// --- MISSING LINE 2714 ---
+// --- MISSING LINE 2715 ---
+// --- MISSING LINE 2716 ---
+// --- MISSING LINE 2717 ---
+// --- MISSING LINE 2718 ---
+// --- MISSING LINE 2719 ---
+// --- MISSING LINE 2720 ---
+// --- MISSING LINE 2721 ---
+// --- MISSING LINE 2722 ---
+// --- MISSING LINE 2723 ---
+// --- MISSING LINE 2724 ---
+// --- MISSING LINE 2725 ---
+// --- MISSING LINE 2726 ---
+// --- MISSING LINE 2727 ---
+// --- MISSING LINE 2728 ---
+// --- MISSING LINE 2729 ---
+// --- MISSING LINE 2730 ---
+// --- MISSING LINE 2731 ---
+// --- MISSING LINE 2732 ---
+// --- MISSING LINE 2733 ---
+// --- MISSING LINE 2734 ---
+// --- MISSING LINE 2735 ---
+// --- MISSING LINE 2736 ---
+// --- MISSING LINE 2737 ---
+// --- MISSING LINE 2738 ---
+// --- MISSING LINE 2739 ---
+// --- MISSING LINE 2740 ---
+// --- MISSING LINE 2741 ---
+// --- MISSING LINE 2742 ---
+// --- MISSING LINE 2743 ---
+// --- MISSING LINE 2744 ---
+// --- MISSING LINE 2745 ---
+// --- MISSING LINE 2746 ---
+// --- MISSING LINE 2747 ---
+// --- MISSING LINE 2748 ---
+// --- MISSING LINE 2749 ---
+// --- MISSING LINE 2750 ---
+// --- MISSING LINE 2751 ---
+// --- MISSING LINE 2752 ---
+// --- MISSING LINE 2753 ---
+// --- MISSING LINE 2754 ---
+// --- MISSING LINE 2755 ---
+// --- MISSING LINE 2756 ---
+// --- MISSING LINE 2757 ---
+// --- MISSING LINE 2758 ---
+// --- MISSING LINE 2759 ---
+// --- MISSING LINE 2760 ---
+// --- MISSING LINE 2761 ---
+// --- MISSING LINE 2762 ---
+// --- MISSING LINE 2763 ---
+// --- MISSING LINE 2764 ---
+// --- MISSING LINE 2765 ---
+// --- MISSING LINE 2766 ---
+// --- MISSING LINE 2767 ---
+// --- MISSING LINE 2768 ---
+// --- MISSING LINE 2769 ---
+// --- MISSING LINE 2770 ---
+// --- MISSING LINE 2771 ---
+// --- MISSING LINE 2772 ---
+// --- MISSING LINE 2773 ---
+// --- MISSING LINE 2774 ---
+// --- MISSING LINE 2775 ---
+// --- MISSING LINE 2776 ---
+// --- MISSING LINE 2777 ---
+// --- MISSING LINE 2778 ---
+// --- MISSING LINE 2779 ---
+// --- MISSING LINE 2780 ---
+// --- MISSING LINE 2781 ---
+// --- MISSING LINE 2782 ---
+// --- MISSING LINE 2783 ---
+// --- MISSING LINE 2784 ---
+// --- MISSING LINE 2785 ---
+// --- MISSING LINE 2786 ---
+// --- MISSING LINE 2787 ---
+// --- MISSING LINE 2788 ---
+// --- MISSING LINE 2789 ---
+// --- MISSING LINE 2790 ---
+// --- MISSING LINE 2791 ---
+// --- MISSING LINE 2792 ---
+// --- MISSING LINE 2793 ---
+// --- MISSING LINE 2794 ---
+// --- MISSING LINE 2795 ---
+// --- MISSING LINE 2796 ---
+// --- MISSING LINE 2797 ---
+// --- MISSING LINE 2798 ---
+// --- MISSING LINE 2799 ---
+// --- MISSING LINE 2800 ---
+// --- MISSING LINE 2801 ---
+// --- MISSING LINE 2802 ---
+// --- MISSING LINE 2803 ---
+// --- MISSING LINE 2804 ---
+// --- MISSING LINE 2805 ---
+// --- MISSING LINE 2806 ---
+// --- MISSING LINE 2807 ---
+// --- MISSING LINE 2808 ---
+// --- MISSING LINE 2809 ---
+// --- MISSING LINE 2810 ---
+// --- MISSING LINE 2811 ---
+// --- MISSING LINE 2812 ---
+// --- MISSING LINE 2813 ---
+// --- MISSING LINE 2814 ---
+// --- MISSING LINE 2815 ---
+// --- MISSING LINE 2816 ---
+// --- MISSING LINE 2817 ---
+// --- MISSING LINE 2818 ---
+// --- MISSING LINE 2819 ---
+// --- MISSING LINE 2820 ---
+// --- MISSING LINE 2821 ---
+// --- MISSING LINE 2822 ---
+// --- MISSING LINE 2823 ---
+// --- MISSING LINE 2824 ---
+// --- MISSING LINE 2825 ---
+// --- MISSING LINE 2826 ---
+// --- MISSING LINE 2827 ---
+// --- MISSING LINE 2828 ---
+// --- MISSING LINE 2829 ---
+// --- MISSING LINE 2830 ---
+// --- MISSING LINE 2831 ---
+// --- MISSING LINE 2832 ---
+// --- MISSING LINE 2833 ---
+// --- MISSING LINE 2834 ---
+// --- MISSING LINE 2835 ---
+// --- MISSING LINE 2836 ---
+// --- MISSING LINE 2837 ---
+// --- MISSING LINE 2838 ---
+// --- MISSING LINE 2839 ---
+// --- MISSING LINE 2840 ---
+// --- MISSING LINE 2841 ---
+// --- MISSING LINE 2842 ---
+// --- MISSING LINE 2843 ---
+// --- MISSING LINE 2844 ---
+// --- MISSING LINE 2845 ---
+// --- MISSING LINE 2846 ---
+// --- MISSING LINE 2847 ---
+// --- MISSING LINE 2848 ---
+// --- MISSING LINE 2849 ---
+// --- MISSING LINE 2850 ---
+// --- MISSING LINE 2851 ---
+// --- MISSING LINE 2852 ---
+// --- MISSING LINE 2853 ---
+// --- MISSING LINE 2854 ---
+// --- MISSING LINE 2855 ---
+// --- MISSING LINE 2856 ---
+// --- MISSING LINE 2857 ---
+// --- MISSING LINE 2858 ---
+// --- MISSING LINE 2859 ---
+// --- MISSING LINE 2860 ---
+// --- MISSING LINE 2861 ---
+// --- MISSING LINE 2862 ---
+// --- MISSING LINE 2863 ---
+// --- MISSING LINE 2864 ---
+// --- MISSING LINE 2865 ---
+// --- MISSING LINE 2866 ---
+// --- MISSING LINE 2867 ---
+// --- MISSING LINE 2868 ---
+// --- MISSING LINE 2869 ---
+// --- MISSING LINE 2870 ---
+// --- MISSING LINE 2871 ---
+// --- MISSING LINE 2872 ---
+// --- MISSING LINE 2873 ---
+// --- MISSING LINE 2874 ---
+// --- MISSING LINE 2875 ---
+// --- MISSING LINE 2876 ---
+// --- MISSING LINE 2877 ---
+// --- MISSING LINE 2878 ---
+// --- MISSING LINE 2879 ---
+// --- MISSING LINE 2880 ---
+// --- MISSING LINE 2881 ---
+// --- MISSING LINE 2882 ---
+// --- MISSING LINE 2883 ---
+// --- MISSING LINE 2884 ---
+// --- MISSING LINE 2885 ---
+// --- MISSING LINE 2886 ---
+// --- MISSING LINE 2887 ---
+// --- MISSING LINE 2888 ---
+// --- MISSING LINE 2889 ---
+// --- MISSING LINE 2890 ---
+// --- MISSING LINE 2891 ---
+// --- MISSING LINE 2892 ---
+// --- MISSING LINE 2893 ---
+// --- MISSING LINE 2894 ---
+// --- MISSING LINE 2895 ---
+// --- MISSING LINE 2896 ---
+// --- MISSING LINE 2897 ---
+// --- MISSING LINE 2898 ---
+// --- MISSING LINE 2899 ---
+// --- MISSING LINE 2900 ---
+// --- MISSING LINE 2901 ---
+// --- MISSING LINE 2902 ---
+// --- MISSING LINE 2903 ---
+// --- MISSING LINE 2904 ---
+// --- MISSING LINE 2905 ---
+// --- MISSING LINE 2906 ---
+// --- MISSING LINE 2907 ---
+// --- MISSING LINE 2908 ---
+// --- MISSING LINE 2909 ---
+// --- MISSING LINE 2910 ---
+// --- MISSING LINE 2911 ---
+// --- MISSING LINE 2912 ---
+// --- MISSING LINE 2913 ---
+// --- MISSING LINE 2914 ---
+// --- MISSING LINE 2915 ---
+// --- MISSING LINE 2916 ---
+// --- MISSING LINE 2917 ---
+// --- MISSING LINE 2918 ---
+// --- MISSING LINE 2919 ---
+// --- MISSING LINE 2920 ---
+// --- MISSING LINE 2921 ---
+// --- MISSING LINE 2922 ---
+// --- MISSING LINE 2923 ---
+// --- MISSING LINE 2924 ---
+// --- MISSING LINE 2925 ---
+// --- MISSING LINE 2926 ---
+// --- MISSING LINE 2927 ---
+// --- MISSING LINE 2928 ---
+// --- MISSING LINE 2929 ---
+// --- MISSING LINE 2930 ---
+// --- MISSING LINE 2931 ---
+// --- MISSING LINE 2932 ---
+// --- MISSING LINE 2933 ---
+// --- MISSING LINE 2934 ---
+// --- MISSING LINE 2935 ---
+// --- MISSING LINE 2936 ---
+// --- MISSING LINE 2937 ---
+// --- MISSING LINE 2938 ---
+// --- MISSING LINE 2939 ---
+// --- MISSING LINE 2940 ---
+// --- MISSING LINE 2941 ---
+// --- MISSING LINE 2942 ---
+// --- MISSING LINE 2943 ---
+// --- MISSING LINE 2944 ---
+// --- MISSING LINE 2945 ---
+// --- MISSING LINE 2946 ---
+// --- MISSING LINE 2947 ---
+// --- MISSING LINE 2948 ---
+// --- MISSING LINE 2949 ---
+// --- MISSING LINE 2950 ---
+// --- MISSING LINE 2951 ---
+// --- MISSING LINE 2952 ---
+// --- MISSING LINE 2953 ---
+// --- MISSING LINE 2954 ---
+// --- MISSING LINE 2955 ---
+// --- MISSING LINE 2956 ---
+// --- MISSING LINE 2957 ---
+// --- MISSING LINE 2958 ---
+// --- MISSING LINE 2959 ---
+// --- MISSING LINE 2960 ---
+// --- MISSING LINE 2961 ---
+// --- MISSING LINE 2962 ---
+// --- MISSING LINE 2963 ---
+// --- MISSING LINE 2964 ---
+// --- MISSING LINE 2965 ---
+// --- MISSING LINE 2966 ---
+// --- MISSING LINE 2967 ---
+// --- MISSING LINE 2968 ---
+// --- MISSING LINE 2969 ---
+// --- MISSING LINE 2970 ---
+// --- MISSING LINE 2971 ---
+// --- MISSING LINE 2972 ---
+// --- MISSING LINE 2973 ---
+// --- MISSING LINE 2974 ---
+// --- MISSING LINE 2975 ---
+// --- MISSING LINE 2976 ---
+// --- MISSING LINE 2977 ---
+// --- MISSING LINE 2978 ---
+// --- MISSING LINE 2979 ---
+// --- MISSING LINE 2980 ---
+// --- MISSING LINE 2981 ---
+// --- MISSING LINE 2982 ---
+// --- MISSING LINE 2983 ---
+// --- MISSING LINE 2984 ---
+// --- MISSING LINE 2985 ---
+// --- MISSING LINE 2986 ---
+// --- MISSING LINE 2987 ---
+// --- MISSING LINE 2988 ---
+// --- MISSING LINE 2989 ---
+// --- MISSING LINE 2990 ---
+// --- MISSING LINE 2991 ---
+// --- MISSING LINE 2992 ---
+// --- MISSING LINE 2993 ---
+// --- MISSING LINE 2994 ---
+// --- MISSING LINE 2995 ---
+// --- MISSING LINE 2996 ---
+// --- MISSING LINE 2997 ---
+// --- MISSING LINE 2998 ---
+// --- MISSING LINE 2999 ---
+// --- MISSING LINE 3000 ---
+// --- MISSING LINE 3001 ---
+// --- MISSING LINE 3002 ---
+// --- MISSING LINE 3003 ---
+// --- MISSING LINE 3004 ---
+// --- MISSING LINE 3005 ---
+// --- MISSING LINE 3006 ---
+// --- MISSING LINE 3007 ---
+// --- MISSING LINE 3008 ---
+// --- MISSING LINE 3009 ---
+// --- MISSING LINE 3010 ---
+// --- MISSING LINE 3011 ---
+// --- MISSING LINE 3012 ---
+// --- MISSING LINE 3013 ---
+// --- MISSING LINE 3014 ---
+// --- MISSING LINE 3015 ---
+// --- MISSING LINE 3016 ---
+// --- MISSING LINE 3017 ---
+// --- MISSING LINE 3018 ---
+// --- MISSING LINE 3019 ---
+// --- MISSING LINE 3020 ---
+// --- MISSING LINE 3021 ---
+// --- MISSING LINE 3022 ---
+// --- MISSING LINE 3023 ---
+// --- MISSING LINE 3024 ---
+// --- MISSING LINE 3025 ---
+// --- MISSING LINE 3026 ---
+// --- MISSING LINE 3027 ---
+// --- MISSING LINE 3028 ---
+// --- MISSING LINE 3029 ---
+// --- MISSING LINE 3030 ---
+// --- MISSING LINE 3031 ---
+// --- MISSING LINE 3032 ---
+// --- MISSING LINE 3033 ---
+// --- MISSING LINE 3034 ---
+// --- MISSING LINE 3035 ---
+// --- MISSING LINE 3036 ---
+// --- MISSING LINE 3037 ---
+// --- MISSING LINE 3038 ---
+// --- MISSING LINE 3039 ---
+// --- MISSING LINE 3040 ---
+// --- MISSING LINE 3041 ---
+// --- MISSING LINE 3042 ---
+// --- MISSING LINE 3043 ---
+// --- MISSING LINE 3044 ---
+// --- MISSING LINE 3045 ---
+// --- MISSING LINE 3046 ---
+// --- MISSING LINE 3047 ---
+// --- MISSING LINE 3048 ---
+// --- MISSING LINE 3049 ---
+// --- MISSING LINE 3050 ---
+// --- MISSING LINE 3051 ---
+// --- MISSING LINE 3052 ---
+// --- MISSING LINE 3053 ---
+// --- MISSING LINE 3054 ---
+// --- MISSING LINE 3055 ---
+// --- MISSING LINE 3056 ---
+// --- MISSING LINE 3057 ---
+// --- MISSING LINE 3058 ---
+// --- MISSING LINE 3059 ---
+// --- MISSING LINE 3060 ---
+// --- MISSING LINE 3061 ---
+// --- MISSING LINE 3062 ---
+// --- MISSING LINE 3063 ---
+// --- MISSING LINE 3064 ---
+// --- MISSING LINE 3065 ---
+// --- MISSING LINE 3066 ---
+// --- MISSING LINE 3067 ---
+// --- MISSING LINE 3068 ---
+// --- MISSING LINE 3069 ---
+// --- MISSING LINE 3070 ---
+// --- MISSING LINE 3071 ---
+// --- MISSING LINE 3072 ---
+// --- MISSING LINE 3073 ---
+// --- MISSING LINE 3074 ---
+// --- MISSING LINE 3075 ---
+// --- MISSING LINE 3076 ---
+// --- MISSING LINE 3077 ---
+// --- MISSING LINE 3078 ---
+// --- MISSING LINE 3079 ---
+// --- MISSING LINE 3080 ---
+// --- MISSING LINE 3081 ---
+// --- MISSING LINE 3082 ---
+// --- MISSING LINE 3083 ---
+// --- MISSING LINE 3084 ---
+// --- MISSING LINE 3085 ---
+// --- MISSING LINE 3086 ---
+// --- MISSING LINE 3087 ---
+// --- MISSING LINE 3088 ---
+// --- MISSING LINE 3089 ---
+// --- MISSING LINE 3090 ---
+// --- MISSING LINE 3091 ---
+// --- MISSING LINE 3092 ---
+// --- MISSING LINE 3093 ---
+// --- MISSING LINE 3094 ---
+// --- MISSING LINE 3095 ---
+// --- MISSING LINE 3096 ---
+// --- MISSING LINE 3097 ---
+// --- MISSING LINE 3098 ---
+// --- MISSING LINE 3099 ---
+// --- MISSING LINE 3100 ---
+// --- MISSING LINE 3101 ---
+// --- MISSING LINE 3102 ---
+// --- MISSING LINE 3103 ---
+// --- MISSING LINE 3104 ---
+// --- MISSING LINE 3105 ---
+// --- MISSING LINE 3106 ---
+// --- MISSING LINE 3107 ---
+// --- MISSING LINE 3108 ---
+// --- MISSING LINE 3109 ---
+// --- MISSING LINE 3110 ---
+// --- MISSING LINE 3111 ---
+// --- MISSING LINE 3112 ---
+// --- MISSING LINE 3113 ---
+// --- MISSING LINE 3114 ---
+// --- MISSING LINE 3115 ---
+// --- MISSING LINE 3116 ---
+// --- MISSING LINE 3117 ---
+// --- MISSING LINE 3118 ---
+// --- MISSING LINE 3119 ---
+// --- MISSING LINE 3120 ---
+// --- MISSING LINE 3121 ---
+// --- MISSING LINE 3122 ---
+// --- MISSING LINE 3123 ---
+// --- MISSING LINE 3124 ---
+// --- MISSING LINE 3125 ---
+// --- MISSING LINE 3126 ---
+// --- MISSING LINE 3127 ---
+// --- MISSING LINE 3128 ---
+// --- MISSING LINE 3129 ---
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+function FooterCTA({ activeHero }) {
+  if (activeHero === 'spline1') {
+    return (
+      <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+            You already have the data.
+          </h2>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+            Now, make it think.
+          </h2>
+          <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.25rem', lineHeight: 1.7, maxWidth: '650px', margin: '0 auto 4rem' }}>
+            Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+          </p>
+// --- MISSING LINE 3154 ---
+// --- MISSING LINE 3155 ---
+// --- MISSING LINE 3156 ---
+// --- MISSING LINE 3157 ---
+// --- MISSING LINE 3158 ---
+// --- MISSING LINE 3159 ---
+// --- MISSING LINE 3160 ---
+// --- MISSING LINE 3161 ---
+// --- MISSING LINE 3162 ---
+// --- MISSING LINE 3163 ---
+// --- MISSING LINE 3164 ---
+// --- MISSING LINE 3165 ---
+// --- MISSING LINE 3166 ---
+// --- MISSING LINE 3167 ---
+// --- MISSING LINE 3168 ---
+// --- MISSING LINE 3169 ---
+// --- MISSING LINE 3170 ---
+// --- MISSING LINE 3171 ---
+// --- MISSING LINE 3172 ---
+// --- MISSING LINE 3173 ---
+// --- MISSING LINE 3174 ---
+// --- MISSING LINE 3175 ---
+// --- MISSING LINE 3176 ---
+// --- MISSING LINE 3177 ---
+// --- MISSING LINE 3178 ---
+// --- MISSING LINE 3179 ---
+// --- MISSING LINE 3180 ---
+// --- MISSING LINE 3181 ---
+// --- MISSING LINE 3182 ---
+// --- MISSING LINE 3183 ---
+// --- MISSING LINE 3184 ---
+// --- MISSING LINE 3185 ---
+// --- MISSING LINE 3186 ---
+// --- MISSING LINE 3187 ---
+// --- MISSING LINE 3188 ---
+// --- MISSING LINE 3189 ---
+// --- MISSING LINE 3190 ---
+// --- MISSING LINE 3191 ---
+// --- MISSING LINE 3192 ---
+// --- MISSING LINE 3193 ---
+// --- MISSING LINE 3194 ---
+// --- MISSING LINE 3195 ---
+// --- MISSING LINE 3196 ---
+// --- MISSING LINE 3197 ---
+// --- MISSING LINE 3198 ---
+// --- MISSING LINE 3199 ---
+// --- MISSING LINE 3200 ---
+// --- MISSING LINE 3201 ---
+// --- MISSING LINE 3202 ---
+// --- MISSING LINE 3203 ---
+// --- MISSING LINE 3204 ---
+// --- MISSING LINE 3205 ---
+// --- MISSING LINE 3206 ---
+// --- MISSING LINE 3207 ---
+// --- MISSING LINE 3208 ---
+// --- MISSING LINE 3209 ---
+// --- MISSING LINE 3210 ---
+// --- MISSING LINE 3211 ---
+// --- MISSING LINE 3212 ---
+// --- MISSING LINE 3213 ---
+// --- MISSING LINE 3214 ---
+// --- MISSING LINE 3215 ---
+// --- MISSING LINE 3216 ---
+// --- MISSING LINE 3217 ---
+// --- MISSING LINE 3218 ---
+// --- MISSING LINE 3219 ---
+// --- MISSING LINE 3220 ---
+// --- MISSING LINE 3221 ---
+// --- MISSING LINE 3222 ---
+// --- MISSING LINE 3223 ---
+// --- MISSING LINE 3224 ---
+// --- MISSING LINE 3225 ---
+// --- MISSING LINE 3226 ---
+// --- MISSING LINE 3227 ---
+// --- MISSING LINE 3228 ---
+// --- MISSING LINE 3229 ---
+// --- MISSING LINE 3230 ---
+// --- MISSING LINE 3231 ---
+// --- MISSING LINE 3232 ---
+// --- MISSING LINE 3233 ---
+// --- MISSING LINE 3234 ---
+// --- MISSING LINE 3235 ---
+// --- MISSING LINE 3236 ---
+// --- MISSING LINE 3237 ---
+// --- MISSING LINE 3238 ---
+// --- MISSING LINE 3239 ---
+// --- MISSING LINE 3240 ---
+// --- MISSING LINE 3241 ---
+// --- MISSING LINE 3242 ---
+// --- MISSING LINE 3243 ---
+// --- MISSING LINE 3244 ---
+// --- MISSING LINE 3245 ---
+// --- MISSING LINE 3246 ---
+// --- MISSING LINE 3247 ---
+// --- MISSING LINE 3248 ---
+// --- MISSING LINE 3249 ---
+// --- MISSING LINE 3250 ---
+// --- MISSING LINE 3251 ---
+// --- MISSING LINE 3252 ---
+// --- MISSING LINE 3253 ---
+          </p>
+          <button className="btn-glow-border" style={{
+            fontFamily: 'var(--font-tech)',
+            fontWeight: 800,
+            fontSize: '1.25rem',
+            padding: '1rem 3rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+            Deploy Intelligence
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section style={{ padding: '10rem 0', position: 'relative', zIndex: 10 }}>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '80%',
+        maxWidth: '800px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(198, 255, 52, 0.15) 0%, transparent 70%)',
+        filter: 'blur(100px)',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }} />
+
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+        <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '0.5rem' }}>
+          You already have the data.
+        </h2>
+        <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#c6ff34', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '3rem' }}>
+          Now, make it think.
+        </h2>
+        <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.25rem', lineHeight: 1.7, maxWidth: '650px', margin: '0 auto 4rem' }}>
+          Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+        </p>
+        <button className="sui-btn" style={{
+          padding: '1.25rem 3.5rem',
+          fontSize: '1.25rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontFamily: 'var(--font-ui)',
+          cursor: 'pointer'
+        }}>
+          Deploy Intelligence
+          <div className="sui-btn-icon-wrapper" style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow" style={{ transform: 'scale(1.2)' }}>
+              <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+              <path d="M5.30933 3.26746L6.84508 3.2675L7.92617 5.7266L6.39041 5.72656L5.30933 3.26746Z" fill="currentColor"></path>
+              <path d="M10.5417 12.5849L9.00599 12.5849L7.92491 10.1258L9.46066 10.1258L10.5417 12.5849Z" fill="currentColor"></path>
+              <path d="M5.30933 12.5849L6.84508 12.5849L7.92617 10.1258L6.39041 10.1258L5.30933 12.5849Z" fill="currentColor"></path>
+              <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow" style={{ transform: 'scale(1.2)' }}>
+              <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+              <path d="M5.30933 3.26746L6.84508 3.2675L7.92617 5.7266L6.39041 5.72656L5.30933 3.26746Z" fill="currentColor"></path>
+              <path d="M10.5417 12.5849L9.00599 12.5849L7.92491 10.1258L9.46066 10.1258L10.5417 12.5849Z" fill="currentColor"></path>
+              <path d="M5.30933 12.5849L6.84508 12.5849L7.92617 10.1258L6.39041 10.1258L5.30933 12.5849Z" fill="currentColor"></path>
+              <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+              <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 10: PREMIUM STYLE-SPECIFIC FOOTER (SUI & RAYCAST DNA) ───

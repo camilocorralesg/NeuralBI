@@ -1,0 +1,506 @@
+function Footer({ activeHero }) {
+  const [lang, setLang] = React.useState('English');
+
+  const links = {
+    platform: [
+      { name: "About Power Platform", href: "#" },
+      { name: "Enterprise Blueprint", href: "#" },
+      { name: "AI Integration", href: "#" }
+    ],
+    solutions: [
+      { name: "Fintech Engine", href: "#" },
+      { name: "Retail Pipeline", href: "#" },
+      { name: "Health Telemetry", href: "#" }
+    ],
+    company: [
+      { name: "About Us", href: "#" },
+      { name: "Careers", href: "#" },
+      { name: "Manifesto", href: "#" }
+    ],
+    developers: [
+      { name: "PowerApps SDK", href: "#" },
+      { name: "Developer APIs", href: "#" },
+      { name: "Copilot Studio", href: "#" }
+    ],
+    resources: [
+      { name: "Incident History", href: "#" },
+      { name: "Terms of Service", href: "#" },
+      { name: "Privacy Policy", href: "#" }
+    ]
+  };
+
+  const isSuiStyle = activeHero === 'sui_fork' || activeHero === 'spline1';
+
+  if (isSuiStyle) {
+    // ─── SUI-INSP
+// --- MISSING LINE 3365 ---
+// --- MISSING LINE 3366 ---
+// --- MISSING LINE 3367 ---
+// --- MISSING LINE 3368 ---
+// --- MISSING LINE 3369 ---
+// --- MISSING LINE 3370 ---
+// --- MISSING LINE 3371 ---
+// --- MISSING LINE 3372 ---
+// --- MISSING LINE 3373 ---
+// --- MISSING LINE 3374 ---
+// --- MISSING LINE 3375 ---
+// --- MISSING LINE 3376 ---
+// --- MISSING LINE 3377 ---
+// --- MISSING LINE 3378 ---
+// --- MISSING LINE 3379 ---
+// --- MISSING LINE 3380 ---
+// --- MISSING LINE 3381 ---
+// --- MISSING LINE 3382 ---
+// --- MISSING LINE 3383 ---
+// --- MISSING LINE 3384 ---
+// --- MISSING LINE 3385 ---
+// --- MISSING LINE 3386 ---
+// --- MISSING LINE 3387 ---
+// --- MISSING LINE 3388 ---
+// --- MISSING LINE 3389 ---
+// --- MISSING LINE 3390 ---
+// --- MISSING LINE 3391 ---
+// --- MISSING LINE 3392 ---
+// --- MISSING LINE 3393 ---
+// --- MISSING LINE 3394 ---
+// --- MISSING LINE 3395 ---
+// --- MISSING LINE 3396 ---
+// --- MISSING LINE 3397 ---
+// --- MISSING LINE 3398 ---
+// --- MISSING LINE 3399 ---
+          <div key={idx} style={{
+            fontFamily: current.font,
+            fontSize: '0.85rem',
+            fontWeight: 800,
+            letterSpacing: '0.2em',
+            color: current.color,
+            marginRight: '6rem',
+            display: 'inline-flex',
+            alignItems: 'center'
+          }}>
+            {activeHero === 'tech_v4' && <span style={{ color: 'rgba(198, 255, 52, 0.3)', marginRight: '8px' }}>[SYS_PARTNER]</span>}
+            {b}
+            {activeHero === 'cinematic' && <span style={{ color: 'rgba(255, 255, 255, 0.15)', marginLeft: '3rem' }}>|</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── SECTION 9.2: INTEGRATIONS HUB (STRIPE-INSPIRED SVG BEZIER DATA CONNECTIONS) ───
+function IntegrationsHub({ activeHero }) {
+  const [hoveredNode, setHoveredNode] = React.useState(null);
+
+  const nodes = [
+    { id: "SAP", name: "SAP", x: 130, y: 75, desc: "Sincronización automatizada de inventario y ERP." },
+    { id: "Salesforce", name: "Salesforce", x: 80, y: 225, desc: "Flujos bidireccionales de oportunidades CRM." },
+    { id: "SQL", name: "Azure SQL", x: 130, y: 375, desc: "Querying cognitivo optimizado y data warehouse." },
+    { id: "Excel", name: "OneDrive Excel", x: 670, y: 75, desc: "Carga masiva sin fallas y parsing de archivos." },
+    { id: "Teams", name: "MS Teams", x: 720, y: 225, desc: "Notificaciones directas del est
+// --- MISSING LINE 3430 ---
+// --- MISSING LINE 3431 ---
+// --- MISSING LINE 3432 ---
+// --- MISSING LINE 3433 ---
+// --- MISSING LINE 3434 ---
+// --- MISSING LINE 3435 ---
+// --- MISSING LINE 3436 ---
+// --- MISSING LINE 3437 ---
+// --- MISSING LINE 3438 ---
+// --- MISSING LINE 3439 ---
+// --- MISSING LINE 3440 ---
+// --- MISSING LINE 3441 ---
+// --- MISSING LINE 3442 ---
+// --- MISSING LINE 3443 ---
+// --- MISSING LINE 3444 ---
+// --- MISSING LINE 3445 ---
+// --- MISSING LINE 3446 ---
+// --- MISSING LINE 3447 ---
+// --- MISSING LINE 3448 ---
+// --- MISSING LINE 3449 ---
+// --- MISSING LINE 3450 ---
+// --- MISSING LINE 3451 ---
+// --- MISSING LINE 3452 ---
+// --- MISSING LINE 3453 ---
+// --- MISSING LINE 3454 ---
+// --- MISSING LINE 3455 ---
+// --- MISSING LINE 3456 ---
+// --- MISSING LINE 3457 ---
+          title: "Frictionless Connections",
+          subtitle: "Orchestrate processes seamlessly by linking all databases.",
+          connectorColor: 'rgba(198, 255, 52, 0.2)',
+          nodeBg: 'rgba(255, 255, 255, 0.02)',
+          nodeBorder: 'rgba(255,255,255,0.05)',
+          bgGradient: 'linear-gradient(to bottom, #071501 0%, #000000 100%)'
+        };
+      case 'tech_v4':
+        return {
+          font: 'var(--font-mono)',
+          title: "SYS_CONNECT_PORTAL",
+          subtitle: "ROUTING COGNITIVE CHANNELS OVER DATA SOURCES.",
+          connectorColor: 'rgba(198, 255, 52, 0.35)',
+          nodeBg: '#010200',
+          nodeBorder: 'rgba(198, 255, 52, 0.4)',
+          bgGradient: 'linear-gradient(to bottom, #050505 0%, #000000 100%)'
+        };
+      case 'sui_fork':
+      default:
+        return {
+          font: 'var(--font-ui)',
+          title: "Seamless Integrations",
+          subtitle: "Leverage standard Microsoft connectors to drive efficiency.",
+          connectorColor: 'rgba(198, 255, 52, 0.15)',
+          nodeBg: 'rgba(255, 255, 255, 0.01)',
+          nodeBorder: 'rgba(255,255,255,0.05)',
+          bgGradient: 'linear-gradient(to bottom, #000000 0%, #000000 100%)'
+        };
+    }
+  };
+
+  const s = getStyle();
+
+  return (
+    <section style={{
+      background: s.bgGradient,
+      padding: '8rem 0',
+      position: 'relative',
+      zIndex: 10
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{
+  } else {
+    // ─── RAYCAST-INSPIRED FOOTER ───
+    return (
+      <footer style={{
+        position: 'relative',
+        background: '#030303',
+        padding: '0 0 5rem 0',
+        overflow: 'hidden',
+        zIndex: 10,
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+      }}>
+        {/* Angled slats header block (Reference Image 2) */}
+        <div style={{
+          height: '140px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          position: 'relative',
+          marginBottom: '5rem',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #030303)', zIndex: 2, pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', gap: '12px', transform: 'translateY(15px)', zIndex: 1 }}>
+            <div className="rayca
+// --- MISSING LINE 3527 ---
+// --- MISSING LINE 3528 ---
+// --- MISSING LINE 3529 ---
+// --- MISSING LINE 3530 ---
+// --- MISSING LINE 3531 ---
+// --- MISSING LINE 3532 ---
+// --- MISSING LINE 3533 ---
+// --- MISSING LINE 3534 ---
+// --- MISSING LINE 3535 ---
+// --- MISSING LINE 3536 ---
+// --- MISSING LINE 3537 ---
+// --- MISSING LINE 3538 ---
+// --- MISSING LINE 3539 ---
+// --- MISSING LINE 3540 ---
+// --- MISSING LINE 3541 ---
+// --- MISSING LINE 3542 ---
+// --- MISSING LINE 3543 ---
+// --- MISSING LINE 3544 ---
+// --- MISSING LINE 3545 ---
+// --- MISSING LINE 3546 ---
+// --- MISSING LINE 3547 ---
+// --- MISSING LINE 3548 ---
+// --- MISSING LINE 3549 ---
+// --- MISSING LINE 3550 ---
+// --- MISSING LINE 3551 ---
+// --- MISSING LINE 3552 ---
+// --- MISSING LINE 3553 ---
+// --- MISSING LINE 3554 ---
+// --- MISSING LINE 3555 ---
+// --- MISSING LINE 3556 ---
+// --- MISSING LINE 3557 ---
+// --- MISSING LINE 3558 ---
+// --- MISSING LINE 3559 ---
+// --- MISSING LINE 3560 ---
+// --- MISSING LINE 3561 ---
+// --- MISSING LINE 3562 ---
+// --- MISSING LINE 3563 ---
+// --- MISSING LINE 3564 ---
+// --- MISSING LINE 3565 ---
+// --- MISSING LINE 3566 ---
+// --- MISSING LINE 3567 ---
+// --- MISSING LINE 3568 ---
+// --- MISSING LINE 3569 ---
+// --- MISSING LINE 3570 ---
+// --- MISSING LINE 3571 ---
+// --- MISSING LINE 3572 ---
+// --- MISSING LINE 3573 ---
+// --- MISSING LINE 3574 ---
+// --- MISSING LINE 3575 ---
+// --- MISSING LINE 3576 ---
+// --- MISSING LINE 3577 ---
+// --- MISSING LINE 3578 ---
+// --- MISSING LINE 3579 ---
+// --- MISSING LINE 3580 ---
+// --- MISSING LINE 3581 ---
+// --- MISSING LINE 3582 ---
+// --- MISSING LINE 3583 ---
+// --- MISSING LINE 3584 ---
+// --- MISSING LINE 3585 ---
+// --- MISSING LINE 3586 ---
+// --- MISSING LINE 3587 ---
+// --- MISSING LINE 3588 ---
+// --- MISSING LINE 3589 ---
+// --- MISSING LINE 3590 ---
+// --- MISSING LINE 3591 ---
+// --- MISSING LINE 3592 ---
+// --- MISSING LINE 3593 ---
+// --- MISSING LINE 3594 ---
+// --- MISSING LINE 3595 ---
+// --- MISSING LINE 3596 ---
+// --- MISSING LINE 3597 ---
+// --- MISSING LINE 3598 ---
+// --- MISSING LINE 3599 ---
+// --- MISSING LINE 3600 ---
+// --- MISSING LINE 3601 ---
+// --- MISSING LINE 3602 ---
+                © 2026 Copyright NeuralBI. All rights reserved.
+              </span>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '1.5rem' }}>
+              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>X / Twitter</a>
+              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>LinkedIn</a>
+              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>Discord</a>
+              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>YouTube</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+}
+
+
+// ────────────────────────────────────────────────────────
+// End of File
+// ────────────────────────────────────────────────────────
+
+
+// --- MISSING LINE 3626 ---
+// --- MISSING LINE 3627 ---
+// --- MISSING LINE 3628 ---
+// --- MISSING LINE 3629 ---
+// --- MISSING LINE 3630 ---
+// --- MISSING LINE 3631 ---
+// --- MISSING LINE 3632 ---
+// --- MISSING LINE 3633 ---
+// --- MISSING LINE 3634 ---
+// --- MISSING LINE 3635 ---
+// --- MISSING LINE 3636 ---
+// --- MISSING LINE 3637 ---
+// --- MISSING LINE 3638 ---
+// --- MISSING LINE 3639 ---
+// --- MISSING LINE 3640 ---
+// --- MISSING LINE 3641 ---
+// --- MISSING LINE 3642 ---
+// --- MISSING LINE 3643 ---
+// --- MISSING LINE 3644 ---
+// --- MISSING LINE 3645 ---
+// --- MISSING LINE 3646 ---
+// --- MISSING LINE 3647 ---
+// --- MISSING LINE 3648 ---
+// --- MISSING LINE 3649 ---
+
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 9.3: ROI & SAVINGS CALCULATOR (INTERACTIVE REAL-TIME SAVINGS COUNTERS) ───
+function RoiCalculator({ activeHero }) {
+  const [processes, setProcesses] = React.useState(6);
+  const [hours, setHours] = React.useState(12);
+
+  const hoursSaved = Math.round(processes * hours * 4.33 * 0.75);
+  const annualSavings = Math.round(hoursSaved * 12 * 45);
+
+  const getStyle = () => {
+    switch (activeHero) {
+      case 'spline1':
+        return {
+          font: 'var(--font-serif)',
+          cardBg: 'linear-gradient(to right, rgba(10,18,1,0.5), rgba(0,0,0,0.8))',
+          borderColor: 'rgba(198,255,52,0.12)',
+          buttonStyle: { borderRadius: '9999px' },
+          bgGradient: 'linear-gradient(to bottom, #000000 0%, #040900 100%)'
+        };
+      case 'cinematic':
+        return {
+          font: 'var(--font-ui)',
+          cardBg: '#020202',
+          borderColor: 'rgba(255, 255, 255, 0.08)',
+          buttonStyle: { borderRadius: '0' },
+          bgGradient: 'linear-gradient(to bottom, #000000 0%, #08080c 100%)'
+        };
+      case 'modern_v2':
+        return {
+          font: 'var(--font-display)',
+          cardBg: 'rgba(255, 255, 255, 0.01)',
+          borderColor: 'rgba(255, 255, 255, 0.05)',
+          buttonStyle: { borderRadius: '12px' },
+// --- MISSING LINE 3690 ---
+// --- MISSING LINE 3691 ---
+// --- MISSING LINE 3692 ---
+// --- MISSING LINE 3693 ---
+// --- MISSING LINE 3694 ---
+// --- MISSING LINE 3695 ---
+// --- MISSING LINE 3696 ---
+// --- MISSING LINE 3697 ---
+// --- MISSING LINE 3698 ---
+// --- MISSING LINE 3699 ---
+// --- MISSING LINE 3700 ---
+// --- MISSING LINE 3701 ---
+// --- MISSING LINE 3702 ---
+// --- MISSING LINE 3703 ---
+// --- MISSING LINE 3704 ---
+// --- MISSING LINE 3705 ---
+// --- MISSING LINE 3706 ---
+// --- MISSING LINE 3707 ---
+// --- MISSING LINE 3708 ---
+// --- MISSING LINE 3709 ---
+// --- MISSING LINE 3710 ---
+// --- MISSING LINE 3711 ---
+// --- MISSING LINE 3712 ---
+// --- MISSING LINE 3713 ---
+// --- MISSING LINE 3714 ---
+// --- MISSING LINE 3715 ---
+// --- MISSING LINE 3716 ---
+// --- MISSING LINE 3717 ---
+// --- MISSING LINE 3718 ---
+// --- MISSING LINE 3719 ---
+// --- MISSING LINE 3720 ---
+// --- MISSING LINE 3721 ---
+// --- MISSING LINE 3722 ---
+// --- MISSING LINE 3723 ---
+// --- MISSING LINE 3724 ---
+// --- MISSING LINE 3725 ---
+// --- MISSING LINE 3726 ---
+// --- MISSING LINE 3727 ---
+// --- MISSING LINE 3728 ---
+// --- MISSING LINE 3729 ---
+// --- MISSING LINE 3730 ---
+// --- MISSING LINE 3731 ---
+// --- MISSING LINE 3732 ---
+// --- MISSING LINE 3733 ---
+// --- MISSING LINE 3734 ---
+// --- MISSING LINE 3735 ---
+// --- MISSING LINE 3736 ---
+// --- MISSING LINE 3737 ---
+// --- MISSING LINE 3738 ---
+// --- MISSING LINE 3739 ---
+// --- MISSING LINE 3740 ---
+// --- MISSING LINE 3741 ---
+// --- MISSING LINE 3742 ---
+// --- MISSING LINE 3743 ---
+// --- MISSING LINE 3744 ---
+// --- MISSING LINE 3745 ---
+// --- MISSING LINE 3746 ---
+// --- MISSING LINE 3747 ---
+// --- MISSING LINE 3748 ---
+// --- MISSING LINE 3749 ---
+              height: '90px',
+              borderRadius: '50%',
+              background: '#000000',
+              border: '2.5px solid #c6ff34',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 0 35px rgba(198, 255, 52, 0.4)',
+              zIndex: 3
+            }}>
+              {/* Spinning technical dash ring */}
+              <div style={{
+                position: 'absolute',
+                inset: '-8px',
+                border: '1.5px dashed rgba(198, 255, 52, 0.4)',
+                borderRadius: '50%',
+                animation: 'rotate-gradient 25s linear infinite'
+              }} />
+              
+              {/* Exact brand logo centering */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%'
+              }}>
+                <img 
+                  src={logoSoloUrl} 
+                  alt="NeuralBI Hub" 
+                  style={{ 
+                    height: '42px', 
+                    width: 'auto', 
+                    opacity: 0.95, 
+                    display: 'block',
+                    marginLeft: '15px' /* Compensate for the inherent asymmetrical spacing inside the SVG's viewBox */
+                  }} 
+                />
+              </div>
+            </div>
+
+            {/* Outer System Nodes with SVG icons */}
+            {nodes.map((node, idx) => {
+              const isHovered = hoveredNode === node.id;
+              
+              return (
+                <div
+                  key={idx}
+                  style={{
+                    position: 'absolute',
+                    top: node.top,
+                color: '#ffffff',
+                fontWeight: 700,
+                lineHeight: 1,
+                marginTop: '0.5rem'
+              }}>
+                {hoursSaved} <span style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>Hrs</span>
+              </div>
+            </div>
+
+            <div>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                Projected Annual Savings
+              </span>
+              <div style={{
+                fontFamily: style.font,
+                fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+                color: '#c6ff34',
+                fontWeight: 800,
+                lineHeight: 1,
+                marginTop: '0.5rem',
+                textShadow: '0 0 15px rgba(198, 255, 52, 0.15)'
+              }}>
+                ${annualSavings.toLocaleString()} <span style={{ fontSize: '1.25rem', color: 'rgba(198,255,52,0.5)', fontWeight: 400 }}>USD</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 9.4: CASE STUDY SPOTLIGHT (SUCCESS STORY PULL QUOTE) ───

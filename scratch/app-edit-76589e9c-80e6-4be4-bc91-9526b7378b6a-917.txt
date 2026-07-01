@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "640",
+    "StartLine": "620",
+    "toolAction": "\"Viewing Spline Manifesto\"",
+    "toolSummary": "\"View Spline Manifesto App.jsx\""
+  }
+}

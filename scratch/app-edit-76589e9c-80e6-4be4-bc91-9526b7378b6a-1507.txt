@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "1665",
+    "StartLine": "1630",
+    "toolAction": "\"View Industries eyebrow structure in App.jsx\"",
+    "toolSummary": "\"View Industries eyebrow structure\""
+  }
+}

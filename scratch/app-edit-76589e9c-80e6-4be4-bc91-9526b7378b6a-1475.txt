@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "1750",
+    "StartLine": "1690",
+    "toolAction": "\"View blue styles in Industries in App.jsx\"",
+    "toolSummary": "\"View Industries blue colors\""
+  }
+}

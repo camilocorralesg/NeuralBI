@@ -1,0 +1,23 @@
+
+Created At: 2026-06-27T20:54:28Z
+Completed At: 2026-06-27T20:54:30Z
+
+				The command completed successfully.
+				Output:
+				
+src\App.jsx:13:export default function App() {
+src\App.jsx:300:function SwitcherUI({ activeHero, setActiveHero }) {
+src\App.jsx:374:function Arsenal({ activeHero }) {
+src\App.jsx:618:function PowerAutomateIcon({ size = 48, color = "currentColor" }) {
+src\App.jsx:631:function Manifesto({ activeHero }) {
+src\App.jsx:823:function NebulaManifestoCard({ item }) {
+src\App.jsx:872:function CinematicManifestoRow({ item, index }) {
+src\App.jsx:905:function ModernManifestoCard({ item }) {
+src\App.jsx:1001:function TechManifestoCard({ item }) {
+src\App.jsx:1047:function AiNativeGraphic({ hovered }) {
+src\App.jsx:1103:function WarpSpeedGraphic({ hovered }) {
+src\App.jsx:1167:function ZeroFrictionGraphic({ hovered }) {
+src\App.jsx:1278:function Industries({ activeHero }) {
+
+
+

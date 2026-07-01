@@ -1,0 +1,80 @@
+}
+
+// =========================================================
+// Trust Bar — Silent Authority (Hallmark · component-scope)
+// Four premium treatments, one per hero iteration.
+// Uses real SVG logos for Power BI, Power Apps, Copilot Studio.
+// =========================================================
+const toolLogos = [
+  { src: powerBiLogo, name: 'Power BI' },
+  { src: powerAppsLogo, name: 'Power Apps' },
+  { src: copilotStudioLogo, name: 'Copilot Studio' },
+];
+
+function TrustBar({ activeHero }) {
+  // Each hero gets a COMPLETELY different Trust Bar layout & treatment
+  switch (activeHero) {
+
+    // ─── NEBULA: Pure inline strip. No cards, no chrome. Just logos floating. ───
+    case 'spline1':
+      return (
+        <section style={{
+          padding: '3rem 0',
+          background: 'transparent',
+          position: 'relative',
+          zIndex: 20,
+        }}>
+          <div className="animate-blur-reveal" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '4rem',
+            flexWrap: 'wrap',
+            padding: '0 2rem',
+          }}>
+            {toolLogos.map((tool) => (
+              <InlineLogo key={tool.name} tool={tool}
+                opacity={0.25} hoverOpacity={0.7}
+                labelColor="rgba(255,255,255,0.0)" hoverLabelColor="rgba(255,255,255,0.5)"
+              />
+            ))}
+          </div>
+        </section>
+      );
+
+    // ─── CINEMATIC: Full-width dark strip with hairline borders an
+        <div style={{ width: '50px', height: '4px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '2px' }} />
+      </div>
+
+      {/* Glass card element 2 - Front overlapping (TinyPNG style) */}
+      <div style={{
+        position: 'absolute',
+        width: '130px',
+        height: '90px',
+        right: '25px',
+        bottom: hovered ? '35px' : '20px',
+        background: 'rgba(14, 165, 233, 0.05)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: hovered ? '1px solid rgba(14, 165, 233, 0.25)' : '1px solid rgba(14, 165, 233, 0.1)',
+        borderRadius: '14px',
+        boxShadow: hovered 
+          ? '0 12px 40px rgba(0,0,0,0.6), 0 0 16px rgba(14, 165, 233, 0.1)' 
+          : '0 8px 32px rgba(0,0,0,0.5)',
+        padding: '12px',
+        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0ea5e9' }} />
+          <div style={{ fontSize: '8px', color: '#0ea5e9', fontWeight: 'bold', fontFamily: 'monospace' }}>ACTIVE</div>
+        </div>
+        <div style={{ fontSize: '11px', color: '#ffffff', fontWeight: 'bold', fontFamily: 'var(--font-sans)', marginBottom: '4px' }}>
+          Zero Chaos
+        </div>
+        <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
+          Spreadsheet eradicated.
+        </div>
+      </div>
+    </div>
+  );
+}

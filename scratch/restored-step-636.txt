@@ -1,0 +1,111 @@
+
+Created At: 2026-06-27T18:24:41Z
+Completed At: 2026-06-27T18:24:44Z
+The following changes were made by the multi_replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -1,5 +1,7 @@
+ import React, { Suspense, lazy, useState } from 'react';
+-import { BarChart2, Cloud, Zap, Sparkles, BrainCircuit, Building2, Globe2, ShieldCheck } from 'lucide-react';
++import powerBiLogo from './assets/New_Power_BI_Logo.svg';
++import powerAppsLogo from './assets/Powerapps-logo.svg.svg';
++import copilotStudioLogo from './assets/Copilot Studio.svg';
+ import logoUrl from './assets/Neuralbi logo.svg';
+ import videoMaster from './assets/video.mp4';
+ import video2 from './assets/Video 2.mp4';
+@@ -265,139 +265,195 @@
+ }
+ 
+ // =========================================================
+-// Dynamic Trust Bar Component (Silent Authority)
+-// =========================================================
++// Trust Bar — Silent Authority (Hallmark · component-scope)
++// Four premium treatments, one per hero iteration.
++// Uses real SVG logos for Power BI, Power Apps, Copilot Studio.
++// =========================================================
++const toolLogos = [
++  { src: powerBiLogo, name: 'Power BI' },
++  { src: powerAppsLogo, name: 'Power Apps' },
++  { src: copilotStudioLogo, name: 'Copilot Studio' },
++];
++
+ function TrustBar({ activeHero }) {
+-  // Styles based on active iteration
+-  const getStyle = () => {
+-    switch(activeHero) {
+-      case 'spline1':
+-        return {
+-          wrapper: {
+-            background: 'rgba(10, 10, 10, 0.5)',
+-            backdropFilter: 'blur(32px)',
+-            WebkitBackdropFilter: 'blur(32px)',
+-            borderTop: '1px solid rgba(255,255,255,0.06)',
+-            borderBottom: '1px solid rgba(255,255,255,0.03)',
+-            boxShadow: '0 -4px 32px rgba(0,0,0,0.4)'
+-          },
+-          text: { color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1
+<truncated 8738 bytes>
+ol, config: c }) {
++  const [hovered, setHovered] = useState(false);
++
++  return (
++    <div
++      onMouseEnter={() => setHovered(true)}
++      onMouseLeave={() => setHovered(false)}
++      style={{
++        display: 'flex',
++        flexDirection: 'column',
++        alignItems: 'center',
++        justifyContent: 'center',
++        gap: '1.25rem',
++        padding: '2.5rem 3rem',
++        borderRadius: '16px',
++        background: c.cardBg,
++        border: hovered ? c.cardHoverBorder : c.cardBorder,
++        backdropFilter: c.cardBackdrop,
++        WebkitBackdropFilter: c.cardBackdrop,
++        boxShadow: hovered ? c.cardHoverShadow : c.cardShadow,
++        transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
++        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
++        cursor: 'default',
++        minWidth: '180px',
++        flex: '1 1 180px',
++        maxWidth: '280px',
++      }}
+     >
+-      {icon}
+-      <span style={{ 
+-        fontFamily: 'var(--font-ui)', 
+-        fontWeight: 600, 
+-        fontSize: '0.95rem',
+-        letterSpacing: '-0.02em'
++      <img
++        src={tool.src}
++        alt={tool.name}
++        style={{
++          height: '40px',
++          width: 'auto',
++          filter: c.logoFilter,
++          opacity: hovered ? c.logoHoverOpacity : c.logoOpacity,
++          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
++        }}
++      />
++      <span style={{
++        fontFamily: 'var(--font-ui)',
++        fontSize: '0.85rem',
++        fontWeight: 600,
++        letterSpacing: '-0.01em',
++        color: hovered ? c.labelHoverColor : c.labelColor,
++        transition: 'color 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
++        textAlign: 'center',
+       }}>
+-        {text}
++        {tool.name}
+       </span>
+     </div>
+-  )
++  );
+ }
+ 
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

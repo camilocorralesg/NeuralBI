@@ -1,0 +1,12 @@
+{
+  "name": "write_to_file",
+  "args": {
+    "CodeContent": "\"const fs = require('fs');\\nconst path = require('path');\\n\\nconst brainDir = 'C:/Users/camil/.gemini/antigravity-ide/brain';\\nconst folders = fs.readdirSync(brainDir).filter(f => {\\n  return fs.statSync(path.join(brainDir, f)).isDirectory() && f !== 'tempmediaStorage';\\n});\\n\\nconsole.log(`Searching across ${folders.length} conversations for any App.jsx edit tool calls...`);\\n\\nfor (const folder of folders) {\\n  const logPath = path.join(brainDir, folder, '.system_generated/logs/transcript.jsonl');\\n  if (!fs.existsSync(logPath)) continue;\\n  \\n  const fileContent = fs.readFileSync(logPath, 'utf8');\\n  const lines = fileContent.split('\\\\n');\\n  \\n  for (let i = 0; i < lines.length; i++) {\\n    const line = lines[i].trim();\\n    if (!line) continue;\\n    try {\\n      const data = JSON.parse(line);\\n      \\n      if (data.tool_calls) {\\n        for (const call of data.tool_calls) {\\n          const argsStr = JSON.stringify(call.args || {});\\n          if (argsStr.includes('App.jsx')) {\\n            console.log(`Found edit in conv ${folder}, step ${data.step_index}, tool: ${call.name}`);\\n            \\n            // Check if it contains keywords\\n            const keywords = ['Manifesto', 'Industries', 'Methodology', 'CaseStudy', 'Footer'];\\n            const matchedKeywords = keywords.filter(k => argsStr.includes(k));\\n            if (matchedKeywords.length > 0) {\\n              console.log(`  -> Keywords: ${matchedKeywords.join(', ')}`);\\n              fs.writeFileSync(`c:/Users/camil/My Repos/Figma Design/scratch/app-edit-${folder}-${data.step_index}.txt`, JSON.stringify(call, null, 2));\\n            }\\n          }\\n        }\\n      }\\n    } catch (e) {\\n    }\\n  }\\n}\\n\\nconsole.log(\\\"Scan complete.\\\");\\n\"",
+    "Description": "\"Create script to find any tool call containing App.jsx in all conversations and output matching steps\"",
+    "IsArtifact": "false",
+    "Overwrite": "true",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/scratch/find-all-app-edits.cjs\"",
+    "toolAction": "\"Create find-all-app-edits.cjs\"",
+    "toolSummary": "\"Create search script\""
+  }
+}

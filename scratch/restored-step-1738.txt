@@ -1,0 +1,4 @@
+
+Created At: 2026-06-29T06:19:37Z
+Completed At: 2026-06-29T06:19:38Z
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":1462,"LineContent":"function Industries({ activeHero }) {"}

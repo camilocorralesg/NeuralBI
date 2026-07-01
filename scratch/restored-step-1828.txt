@@ -1,0 +1,39 @@
+
+Created At: 2026-06-29T16:03:53Z
+Completed At: 2026-06-29T16:03:53Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 2583
+Total Bytes: 126333
+Showing lines 2371 to 2400
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+2371:               <span style={{ fontFamily: 'var(--font-ui)', fontSize: '2.5rem', fontWeight: 900, color: '#c6ff34' }}>
+2372:                 {p.num}
+2373:               </span>
+2374:               <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em' }}>
+2375:                 {p.title}
+2376:               </h3>
+2377:               <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
+2378:                 {p.desc}
+2379:               </p>
+2380:             </div>
+2381:           ))}
+2382:         </div>
+2383:       </div>
+2384:     </section>
+2385:   );
+2386: }
+2387: 
+2388: // ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+2389: function FooterCTA({ activeHero }) {
+2390:   if (activeHero === 'spline1') {
+2391:     return (
+2392:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+2393:         <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+2394: 
+2395:         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+2396:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+2397:             You already have the data.
+2398:           </h2>
+2399:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+2400:             Now, make it think.
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

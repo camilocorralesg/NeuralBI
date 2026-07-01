@@ -1,0 +1,98 @@
+Created At: 2026-06-27T18:26:34Z
+Completed At: 2026-06-27T18:26:34Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 462
+Total Bytes: 17857
+Showing lines 275 to 380
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+275: const toolLogos = [
+276:   { src: powerBiLogo, name: 'Power BI' },
+277:   { src: powerAppsLogo, name: 'Power Apps' },
+278:   { src: copilotStudioLogo, name: 'Copilot Studio' },
+279: ];
+280: 
+281: function TrustBar({ activeHero }) {
+282:   // ── Per-variation visual config ──
+283:   const config = {
+284:     spline1: {
+285:       // Glassmorphism: frosted panel behind logos
+286:       sectionBg: 'transparent',
+287:       topLine: null,
+288:       copyColor: 'rgba(255,255,255,0.45)',
+289:       cardBg: 'rgba(255,255,255,0.04)',
+290:       cardBorder: '1px solid rgba(255,255,255,0.08)',
+291:       cardBackdrop: 'blur(24px)',
+292:       cardShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+293:       cardHoverBorder: '1px solid rgba(255,255,255,0.18)',
+294:       cardHoverShadow: '0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
+295:       labelColor: 'rgba(255,255,255,0.7)',
+296:       labelHoverColor: '#ffffff',
+297:       logoFilter: 'brightness(0) invert(1)',
+298:       logoOpacity: 0.7,
+299:       logoHoverOpacity: 1,
+300:     },
+301:     cinematic: {
+302:       // Ultra-minimal: hairline dividers, desaturated logos
+303:       sectionBg: '#050505',
+304:       topLine: { background: 'linear-gradient(90deg, transparent 20%, rgba(255,255,255,0.06) 50%, transparent 80%)' },
+305:       copyColor: '#3f3f46',
+306:       cardBg: 'transparent',
+307:       cardBorder: 'none',
+308:       cardBackdrop: 'none',
+309:       cardShadow: 'none',
+310:       cardHoverBorder: 'none',
+311:       cardHoverShadow: 'none',
+312:       labelCol
+<truncated 965 bytes>
+0:       labelHoverColor: '#ffffff',
+331:       logoFilter: 'brightness(0) invert(1)',
+332:       logoOpacity: 0.5,
+333:       logoHoverOpacity: 1,
+334:     },
+335:     tech_v4: {
+336:       // Cyber neon: accent-glow border, lime scan-line top edge
+337:       sectionBg: '#000000',
+338:       topLine: {
+339:         background: 'linear-gradient(90deg, transparent, rgba(198,255,52,0.5), transparent)',
+340:         boxShadow: '0 0 20px rgba(198,255,52,0.3)'
+341:       },
+342:       copyColor: 'rgba(198,255,52,0.5)',
+343:       cardBg: 'rgba(198,255,52,0.03)',
+344:       cardBorder: '1px solid rgba(198,255,52,0.1)',
+345:       cardBackdrop: 'none',
+346:       cardShadow: '0 4px 24px rgba(0,0,0,0.4)',
+347:       cardHoverBorder: '1px solid rgba(198,255,52,0.35)',
+348:       cardHoverShadow: '0 4px 32px rgba(198,255,52,0.12), 0 0 0 1px rgba(198,255,52,0.2)',
+349:       labelColor: 'rgba(255,255,255,0.6)',
+350:       labelHoverColor: 'var(--color-accent)',
+351:       logoFilter: 'brightness(0) invert(1)',
+352:       logoOpacity: 0.55,
+353:       logoHoverOpacity: 1,
+354:     },
+355:   };
+356: 
+357:   const c = config[activeHero] || config.cinematic;
+358: 
+359:   return (
+360:     <section style={{
+361:       background: c.sectionBg,
+362:       padding: '5rem 0',
+363:       width: '100%',
+364:       position: 'relative',
+365:       zIndex: 20,
+366:     }}>
+367:       {/* Top separator line */}
+368:       {c.topLine && (
+369:         <div style={{
+370:           position: 'absolute',
+371:           top: 0, left: 0, right: 0,
+372:           height: '1px',
+373:           ...c.topLine,
+374:         }} />
+375:       )}
+376: 
+377:       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem' }}>
+378:         {/* Micro-copy */}
+379:         <p className="animate-blur-reveal" style={{
+380:           fontFamily: 'var(--font-mono)',
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

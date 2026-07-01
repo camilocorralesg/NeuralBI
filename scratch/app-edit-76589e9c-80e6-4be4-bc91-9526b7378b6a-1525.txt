@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Remove Manifesto spline1 eyebrow in App.jsx\"",
+    "EndLine": "793",
+    "Instruction": "\"Remove the Manifesto spline1 label span (eyebrow) and the margin-top adjustment on the h2.\"",
+    "ReplacementContent": "\"              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>\\n                Built for the AI era. Unbound by legacy.\\n              </h2>\"",
+    "StartLine": "786",
+    "TargetContent": "\"            <div>\\n              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-accent)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>\\n                // NeuralBI Manifesto\\n              </span>\\n              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, marginTop: '1rem', lineHeight: 1.1 }}>\\n                Built for the AI era. Unbound by legacy.\\n              </h2>\"",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Remove spline1 Manifesto eyebrow\"",
+    "toolSummary": "\"Remove spline1 Manifesto eyebrow\""
+  }
+}

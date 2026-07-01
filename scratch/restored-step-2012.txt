@@ -1,0 +1,74 @@
+
+Created At: 2026-06-29T16:36:03Z
+Completed At: 2026-06-29T16:36:03Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 3332
+Total Bytes: 163900
+Showing lines 3130 to 3291
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+3130: 
+3131:         </div>
+3132:       </div>
+3133:     </section>
+3134:   );
+3135: }
+3136: 
+3137: // ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+3138: function FooterCTA({ activeHero }) {
+3139:   if (activeHero === 'spline1') {
+3140:     return (
+3141:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+3142:         <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+3143: 
+3144:         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+3145:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+3146:             You already have the data.
+3147:           </h2>
+3148:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+3149:             Now, make it think.
+3150:           </h2>
+3151:           <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.25rem', lineHeight: 1.7, maxWidth: '650px', margin: '0 auto 4rem' }}>
+3152:             Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+3153:           </p>
+3154
+<truncated 6057 bytes>
+         Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+3254:           </p>
+3255:           <button className="btn-glow-border" style={{
+3256:             fontFamily: 'var(--font-tech)',
+3257:             fontWeight: 800,
+3258:             fontSize: '1.25rem',
+3259:             padding: '1rem 3rem',
+3260:             textTransform: 'uppercase',
+3261:             letterSpacing: '0.05em'
+3262:           }}>
+3263:             Deploy Intelligence
+3264:           </button>
+3265:         </div>
+3266:       </section>
+3267:     );
+3268:   }
+3269: 
+3270:   return (
+3271:     <section style={{ padding: '10rem 0', position: 'relative', zIndex: 10 }}>
+3272:       <div style={{
+3273:         position: 'absolute',
+3274:         top: '50%',
+3275:         left: '50%',
+3276:         transform: 'translate(-50%, -50%)',
+3277:         width: '80%',
+3278:         maxWidth: '800px',
+3279:         height: '400px',
+3280:         background: 'radial-gradient(circle, rgba(198, 255, 52, 0.15) 0%, transparent 70%)',
+3281:         filter: 'blur(100px)',
+3282:         zIndex: 0,
+3283:         pointerEvents: 'none'
+3284:       }} />
+3285: 
+3286:       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+3287:         <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '0.5rem' }}>
+3288:           You already have the data.
+3289:         </h2>
+3290:         <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#c6ff34', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '3rem' }}>
+3291:           Now, make it think.
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

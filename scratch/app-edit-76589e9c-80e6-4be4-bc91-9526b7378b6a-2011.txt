@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "3291",
+    "StartLine": "3130",
+    "toolAction": "\"View FooterCTA and remainder of App.jsx\"",
+    "toolSummary": "\"View FooterCTA and App.jsx end\""
+  }
+}

@@ -1,0 +1,5 @@
+
+Created At: 2026-06-29T21:49:32Z
+Tool is running as a background task with task id: 76589e9c-80e6-4be4-bc91-9526b7378b6a/task-2536
+Task Description: Select-String -Path "C:\Users\camil\.gemini\antigravity-ide\brain\76589e9c-80e6-4be4-bc91-9526b7378b6a\.system_generated\logs\transcript.jsonl" -Pattern "function Manifesto" -Context 0, 5
+Task logs are available at: file:///C:/Users/camil/.gemini/antigravity-ide/brain/76589e9c-80e6-4be4-bc91-9526b7378b6a/.system_generated/tasks/task-2536.log

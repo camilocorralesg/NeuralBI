@@ -1,0 +1,12 @@
+{
+  "name": "grep_search",
+  "args": {
+    "CaseInsensitive": "true",
+    "IsRegex": "false",
+    "MatchPerLine": "true",
+    "Query": "\"Footer\"",
+    "SearchPath": "\"c:/Users/camil/My Repos/Figma Design/src\"",
+    "toolAction": "\"Search for Footer or FooterCTA component in App.jsx\"",
+    "toolSummary": "\"Search footer references\""
+  }
+}

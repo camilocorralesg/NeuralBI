@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "880",
+    "StartLine": "800",
+    "toolAction": "\"View Manifesto again\"",
+    "toolSummary": "\"View Manifesto again\""
+  }
+}

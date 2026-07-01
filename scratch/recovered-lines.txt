@@ -1,0 +1,2513 @@
+
+// --- GAP FROM LINE 1 TO -1 ---
+
+0:       labelHoverColor: '#ffffff',
+1: "const fs = require('fs');\n\nconst filePath = 'c:/Users/camil/My Repos/Figma Design/src/App.jsx';\nlet content = fs.readFileSync(filePath, 'utf8');\n\n// 1. Replace rendering blocks to include FAQ\nconst methodologySearch = '<Methodology activeHero={activeHero} />';\nconst ctaSearch = '<FooterCTA activeHero={activeHero} />';\n\nif (!content.includes(methodologySearch) || !content.includes(ctaSearch)) {\n  console.error(\"Could not find Methodology or FooterCTA render calls!\");\n  process.exit(1);\n}\n\n// Find render sequence and insert Faq\nconst renderSequence = `<Methodology activeHero={activeHero} />\n            <FooterCTA activeHero={activeHero} />`;\n\nlet sequenceToReplace = renderSequence;\nif (!content.includes(renderSequence)) {\n  sequenceToReplace = renderSequence.replace(/\\n/g, '\\r\\n');\n  if (!content.includes(sequenceToReplace)) {\n    console.error(\"Could not find exact sequence of rendering components!\");\n    process.exit(1);\n  }\n}\n\ncontent = content.replace(\n  sequenceToReplace,\n  `<Methodology activeHero={activeHero} />\n            <Faq activeHero={activeHero} />\n            <FooterCTA activeHero={activeHero} />`.replace(/\\n/g, sequenceToReplace.includes('\\r\\n') ? '\\r\\n' : '\\n')\n);\n\n// 2. Insert Faq component definition before Footer component\nconst footerPattern = '// ─── SECTION 10: PREMIUM STYLE-SPECIFIC FOOTER (SUI & RAYCAST DNA) ───';\nconst footerIndex = content.indexOf(footerPattern);\n\nif (footerIndex === -1) {\n  console.error(\"Could not find Footer component start pattern!\");\n  process.exit(1);\n}\n\nconst faqComponentCode = `// ─── SECTION 10: PREMIUM STYLE-SPECIFIC FAQ (ACCORDIONS, GRID & COMMAND CONSOLE) ───\nfunction Faq({ activeHero }) {\n  const [activeIdx, setActiveIdx] = React.useState(null);\n\n  const faqData = [\n    {\n      q: \"What is Microsoft Power Platform?\",\n      a: \"A suite of low-code tools (Power Apps, Automate, BI, Copilot Studio) that allows businesses to build apps, automate workflows, analyze data, an
+2: <truncated 24877 bytes>
+3: File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+4: Total Lines: 1568
+5: Total Bytes: 78191
+6: Showing lines 550 to 600
+7: The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+8: 550:                     <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.01em', textTransform: 'uppercase' }}>{item.title}</h3>
+9: 551:                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+10: 552:                   </div>
+11: 553:                 </div>
+12: 554:               ))}
+13: 555:             </div>
+14: 556:           </div>
+15: 557:           <style>{`.hover-glass-soft:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.15) !important; background: rgba(255,255,255,0.04) !important; }`}</style>
+16: 558:         </section>
+17: 559:       );
+18: 560: 
+19: 561:     default:
+20: 562:       return null;
+21: 563:   }
+22: 564: }
+23: 565: 
+24: 566: // Simple Inline SVG for Power Automate (Blue flow arrow)
+25: 567: function PowerAutomateIcon({ size = 48, color = "currentColor" }) {
+26: 
+27: 569:       id: "ai-native",
+28: 570:       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z" fill={color}/>
+29: 571:       <path d="M13.5 7H16L12 3L8 7h2.5v7h3V7z" fill="#0078D4"/>
+30: 572:       <path d="M10.5 17H8l4 4 4-4h-2.5v-7h-3v7z" fill="#0078D4"/>
+31: 573:     </svg>
+32: 574:   );
+33: 575: }
+34: 576: 
+35: 577: // =========================================================
+36: 578: // Why NeuralBI: The Manifesto Section (Radically Different per Hero)
+37: 579: // =========================================================
+38: 580: function Manifesto({ activeHero }) {
+39: 581:   const data = [
+40: 582:     {
+41: 583:       id: "ai-native",
+42: 584:       title: "AI-Native Blueprint",
+43: 585:       body: "We don’t bolt on AI as an afterthought. We architect your data foundation from day zero to seamlessly integrate with Copilot and advanced LLMs.",
+44: 586:       icon: (
+45: 587:         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+46: 588:           <circle cx="12" cy="12" r="10" />
+47: 589:           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+48: 590:           <path d="M2 12h20" />
+49: 591:         </svg>
+50: 592:       ),
+51: 593:       glow: "radial-gradient(circle at 50% 120%, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0) 70%)",
+52: 594:       glowColor: "rgba(198, 255, 52, 0.25)",
+53: 595:       accentColor: "var(--color-accent)",
+54: 596:       graphic: (hovered) => <AiNativeGraphic hovered={hovered} />
+55: 597:     },
+56: 598:     {
+57: 599:       id: "warp-speed",
+58: 600:       title: "Warp-Speed Velocity",
+59: The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+60: 
+61:       h1Class: "", // Standard white
+62:       h1Color: "#ffffff"
+63:     },
+64:     cinematic: {
+65:       eyebrow: "// ENTERPRISE DATA ARCHITECTURE",
+66:       h1: "Intelligence, Architected.",
+67:       sub: "Zero-trust AI deployments and enterprise BI systems built in days, not months. We build the cognitive infrastructure that powers modern facilities.",
+68:       cta: <>Book a Call <span style={{ color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', transition: 'all 0.5s' }}>↵</span></>,
+69:       align: "center",
+70:       textAlign: "center",
+71:       btnClass: "btn-glow-border",
+72:       h1Font: "var(--font-ui)", // Cl
+73:       h1Class: "", // Soft glowing white
+74:       h1Color: "#f4f4f5"
+75:     },
+76:     modern_v2: {
+77:       eyebrow: "// NEXT-GEN DATA INFRASTRUCTURE",
+78:       h1: "Cognition, Delivered.",
+79:       sub: "We engineer autonomous intelligence into your business operations. A living, breathing ecosystem built on zero-trust AI and Power Platform architecture.",
+80:       cta: <>Book a Call <span style={{ color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', transition: 'all 0.5s' }}>↵</span></>,
+81:       align: "center",
+82:       textAlign: "center",
+83:       btnClass: "btn-glow-border",
+84:       h1Font: "var(--font-display)", // Absolut logo font
+85:       h1Class: "text-gradient-premium", // Metallic brutal gradient
+86:       h1Color: "transparent"
+87:     },
+88:     tech_v4: {
+89:       eyebrow: "// DATA NEURAL NETWORKS",
+90:       h1: "Beyond Analytics.",
+91:       sub: "We synthesize structured intelligence from your chaotic data streams. Scalable, autonomous, and beautiful.",
+92:       cta: <>Book a Call <span style={{ color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', transition: 'all 0.5s' }}>↵</span></>,
+93:       align: "center",
+94:       textAlign: "center",
+95:       btnClass: "btn-glow-border",
+96:       h1Font: "var(--font-tech)", // Space Grotesk
+97:       h1Class: "text-gradient-accent", // White to Lime gradient
+98:       h1Color: "transparent"
+99:     },
+100:     sui_fork: {
+101:       align: "center",
+102:       textAlign: "center",
+103:       cta: (
+104:         <>
+105:           Get Started
+106:           <div className="sui-btn-icon-wrapper" style={{ marginLeft: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+107:             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow">
+108:               <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+109:               <path d="M5.30933 3.26746L6.84508 3.2675L7.92617 5.7266L6.39041 5.72656L5.30933 3.26746Z" fill="currentColor"></path>
+110:               <path d="M10.5417 12.5849L9.00599 12.5849L7.92491 10.1258L9.46066 10.1258L10.5417 12.5849Z" fill="currentColor"></path>
+111:               <path d="M5.30933 12.5849L6.84508 12.5849L7.92617 10.1258L6.39041 10.1258L5.30933 12.5849Z" fill="currentColor"></path>
+112:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+113:             </svg>
+114:             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow">
+115:               <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+116:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+117:             </svg>
+118:           </div>
+119:         </>
+120:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+121:             </svg>
+122:           </div>
+123:         </>
+124:       ),
+125:       align: "center",
+126:       textAlign: "center",
+127:       btnClass: "sui-btn",
+128:       h1Font: "var(--font-ui)", // Clean grotesque look
+129:       h1Class: "", // Solid white
+130:       h1Color: "#ffffff"
+131:     }
+132:   };
+133: 
+134:   const currentContent = contentMap[activeHero] || contentMap.cinematic;
+135: 
+136:   const renderBackground = () => {
+137:     switch (activeHero) {
+138:       case 'spline1':
+139:         return (
+140:           <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
+141:             <ColorBends
+142:               colors={["#c6ff34", "#1a3000", "#000000"]}
+143:               rotation={90}
+144:               speed={0.4}
+145:               scale={1}
+146:               frequency={1}
+147:               warpStrength={1}
+148:               mouseInfluence={1}
+149:               noise={0.15}
+150:               parallax={0.5}
+151:               iterations={1}
+152:               intensity={1.5}
+153:               bandWidth={6}
+154:               transparent
+155:             />
+156:           </div>
+157:         );
+158:       case 'cinematic':
+159:         return <video autoPlay loop muted playsInline src={videoMaster} className="bg-video" />;
+160:       case 'modern_v2':
+161:         return (
+162:           <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
+163:             <GradientBlinds
+164:               gradientColors={['#445e00', '#c6ff34']}
+165:               angle={33}
+166:               noise={0.55}
+167:               blindCount={20}
+168:               blindMinWidth={60}
+169:               spotlightRadius={0.25}
+170:               spotlightSoftness={1}
+171:               spotlightOpacity={1}
+172:               mouseDampening={0.15}
+173:               distortAmount={0}
+174:               shineDirection="left"
+175:               mixBlendMode="lighten"
+176:             />
+177:           </div>
+178:         );
+179:       case 'tech_v4':
+180:         return (
+181:           <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
+182:             <FloatingLines
+183:               enabledWaves={['top', 'middle', 'bottom']}
+184:               lineCount={20}
+185:               lineDistance={51.5}
+186:               bendRadius={16}
+187:               bendStrength={1}
+188:               interactive={true}
+189:               parallax={true}
+190:               animationSpeed={2.2}
+191:               gradientStart="#c6ff34"
+192:               gradientMid="#000000"
+193:               gradientEnd="#000000"
+194:             />
+195:           </div>
+196:         );
+197:       case 'sui_fork':
+198:         return (
+199:           <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
+200:             <Grainient
+201:               color1="#000000"
+202:               color2="#c6ff34"
+203:               color3="#000000"
+204:               timeSpeed={0.25}
+205:               colorBalance={0.0}
+206:               warpStrength={1.0}
+207:               warpFrequency={5.0}
+208:               warpSpeed={2.0}
+209:               warpAmplitude={50.0}
+210:               blendAngle={0.0}
+211:               blendSoftness={0.05}
+212:               rotationAmount={500.0}
+213:               noiseScale={2.0}
+214:               grainAmount={0.1}
+215:               grainScale={2.0}
+216:               grainAnimated={false}
+217:               contrast={1.5}
+218:               gamma={1.0}
+219:               saturation={1.0}
+220:               centerX={0.0}
+221:               centerY={0.0}
+222:               zoom={0.9}
+223:             />
+224:           </div>
+225:         );
+226:       default: return null;
+227:     }
+228:   };
+229: 
+230:   return (
+231:     <div style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-ink)', backgroundColor: 'var(--color-paper)' }}>
+232:       {/* Universal Nav (Raycast Glass Panel) */}
+233:       <nav className="nav-n5 glass-raycast" style={{ border: 'none' }}>
+234:         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '700', fontFamily: 'var(--font-display)' }}>
+235:           <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px' }} />
+236:         </div>
+237: 
+238:         <div className="nav-n5-links">
+239:           <a href="#services" className="nav-n5-link" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>Services</a>
+240:           <a href="#platform" className="nav-n5-link" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>Platform</a>
+241:           <a href="#about" className="nav-n5-link" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>About Us</a>
+242:         </div>
+243: 
+244:         <button className="btn-raycast btn-radius-8" style={{ padding: '0.375rem 1.2rem', fontSize: '0.875rem', fontFamily: 'var(--font-display)' }}>
+245:           Get Quote
+246:         </button>
+247:       </nav>
+248: 
+249:       <main>
+250:         <section style={{
+251:           position: 'relative',
+252:           minHeight: '100vh',
+253:           display: 'flex',
+254:           alignItems: 'center',
+255:           backgroundColor: 'var(--color-paper)',
+256:           overflow: 'hidden'
+257:         }}>
+258: 
+259:           {/* Universal Background Layer */}
+260:           <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+261:                 : 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%)',
+262:             zIndex: 1,
+263:             pointerEvents: 'none'
+264:           }} />
+265:           {/* Advanced Film Grain (Always present) */}
+266:           <div className="grain-overlay" />
+267: 
+268:           {/* Specific Opacity Layer for readability. Stronger to ensure text is always visible. */}
+269:           <div style={{
+270:             position: 'absolute',
+271:             inset: 0,
+272:             background: activeHero === 'spline1'
+273:               ? 'radial-gradient(circle at 20% 50%, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0) 100%)'
+274:               : activeHero === 'sui_fork'
+275:                 ? 'transparent'
+276:                 : 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%)',
+277:             zIndex: 1,
+278:             pointerEvents: 'none'
+279:           }} />
+280: 
+281:           {/* Text Content Block */}
+282:           <div style={{
+283:             position: 'relative',
+284:             zIndex: 10,
+285:             pointerEvents: 'none',
+286:             width: '100%',
+287:             maxWidth: '1200px',
+288:             margin: '0 auto',
+289:             padding: '0 var(--space-6)',
+290:             display: 'flex',
+291:             flexDirection: 'column',
+292:             justifyContent: 'center',
+293:             alignItems: currentContent.align
+294:           }}>
+295:             {activeHero === 'sui_fork' && (
+296:               <div style={{
+297:                 position: 'absolute',
+298:                 top: '40%',
+299:                 left: '50%',
+300:                 transform: 'translate(-50%, -50%)',
+301:                 width: '100%',
+302:                
+303:             }}>
+304: 
+305: 
+306:               {/* H1 Headline */}
+307:               {activeHero === 'sui_fork' ? (
+308:                 <SuiHeroTitle text={currentContent.h1} />
+309:               ) : (
+310:                 <h1 className={`animate-blur-reveal delay-100 ${currentContent.h1Class}`} style={{
+311:                   fontFamily: currentContent.h1Font,
+312:                   fontSize: 'clamp(3.5rem, 6vw, 6.5rem)',
+313:               pointerEvents: 'auto',
+314:               textAlign: currentContent.textAlign,
+315:               display: 'flex',
+316:               flexDirection: 'column',
+317:               alignItems: currentContent.align
+318:             }}>
+319: 
+320: 
+321:               {/* H1 Headline */}
+322:               {activeHero === 'sui_fork' ? (
+323:                 <SuiHeroTitle text={currentContent.h1} />
+324:               ) : (
+325:                 <h1 className={`animate-blur-reveal delay-100 ${currentContent.h1Class}`} style={{
+326:                   fontFamily: currentContent.h1Font,
+327:                   fontSize: 'clamp(3.5rem, 6vw, 6.5rem)',
+328:                   fontWeight: 900,
+329:                   lineHeight: 1.05,
+330:                   /* Impeccable polish: Use -0.04em for display headlines to prevent letters touching */
+331:                   letterSpacing: currentContent.h1Font === 'var(--font-serif)' ? '0' : '-0.04em',
+332:                   marginBottom: 'var(--space-6)',
+333:                   color: currentContent.h1Color,
+334:                   textShadow: currentContent.h1Class.includes('gradient') ? 'none' : '0 4px 24px rgba(0,0,0,0.6)'
+335:                 }}>
+336:                   {currentContent.h1}
+337:                 </h1>
+338:               )}
+339: 
+340:               {/* Sub-headline */}
+341:               <p className="animate-blur-reveal delay-200" style={{
+342:                 fontFamily: 'var(--font-sans)',
+343:                 color: 'rgba(255,255,255,0.85)',
+344:                 fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
+345:                 fontWeight: 400,
+346:                 marginBottom: 'var(--space-12)',
+347:                 lineHeight: 1.6,
+348:                 maxWidth: '650px',
+349:                 textShadow: '0 2px 12px rgba(0,0,0,0.8)'
+350:                 }}>
+351:                   {currentContent.cta}
+352:                 </button>
+353:               </div>
+354:             </div>
+355:           </div>          {/* Smooth Fade to Background to avoid image cutoffs */}
+356:           <div style={{
+357:             position: 'absolute',
+358:             bottom: 0,
+359:             left: 0,
+360:             right: 0,
+361:             height: '25vh',
+362:             background: activeHero === 'sui_fork' ? 'transparent' : `linear-gradient(to bottom, transparent, ${activeHero === 'tech_v4' ? '#030303' :
+363:               (activeHero === 'modern_v2' || activeHero === 'spline1') ? '#020202' : '#000000'
+364:               })`,
+365:             zIndex: 10,
+366:             pointerEvents: 'none'
+367:           }} />
+368:         </section>
+369: 
+370:         {/* Unified Continuous Background Wrapper for Content Sections */}
+371:         <div style={{ position: 'relative' }}>
+372:           {/* Sticky Background Layer */}
+373:           <div className={
+374:             activeHero === 'tech_v4' ? 'bg-fallback' :
+375:               activeHero === 'modern_v2' ? 'bg-fallback' :
+376:                 activeHero === 'spline1' ? 'bg-nebula-glow' :
+377:                   activeHero === 'sui_fork' ? 'bg-fallback' :
+378:                     'bg-shift-cinematic'
+379:           } style={{
+380:             position: 'sticky',
+381:             top: 0,
+382:             width: '100%',
+383:             height: '100vh',
+384:             zIndex: 0,
+385:             overflow: 'hidden',
+386:             pointerEvents: 'none'
+387:      
+388: 
+389:           {/* Content Layer (Transparent) */}
+390:           <div style={{ position: 'relative', zIndex: 10, marginTop: '-100vh' }}>
+391:             <Manifesto activeHero={activeHero} />
+392:             <TrustBar activeHero={activeHero} />
+393:               position: 'absolute', bottom: 0, right: 0, width: '45px', height: '45px',
+394:               border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px',
+395:               background: 'rgba(255,255,255,0.03)',
+396:               animation: 'sui-bento-assemble 3s ease-in-out infinite 1s'
+397:             }} />
+398:           </div>
+399:         </div>
+400:       )}
+401: 
+402:       {activeHero === 'sui_fork' && phase === 3 && (
+403:         <div style={{ position: 'relative', width: '220px', height: '180px' }}>
+404:           {/* Bento loop trace with animated motion particle */}
+405:           <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+406:             <path id="infinity_loop" d="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90 C 180,50 110,50 110,90 C 110,130 40,130 40,90 Z" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5" />
+407:             <path d="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90" fill="none" stroke={colorAccent} strokeWidth="1.5" strokeDasharray="15, 60" style={{ animation: 'tech-dash 4s linear infinite' }} />
+408:             
+409:             <circle r="4" fill="#ffffff" filter="drop-shadow(0 0 6px #c6ff34)">
+410:               <animateMotion dur="4s" repeatCount="indefinite" path="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90 C 180,50 110,50 110,90 C 110,130 40,130 40,90 Z" />
+411:             </circle>
+412:           </svg>
+413:         </div>
+414:       )}
+415:     </div>
+416:   );
+417: }
+418: 
+419: function MethodologyDiagramStub({ phase, activeHero }) {
+420:   return <MethodologyDiagram phase={phase} activeHero={activeHero} />;
+421: }
+422: `;
+423: 
+424: const replacedContent = content.slice(0, startIndex) + replacementCode + content.slice(endIndex);
+425: fs.writeFileSync(filePath, replacedContent, 'utf8');
+426: console.log("Successfully replaced diagrams block in App.jsx!");
+427: 
+428:   return (
+429:     <div className="glass-raycast" style={{
+430:       position: 'fixed',
+431:       bottom: '24px',
+432:       left: '50%',
+433:       transform: 'translateX(-50%)',
+434:       zIndex: 50,
+435:       display: 'flex',
+436:       alignItems: 'center',
+437:       gap: '4px',
+438:       padding: '6px',
+439:       borderRadius: '10px',
+440:       border: 'none',
+441:       maxWidth: '90vw',
+442:       overflowX: 'auto',
+443:       msOverflowStyle: 'none',
+444:       scrollbarWidth: 'none'
+445:     }}>
+446:       <button onClick={() => setActiveHero('spline1')} style={btnStyle('spline1')}>Nebula (Interactive)</button>
+447:       <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.1)', margin: '0 8px' }} />
+448:       <button onClick={() => setActiveHero('cinematic')} style={btnStyle('cinematic')}>Cinematic (Master)</button>
+449:       <button onClick={() => setActiveHero('modern_v2')} style={btnStyle('modern_v2')}>Video 2 (Modern)</button>
+450:       <button onClick={() => setActiveHero('tech_v4')} style={btnStyle('tech_v4')}>Video 0627 (Tech)</button>
+451:     </div>
+452:   );
+453: }
+454: 
+455: // =========================================================
+456: // Bento Box: The Arsenal (Solutions)
+457: // Four premium treatments, one per hero iteration.
+458: // =========================================================
+459: 
+460: const arsenalData = [
+461:   {
+462:     id: "power-bi",
+463:     tool: "Power BI",
+464:     title: "Cognitive Analytics.",
+465:     body: "Transform dormant databases into real-time, interactive visual models. See the absolute truth behind your numbers instantly, with zero latency.",
+466:     logo: powerBiLogo,
+467:     type: "large" // spans more space
+468:   },
+469:   {
+470:     id: "power-apps",
+471:     tool: "Power Apps",
+472:     title: "Custom Engineering.",
+473:     body: "Tailor-made applications built flawlessly. From field operations to executive suites, we digitize your most complex workflows securely.",
+474:     logo: powerAppsLogo,
+475:     type: "medium"
+476:   },
+477:   {
+478:     id: "power-automate",
+479:     tool: "Power Automate",
+480:     title: "Silent Orchestration.",
+481:     body: "Connect APIs and sync databases. We engineer invisible neural pathways that automate the mundane and eliminate human error quietly in the background.",
+482:     logo: null, // We'll use an inline SVG for Power Automate
+483:     type: "wide"
+484:   }
+485: ];
+486: 
+487: function Arsenal({ activeHero }) {
+488:   // Each hero gets a completely different Arsenal layout
+489:   switch (activeHe
+490:       return (
+491:         <section style={{ padding: '8rem 0', background: '#020104', position: 'relative', zIndex: 20 }}>
+492:           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+493:             <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+494:               <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: '#a855f7', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+495:                 Orchestration Layer
+496:               </span>
+497:               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.02em' }}>
+498:                 The Arsenal.
+499:               </h2>
+500:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '500px', margin: '1rem auto 0' }}>
+501:                 End-to-end intelligence powered by the Microsoft stack.
+502:               </p>
+503:             </div>
+504: 
+505:             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+506:               {arsenalData.map((item) => (
+507:                 <div key={item.id} style={{
+508:                   gridColumn: item.type === 'wide' ? 'span 3' : (item.type === 'large' ? 'span 2' : 'span 1'),
+509:                   background: 'rgba(255,255,255,0.02)',
+510:                   backdropFilter: 'blur(40px)',
+511:                   WebkitBackdropFilter: 'blur(40px)',
+512:                   borderRadius: '32px',
+513:                   padding: item.type === 'wide' ? '3rem' : '4rem',
+514:                   display: 'flex',
+515:                   flexDirection: item.type === 'wide' ? 'row' : 'column',
+516:                   gap: '2rem',
+517:                   alignItems: item.type === 'wide' ? 'center' : 'flex-start',
+518:                   border: '1px solid rgba(255,255,255,0.06)',
+519:                   boxShadow: '0 20px 60px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1)',
+520:                   position: 'relative',
+521:                   overflow: 'hidden',
+522:                   transition: 'all 0.5s'
+523:                 }} className="hover-glass-soft">
+524:                   <div style={{ 
+525:                     position: 'absolute', top: '-10%', right: '-10%', width: '60%', height: '60%', 
+526:                     background: item.id === 'power-bi' ? 'rgba(234, 179, 8, 0.15)' : item.id === 'power-apps' ? 'rgba(56, 189, 248, 0.15)' : 'rgba(168, 85, 247, 0.15)',
+527:                     filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 
+528:                   }} />
+529:                   <div style={{ width: '48px', height: '48px', zIndex: 1, filter: 'drop-shadow(0 4px 12px rgba(255,255,255,0.2))' }}>
+530:                     {item.logo ? <img src={item.logo} alt={item.tool} style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <PowerAutomateIcon color="#fff" />}
+531:                   </div>
+532:                   <div style={{ zIndex: 1 }}>
+533:                     <div style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', fontWeight: 500 }}>
+534:                       {item.tool}
+535:                     </div>
+536:                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.01em' }}>{item.title}</h3>
+537:                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+538:                   </div>
+539:                 </div>
+540:               ))}
+
+// --- GAP FROM LINE 541 TO 549 ---
+
+550:                     <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.01em', textTransform: 'uppercase' }}>{item.title}</h3>
+551:                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+552:                   </div>
+553:                 </div>
+554:               ))}
+555:             </div>
+556:           </div>
+557:           <style>{`.hover-glass-soft:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.15) !important; background: rgba(255,255,255,0.04) !important; }`}</style>
+558:         </section>
+559:       );
+560: 
+561:     default:
+562:       return null;
+563:   }
+564: }
+565: 
+566: // Simple Inline SVG for Power Automate (Blue flow arrow)
+567: function PowerAutomateIcon({ size = 48, color = "currentColor" }) {
+568:   return (
+569:     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+570:       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z" fill={color}/>
+571:                           <span style={{ color: '#52525b', marginRight: '0.75rem', fontWeight: 500 }}>{item.tool} //</span> {item.title}
+572:                         </h3>
+573:                         <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: '#a1a1aa', lineHeight: 1.6 }}>{item.body}</p>
+574:                       </div>
+575:                     </div>
+576:                   ))}
+577:                 </div>
+578:               </div>
+579:             </div>
+580:           </div>
+581:         </section>
+582:       );
+583: 
+584:     // ─── MODERN V2: Raycast Glassmorphism Bento Grid ───
+585:     case 'modern_v2':
+586:       return (
+587:         <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+588:           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+589: 
+590:           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+591:             <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+592:               <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem' }}>
+593:                 The Arsenal.<br />Perfectly orchestrated.
+594:               </h2>
+595:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.5)', maxWidth: '600px', margin: '0 auto' }}>
+596:                 End-to-end intelligence powered by the Microsoft stack.
+597:               </p>
+598:             </div>
+599: 
+600:             {/* The Bento Grid */}
+601:                 Orchestration Layer
+602:               </span>
+603:               <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
+604:                 The Arsenal.
+605:               </h2>
+606:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '500px', margin: '1rem auto 0' }}>
+607:                 End-to-end intelligence powered by the Microsoft stack.
+608:               </p>
+609:             </div>
+610: 
+611:             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+612:               {arsenalData.map((item) => (
+613:                 <div key={item.id} style={{
+614:                   gridColumn: item.type === 'wide' ? 'span 3' : (item.type === 'large' ? 'span 2' : 'span 1'),
+615:                   background: 'rgba(255,255,255,0.02)',
+616:             <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+617:               <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
+618:                 The Arsenal
+619:               </h2>
+620:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: 'rgba(255,255,255,0.6)' }}>
+621:       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z" fill={color}/>
+622:       <path d="M13.5 7H16L12 3L8 7h2.5v7h3V7z" fill="#0078D4"/>
+623:       <path d="M10.5 17H8l4 4 4-4h-2.5v-7h-3v7z" fill="#0078D4"/>
+624:     </svg>
+625:   );
+626: }
+627: 
+628: // =========================================================
+629: // Why NeuralBI: The Manifesto Section (Radically Different per Hero)
+630: // =========================================================
+631: function Manifesto({ activeHero }) {
+632:   const data = [
+633:     {
+634:       id: "ai-native",
+635:       title: "AI-Native Blueprint",
+636:       body: "We don’t bolt on AI as an afterthought. We architect your data foundation from day zero to seamlessly integrate with Copilot and advanced LLMs.",
+637:       icon: (
+638:         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+639:           <circle cx="12" cy="12" r="10" />
+640:           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+641:           <path d="M2 12h20" />
+642:         </svg>
+643:       ),
+644:       glow: "radial-gradient(circle at 50% 120%, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0) 70%)",
+645:       glowColor: "rgba(198, 255, 52, 0.25)",
+646:       accentColor: "var(--color-accent)",
+647:       graphic: (hovered) => <AiNativeGraphic hovered={hovered} />
+648:     },
+649:     {
+650:         </section>
+651:       );
+652: 
+653:     case 'sui_fork':
+654:       return (
+655:         <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+656:           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+657:             <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+658:               <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
+659:                 The Arsenal
+660:               </h2>
+661:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: 'rgba(255,255,255,0.6)' }}>
+662:                 End-to-end intelligence powered by the Microsoft stack.
+663:               </p>
+664:             </div>
+665:             
+666:             <div style={{
+667:               display: 'grid',
+668:               gridTemplateColumns: 'repeat(12, 1fr)',
+669:               gap: '1.5rem',
+670:             }}>
+671:               {arsenalData.map((item, index) => {
+672:                 // Emulate a masonry grid: Wide items span 8/4, standard items span 4.
+673:                 let colSpan = item.type === 'wide' ? (index % 2 === 0 ? 'span 8' : 'span 4') : 'span 4';
+674:                 // Adjust for mobile via simple inline logic (in a real app, use CSS classes for grid responses)
+675:                 return (
+676:                   <div key={item.id} style={{
+677:                     gridColumn: colSpan,
+678:                     background: 'rgba(255,255,255,0.02)',
+679:                     backdropFilter: 'blur(24px)',
+680:                     border: '1px solid rgba(255,255,255,0.06)',
+681:                     borderRadius: '24px',
+682:                     padding: '2.5rem',
+683:                     display: 'flex',
+684:                     flexDirection: 'column',
+685:                     gap: '1.5rem',
+686:                     position: 'relative'
+687:                   }} className="sui-card-hover">
+688:                     <div style={{ width: '48px', height: '48px', opacity: 0.9 }}>
+689:                       {item.logo ? <img src={item.logo} alt={item.tool} style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <PowerAutomateIcon color="#c6ff34" />}
+690:                     </div>
+691:                     backdropFilter: 'blur(24px)',
+692:                     border: '1px solid rgba(255,255,255,0.06)',
+693:                     borderRadius: '24px',
+694:                     padding: '2.5rem',
+695:                     display: 'flex',
+696:                     flexDirection: 'column',
+697:                     gap: '1.5rem',
+698:                     position: 'relative'
+699:                   }} className="sui-card-hover">
+700:                     <div style={{ width: '48px', height: '48px', opacity: 0.9 }}>
+701:                       {item.logo ? <img src={item.logo} alt={item.tool} style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <PowerAutomateIcon color="#298dff" />}
+702:                     </div>
+703:                     <div>
+704:                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#298dff', textTransform: 'uppercase', marginBottom: '0.75rem' }}>{item.tool}</div>
+705:                       <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 600, color: '#ffffff', marginBottom: '1rem' }}>{item.title}</h3>
+706:                       <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+707:                     </div>
+708:                     <div style={{ position: 'absolute', bottom: '2.5rem', right: '2.5rem', color: '#298dff' }}>
+709:                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+710:                     </div>
+711:                   </div>
+712:                 );
+713:               })}
+714:             </div>
+715:           </div>
+716:         </section>
+717:       );
+718: 
+719:     default:
+720:       return null;
+721:   }
+722: }
+723: 
+724: // Simple Inline SVG for Power Automate (Blue flow arrow)
+725: function PowerAutomateIcon({ size = 48, color = "currentColor" }) {
+726:             display: 'flex', 
+727:             alignItems: 'center', 
+728:             justifyContent: 'center',
+729:             color: item.accentColor,
+730:             boxShadow: `0 0 12px ${item.glowColor}`
+731:           }}>
+732:             {item.icon}
+733:           </div>
+734:           <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.9rem', color: '#ffffff' }}>
+735:             {item.title}
+736:           </span>
+737:         </div>
+738:         <div style={{ 
+739:           width: '28px', 
+740:           height: '28px', 
+741:           borderRadius: '50%', 
+742:           background: 'rgba(255,255,255,0.04)', 
+743:           border: '1px solid rgba(255,255,255,0.08)',
+744:           display: 'flex', 
+745:           alignItems: 'center', 
+746:           justifyContent: 'center',
+747:           color: 'rgba(255,255,255,0.4)',
+748:           transform: hovered ? 'rotate(-45deg)' : 'rotate(0)',
+749:           transition: 'all 0.4s'
+750:         }}>
+751:           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+752:         </div>
+753:       </div>
+754: 
+755:       {/* Card Content */}
+756:       <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', zIndex: 1, flex: 1 }}>
+757:         <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.65)' }}>
+758:           {item.body}
+759:         </p>
+760: 
+761:         {/* High-fidelity Visual Graphic Area (Matches the referenced image) */}
+762:         <div style={{ 
+763:           height: '180px', 
+764:           background: 'rgba(0, 0, 0, 0.4)', 
+765:           borderRadius: '16px', 
+766:           marginTop: '2rem',
+767:           border: '1px solid rgba(255,255,255,0.04)',
+768:           overflow: 'hidden',
+769:           position: 'relative'
+770:         }}>
+771:           {item.graphic(hovered)}
+772:         </div>
+773:       </div>
+774:     </div>
+775:   );
+776: }
+777: 
+778:   if (activeHero === 'spline1') {
+779:     return (
+780:       <section style={{ padding: '6rem 0', position: 'relative', zIndex: 10 }}>
+781:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+782:           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '5rem', alignItems: 'end' }}>
+783:               <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>
+784:                 Built for the AI era. Unbound by legacy.
+785:               </h2>
+786:             </div>
+787:             <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', lineHeight: 1.6, maxWidth: '480px' }}>
+788:               Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.
+789:             </p>
+790:           </div>
+791: 
+792:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+793:             {data.map((item) => (
+794:               <NebulaManifestoCard key={item.id} item={item} />
+795:             ))}
+796:           </div>
+797:         </div>
+798:       </section>
+799:     );
+800:   }
+801: 
+802:   // 2. CINEMATIC: Clean, ultra-minimal, horizontal, razor-sharp alignment.
+803:           </div>
+804:         </div>
+805:       </section>
+806:     );
+807:   }
+808: 
+809:   // 2. CINEMATIC: Clean, ultra-minimal, horizontal, razor-sharp alignment.
+810:           <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+811:             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.5rem' }}>
+812:               Built for the AI era. Unbound by legacy.
+813:             </h2>
+814:             <p style={{ fontFamily: 'var(--font-sans)', color: '#71717a', fontSize: '1.125rem', maxWidth: '600px', margin: '0 auto' }}>
+815:               Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.
+816:             </p>
+817:           </div>
+818: 
+819:           <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+820:             {data.map((item, index) => (
+821:               <CinematicManifestoRow key={item.id} item={item} index={index} />
+822:             ))}
+823:           </div>
+824:         </div>
+825:       </section>
+826:     );
+827:   }
+828: 
+829:   // 3. MODERN V2 (Video 2): 3D Brand Cards with premium colored glows matching the provided image.
+830:   if (activeHero === 'modern_v2') {
+831:     return (
+832:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+833:         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+834:         
+835:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+836:           <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+837:             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+838:               // Why NeuralBI
+839:             </span>
+840:             <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, marginTop: '1.5rem', marginBottom: '1.5rem', lineHeight: 1.05 }}>
+841:               Built for the AI era.<br/>Unbound by legacy.
+842:             </h2>
+843:             <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.5)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
+844:               Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.
+845:             </p>
+846:               flexDirection: 'column',
+847:               alignItems: 'center',
+848:               textAlign: 'center',
+849:               border: '1px solid rgba(255,255,255,0.05)',
+850:               boxShadow: '0 10px 40px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)',
+851:               transition: 'all 0.5s',
+852:                   border: '1px solid rgba(41,141,255,0.2)'
+853:                 }}>
+854:                   {item.icon}
+855:                 </div>
+856:                 <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 600, color: '#ffffff' }}>{item.title}</h3>
+857:                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+858:               </div>
+859:             ))}
+860:   }
+861: 
+862:   // 5. SUI_FORK: Dark, highly tactile Bento glass grids
+863:   if (activeHero === 'sui_fork') {
+864:     return (
+865:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+866:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+867:           <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+868:             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#c6ff34', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+869:               Manifesto
+870:             </span>
+871:             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff', marginTop: '1rem' }}>
+872:               Built for the AI era.
+873:             </h2>
+874:           </div>
+875:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+876:             {data.map((item) => (
+877:               <div key={item.id} style={{
+878:                 background: 'rgba(255,255,255,0.03)',
+879:                 backdropFilter: 'blur(30px)',
+880:                 borderRadius: '24px',
+881:                 padding: '3rem 2rem',
+882:                 border: '1px solid rgba(255,255,255,0.06)',
+883:                 display: 'flex',
+884:                 flexDirection: 'column',
+885:                 gap: '1.5rem',
+886:           </div>
+887:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+888:             {data.map((item) => (
+889:               <div key={item.id} style={{
+890:                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+891:               </div>
+892:             ))}
+893:           </div>
+894:         </div>
+895:       </section>
+896:     );
+897:   }
+898: 
+899:   // 4. TECH V4 (Video 0627): Smooth Premium Mesh (Glassmorphism)
+900:   return (
+901:     <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}>
+902:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+903:         <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+904:           <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.8rem', color: 'var(--color-accent)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+905:             The Blueprint
+906:           </span>
+907:           <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.03em', lineHeight: 1.1, textTransform: 'uppercase' }}>
+908:             Built for the AI era.<br/>Unbound by legacy.
+909:           </h2>
+910:           <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.2rem', maxWidth: '600px', margin: '1.5rem auto 0', lineHeight: 1.6 }}>
+911:             Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.
+912:           </p>
+913:         </div>
+914: 
+915:         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+916:             : "M 20 110 Q 50 110 80 105 T 140 95 T 200 90"
+917:           } 
+918:           fill="none" 
+919:           stroke="var(--color-accent)" 
+920:           strokeWidth="3"
+921:           style={{ transition: 'd 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
+922:         />
+923:         
+924:         {/* Glowing node at current speed point */}
+925:         <circle 
+926:           cx={200} 
+927:           cy={hovered ? 20 : 90} 
+928:           r="6" 
+929:           fill="#ffffff" 
+930:           stroke="var(--color-accent)" 
+931:           strokeWidth="2.5"
+932:           style={{ transition: 'cy 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
+933:         />
+934: 
+935: 
+936: // ─── Sub-components for each Trust Bar variant ───
+937: 
+938: // NEBULA: Ghost logos, no label until hover
+939: function InlineLogo({ tool, opacity, hoverOpacity, labelColor, hoverLabelColor }) {
+940:   const [hovered, setHovered] = useState(false);
+941:   return (
+942:     <div
+943:       onMouseEnter={() => setHovered(true)}
+944:       onMouseLeave={() => setHovered(false)}
+945:       style={{
+946:     <div
+947:       onMouseEnter={() => setHovered(true)}
+948:       onMouseLeave={() => setHovered(false)}
+949:       style={{
+950:         boxShadow: hovered ? '0 0 24px rgba(198, 255, 52, 0.15)' : 'none',
+951:         transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+952:             }} />
+953:             <div style={{
+954:               position: 'absolute', inset: 0,
+955:               backgroundImage: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06))',
+956:               backgroundSize: '100% 4px, 6px 100%',
+957:               pointerEvents: 'none'
+958:             }} />
+959:           </div>
+960:         );
+961:       case 'modern_v2':
+962:         return (
+963:           <GradientBlinds
+964:             gradientColors={['#1a2a00', '#c6ff34']}
+965:             angle={33}
+966:             noise={0.4}
+967:             blindCount={12}
+968:             blindMinWidth={80}
+969:             spotlightRadius={0.4}
+970:             spotlightSoftness={0.8}
+971:             spotlightOpacity={0.7}
+972:             mouseDampening={0.3}
+973:             distortAmount={0}
+974:             shineDirection="left"
+975:             mixBlendMode="lighten"
+976:           />
+977:         );
+978:       case 'tech_v4':
+979:         return (
+980:           <FloatingLines
+981:             enabledWaves={['top', 'middle']}
+982:             lineCount={12}
+983:             lineDistance={40}
+984:             bendRadius={12}
+985:             bendStrength={0.6}
+986:             interactive={true}
+987:             parallax={true}
+988:             animationSpeed={1.2}
+989:             gradientStart="#c6ff34"
+990:             gradientMid="#000000"
+991:             gradientEnd="#000000"
+992:           />
+993:         );
+994:       case 'sui_fork':
+995:       default:
+996:         return (
+997:           <Grainient
+998:             color1="#000000"
+999:             color2="#c6ff34"
+1000:             color3="#000000"
+1001:           <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0ea5e9' }} />
+1002:           <div style={{ fontSize: '8px', color: '#0ea5e9', fontWeight: 'bold', fontFamily: 'monospace' }}>ACTIVE</div>
+1003:         </div>
+1004:         <div style={{ fontSize: '11px', color: '#ffffff', fontWeight: 'bold', fontFamily: 'var(--font-sans)', marginBottom: '4px' }}>
+1005:           Zero Chaos
+1006:         </div>
+1007:         <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
+1008:           Spreadsheet eradicated.
+1009:         </div>
+1010:       </div>
+
+// --- GAP FROM LINE 1011 TO 1099 ---
+
+1100: 
+1101: // Zero-Friction Graphic: Overlapping frosted glass layout window elements (like TinyPNG in image)
+1102: function ZeroFrictionGraphic({ hovered }) {
+1103:   return (
+1104:     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+1105:       {/* Grid background representing spreadsheet cells */}
+1106:       <div style={{
+1107:         position: 'absolute',
+1108:         inset: 0,
+1109:         opacity: 0.15,
+1110:         backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+1111:         backgroundSize: '20px 20px',
+1112:       }} />
+1113: 
+1114:       {/* Glass card element 1 - Behind */}
+1115:       <div style={{
+1116:         position: 'absolute',
+1117:         width: '120px',
+1118:         height: '80px',
+1119:         left: '20px',
+1120:         top: '50px',
+1121:         background: 'rgba(255, 255, 255, 0.02)',
+1122:         backdropFilter: 'blur(12px)',
+1123:         WebkitBackdropFilter: 'blur(12px)',
+1124:         border: '1px solid rgba(255, 255, 255, 0.05)',
+1125:         borderRadius: '12px',
+1126:         boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+1127:         padding: '10px',
+1128:         transform: hovered ? 'translate(8px, -8px)' : 'none',
+1129:         transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+1130:       }}>
+1131:         <div style={{ width: '20px', height: '6px', background: 'rgba(255,255,255,0.2)', borderRadius: '3px', marginBottom: '8px' }} />
+1132:         <div style={{ width: '70px', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginBottom: '4px' }} />
+1133:         <div style={{ width: '50px', height: '4px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '2px' }} />
+1134:       </div>
+1135: 
+1136:       {/* Glass card element 2 - Front overlapping (TinyPNG style) */}
+1137:       <div style={{
+1138:         position: 'absolute',
+1139:         width: '130px',
+1140:         height: '90px',
+1141:         right: '25px',
+1142:         bottom: hovered ? '35px' : '20px',
+1143:         background: 'rgba(14, 165, 233, 0.05)',
+1144:         backdropFilter: 'blur(16px)',
+1145:         WebkitBackdropFilter: 'blur(16px)',
+1146:         border: hovered ? '1px solid rgba(14, 165, 233, 0.25)' : '1px solid rgba(14, 165, 233, 0.1)',
+1147:         borderRadius: '14px',
+1148:         boxShadow: hovered 
+1149:           ? '0 12px 40px rgba(0,0,0,0.6), 0 0 16px rgba(14, 165, 233, 0.1)' 
+1150:           : '0 8px 32px rgba(0,0,0,0.5)',
+1151:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+1152:     ),
+1153:     accent: "#6366f1"
+1154:   },
+1155:   {
+1156:     id: "fintech",
+1157:     title: "Fintech & Banking",
+1158:     body: "Real-time liquidity tracking, fraud anomaly detection, and automated compliance reporting flows. Millisecond latency on financial dashboards.",
+1159:     icon: (
+1160:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+1161:     ),
+1162:     accent: "#10b981"
+1163:   },
+1164:   {
+1165:     id: "manufacturing",
+1166:     title: "Manufacturing 4.0",
+1167:     body: "IoT sensor data transformed into actionable maintenance alerts. Monitor machine health and predict downtime before it halts your production line.",
+1168:     icon: (
+1169:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 
+1170:         fontWeight: 600,
+1171:         letterSpacing: '-0.01em',
+1172:         color: hovered ? 'var(--color-accent)' : 'rgba(255,255,255,0.6)',
+1173:         transition: 'color 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+1174:         textAlign: 'center',
+1175:       }}>
+1176:         {tool.name}
+1177:       </span>
+1178:     </div>
+1179:   );
+1180:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+1181:     ),
+1182:     accent: "#6366f1"
+1183:   },
+1184:   {
+1185:     id: "fintech",
+1186:     title: "Fintech & Banking",
+1187:     body: "Real-time liquidity tracking, fraud anomaly detection, and automated compliance reporting flows. Millisecond latency on financial dashboards.",
+1188:     icon: (
+1189:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+1190:     ),
+1191:     accent: "#10b981"
+1192:   },
+1193:   {
+1194:     id: "manufacturing",
+1195:     title: "Manufacturing 4.0",
+1196:     body: "IoT sensor data transformed into actionable maintenance alerts. Monitor machine health and predict downtime before it halts your production line.",
+1197:     icon: (
+1198:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+1199:     ),
+1200:     accent: "#f59e0b"
+1201:   },
+1202:   {
+1203:     id: "retail",
+1204:     title: "Retail & E-Commerce",
+1205:     body: "Hyper-personalized customer journey mapping, dynamic pricing engines, and unified cross-channel inventory synchronization.",
+1206:     icon: (
+1207:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+1208:     ),
+1209:     accent: "#ec4899"
+1210:   }
+1211: ];
+1212: 
+1213: function Industries({ activeHero }) {
+1214:   const [activeTab, setActiveTab] = useState(0);
+1215:   const currentIndustry = industriesData[activeTab];
+1216: 
+1217:   // ─── NEBULA: Floating Horizontal Pills & Big Glass Detail ───
+1218:   if (activeHero === 'spline1') {
+1219:     return (
+1220:       <section className="bg-nebula-glow" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+1221:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1222:           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+1223:             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4.5vw, 3.5rem)', fontWeight: 400, color: '#ffffff', marginBottom: '1rem' }}>
+1224:               Applied intelligence across verticals.
+1225:             </h2>
+1226:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '0 auto' }}>
+1227:               Tailored architectures for complex industry challenges.
+1228:             </p>
+1229:           </div>
+1230: 
+
+// --- GAP FROM LINE 1231 TO 1249 ---
+
+1250:                   backdropFilter: 'blur(12px)',
+1251:                 }}
+1252:               >
+1253:                 <div style={{ color: activeTab === index ? item.accent : 'inherit', display: 'flex' }}>{item.icon}</div>
+1254:                 {item.title}
+1255:               </button>
+1256:             ))}
+1257:           </div>
+1258: 
+1259:           <div key={currentIndustry.id} className="animate-blur-reveal" style={{
+1260:             background: 'rgba(255,255,255,0.02)',
+1261:             backdropFilter: 'blur(32px)',
+1262:             border: '1px solid rgba(255,255,255,0.08)',
+1263:             borderRadius: '32px',
+1264:             padding: '5rem',
+1265:             textAlign: 'center',
+1266:             boxShadow: '0 24px 64px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1)',
+1267:             position: 'relative',
+1268:             overflow: 'hidden'
+1269:           }}>
+1270:     body: "Hyper-personalized customer journey mapping, dynamic pricing engines, and unified cross-channel inventory synchronization.",
+1271:     icon: (
+1272:       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+1273:     ),
+1274:     accent: "#ec4899"
+1275:   }
+1276: ];
+1277: 
+1278: function Industries({ activeHero }) {
+1279:   const [activeTab, setActiveTab] = useState(0);
+1280:   const currentIndustry = industriesData[activeTab];
+1281: 
+1282:   // ─── NEBULA: Floating Horizontal Pills & Big Glass Detail ───
+1283:   if (activeHero === 'spline1') {
+1284:     return (
+1285:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+1286:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1287:           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+1288:             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4.5vw, 3.5rem)', fontWeight: 400, color: '#ffffff', marginBottom: '1rem' }}>
+1289:               Applied intelligence across verticals.
+1290:             </h2>
+1291:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '0 auto' }}>
+1292:               Tailored architectures for complex industry challenges.
+1293:             </p>
+1294:             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#ffffff', marginBottom: '1rem' }}>
+1295:               Applied intelligence<br/>across verticals.
+1296:             </h2>
+1297:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: '#71717a' }}>
+1298:               Tailored architectures for complex industry challenges.
+1299:             </p>
+1300:           </div>
+
+// --- GAP FROM LINE 1301 TO 1369 ---
+
+1370:             backdropFilter: 'blur(40px)',
+1371:             WebkitBackdropFilter: 'blur(40px)',
+1372:             border: '1px solid rgba(255,255,255,0.08)',
+1373:             borderRadius: '24px',
+1374:             padding: '1.5rem',
+1375:             minHeight: '500px',
+1376:                       background: isActive ? 'rgba(255,255,255,0.02)' : 'transparent',
+1377:                       padding: '2.5rem 0',
+1378:                       border: 'none',
+1379:                       display: 'flex',
+1380:                       alignItems: 'center',
+1381:                       gap: '3rem',
+1382:                       cursor: 'pointer',
+1383:                       textAlign: 'left',
+1384:                       transition: 'background 0.3s'
+1385:                     }}
+1386:                   >
+1387:                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', color: isActive ? '#ffffff' : '#3f3f46', paddingLeft: '2rem', transition: 'color 0.3s' }}>
+1388:                       0{index + 1}
+1389:                     </span>
+1390:                     <h3 style={{ flex: 1, fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.02em', color: isActive ? '#ffffff' : '#a1a1aa', transition: 'color 0.3s' }}>
+1391:                       {item.title}
+1392:                     </h3>
+1393:                     <div style={{ paddingRight: '2rem', color: isActive ? '#ffffff' : '#3f3f46', transform: isActive ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.4s' }}>
+1394:                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+1395:                     </div>
+1396:                   </button>
+1397:                   
+1398:                   {isActive && (
+1399:                     <div className="animate-blur-reveal" style={{ padding: '0 2rem 3rem 6.5rem' }}>
+1400:                       <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: '#a1a1aa', lineHeight: 1.6, maxWidth: '600px' }}>
+1401:                     }}
+1402:                   >
+1403:                     {isActive && (
+1404:                       <div style={{ position: 'absolute', left: 0, top: '25%', height: '50%', width: '4px', background: item.accent, borderRadius: '0 4px 4px 0', boxShadow: `0 0 12px ${item.accent}` }} />
+1405:                     )}
+1406:                     <div style={{ color: isActive ? item.accent : 'rgba(255,255,255,0.4)', transition: 'color 0.2s' }}>
+1407:                       {item.icon}
+1408:                     </div>
+1409:                     <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: isActive ? 600 : 400, color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
+1410:                       {item.title}
+
+// --- GAP FROM LINE 1411 TO 1449 ---
+
+1450:                     key={item.id}
+1451:                     onClick={() => setActiveTab(index)}
+1452:                     style={{
+1453:                       background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+1454:                       border: '1px solid',
+1455:                       borderColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+1456:                       padding: '1.25rem',
+1457:                       borderRadius: '16px',
+1458:                       display: 'flex',
+1459:                       alignItems: 'center',
+1460:                       gap: '1rem',
+1461:                       cursor: 'pointer',
+1462:                       textAlign: 'left',
+1463:                       transition: 'all 0.2s',
+1464:                       position: 'relative',
+1465:                       overflow: 'hidden'
+1466:                     }}
+1467:                   >
+1468:                     {isActive && (
+1469:                       <div style={{ position: 'absolute', left: 0, top: '25%', height: '50%', width: '4px', background: item.accent, borderRadius: '0 4px 4px 0', boxShadow: `0 0 12px ${item.accent}` }} />
+1470:                     )}
+1471:                     <div style={{ color: isActive ? item.accent : 'rgba(255,255,255,0.4)', transition: 'color 0.2s' }}>
+1472:                       {item.icon}
+1473:                     </div>
+1474:                     <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: isActive ? 600 : 400, color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
+1475: 
+1476:                 {/* Visual Data Placeholder corresponding to Raycast's detailed previews */}
+1477:                 <div style={{ 
+1478:                   marginTop: '1rem', height: '120px', borderRadius: '16px', 
+1479:                   background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.0) 100%)',
+1480:                   border: '1px solid rgba(255,255,255,0.05)',
+1481:                   position: 'relative', overflow: 'hidden'
+1482:                 }}>
+1483:                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: `linear-gradient(0deg, ${currentIndustry.accent}11 0%, transparent 100%)` }} />
+1484:                   <svg width="100%" height="100%" preserveAspectRatio="none">
+1485:                     <path d="M0,80 Q50,60 150,100 T300,50 T450,90 T600,40" fill="none" stroke={currentIndustry.accent} strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+1486:                     <circle cx="600" cy="40" r="4" fill={currentIndustry.accent} />
+1487:                   </svg>
+1488:                 </div>
+1489:               </div>
+1490:             </div>
+1491:           </div>
+1492:         </div>
+1493:       </section>
+1494:     );
+1495:   }
+1496: 
+1497:               Applied intelligence across verticals.
+1498:             </h2>
+1499:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '1rem auto 0' }}>
+1500:               Tailored architectures for complex industry challenges.
+1501:             </p>
+1502:           </div>
+1503: 
+1504:           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+1505:             
+1506:             {/* Sidebar Navigation */}
+1507:             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+1508:               {industriesData.map((item, index) => {
+1509:                 const isActive = activeTab === index;
+1510:                 return (
+1511:       </section>
+1512:     );
+1513:   }
+1514: 
+1515:   return null;
+1516: }
+1517: 
+1518: // ────────────────────────────────────────────────────────
+1519: // End of File
+1520: // ────────────────────────────────────────────────────────
+1521: 
+1522: 
+
+// --- GAP FROM LINE 1523 TO 1539 ---
+
+1540:           </div>
+1541:         </div>
+1542:       </section>
+1543:     );
+1544:   }
+1545: 
+1546:   // ─── MODERN V2: The Official Raycast Interactive Side Menu ───
+1547:   if (activeHero === 'modern_v2') {
+1548:     return (
+1549:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+1550:         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+1551:         
+1552:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1553:           <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+1554:             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>// Verticals</span>
+1555:             <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem', marginTop: '1rem' }}>
+1556:               Applied intelligence<br/>across verticals.
+1557:             </h2>
+1558:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.5)', maxWidth: '600px', margin: '0 auto' }}>
+1559:               Tailored architectures for complex industry challenges.
+1560:             </p>
+1561:           </div>
+1562: 
+1563:           <div style={{
+1564:             display: 'flex',
+1565:             gap: '1.5rem',
+
+// --- GAP FROM LINE 1566 TO 1579 ---
+
+1580:                       {item.title}
+1581:                     </span>
+1582:                   </button>
+1583:                 );
+1584:               })}
+1585:             </div>
+1586: 
+1587:             {/* Detail Pane */}
+1588:             <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+1589:               {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+1590:               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+1591:               
+1592:               <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+1593:                 <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '24px', background: 'rgba(255,255,255,0.05)', color: '#ffffff', width: 'fit-content', border: '1px solid rgba(255,255,255,0.1)' }}>
+1594:                   <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+1595:                 </div>
+1596:                 <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.1, textTransform: 'uppercase' }}>
+1597:                   {currentIndustry.title}
+1598:                 </h3>
+1599:                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+1600: 
+1601:           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+1602:             
+1603:             {/* Sidebar Navigation */}
+1604:             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+1605:               {industriesData.map((item, index) => {
+1606:                 const isActive = activeTab === index;
+1607:                 return (
+1608:                   <button
+1609:                     key={item.id}
+1610:                     onClick={() => setActiveTab(index)}
+1611:                     style={{
+1612:                       background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+1613:                   border: '1px solid rgba(255,255,255,0.05)',
+1614:                   position: 'relative', overflow: 'hidden'
+1615:                 }}>
+1616:                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: `linear-gradient(0deg, ${currentIndustry.accent}11 0%, transparent 100%)` }} />
+1617:                   <svg width="100%" height="100%" preserveAspectRatio="none">
+1618:                     <path d="M0,80 Q50,60 150,100 T300,50 T450,90 T600,40" fill="none" stroke={currentIndustry.accent} strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+1619:                     <circle cx="600" cy="40" r="4" fill={currentIndustry.accent} />
+1620:                   </svg>
+1621:                 </div>
+1622:               </div>
+1623:             </div>
+1624:           </div>
+1625:         </div>
+1626:       </section>
+1627:     );
+1628:   }
+1629: 
+1630:               })}
+1631:             </div>
+1632: 
+1633:             <div style={{ width: '1px', background: 'rgba(255,255,255,0.06)', margin: '0 0.5rem' }} />
+1634: 
+1635:             {/* Detail Pane */}
+1636:             <div style={{ flex: 1, padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+1637:               <div key={currentIndustry.id} className="animate-blur-reveal" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+1638:                 <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+1639:                   <div style={{ 
+1640:                     width: '64px', height: '64px', borderRadius: '20px', 
+1641:                     background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+1642:                     display: 'flex', alignItems: 'center', justifyContent: 'center', color: currentIndustry.accent,
+1643:                     boxShadow: `0 0 32px ${currentIndustry.accent}33, inset 0 2px 4px rgba(255,255,255,0.1)`
+1644:                   }}>
+1645:                     <div style={{ transform: 'scale(1.2)' }}>{currentIndustry.icon}</div>
+1646:                   </div>
+1647:                   <div>
+1648:                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: currentIndustry.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+1649:                       Industry Blueprint
+1650:                     </div>
+1651:                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.1 }}>
+1652:                       {currentIndustry.title}
+1653:                     </h3>
+1654:                   </div>
+1655:                 </div>
+1656:                 
+1657:                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, maxWidth: '600px' }}>
+1658:                   {currentIndustry.body}
+1659:                 </p>
+1660:                 
+1661:                 {/* Visual Data Placeholder corresponding to Raycast's detailed previews */}
+1662:                 <div style={{ 
+1663:                   marginTop: '1rem', height: '120px', borderRadius: '16px', 
+1664:                   background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.0) 100%)',
+1665:                   border: '1px solid rgba(255,255,255,0.05)',
+1666:                       border: 'none',
+1667:                       color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)'
+1668:                     }}
+1669:                   >
+1670:                     <div style={{ 
+1671:             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#298dff', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+1672:               Manifesto
+1673:             </span>
+1674:             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff', marginTop: '1rem' }}>
+1675:               Built for the AI era.
+1676:             </h2>
+1677:           </div>
+1678:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+1679:  
+1680:                     </span>
+1681:                   </button>
+1682:                 );
+1683:               })}
+1684:             </div>
+1685: 
+1686:             {/* Detail Pane */}
+1687:             <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+1688:               {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+1689:               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+1690:             </h2>
+1691:           </div>
+1692: 
+1693:           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', padding: '1rem', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)' }}>
+1694:             
+1695:             {/* Sidebar Navigation */}
+1696:             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+1697:               {industriesData.map((item, index) => {
+1698:                 const isActive = activeTab === index;
+1699:                 return (
+1700:                   <button
+1701:                     key={item.id}
+1702:                     onClick={() => setActiveTab(index)}
+1703:                     style={{
+1704:                       background: isActive ? 'rgba(41, 141, 255, 0.1)' : 'transparent',
+1705:                       padding: '1.2rem',
+1706:                       borderRadius: '16px',
+1707:                       display: 'flex',
+1708:                       alignItems: 'center',
+1709:                       gap: '1rem',
+1710:                       cursor: 'pointer',
+1711:                       textAlign: 'left',
+1712:                       border: isActive ? '1px solid rgba(41, 141, 255, 0.2)' : '1px solid transparent',
+1713:                       color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+1714:                       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+1715:                     }}
+1716:                   >
+1717:                     <div style={{ color: isActive ? 
+1718:             </h2>
+1719:           </div>
+1720:                 </p>
+1721:               </div>
+1722:             </div>
+1723:           </div>
+1724:         </div>
+1725:       </section>
+1726:     );
+1727:   }
+1728: 
+1729:   // ─── TECH V4: Smooth Premium Glassmorphism (Video 0627) ───
+1730:   return (
+1731:     <section style={{ padding: '9rem 0', position: 'relative', zIndex: 20 }}>
+1732:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1733:         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+1734:           <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.8rem', color: 'var(--color-accent)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+1735:             Verticals
+1736:           </span>
+1737:           <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
+1738:             Applied intelligence across verticals.
+1739:           </h2>
+1740:             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '1rem auto 0' }}>
+1741:               Tailored architectures for complex industry challenges.
+1742:             </p>
+1743:           </div>
+1744: 
+1745:           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+1746:   }
+1747: 
+1748:   // ─── TECH V4: Smooth Premium Glassmorphism (Video 0627) ───
+1749:   return (
+1750:     <section style={{ padding: '9rem 0', position: 'relative', zIndex: 20 }}>
+1751:               })}
+1752:             </div>
+1753: 
+1754:             {/* Detail Pane */}
+1755:             <div style={{ background: 'rgba(0,0,0,0.4)', borderRadius: '24px', padding: '4rem', border: '1px solid rgba(255,255,255,0.05)', position: 'relative', overflow: 'hidden' }}>
+1756:               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: '#298dff', filter: 'blur(150px)', opacity: 0.15, pointerEvents: 'none' }} />
+1757:               
+1758:               <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+1759:                 <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '16px', background: 'rgba(41,141,255,0.1)', color: '#298dff', width: 'fit-content', border: '1px solid rgba(41,141,255,0.2)' }}>
+1760:                   <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+1761:                 </div>
+1762:                 <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '2.5rem', fontWeight: 600, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+1763:                   {currentIndustry.title}
+1764:                 </h3>
+1765:                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.15rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: '600px' }}>
+1766:                   {currentIndustry.body}
+1767:                 </p>
+1768:               </div>
+1769:             </div>
+1770:           </div>
+1771:         </div>
+1772:       </section>
+1773:     );
+1774:   }
+1775: 
+1776:   return null;
+1777: }
+1778: 
+1779: // ────────────────────────────────────────────────────────
+1780: // End of File
+1781: // ────────────────────────────────────────────────────────
+1782: 
+1783: 
+
+// --- GAP FROM LINE 1784 TO 1799 ---
+
+1800:             {industriesData.map((item, index) => {
+1801:               const isActive = activeTab === index;
+1802:               return (
+1803:                 <button
+1804:                   key={item.id}
+1805:                   onClick={() => setActiveTab(index)}
+1806:                   style={{
+1807:                     background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+1808:                     padding: '1.5rem',
+1809:                     borderRadius: '24px',
+1810:                     display: 'flex',
+1811:                     alignItems: 'center',
+1812:                     gap: '1rem',
+1813:                     cursor: 'pointer',
+1814:                     textAlign: 'left',
+1815:                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+1816:                     border: 'none',
+1817:                     color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)'
+1818:                   }}
+1819:                 >
+1820:                   <div style={{
+1821:                     width: '40px', height: '40px', borderRadius: '50%',
+1822:                     background: isActive ? 'rgba(255,255,255,0.1)' : 'transparent',
+1823:                     display: 'flex', alignItems: 'center', justifyContent: 'center',
+1824:                     transition: 'all 0.3s'
+1825:                   }}>
+1826:                     {item.icon}
+1827:                   </div>
+1828:                   <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', fontWeight: isActive ? 600 : 400 }}>
+1829:                     {item.title}
+1830:                   </span>
+1831:                 </button>
+1832:               );
+1833:             })}
+1834:                 {currentIndustry.title}
+1835:               </h3>
+1836:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+1837:                 {currentIndustry.body}
+1838:               </p>
+1839:             </div>
+1840:           </div>
+1841: 
+1842:         </div>
+1843:       </div>
+1844:     </section>
+1845:   );
+1846: }
+1847: 
+1848: // ────────────────────────────────────────────────────────
+1849: // End of File
+1850: 
+1851:           {/* Detail Pane */}
+1852:           <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+1853:             {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+1854:             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+1855: 
+1856:             <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+1857:               <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '24px', background: 'rgba(255,255,255,0.05)', color: '#ffffff', width: 'fit-content', border: '1px solid rgba(255,255,255,0.1)' }}>
+1858:                 <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+1859:               </div>
+1860:               <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.1, textTransform: 'uppercase' }}>
+1861:                 {currentIndustry.title}
+1862:               </h3>
+1863:               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+1864:                 {currentIndus
+
+// --- GAP FROM LINE 1865 TO 1869 ---
+
+1870:       </div>
+1871:     </section>
+1872:   );
+1873: }
+1874: 
+1875: // ─── SECTION 7: IMPACT (EMPIRICAL PROOF) ───
+1876: function Impact({ activeHero }) {
+1877:   const metrics = [
+1878:     { number: "10x", label: "Faster deployment cycles vs. traditional dev." },
+1879:     { number: "-85%", label: "Reduction in manual reporting hours." },
+1880:     { number: "50M+", label: "Data rows securely orchestrated daily." }
+1881:   ];
+1882: 
+1883:   // Pick colors and fonts based on activeHero
+1884:   const getTheme = () => {
+1885:     switch (activeHero) {
+1886:       case 'spline1':
+1887:         return {
+1888:           fontTitle: 'var(--font-serif)',
+1889:           fontNumber: 'var(--font-serif)',
+1890:           fontSans: 'var(--font-sans)',
+1891:           colorAccent: '#c6ff34',
+1892:           bgGradient: 'radial-gradient(circle at 50% 50%, #0e1201 0%, #000000 100%)',
+1893:           highlightGlow: 'rgba(198, 255, 52, 0.04)',
+1894:           highlightBorder: 'rgba(198, 255, 52, 0.2)'
+1895:         };
+1896:       case 'cinematic':
+1897:         return {
+1898:           fontTitle: 'var(--font-ui)',
+1899:           fontNumber: 'var(--font-ui)',
+1900:           fontSans: 'var(--font-sans)',
+1901:           colorAccent: '#ffffff',
+1902:           bgGradient: 'radial-gradient(circle at 50% 50%, #0f1026 0%, #000000 100%)',
+1903:           highlightGlow: 'rgba(255, 255, 255, 0.03)',
+1904:           highlightBorder: 'rgba(255, 255, 255, 0.15)'
+1905:         };
+1906:       case 'modern_v2':
+1907:         return {
+1908:           fontTitle: 'var(--font-display)',
+
+// --- GAP FROM LINE 1909 TO 1915 ---
+
+1916:         </div>
+1917:       </section>
+1918:     );
+1919:   }
+1920: 
+1921:   if (activeHero === 'cinematic') {
+1922:     return (
+1923:       <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+1924:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1925:           <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+1926:             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em' }}>
+1927:               The math speaks for itself.
+1928:             </h2>
+1929:           </div>
+1930:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(255,255,255,0.1)' }}>
+1931:             {metrics.map((m, index) => (
+1932:               <div key={index} style={{ background: '#000000', padding: '4rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+1933:                 <span style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(4rem, 6vw, 6rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.04em' }}>
+1934:                   {m.number}
+1935:                 </span>
+1936:                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#71717a', maxWidth: '240px', margin: '0 auto', lineHeight: 1.5 }}>
+1937:                   {m.label}
+1938:                 </span>
+1939:               </div>
+1940:             ))}
+1941:           </div>
+1942:         </div>
+1943:       </section>
+1944:     );
+1945:   }
+1946: 
+1947:   if (activeHero === 'modern_v2') {
+1948:     return (
+1949:       <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}>
+1950:         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+1951:           <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+1952:             <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem' }}>
+1953:               The math speaks for itself.
+1954:             </h2>
+1955:           </div>
+1956:           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+1957:             {metrics.map((m, index) => (
+1958:               <div key={index} style={{
+1959:                 background: 'rgba(255, 255, 255, 0.02)',
+1960:                 backdropFilter: 'blur(20px)',
+1961:                 border: '1px solid rgba(255, 255, 255, 0.06)',
+1962:                 borderRadius: '24px',
+1963:                 padding: '3.5rem 2.5rem',
+1964:                 textAlign: 'center',
+1965:                 boxShadow: '0 12px 40px rgba(198, 255, 52, 0.03)',
+1966:                 display: 'flex',
+1967:                 flexDirection: 'column',
+1968:                 gap: '1.5rem'
+1969:               }} className="sui-card-hover">
+1970:                 <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3.5rem, 5vw, 5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.03em' }}>
+1971:                   {m.number}
+1972:                 </span>
+1973:                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
+1974:               
+
+// --- GAP FROM LINE 1975 TO 2016 ---
+
+2017:     );
+2018:   }
+2019: 
+2020:   return (
+2021:     <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+2022:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+2023:         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+2024:           <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 3.5vw, 3.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em' }}>
+2025:             The math speaks for itself.
+2026:           </h2>
+2027:         </div>
+2028:         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+2029:           {metrics.map((m, index) => (
+2030:             <div key={index} style={{
+2031:               background: 'rgba(255,255,255,0.02)',
+2032:             centerY={0.0}
+2033:             zoom={0.9}
+2034:           />
+2035:         );
+2036:     }
+2037:   };
+2038: 
+2039:   return (
+2040:     <section style={{ 
+2041:       padding: '8rem 0 0 0', 
+2042:       position: 'relative', 
+2043:       zIndex: 10,
+2044:       background: theme.bgGradient,
+2045:       transition: 'background 0.5s ease'
+2046:     }}>
+2047:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+2048:         
+2049:         {/* Title Block */}
+2050:         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+2051:           <h2 style={{ 
+2052:             fontFamily: theme.fontTitle, 
+2053:             fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', 
+2054:             fontWeight: activeHero === 'spline1' ? 400 : 800, 
+2055:             color: '#ffffff', 
+2056:             letterSpacing: theme.fontTitle === 'var(--font-serif)' ? '0' : '-0.04em',
+2057:             lineHeight: 1.25,
+2058:             textTransform: activeHero === 'tech_v4' ? 'uppercase' : 'none'
+2059:           }}>
+2060:             The math speaks for itself.
+2061:           </h2>
+2062:         </div>
+2063: 
+2064:         {/* Top Horizontal Divider */}
+2065:         <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', marginBottom: '3rem' }} />
+2066: 
+2067:         {/* Horizontal Metrics Grid */}
+2068:         <div style={{ 
+2069:           display: 'grid', 
+2070:           gridTemplateColumns: 'repeat(3, 1fr)', 
+2071:           alignItems: 'stretch',
+2072:           marginBottom: '3rem'
+2073:         }}>
+2074:           {metrics.map((m, index) => {
+2075:             const isHighlighted = index === 1; // Highlight the middle one (-85%)
+2076:             
+2077:             return (
+2078:               <div 
+2079:                 key={index} 
+2080:                 style={{
+2081:                   padding: '3rem 2rem',
+2082:                   display: 'flex',
+2083:                   flexDirection: 'column',
+2084:                   gap: '1.25rem',
+2085:                   textAlign: 'center',
+2086:                   alignItems: 'center',
+2087:                   justifyContent: 'center',
+2088:                   borderRight: index < 2 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
+2089:                   // Highlight styling similar to Stripe's premium card
+2090:                   background: isHighlighted ? theme.highlightGlow : 'transparent',
+2091:                   borderTop: isHighlighted ? `1px solid ${theme.highlightBorder}` : '1px solid transparent',
+2092:                   borderBottom: isHighlighted ? `1px solid ${theme.highlightBorder}` : '1px solid transparent',
+2093:                   boxShadow: isHighlighted ? `0 20px 40px ${theme.highlightGlow}` : 'none',
+2094:                   borderRadius: isHighlighted ? '16px' : '0',
+2095:                   transform: isHighlighted ? 'scale(1.03)' : 'scale(1)',
+2096:                   transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+2097:                   zIndex: isHighlighted ? 2 : 1
+2098:                 }}
+2099:               >
+2100:                 {/* Micro indicator tag above for tech versions */}
+2101:                 {activeHero === 'tech_v4' && (
+2102:                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: isHighlighted ? theme.colorAccent : 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>
+2103:                  
+2104:           <div style={{ position: 'absolute', top: '50%', left: '20%', width: '30%', height: '5px', background: 'rgba(255,255,255,0.3)', borderRadius: '2px' }} />
+2105:         </div>
+2106:       </div>
+2107:     </div>
+2108:   );
+2109: }
+2110: 
+2111: function IsometricTelemetry({ colorAccent }) {
+2112:   return (
+2113:     <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+2114:       <div style={{ position: 'relative', width: '180px', height: '140px' }}>
+2115:                 }}>
+2116:                   {m.number}
+2117:                 </span>
+2118:                 
+2119:                 <span style={{ 
+2120:                   fontFamily: 'var(--font-sans)', 
+2121:                   fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', 
+2122:                   color: isHighlighted ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)', 
+2123:                   lineHeight: 1.5,
+2124:                   maxWidth: '280px',
+2125:                   fontWeight: isHighlighted ? 500 : 400
+2126:                 }}>
+2127:                   {m.label}
+2128:                 </span>
+2129:               </div>
+2130:             );
+2131:           })}
+2132:         </div>
+2133: 
+2134:         {/* Bottom Horizontal Divider */}
+2135:         <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }} />
+2136:       </div>
+2137: 
+2138:       {/* Bottom Animation Container (matches Hero style, masked with gradient to black at the bottom) */}
+2139:       <div style={{ 
+2140:         position: 'relative', 
+2141:         width: '100%', 
+2142:         height: '320px', 
+2143:         marginTop: '0', 
+2144:         overflow: 'hidden'
+2145:       }}>
+2146:         {/* Render actual background component */}
+2147:         <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+2148:           {renderBottomAnimation()}
+2149:         </div>
+2150: 
+2151:         {/* Radial Dark overlay for text/element separation */}
+2152:         <div style={{
+2153:           position: 'absolute',
+2154:           inset: 0,
+2155:           background: 'radial-gradient(circle at 50% 20%, transparent 20%, #000000 95%)',
+2156:           zIndex: 2,
+2157:           pointerEvents: 'none'
+2158:         }} />
+2159: 
+2160:         {/* Bottom mask to fade seamlessly into Methodology section */}
+2161:         <div style={{
+2162:           position: 'absolute',
+2163:           left: 0,
+2164:           right: 0,
+2165:           bottom: 0,
+2166:           height: '180px',
+2167:           background: 'linear-gradient(to bottom, transparent, #000000)',
+2168:           zIndex: 3,
+2169:           pointerEvents: 'none'
+2170:         }} />
+2171:       </div>
+2172:     </section>
+2173:   );
+2174: }
+2175: 
+2176: // ─── SECTION 8: METHODOLOGY (THE DEPLOYMENT PROTOCOL) ───
+2177: // Isometric CSS Diagrams for Methodology Phases
+2178: // Fully Animated, Style-Specific Isometric SVG/CSS Diagrams for all 15 variants (5 versions * 3 phases)
+2179: function MethodologyDiagram({ phase, activeHero }) {
+2180:   const colorAccent = '#c6ff34';
+2181:   
+2182:   const animationStyles = `
+2183:     @keyframes float-p1 {
+2184:       0%, 100% { transform: translateY(0px); }
+2185:       50% { transform: translateY(-8px); }
+
+// --- GAP FROM LINE 2186 TO 2229 ---
+
+2230:       )}
+2231: 
+2232:       {activeHero === 'cinematic' && phase === 3 && (
+2233:         <div style={{ position: 'relative', width: '200px', height: '160px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', padding: '15px' }}>
+2234:           {/* Strobe binary cell grid */}
+2235:           {`{`}Array.from({ length: 16 }).map((_, i) => (
+2236:             <div key={i} style={{
+2237:               border: '1px solid rgba(255,255,255,0.1)',
+2238:               background: i % 3 === 0 ? colorAccent : 'transparent',
+2239:               opacity: i % 2 === 0 ? 0.8 : 0.2,
+2240:               animation: i % 5 === 0 ? 'brutalist-strobe 0.8s steps(1) infinite' : i % 3 === 0 ? 'brutalist-strobe 1.2s steps(1) infinite 0.3s' : 'none'
+2241:             }} />
+2242:           )){`}`}
+2243:         </div>
+2244:       )}
+2245: 
+
+// --- GAP FROM LINE 2246 TO 2327 ---
+
+2328:                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--color-accent)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+2329:                     STAGE_0{index + 1} // STATUS: READY
+2330:                   </div>
+2331:                   <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+2332:                     {p.title}
+2333:                   </h3>
+2334:                   <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '1.1rem' }}>
+2335:                     {p.desc}
+2336:                   </p>
+2337:                 </div>
+2338:               </div>
+2339:             ))}
+2340:           </div>
+2341:         </div>
+2342:       </section>
+2343:     );
+2344:   }
+2345:               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: colorAccent, animation: 'tech-led 1s infinite' }}>ONLINE</span>
+2346:             </div>
+2347:             
+2348:             {/* Blinking LED Grid */}
+2349:             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '6px' }}>
+2350:               {`{`}Array.from({ length: 18 }).map((_, i) => (
+2351:                 <div key={i} style={{
+2352:                   width: '6px', height: '6px', borderRadius: '50%',
+2353:                   background: i % 4 === 0 ? colorAccent : '#27272a',
+2354:                   boxShadow: i % 4 === 0 ? `0 0 6px ${colorAccent}` : 'none',
+2355:                   animation: i % 3 === 0 ? 'tech-led 0.6s infinite' : i % 5 === 0 ? 'tech-led 1.2s infinite 0.4s' : 'none'
+2356:                 }} />
+2357:               )){`}`}
+2358:             </div>
+2359:           </div>
+2360:         </div>
+2361:                   </button>
+2362:                 );
+2363:               })}
+2364:             </div>
+2365: 
+2366:             {/* Display Console Grid */}
+2367:             <div style={{
+2368:               background: 'rgba(255,255,255,0.01)',
+2369:               backdropFilter: 'blur(45px)',
+2370:               border: '1px solid rgba(255,255,255,0.06)',
+2371:               borderRadius: '24px',
+2372:               padding: '3rem',
+2373:               display: 'flex',
+2374:               flexDirection: 'column',
+2375:               position: 'relative',
+2376:               overflow: 'hidden',
+2377:               boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+2378:             }} className="sui-card-hover">
+2379:               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '250px', height: '250px', background: '#c6ff34', filter: 'blur(130px)', opacity: 0.06, pointerEvents: 'none' }} />
+2380: 
+2381:               <div key={activePhase} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+2382:                 {/* Console Illustration Box */}
+2383:                 <div style={{
+2384:                   height: '240px',
+2385:                   borderRadius: '16px',
+2386:                   background: 'rgba(255,255,255,0.01)',
+2387:                   border: '1px solid rgba(255,255,255,0.05)',
+2388:                   backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+2389:    
+2390:                   backgroundPosition: 'center',
+2391:     return (
+2392:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+2393:         <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+2394: 
+2395:         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+2396:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+2397:             You already have the data.
+2398:           </h2>
+2399:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+2400:             Now, make it think.
+
+// --- GAP FROM LINE 2401 TO 2644 ---
+
+2645:             background: 'rgba(255,255,255,0.02)',
+2646:             backdropFilter: 'blur(30px)',
+2647:             borderRadius: '24px',
+2648:             border: '1px solid rgba(255,255,255,0.06)',
+2649:             padding: '3rem',
+2650:             display: 'grid',
+2651:             gridTemplateColumns: '1.2fr 1.8fr',
+2652:             gap: '2.5rem',
+2653:             alignItems: 'center',
+2654:             position: 'relative'
+2655:           }} className="sui-card-hover">
+2656:             <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+2657:               FIG_03 // SCALE
+2658:             </div>
+2659:             <div style={{ height: '180px', backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center' }}>
+2660:               <MethodologyDiagram phase={3} colorAccent={colorAccent} />
+2661:             </div>
+2662:             <div>
+2663:               <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1.75rem', fontWeight: 900, color: colorAccent, display: 'block', marginBottom: '0.5rem' }}>
+2664:                 03
+2665:               </span>
+2666:               <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.8rem' }}>
+2667:                 {phases[2].title}
+2668:               </h3>
+2669:               <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '1rem' }}>
+2670:                 {phases[2].desc}
+2671:               </p>
+2672:             </div>
+2673:           </div>
+2674: 
+2675:         </div>
+2676:       </div>
+2677:     </section>
+2678:   );
+2679: }
+2680: 
+2681: // ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+2682: function FooterCTA({ activeHero }) {
+2683:   if (activeHero === 'spline1') {
+2684:     return (
+2685:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+
+// --- GAP FROM LINE 2686 TO 3129 ---
+
+3130: 
+3131:         </div>
+3132:       </div>
+3133:     </section>
+3134:   );
+3135: }
+3136: 
+3137: // ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+3138: function FooterCTA({ activeHero }) {
+3139:   if (activeHero === 'spline1') {
+3140:     return (
+3141:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+3142:         <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+3143: 
+3144:         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+3145:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+3146:             You already have the data.
+3147:           </h2>
+3148:           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+3149:             Now, make it think.
+3150:           </h2>
+3151:           <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.25rem', lineHeight: 1.7, maxWidth: '650px', margin: '0 auto 4rem' }}>
+3152:             Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+3153:           </p>
+
+// --- GAP FROM LINE 3154 TO 3253 ---
+
+3254:           </p>
+3255:           <button className="btn-glow-border" style={{
+3256:             fontFamily: 'var(--font-tech)',
+3257:             fontWeight: 800,
+3258:             fontSize: '1.25rem',
+3259:             padding: '1rem 3rem',
+3260:             textTransform: 'uppercase',
+3261:             letterSpacing: '0.05em'
+3262:           }}>
+3263:             Deploy Intelligence
+3264:           </button>
+3265:         </div>
+3266:       </section>
+3267:     );
+3268:   }
+3269: 
+3270:   return (
+3271:     <section style={{ padding: '10rem 0', position: 'relative', zIndex: 10 }}>
+3272:       <div style={{
+3273:         position: 'absolute',
+3274:         top: '50%',
+3275:         left: '50%',
+3276:         transform: 'translate(-50%, -50%)',
+3277:         width: '80%',
+3278:         maxWidth: '800px',
+3279:         height: '400px',
+3280:         background: 'radial-gradient(circle, rgba(198, 255, 52, 0.15) 0%, transparent 70%)',
+3281:         filter: 'blur(100px)',
+3282:         zIndex: 0,
+3283:         pointerEvents: 'none'
+3284:       }} />
+3285: 
+3286:       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+3287:         <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '0.5rem' }}>
+3288:           You already have the data.
+3289:         </h2>
+3290:         <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)', fontWeight: 700, color: '#c6ff34', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '3rem' }}>
+3291:           Now, make it think.
+3292:         </h2>
+3293:         <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.25rem', lineHeight: 1.7, maxWidth: '650px', margin: '0 auto 4rem' }}>
+3294:           Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
+3295:         </p>
+3296:         <button className="sui-btn" style={{
+3297:           padding: '1.25rem 3.5rem',
+3298:           fontSize: '1.25rem',
+3299:           display: 'inline-flex',
+3300:           alignItems: 'center',
+3301:           justifyContent: 'center',
+3302:           fontFamily: 'var(--font-ui)',
+3303:           cursor: 'pointer'
+3304:         }}>
+3305:           Deploy Intelligence
+3306:           <div className="sui-btn-icon-wrapper" style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+3307:             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow" style={{ transform: 'scale(1.2)' }}>
+3308:               <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+3309:               <path d="M5.30933 3.26746L6.84508 3.2675L7.92617 5.7266L6.39041 5.72656L5.30933 3.26746Z" fill="currentColor"></path>
+3310:               <path d="M10.5417 12.5849L9.00599 12.5849L7.92491 10.1258L9.46066 10.1258L10.5417 12.5849Z" fill="currentColor"></path>
+3311:               <path d="M5.30933 12.5849L6.84508 12.5849L7.92617 10.1258L6.39041 10.1258L5.30933 12.5849Z" fill="currentColor"></path>
+3312:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+3313:             </svg>
+3314:             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none" className="sui-btn-arrow" style={{ transform: 'scale(1.2)' }}>
+3315:               <path d="M10.5417 3.26746L9.00599 3.2675L7.92491 5.7266L9.46066 5.72656L10.5417 3.26746Z" fill="currentColor"></path>
+3316:               <path d="M5.30933 3.26746L6.84508 3.2675L7.92617 5.7266L6.39041 5.72656L5.30933 3.26746Z" fill="currentColor"></path>
+3317:               <path d="M10.5417 12.5849L9.00599 12.5849L7.92491 10.1258L9.46066 10.1258L10.5417 12.5849Z" fill="currentColor"></path>
+3318:               <path d="M5.30933 12.5849L6.84508 12.5849L7.92617 10.1258L6.39041 10.1258L5.30933 12.5849Z" fill="currentColor"></path>
+3319:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+3320:               <path d="M3.26929 5.30914L3.26933 6.8449L5.72843 7.92598L5.72839 6.39023L3.26929 5.30914Z" fill="currentColor"></path>
+3321:             </svg>
+3322:           </div>
+3323:         </button>
+3324:       </div>
+3325:     </section>
+3326:   );
+3327: }
+3328: 
+3329: // ─── SECTION 10: PREMIUM STYLE-SPECIFIC FOOTER (SUI & RAYCAST DNA) ───
+3330: function Footer({ activeHero }) {
+3331:   const [lang, setLang] = React.useState('English');
+3332: 
+3333:   const links = {
+3334:     platform: [
+3335:       { name: "About Power Platform", href: "#" },
+3336:       { name: "Enterprise Blueprint", href: "#" },
+3337:       { name: "AI Integration", href: "#" }
+3338:     ],
+3339:     solutions: [
+3340:       { name: "Fintech Engine", href: "#" },
+3341:       { name: "Retail Pipeline", href: "#" },
+3342:       { name: "Health Telemetry", href: "#" }
+3343:     ],
+3344:     company: [
+3345:       { name: "About Us", href: "#" },
+3346:       { name: "Careers", href: "#" },
+3347:       { name: "Manifesto", href: "#" }
+3348:     ],
+3349:     developers: [
+3350:       { name: "PowerApps SDK", href: "#" },
+3351:       { name: "Developer APIs", href: "#" },
+3352:       { name: "Copilot Studio", href: "#" }
+3353:     ],
+3354:     resources: [
+3355:       { name: "Incident History", href: "#" },
+3356:       { name: "Terms of Service", href: "#" },
+3357:       { name: "Privacy Policy", href: "#" }
+3358:     ]
+3359:   };
+3360: 
+3361:   const isSuiStyle = activeHero === 'sui_fork' || activeHero === 'spline1';
+3362: 
+3363:   if (isSuiStyle) {
+3364:     // ─── SUI-INSP
+
+// --- GAP FROM LINE 3365 TO 3399 ---
+
+3400:           <div key={idx} style={{
+3401:             fontFamily: current.font,
+3402:             fontSize: '0.85rem',
+3403:             fontWeight: 800,
+3404:             letterSpacing: '0.2em',
+3405:             color: current.color,
+3406:             marginRight: '6rem',
+3407:             display: 'inline-flex',
+3408:             alignItems: 'center'
+3409:           }}>
+3410:             {activeHero === 'tech_v4' && <span style={{ color: 'rgba(198, 255, 52, 0.3)', marginRight: '8px' }}>[SYS_PARTNER]</span>}
+3411:             {b}
+3412:             {activeHero === 'cinematic' && <span style={{ color: 'rgba(255, 255, 255, 0.15)', marginLeft: '3rem' }}>|</span>}
+3413:           </div>
+3414:         ))}
+3415:       </div>
+3416:     </div>
+3417:   );
+3418: }
+3419: 
+3420: // ─── SECTION 9.2: INTEGRATIONS HUB (STRIPE-INSPIRED SVG BEZIER DATA CONNECTIONS) ───
+3421: function IntegrationsHub({ activeHero }) {
+3422:   const [hoveredNode, setHoveredNode] = React.useState(null);
+3423: 
+3424:   const nodes = [
+3425:     { id: "SAP", name: "SAP", x: 130, y: 75, desc: "Sincronización automatizada de inventario y ERP." },
+3426:     { id: "Salesforce", name: "Salesforce", x: 80, y: 225, desc: "Flujos bidireccionales de oportunidades CRM." },
+3427:     { id: "SQL", name: "Azure SQL", x: 130, y: 375, desc: "Querying cognitivo optimizado y data warehouse." },
+3428:     { id: "Excel", name: "OneDrive Excel", x: 670, y: 75, desc: "Carga masiva sin fallas y parsing de archivos." },
+3429:     { id: "Teams", name: "MS Teams", x: 720, y: 225, desc: "Notificaciones directas del est
+
+// --- GAP FROM LINE 3430 TO 3457 ---
+
+3458:           title: "Frictionless Connections",
+3459:           subtitle: "Orchestrate processes seamlessly by linking all databases.",
+3460:           connectorColor: 'rgba(198, 255, 52, 0.2)',
+3461:           nodeBg: 'rgba(255, 255, 255, 0.02)',
+3462:           nodeBorder: 'rgba(255,255,255,0.05)',
+3463:           bgGradient: 'linear-gradient(to bottom, #071501 0%, #000000 100%)'
+3464:         };
+3465:       case 'tech_v4':
+3466:         return {
+3467:           font: 'var(--font-mono)',
+3468:           title: "SYS_CONNECT_PORTAL",
+3469:           subtitle: "ROUTING COGNITIVE CHANNELS OVER DATA SOURCES.",
+3470:           connectorColor: 'rgba(198, 255, 52, 0.35)',
+3471:           nodeBg: '#010200',
+3472:           nodeBorder: 'rgba(198, 255, 52, 0.4)',
+3473:           bgGradient: 'linear-gradient(to bottom, #050505 0%, #000000 100%)'
+3474:         };
+3475:       case 'sui_fork':
+3476:       default:
+3477:         return {
+3478:           font: 'var(--font-ui)',
+3479:           title: "Seamless Integrations",
+3480:           subtitle: "Leverage standard Microsoft connectors to drive efficiency.",
+3481:           connectorColor: 'rgba(198, 255, 52, 0.15)',
+3482:           nodeBg: 'rgba(255, 255, 255, 0.01)',
+3483:           nodeBorder: 'rgba(255,255,255,0.05)',
+3484:           bgGradient: 'linear-gradient(to bottom, #000000 0%, #000000 100%)'
+3485:         };
+3486:     }
+3487:   };
+3488: 
+3489:   const s = getStyle();
+3490: 
+3491:   return (
+3492:     <section style={{
+3493:       background: s.bgGradient,
+3494:       padding: '8rem 0',
+3495:       position: 'relative',
+3496:       zIndex: 10
+3497:     }}>
+3498:       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+3499:         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+3500:           <h2 style={{
+3501:   } else {
+3502:     // ─── RAYCAST-INSPIRED FOOTER ───
+3503:     return (
+3504:       <footer style={{
+3505:         position: 'relative',
+3506:         background: '#030303',
+3507:         padding: '0 0 5rem 0',
+3508:         overflow: 'hidden',
+3509:         zIndex: 10,
+3510:         borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+3511:       }}>
+3512:         {/* Angled slats header block (Reference Image 2) */}
+3513:         <div style={{
+3514:           height: '140px',
+3515:           display: 'flex',
+3516:           justifyContent: 'center',
+3517:           alignItems: 'flex-end',
+3518:           position: 'relative',
+3519:           marginBottom: '5rem',
+3520:           borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+3521:           overflow: 'hidden'
+3522:         }}>
+3523:           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #030303)', zIndex: 2, pointerEvents: 'none' }} />
+3524:           
+3525:           <div style={{ display: 'flex', gap: '12px', transform: 'translateY(15px)', zIndex: 1 }}>
+3526:             <div className="rayca
+
+// --- GAP FROM LINE 3527 TO 3602 ---
+
+3603:                 © 2026 Copyright NeuralBI. All rights reserved.
+3604:               </span>
+3605:             </div>
+3606:             
+3607:             <div style={{ display: 'flex', gap: '1.5rem' }}>
+3608:               <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>X / Twitter</a>
+3609:               <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>LinkedIn</a>
+3610:               <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>Discord</a>
+3611:               <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>YouTube</a>
+3612:             </div>
+3613:           </div>
+3614:         </div>
+3615:       </footer>
+3616:     );
+3617:   }
+3618: }
+3619: 
+3620: 
+3621: // ────────────────────────────────────────────────────────
+3622: // End of File
+3623: // ────────────────────────────────────────────────────────
+3624: 
+3625: 
+
+// --- GAP FROM LINE 3626 TO 3649 ---
+
+3650: 
+3651:           </div>
+3652:         </div>
+3653:       </div>
+3654:     </section>
+3655:   );
+3656: }
+3657: 
+3658: // ─── SECTION 9.3: ROI & SAVINGS CALCULATOR (INTERACTIVE REAL-TIME SAVINGS COUNTERS) ───
+3659: function RoiCalculator({ activeHero }) {
+3660:   const [processes, setProcesses] = React.useState(6);
+3661:   const [hours, setHours] = React.useState(12);
+3662: 
+3663:   const hoursSaved = Math.round(processes * hours * 4.33 * 0.75);
+3664:   const annualSavings = Math.round(hoursSaved * 12 * 45);
+3665: 
+3666:   const getStyle = () => {
+3667:     switch (activeHero) {
+3668:       case 'spline1':
+3669:         return {
+3670:           font: 'var(--font-serif)',
+3671:           cardBg: 'linear-gradient(to right, rgba(10,18,1,0.5), rgba(0,0,0,0.8))',
+3672:           borderColor: 'rgba(198,255,52,0.12)',
+3673:           buttonStyle: { borderRadius: '9999px' },
+3674:           bgGradient: 'linear-gradient(to bottom, #000000 0%, #040900 100%)'
+3675:         };
+3676:       case 'cinematic':
+3677:         return {
+3678:           font: 'var(--font-ui)',
+3679:           cardBg: '#020202',
+3680:           borderColor: 'rgba(255, 255, 255, 0.08)',
+3681:           buttonStyle: { borderRadius: '0' },
+3682:           bgGradient: 'linear-gradient(to bottom, #000000 0%, #08080c 100%)'
+3683:         };
+3684:       case 'modern_v2':
+3685:         return {
+3686:           font: 'var(--font-display)',
+3687:           cardBg: 'rgba(255, 255, 255, 0.01)',
+3688:           borderColor: 'rgba(255, 255, 255, 0.05)',
+3689:           buttonStyle: { borderRadius: '12px' },
+
+// --- GAP FROM LINE 3690 TO 3749 ---
+
+3750:               height: '90px',
+3751:               borderRadius: '50%',
+3752:               background: '#000000',
+3753:               border: '2.5px solid #c6ff34',
+3754:               display: 'flex',
+3755:               alignItems: 'center',
+3756:               justifyContent: 'center',
+3757:               boxShadow: '0 0 35px rgba(198, 255, 52, 0.4)',
+3758:               zIndex: 3
+3759:             }}>
+3760:               {/* Spinning technical dash ring */}
+3761:               <div style={{
+3762:                 position: 'absolute',
+3763:                 inset: '-8px',
+3764:                 border: '1.5px dashed rgba(198, 255, 52, 0.4)',
+3765:                 borderRadius: '50%',
+3766:                 animation: 'rotate-gradient 25s linear infinite'
+3767:               }} />
+3768:               
+3769:               {/* Exact brand logo centering */}
+3770:               <div style={{
+3771:                 display: 'flex',
+3772:                 alignItems: 'center',
+3773:                 justifyContent: 'center',
+3774:                 width: '100%',
+3775:                 height: '100%'
+3776:               }}>
+3777:                 <img 
+3778:                   src={logoSoloUrl} 
+3779:                   alt="NeuralBI Hub" 
+3780:                   style={{ 
+3781:                     height: '42px', 
+3782:                     width: 'auto', 
+3783:                     opacity: 0.95, 
+3784:                     display: 'block',
+3785:                     marginLeft: '15px' /* Compensate for the inherent asymmetrical spacing inside the SVG's viewBox */
+3786:                   }} 
+3787:                 />
+3788:               </div>
+3789:             </div>
+3790: 
+3791:             {/* Outer System Nodes with SVG icons */}
+3792:             {nodes.map((node, idx) => {
+3793:               const isHovered = hoveredNode === node.id;
+3794:               
+3795:               return (
+3796:                 <div
+3797:                   key={idx}
+3798:                   style={{
+3799:                     position: 'absolute',
+3800:                     top: node.top,
+3801:                 color: '#ffffff',
+3802:                 fontWeight: 700,
+3803:                 lineHeight: 1,
+3804:                 marginTop: '0.5rem'
+3805:               }}>
+3806:                 {hoursSaved} <span style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>Hrs</span>
+3807:               </div>
+3808:             </div>
+3809: 
+3810:             <div>
+3811:               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+3812:                 Projected Annual Savings
+3813:               </span>
+3814:               <div style={{
+3815:                 fontFamily: style.font,
+3816:                 fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+3817:                 color: '#c6ff34',
+3818:                 fontWeight: 800,
+3819:                 lineHeight: 1,
+3820:                 marginTop: '0.5rem',
+3821:                 textShadow: '0 0 15px rgba(198, 255, 52, 0.15)'
+3822:               }}>
+3823:                 ${annualSavings.toLocaleString()} <span style={{ fontSize: '1.25rem', color: 'rgba(198,255,52,0.5)', fontWeight: 400 }}>USD</span>
+3824:               </div>
+3825:             </div>
+3826:           </div>
+3827: 
+3828:         </div>
+3829: 
+3830:       </div>
+3831:     </section>
+3832:   );
+3833: }
+3834: 
+3835: // ─── SECTION 9.4: CASE STUDY SPOTLIGHT (SUCCESS STORY PULL QUOTE) ───
+3836: function CaseStudy({ activeHero }) {
+3837:   const getStyle = () => {
+3838:     switch (activeHero) {
+3839:       case 'spline1':
+3840:         return {
+3841:           font: 'var(--font-serif)',
+3842:           cardBg: 'linear-gradient(to right, rgba(10,18,1,0.5), rgba(0,0,0,0.8))',
+3843:           borderColor: 'rgba(198, 255, 52, 0.12)',
+3844:           avatarRadius: '9999px',
+3845:           bgGradient: 'linear-gradient(to bottom, #000000 0%, #040900 100%)'
+3846:         };
+3847:       case 'cinematic':
+3848:         return {
+3849:           font: 'var(--font-ui)',
+3850:           cardBg: '#020202',
+
+// --- GAP FROM LINE 3851 TO 3949 ---
+
+3950:           justifyContent: 'space-between',
+3951:           alignItems: 'center',
+3952:           flexWrap: 'wrap',
+3953:           gap: '2rem',
+3954:           paddingTop: '2.5rem',
+3955:           borderTop: '1px solid rgba(255, 255, 255, 0.06)'
+3956:         }}>
+3957:           {/* Left: Logo, Social boxes & Copyright */}
+3958:           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+3959:             <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', alignSelf: 'flex-start', opacity: 0.95 }} />
+3960:             
+3961:             <div style={{ display: 'flex', gap: '0.75rem' }}>
+3962:               <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
+3963:                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+3964:               </a>
+3965:               <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', back
+
+// --- GAP FROM LINE 3966 TO 3972 ---
+
+3973:             </a>
+3974:           </div>
+3975:           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.05em' }}>
+3976:             © 2026 Copyright NeuralBI. All rights reserved.
+3977:           </span>
+3978:         </div>
+3979: 
+3980:         <div style={{ position: 'relative' }}>
+3981:           <button 
+3982:             onClick={() => setLang(lang === 'English' ? 'Español' : 'English')}
+3983:             style={{
+3984:               background: 'rgba(255, 255, 255, 0.03)',
+3985:               border: '1px solid rgba(255, 255, 255, 0.08)',
+3986:               borderRadius: '16px',
+3987:               padding: '0.5rem 1.25rem',
+3988:               color: '#ffffff',
+3989:               fontFamily: 'var(--font-sans)',
+3990:               fontSize: '0.85rem',
+3991:               display: 'flex',
+3992:               alignItems: 'center',
+3993:               gap: '0.5rem',
+3994:               cursor: 'pointer',
+3995:               transition: 'all 0.3s'
+3996:             }}
+3997:             onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(198, 255, 52, 0.3)'; e.currentTarget.style.background = 'rgba(198, 255, 52, 0.02)'; }}
+3998:             onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)'; e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+3999:           >
+4000:             <span>{lang}</span>
+4001:             <span style={{ fontSize: '0.75rem', opacity: 0.5 }}>▼</span>
+4002:           </button>
+4003:         </div>
+4004:       </div>
+4005:     </div>
+4006:   </footer>
+4007:   );
+4008: }
+4009: 

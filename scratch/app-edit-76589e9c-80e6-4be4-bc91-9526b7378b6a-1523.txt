@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "795",
+    "StartLine": "780",
+    "toolAction": "\"View Manifesto spline1 eyebrow region in App.jsx\"",
+    "toolSummary": "\"View Manifesto spline1 eyebrow\""
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "write_to_file",
+  "args": {
+    "ArtifactMetadata": "{\"ArtifactType\":\"task\",\"Summary\":\"Completed task checklist for the 4 new premium conversion sections (Trust Bar, ROI Calculator, Stripe-style Integrations Hub, Case Study Spotlight). Verified successful production build.\"}",
+    "CodeContent": "\"# Redesign and Build Premium Conversion Sections\\n\\n- `[x]` Add new custom styling rules in `src/index.css`\\n  - `[x]` Append infinite marquee keyframes (`marquee`).\\n  - `[x]` Append SVG flow keyframes (`dash-flow`).\\n  - `[x]` Add helper custom slider styles.\\n- `[x]` Implement the 4 new React components in `src/App.jsx`\\n  - `[x]` Build **TrustBar** (5 variants: floating serif cards, brutalist mono pipe divider lists, glass carousel marquees, HUD terminal coords, dock pills).\\n  - `[x]` Build **IntegrationsHub** (Stripe-inspired SVG paths, pulsing central hub, 6 outer nodes, hover overlays, 5 styling variants).\\n  - `[x]` Build **RoiCalculator** (manual process sliders, reactive mathematics savings displays, 5 theme layouts).\\n  - `[x]` Build **CaseStudy** (case study pull quotes, avatar success card spotlight, 5 style variants).\\n- `[x]` Integrate components into the main React tree in `src/App.jsx`\\n  - `[x]` Insert `<TrustBar activeHero={activeHero} />` after Hero.\\n  - `[x]` Insert `<IntegrationsHub activeHero={activeHero} />` after Arsenal.\\n  - `[x]` Insert `<RoiCalculator activeHero={activeHero} />` after Industries.\\n  - `[x]` Insert `<CaseStudy activeHero={activeHero} />` after Methodology.\\n- `[x]` Verify the build\\n  - `[x]` Run `npx vite build` to check for compilation success.\\n\"",
+    "Description": "\"Update task.md checklist to completed for the 4 new conversion sections\"",
+    "IsArtifact": "true",
+    "Overwrite": "true",
+    "TargetFile": "\"C:\\\\Users\\\\camil\\\\.gemini\\\\antigravity-ide\\\\brain\\\\76589e9c-80e6-4be4-bc91-9526b7378b6a/task.md\"",
+    "toolAction": "\"Update task.md checklist to completed\"",
+    "toolSummary": "\"Update task.md\""
+  }
+}

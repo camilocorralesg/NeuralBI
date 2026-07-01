@@ -1,0 +1,29 @@
+
+Created At: 2026-06-29T16:07:49Z
+Completed At: 2026-06-29T16:07:49Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 2876
+Total Bytes: 144154
+Showing lines 2146 to 2165
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+2146: 
+2147: function MethodologyDiagram({ phase, colorAccent }) {
+2148:   if (phase === 1) return <IsometricBlueprint colorAccent={colorAccent} />;
+2149:   if (phase === 2) return <IsometricLayerStack colorAccent={colorAccent} />;
+2150:   return <IsometricTelemetry colorAccent={colorAccent} />;
+2151: }
+2152: 
+2153: // ─── SECTION 8: METHODOLOGY (THE DEPLOYMENT PROTOCOL) ───
+2154: function Methodology({ activeHero }) {
+2155:   const phases = [
+2156:     {
+2157:       num: "01",
+2158:       title: "Audit & Blueprint",
+2159:       desc: "We map your data infrastructure, identify latency bottlenecks, and define the strategic roadmap for maximum ROI."
+2160:     },
+2161:     {
+2162:       num: "02",
+2163:       title: "Architect & Build",
+2164:       desc: "We construct the semantic layer, clean datasets, and build custom Power Apps tailored to your exact operational reality."
+2165:     },
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

@@ -1,0 +1,12 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "ArtifactMetadata": "{\"ArtifactType\":\"task\",\"RequestFeedback\":false,\"Summary\":\"Tracking progress on Sui_fork integration\"}",
+    "Description": "\"Update task status\"",
+    "Instruction": "\"Update the task.md artifact to mark all UI implementations as completed and note the fix for the chunk apply error.\"",
+    "ReplacementChunks": "[{\"AllowMultiple\":false,\"EndLine\":6,\"ReplacementContent\":\"- `[x]` Implement Sui-inspired CSS classes (`.bg-sui-ambient`, `.sui-card-hover`, `.sui-btn`)\\n- `[x]` Update `App.jsx` state and mapping to support `sui_fork` version\\n- `[x]` Build `Manifesto` UI for `sui_fork` (Bento grids, glow/blur)\\n- `[x]` Build `Arsenal` UI for `sui_fork` (Bento arrays, distinct cards)\\n- `[x]` Build `Industries` UI for `sui_fork` (Tab layout with extreme detail panes)\\n- `[x]` Standardize fonts across `sui_fork` sections\\n- `[x]` Final code review / Fix syntax errors\",\"StartLine\":6,\"TargetContent\":\"- `[x]` Implement Sui-inspired CSS classes (`.bg-sui-ambient`, `.sui-card-hover`, `.sui-btn`)\\n- `[x]` Update `App.jsx` state and mapping to support `sui_fork` version\\n- `[/]` Build `Manifesto` UI for `sui_fork` (Bento grids, glow/blur)\\n- `[ ]` Build `Arsenal` UI for `sui_fork` (Bento arrays, distinct cards)\\n- `[ ]` Build `Industries` UI for `sui_fork` (Tab layout with extreme detail panes)\\n- `[ ]` Standardize fonts across `sui_fork` sections\"}]",
+    "TargetFile": "\"C:/Users/camil/.gemini/antigravity-ide/brain/76589e9c-80e6-4be4-bc91-9526b7378b6a/task.md\"",
+    "toolAction": "\"Update task.md\"",
+    "toolSummary": "\"Update task.md\""
+  }
+}

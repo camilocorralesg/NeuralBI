@@ -1,0 +1,12 @@
+{
+  "name": "grep_search",
+  "args": {
+    "CaseInsensitive": "true",
+    "IsRegex": "false",
+    "MatchPerLine": "true",
+    "Query": "\"function Manifesto\"",
+    "SearchPath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Search Manifesto\"",
+    "toolSummary": "\"Search Manifesto App.jsx\""
+  }
+}

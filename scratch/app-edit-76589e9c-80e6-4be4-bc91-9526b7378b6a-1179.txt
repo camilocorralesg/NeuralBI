@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "1715",
+    "StartLine": "1600",
+    "toolAction": "\"View Industries end\"",
+    "toolSummary": "\"View Industries end\""
+  }
+}

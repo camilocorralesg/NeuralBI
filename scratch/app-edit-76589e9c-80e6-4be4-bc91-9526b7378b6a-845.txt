@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Add Tech V4 redesign to task.md\"",
+    "EndLine": "10",
+    "Instruction": "\"Add Tech V4 redesign tasks to task.md\"",
+    "ReplacementContent": "\"- [x] Refactor `App.jsx` to toggle button radius (pill vs 8px) per variation.\\n- [x] Replaced `TrustBar` with new `Arsenal` (Bento Box) sections for the stack.\\n- [x] Implemented `Industries` section with Raycast-style interactive side menu.\\n- [x] Added dynamic animated backgrounds per architecture style (Mesh, Scanlines, Glows).\\n- [x] Completely redesigned Tech V4 (`tech_v4`) to use Smooth Glassmorphism and Fluid Mesh backgrounds.\\n- [x] Verify functionality.\\n- [x] Create walkthrough.md.\"",
+    "StartLine": "5",
+    "TargetContent": "\"- [x] Refactor `App.jsx` to toggle button radius (pill vs 8px) per variation.\\n- [x] Replaced `TrustBar` with new `Arsenal` (Bento Box) sections for the stack.\\n- [x] Implemented `Industries` section with Raycast-style interactive side menu.\\n- [x] Added dynamic animated backgrounds per architecture style (Mesh, Scanlines, Glows).\\n- [x] Verify functionality.\\n- [x] Create walkthrough.md.\"",
+    "TargetFile": "\"C:/Users/camil/.gemini/antigravity-ide/brain/76589e9c-80e6-4be4-bc91-9526b7378b6a/task.md\"",
+    "toolAction": "\"Update task.md\"",
+    "toolSummary": "\"Update task.md\""
+  }
+}

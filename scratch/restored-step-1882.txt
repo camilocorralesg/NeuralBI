@@ -1,0 +1,15 @@
+
+Created At: 2026-06-29T16:10:29Z
+Completed At: 2026-06-29T16:10:29Z
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2057,"LineContent":"function MethodologyDiagram({ phase, activeHero }) {"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2441,"LineContent":"function MethodologyDiagramStub({ phase, activeHero }) {"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2442,"LineContent":"  return \u003cMethodologyDiagram phase={phase} activeHero={activeHero} /\u003e;"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2514,"LineContent":"                  \u003cMethodologyDiagram phase={index + 1} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2569,"LineContent":"                  \u003cMethodologyDiagram phase={index + 1} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2689,"LineContent":"                  \u003cMethodologyDiagram phase={activePhase + 1} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2765,"LineContent":"                \u003cMethodologyDiagram phase={1} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2793,"LineContent":"                \u003cMethodologyDiagram phase={2} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2820,"LineContent":"                \u003cMethodologyDiagram phase={3} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2889,"LineContent":"              \u003cMethodologyDiagram phase={1} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2920,"LineContent":"              \u003cMethodologyDiagram phase={2} colorAccent={colorAccent} /\u003e"}
+{"File":"c:\\Users\\camil\\My Repos\\Figma Design\\src\\App.jsx","LineNumber":2953,"LineContent":"              \u003cMethodologyDiagram phase={3} colorAccent={colorAccent} /\u003e"}

@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Remove Manifesto V5 eyebrow in App.jsx\"",
+    "EndLine": "875",
+    "Instruction": "\"Remove the Manifesto label span (eyebrow) and the margin-top adjustment on the h2.\"",
+    "ReplacementContent": "\"          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>\\n            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff' }}>\\n              Built for the AI era.\\n            </h2>\\n          </div>\"",
+    "StartLine": "867",
+    "TargetContent": "\"          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>\\n            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#c6ff34', textTransform: 'uppercase', letterSpacing: '0.1em' }}>\\n              Manifesto\\n            </span>\\n            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff', marginTop: '1rem' }}>\\n              Built for the AI era.\\n            </h2>\\n          </div>\"",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Remove Manifesto V5 eyebrow\"",
+    "toolSummary": "\"Remove Manifesto V5 eyebrow\""
+  }
+}

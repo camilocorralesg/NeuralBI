@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Fix syntax error in App.jsx\"",
+    "EndLine": "1712",
+    "Instruction": "\"Remove the extra closing brace that causes the sui_fork block to be outside the Industries function.\"",
+    "ReplacementContent": "\"    );\\n  }\\n\\n  // ─── SUI_FORK: Minimal tabs, extreme glass detail pane ───\\n  if (activeHero === 'sui_fork') {\\n    return (\"",
+    "StartLine": "1707",
+    "TargetContent": "\"    );\\n  }\\n\\n  // ─── SUI_FORK: Minimal tabs, extreme glass detail pane ───\\n  if (activeHero === 'sui_fork') {\\n    return (\"",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Fix syntax error\"",
+    "toolSummary": "\"Fix syntax error\""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "2360",
+    "StartLine": "2050",
+    "toolAction": "\"View Methodology component in App.jsx\"",
+    "toolSummary": "\"View Methodology component\""
+  }
+}

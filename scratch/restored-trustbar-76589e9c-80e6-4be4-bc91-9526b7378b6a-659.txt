@@ -1,0 +1,114 @@
+Created At: 2026-06-27T18:37:43Z
+Completed At: 2026-06-27T18:38:13Z
+The following changes were made by the multi_replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -214,6 +214,9 @@
+           </div>
+         </section>
+ 
++        {/* Why NeuralBI: The Manifesto Section */}
++        <Manifesto activeHero={activeHero} />
++
+         {/* Silent Authority Trust Bar */}
+         <TrustBar activeHero={activeHero} />
+ 
+@@ -264,163 +264,6 @@
+       <button onClick={() => setActiveHero('tech_v4')} style={btnStyle('tech_v4')}>Video 0627 (Tech)</button>
+     </div>
+   );
+-}
+-
+-// =========================================================
+-// Trust Bar — Silent Authority (Hallmark · component-scope)
+-// Four premium treatments, one per hero iteration.
+-// Uses real SVG logos for Power BI, Power Apps, Copilot Studio.
+-// =========================================================
+-const toolLogos = [
+-  { src: powerBiLogo, name: 'Power BI' },
+-  { src: powerAppsLogo, name: 'Power Apps' },
+-  { src: copilotStudioLogo, name: 'Copilot Studio' },
+-];
+-
+-function TrustBar({ activeHero }) {
+-  // Each hero gets a COMPLETELY different Trust Bar layout & treatment
+-  switch (activeHero) {
+-
+-    // ─── NEBULA: Pure inline strip. No cards, no chrome. Just logos floating. ───
+-    case 'spline1':
+-      return (
+-        <section style={{
+-          padding: '3rem 0',
+-          background: 'transparent',
+-          position: 'relative',
+-          zIndex: 20,
+-        }}>
+-          <div className="animate-blur-reveal" style={{
+-            display: 'flex',
+-            justifyContent: 'center',
+-            alignItems: 'center',
+-            gap: '4rem',
+-            flexWrap: 'wrap',
+-            padding: '0 2rem',
+-          }}>
+-            {toolLogos.map((tool) => (
+-              <InlineLogo key={tool.name} tool={tool}
+-                opacity={0.25} hoverOpacit
+<truncated 2709 bytes>
+toolLogos.map((tool, i) => (
+-                <React.Fragment key={tool.name}>
+-                  <PillLogo tool={tool} />
+-                  {i < toolLogos.length - 1 && (
+-                    <div style={{ width: '1px', height: '16px', background: 'rgba(255,255,255,0.06)', flexShrink: 0 }} />
+-                  )}
+-                </React.Fragment>
+-              ))}
+-            </div>
+-          </div>
+-        </section>
+-      );
+-
+-    // ─── TECH V4: Neon-glow card grid (KEPT AS-IS per user request) ───
+-    case 'tech_v4':
+-      return (
+-        <section style={{
+-          background: '#000000',
+-          padding: '5rem 0',
+-          width: '100%',
+-          position: 'relative',
+-          zIndex: 20,
+-        }}>
+-          <div style={{
+-            position: 'absolute',
+-            top: 0, left: 0, right: 0, height: '1px',
+-            background: 'linear-gradient(90deg, transparent, rgba(198,255,52,0.5), transparent)',
+-            boxShadow: '0 0 20px rgba(198,255,52,0.3)',
+-          }} />
+-
+-          <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem' }}>
+-            <div className="animate-blur-reveal delay-200" style={{
+-              display: 'flex',
+-              justifyContent: 'center',
+-              alignItems: 'stretch',
+-              gap: '1.5rem',
+-              flexWrap: 'wrap',
+-            }}>
+-              {toolLogos.map((tool) => (
+-                <NeonCard key={tool.name} tool={tool} />
+-              ))}
+-            </div>
+-          </div>
+-        </section>
+-      );
+-
+-    default:
+-      return null;
+-  }
+-}
+ 
+ // ─── Sub-components for each Trust Bar variant ───
+ 
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.
+
+We did our best to apply changes despite some inaccuracies. Double check if the edit applied is what you intended.

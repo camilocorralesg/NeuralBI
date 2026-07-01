@@ -1,0 +1,11 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "Description": "\"Add continuous sticky background wrapper\"",
+    "Instruction": "\"Update the main layout in App.jsx to wrap Manifesto, Arsenal, and Industries in a single sticky animated background layer, allowing seamless cross-section animations.\"",
+    "ReplacementChunks": "[{\"AllowMultiple\":false,\"EndLine\":242,\"ReplacementContent\":\"        {/* Unified Continuous Background Wrapper for Content Sections */}\\n        <div style={{ position: 'relative' }}>\\n          {/* Sticky Background Layer */}\\n          <div className={\\n            activeHero === 'tech_v4' ? 'bg-mesh-fluid' :\\n            activeHero === 'modern_v2' ? 'bg-mesh-modern' :\\n            activeHero === 'spline1' ? 'bg-nebula-glow' :\\n            'bg-shift-cinematic'\\n          } style={{\\n            position: 'sticky',\\n            top: 0,\\n            width: '100%',\\n            height: '100vh',\\n            zIndex: 0,\\n            overflow: 'hidden',\\n            pointerEvents: 'none'\\n          }} />\\n\\n          {/* Content Layer (Transparent) */}\\n          <div style={{ position: 'relative', zIndex: 10, marginTop: '-100vh' }}>\\n            <Manifesto activeHero={activeHero} />\\n            <Arsenal activeHero={activeHero} />\\n            <Industries activeHero={activeHero} />\\n          </div>\\n        </div>\\n\\n        {/* Global Iteration Switcher */}\",\"StartLine\":232,\"TargetContent\":\"        {/* Why NeuralBI: The Manifesto Section */}\\n        <Manifesto activeHero={activeHero} />\\n\\n        {/* Bento Box: The Arsenal */}\\n        <Arsenal activeHero={activeHero} />\\n\\n        {/* Industries: Applied Intelligence */}\\n        <Industries activeHero={activeHero} />\\n\\n        {/* Global Iteration Switcher */}\"}]",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Add continuous background wrapper\"",
+    "toolSummary": "\"Add continuous background App.jsx\""
+  }
+}

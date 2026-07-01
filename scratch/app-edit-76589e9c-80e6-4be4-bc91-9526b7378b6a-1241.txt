@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "1640",
+    "StartLine": "1620",
+    "toolAction": "\"View TECH V4 in Industries\"",
+    "toolSummary": "\"View TECH V4 in Industries\""
+  }
+}

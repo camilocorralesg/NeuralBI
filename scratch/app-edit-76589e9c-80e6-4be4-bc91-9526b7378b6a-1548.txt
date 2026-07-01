@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "802",
+    "StartLine": "778",
+    "toolAction": "\"View Manifesto spline1 syntax error in App.jsx\"",
+    "toolSummary": "\"View Manifesto spline1 syntax\""
+  }
+}

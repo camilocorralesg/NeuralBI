@@ -1,0 +1,12 @@
+{
+  "name": "grep_search",
+  "args": {
+    "CaseInsensitive": "false",
+    "IsRegex": "false",
+    "MatchPerLine": "true",
+    "Query": "\"CaseStudy\"",
+    "SearchPath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Search for CaseStudy in App.jsx\"",
+    "toolSummary": "\"Search CaseStudy\""
+  }
+}

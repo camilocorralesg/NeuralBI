@@ -1,0 +1,1267 @@
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            : "M 20 110 Q 50 110 80 105 T 140 95 T 200 90"
+          } 
+          fill="none" 
+          stroke="var(--color-accent)" 
+          strokeWidth="3"
+          style={{ transition: 'd 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
+        />
+        
+        {/* Glowing node at current speed point */}
+        <circle 
+          cx={200} 
+          cy={hovered ? 20 : 90} 
+          r="6" 
+          fill="#ffffff" 
+          stroke="var(--color-accent)" 
+          strokeWidth="2.5"
+          style={{ transition: 'cy 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
+        />
+
+
+// ─── Sub-components for each Trust Bar variant ───
+
+// NEBULA: Ghost logos, no label until hover
+function InlineLogo({ tool, opacity, hoverOpacity, labelColor, hoverLabelColor }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        boxShadow: hovered ? '0 0 24px rgba(198, 255, 52, 0.15)' : 'none',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+            }} />
+            <div style={{
+              position: 'absolute', inset: 0,
+              backgroundImage: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06))',
+              backgroundSize: '100% 4px, 6px 100%',
+              pointerEvents: 'none'
+            }} />
+          </div>
+        );
+      case 'modern_v2':
+        return (
+          <GradientBlinds
+            gradientColors={['#1a2a00', '#c6ff34']}
+            angle={33}
+            noise={0.4}
+            blindCount={12}
+            blindMinWidth={80}
+            spotlightRadius={0.4}
+            spotlightSoftness={0.8}
+            spotlightOpacity={0.7}
+            mouseDampening={0.3}
+            distortAmount={0}
+            shineDirection="left"
+            mixBlendMode="lighten"
+          />
+        );
+      case 'tech_v4':
+        return (
+          <FloatingLines
+            enabledWaves={['top', 'middle']}
+            lineCount={12}
+            lineDistance={40}
+            bendRadius={12}
+            bendStrength={0.6}
+            interactive={true}
+            parallax={true}
+            animationSpeed={1.2}
+            gradientStart="#c6ff34"
+            gradientMid="#000000"
+            gradientEnd="#000000"
+          />
+        );
+      case 'sui_fork':
+      default:
+        return (
+          <Grainient
+            color1="#000000"
+            color2="#c6ff34"
+            color3="#000000"
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0ea5e9' }} />
+          <div style={{ fontSize: '8px', color: '#0ea5e9', fontWeight: 'bold', fontFamily: 'monospace' }}>ACTIVE</div>
+        </div>
+        <div style={{ fontSize: '11px', color: '#ffffff', fontWeight: 'bold', fontFamily: 'var(--font-sans)', marginBottom: '4px' }}>
+          Zero Chaos
+        </div>
+        <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
+          Spreadsheet eradicated.
+        </div>
+      </div>
+// --- MISSING LINE 1011 ---
+// --- MISSING LINE 1012 ---
+// --- MISSING LINE 1013 ---
+// --- MISSING LINE 1014 ---
+// --- MISSING LINE 1015 ---
+// --- MISSING LINE 1016 ---
+// --- MISSING LINE 1017 ---
+// --- MISSING LINE 1018 ---
+// --- MISSING LINE 1019 ---
+// --- MISSING LINE 1020 ---
+// --- MISSING LINE 1021 ---
+// --- MISSING LINE 1022 ---
+// --- MISSING LINE 1023 ---
+// --- MISSING LINE 1024 ---
+// --- MISSING LINE 1025 ---
+// --- MISSING LINE 1026 ---
+// --- MISSING LINE 1027 ---
+// --- MISSING LINE 1028 ---
+// --- MISSING LINE 1029 ---
+// --- MISSING LINE 1030 ---
+// --- MISSING LINE 1031 ---
+// --- MISSING LINE 1032 ---
+// --- MISSING LINE 1033 ---
+// --- MISSING LINE 1034 ---
+// --- MISSING LINE 1035 ---
+// --- MISSING LINE 1036 ---
+// --- MISSING LINE 1037 ---
+// --- MISSING LINE 1038 ---
+// --- MISSING LINE 1039 ---
+// --- MISSING LINE 1040 ---
+// --- MISSING LINE 1041 ---
+// --- MISSING LINE 1042 ---
+// --- MISSING LINE 1043 ---
+// --- MISSING LINE 1044 ---
+// --- MISSING LINE 1045 ---
+// --- MISSING LINE 1046 ---
+// --- MISSING LINE 1047 ---
+// --- MISSING LINE 1048 ---
+// --- MISSING LINE 1049 ---
+// --- MISSING LINE 1050 ---
+// --- MISSING LINE 1051 ---
+// --- MISSING LINE 1052 ---
+// --- MISSING LINE 1053 ---
+// --- MISSING LINE 1054 ---
+// --- MISSING LINE 1055 ---
+// --- MISSING LINE 1056 ---
+// --- MISSING LINE 1057 ---
+// --- MISSING LINE 1058 ---
+// --- MISSING LINE 1059 ---
+// --- MISSING LINE 1060 ---
+// --- MISSING LINE 1061 ---
+// --- MISSING LINE 1062 ---
+// --- MISSING LINE 1063 ---
+// --- MISSING LINE 1064 ---
+// --- MISSING LINE 1065 ---
+// --- MISSING LINE 1066 ---
+// --- MISSING LINE 1067 ---
+// --- MISSING LINE 1068 ---
+// --- MISSING LINE 1069 ---
+// --- MISSING LINE 1070 ---
+// --- MISSING LINE 1071 ---
+// --- MISSING LINE 1072 ---
+// --- MISSING LINE 1073 ---
+// --- MISSING LINE 1074 ---
+// --- MISSING LINE 1075 ---
+// --- MISSING LINE 1076 ---
+// --- MISSING LINE 1077 ---
+// --- MISSING LINE 1078 ---
+// --- MISSING LINE 1079 ---
+// --- MISSING LINE 1080 ---
+// --- MISSING LINE 1081 ---
+// --- MISSING LINE 1082 ---
+// --- MISSING LINE 1083 ---
+// --- MISSING LINE 1084 ---
+// --- MISSING LINE 1085 ---
+// --- MISSING LINE 1086 ---
+// --- MISSING LINE 1087 ---
+// --- MISSING LINE 1088 ---
+// --- MISSING LINE 1089 ---
+// --- MISSING LINE 1090 ---
+// --- MISSING LINE 1091 ---
+// --- MISSING LINE 1092 ---
+// --- MISSING LINE 1093 ---
+// --- MISSING LINE 1094 ---
+// --- MISSING LINE 1095 ---
+// --- MISSING LINE 1096 ---
+// --- MISSING LINE 1097 ---
+// --- MISSING LINE 1098 ---
+// --- MISSING LINE 1099 ---
+
+// Zero-Friction Graphic: Overlapping frosted glass layout window elements (like TinyPNG in image)
+function ZeroFrictionGraphic({ hovered }) {
+  return (
+    <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+      {/* Grid background representing spreadsheet cells */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        opacity: 0.15,
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+        backgroundSize: '20px 20px',
+      }} />
+
+      {/* Glass card element 1 - Behind */}
+      <div style={{
+        position: 'absolute',
+        width: '120px',
+        height: '80px',
+        left: '20px',
+        top: '50px',
+        background: 'rgba(255, 255, 255, 0.02)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
+        borderRadius: '12px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+        padding: '10px',
+        transform: hovered ? 'translate(8px, -8px)' : 'none',
+        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}>
+        <div style={{ width: '20px', height: '6px', background: 'rgba(255,255,255,0.2)', borderRadius: '3px', marginBottom: '8px' }} />
+        <div style={{ width: '70px', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginBottom: '4px' }} />
+        <div style={{ width: '50px', height: '4px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '2px' }} />
+      </div>
+
+      {/* Glass card element 2 - Front overlapping (TinyPNG style) */}
+      <div style={{
+        position: 'absolute',
+        width: '130px',
+        height: '90px',
+        right: '25px',
+        bottom: hovered ? '35px' : '20px',
+        background: 'rgba(14, 165, 233, 0.05)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: hovered ? '1px solid rgba(14, 165, 233, 0.25)' : '1px solid rgba(14, 165, 233, 0.1)',
+        borderRadius: '14px',
+        boxShadow: hovered 
+          ? '0 12px 40px rgba(0,0,0,0.6), 0 0 16px rgba(14, 165, 233, 0.1)' 
+          : '0 8px 32px rgba(0,0,0,0.5)',
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+    ),
+    accent: "#6366f1"
+  },
+  {
+    id: "fintech",
+    title: "Fintech & Banking",
+    body: "Real-time liquidity tracking, fraud anomaly detection, and automated compliance reporting flows. Millisecond latency on financial dashboards.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    ),
+    accent: "#10b981"
+  },
+  {
+    id: "manufacturing",
+    title: "Manufacturing 4.0",
+    body: "IoT sensor data transformed into actionable maintenance alerts. Monitor machine health and predict downtime before it halts your production line.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 
+        fontWeight: 600,
+        letterSpacing: '-0.01em',
+        color: hovered ? 'var(--color-accent)' : 'rgba(255,255,255,0.6)',
+        transition: 'color 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        textAlign: 'center',
+      }}>
+        {tool.name}
+      </span>
+    </div>
+  );
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+    ),
+    accent: "#6366f1"
+  },
+  {
+    id: "fintech",
+    title: "Fintech & Banking",
+    body: "Real-time liquidity tracking, fraud anomaly detection, and automated compliance reporting flows. Millisecond latency on financial dashboards.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    ),
+    accent: "#10b981"
+  },
+  {
+    id: "manufacturing",
+    title: "Manufacturing 4.0",
+    body: "IoT sensor data transformed into actionable maintenance alerts. Monitor machine health and predict downtime before it halts your production line.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+    ),
+    accent: "#f59e0b"
+  },
+  {
+    id: "retail",
+    title: "Retail & E-Commerce",
+    body: "Hyper-personalized customer journey mapping, dynamic pricing engines, and unified cross-channel inventory synchronization.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+    ),
+    accent: "#ec4899"
+  }
+];
+
+function Industries({ activeHero }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const currentIndustry = industriesData[activeTab];
+
+  // ─── NEBULA: Floating Horizontal Pills & Big Glass Detail ───
+  if (activeHero === 'spline1') {
+    return (
+      <section className="bg-nebula-glow" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4.5vw, 3.5rem)', fontWeight: 400, color: '#ffffff', marginBottom: '1rem' }}>
+              Applied intelligence across verticals.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '0 auto' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+          </div>
+
+// --- MISSING LINE 1231 ---
+// --- MISSING LINE 1232 ---
+// --- MISSING LINE 1233 ---
+// --- MISSING LINE 1234 ---
+// --- MISSING LINE 1235 ---
+// --- MISSING LINE 1236 ---
+// --- MISSING LINE 1237 ---
+// --- MISSING LINE 1238 ---
+// --- MISSING LINE 1239 ---
+// --- MISSING LINE 1240 ---
+// --- MISSING LINE 1241 ---
+// --- MISSING LINE 1242 ---
+// --- MISSING LINE 1243 ---
+// --- MISSING LINE 1244 ---
+// --- MISSING LINE 1245 ---
+// --- MISSING LINE 1246 ---
+// --- MISSING LINE 1247 ---
+// --- MISSING LINE 1248 ---
+// --- MISSING LINE 1249 ---
+                  backdropFilter: 'blur(12px)',
+                }}
+              >
+                <div style={{ color: activeTab === index ? item.accent : 'inherit', display: 'flex' }}>{item.icon}</div>
+                {item.title}
+              </button>
+            ))}
+          </div>
+
+          <div key={currentIndustry.id} className="animate-blur-reveal" style={{
+            background: 'rgba(255,255,255,0.02)',
+            backdropFilter: 'blur(32px)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '32px',
+            padding: '5rem',
+            textAlign: 'center',
+            boxShadow: '0 24px 64px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+    body: "Hyper-personalized customer journey mapping, dynamic pricing engines, and unified cross-channel inventory synchronization.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+    ),
+    accent: "#ec4899"
+  }
+];
+
+function Industries({ activeHero }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const currentIndustry = industriesData[activeTab];
+
+  // ─── NEBULA: Floating Horizontal Pills & Big Glass Detail ───
+  if (activeHero === 'spline1') {
+    return (
+      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4.5vw, 3.5rem)', fontWeight: 400, color: '#ffffff', marginBottom: '1rem' }}>
+              Applied intelligence across verticals.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '0 auto' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#ffffff', marginBottom: '1rem' }}>
+              Applied intelligence<br/>across verticals.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: '#71717a' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+          </div>
+// --- MISSING LINE 1301 ---
+// --- MISSING LINE 1302 ---
+// --- MISSING LINE 1303 ---
+// --- MISSING LINE 1304 ---
+// --- MISSING LINE 1305 ---
+// --- MISSING LINE 1306 ---
+// --- MISSING LINE 1307 ---
+// --- MISSING LINE 1308 ---
+// --- MISSING LINE 1309 ---
+// --- MISSING LINE 1310 ---
+// --- MISSING LINE 1311 ---
+// --- MISSING LINE 1312 ---
+// --- MISSING LINE 1313 ---
+// --- MISSING LINE 1314 ---
+// --- MISSING LINE 1315 ---
+// --- MISSING LINE 1316 ---
+// --- MISSING LINE 1317 ---
+// --- MISSING LINE 1318 ---
+// --- MISSING LINE 1319 ---
+// --- MISSING LINE 1320 ---
+// --- MISSING LINE 1321 ---
+// --- MISSING LINE 1322 ---
+// --- MISSING LINE 1323 ---
+// --- MISSING LINE 1324 ---
+// --- MISSING LINE 1325 ---
+// --- MISSING LINE 1326 ---
+// --- MISSING LINE 1327 ---
+// --- MISSING LINE 1328 ---
+// --- MISSING LINE 1329 ---
+// --- MISSING LINE 1330 ---
+// --- MISSING LINE 1331 ---
+// --- MISSING LINE 1332 ---
+// --- MISSING LINE 1333 ---
+// --- MISSING LINE 1334 ---
+// --- MISSING LINE 1335 ---
+// --- MISSING LINE 1336 ---
+// --- MISSING LINE 1337 ---
+// --- MISSING LINE 1338 ---
+// --- MISSING LINE 1339 ---
+// --- MISSING LINE 1340 ---
+// --- MISSING LINE 1341 ---
+// --- MISSING LINE 1342 ---
+// --- MISSING LINE 1343 ---
+// --- MISSING LINE 1344 ---
+// --- MISSING LINE 1345 ---
+// --- MISSING LINE 1346 ---
+// --- MISSING LINE 1347 ---
+// --- MISSING LINE 1348 ---
+// --- MISSING LINE 1349 ---
+// --- MISSING LINE 1350 ---
+// --- MISSING LINE 1351 ---
+// --- MISSING LINE 1352 ---
+// --- MISSING LINE 1353 ---
+// --- MISSING LINE 1354 ---
+// --- MISSING LINE 1355 ---
+// --- MISSING LINE 1356 ---
+// --- MISSING LINE 1357 ---
+// --- MISSING LINE 1358 ---
+// --- MISSING LINE 1359 ---
+// --- MISSING LINE 1360 ---
+// --- MISSING LINE 1361 ---
+// --- MISSING LINE 1362 ---
+// --- MISSING LINE 1363 ---
+// --- MISSING LINE 1364 ---
+// --- MISSING LINE 1365 ---
+// --- MISSING LINE 1366 ---
+// --- MISSING LINE 1367 ---
+// --- MISSING LINE 1368 ---
+// --- MISSING LINE 1369 ---
+            backdropFilter: 'blur(40px)',
+            WebkitBackdropFilter: 'blur(40px)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '24px',
+            padding: '1.5rem',
+            minHeight: '500px',
+                      background: isActive ? 'rgba(255,255,255,0.02)' : 'transparent',
+                      padding: '2.5rem 0',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3rem',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'background 0.3s'
+                    }}
+                  >
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.25rem', color: isActive ? '#ffffff' : '#3f3f46', paddingLeft: '2rem', transition: 'color 0.3s' }}>
+                      0{index + 1}
+                    </span>
+                    <h3 style={{ flex: 1, fontFamily: 'var(--font-ui)', fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.02em', color: isActive ? '#ffffff' : '#a1a1aa', transition: 'color 0.3s' }}>
+                      {item.title}
+                    </h3>
+                    <div style={{ paddingRight: '2rem', color: isActive ? '#ffffff' : '#3f3f46', transform: isActive ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.4s' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                  </button>
+                  
+                  {isActive && (
+                    <div className="animate-blur-reveal" style={{ padding: '0 2rem 3rem 6.5rem' }}>
+                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: '#a1a1aa', lineHeight: 1.6, maxWidth: '600px' }}>
+                    }}
+                  >
+                    {isActive && (
+                      <div style={{ position: 'absolute', left: 0, top: '25%', height: '50%', width: '4px', background: item.accent, borderRadius: '0 4px 4px 0', boxShadow: `0 0 12px ${item.accent}` }} />
+                    )}
+                    <div style={{ color: isActive ? item.accent : 'rgba(255,255,255,0.4)', transition: 'color 0.2s' }}>
+                      {item.icon}
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: isActive ? 600 : 400, color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
+                      {item.title}
+// --- MISSING LINE 1411 ---
+// --- MISSING LINE 1412 ---
+// --- MISSING LINE 1413 ---
+// --- MISSING LINE 1414 ---
+// --- MISSING LINE 1415 ---
+// --- MISSING LINE 1416 ---
+// --- MISSING LINE 1417 ---
+// --- MISSING LINE 1418 ---
+// --- MISSING LINE 1419 ---
+// --- MISSING LINE 1420 ---
+// --- MISSING LINE 1421 ---
+// --- MISSING LINE 1422 ---
+// --- MISSING LINE 1423 ---
+// --- MISSING LINE 1424 ---
+// --- MISSING LINE 1425 ---
+// --- MISSING LINE 1426 ---
+// --- MISSING LINE 1427 ---
+// --- MISSING LINE 1428 ---
+// --- MISSING LINE 1429 ---
+// --- MISSING LINE 1430 ---
+// --- MISSING LINE 1431 ---
+// --- MISSING LINE 1432 ---
+// --- MISSING LINE 1433 ---
+// --- MISSING LINE 1434 ---
+// --- MISSING LINE 1435 ---
+// --- MISSING LINE 1436 ---
+// --- MISSING LINE 1437 ---
+// --- MISSING LINE 1438 ---
+// --- MISSING LINE 1439 ---
+// --- MISSING LINE 1440 ---
+// --- MISSING LINE 1441 ---
+// --- MISSING LINE 1442 ---
+// --- MISSING LINE 1443 ---
+// --- MISSING LINE 1444 ---
+// --- MISSING LINE 1445 ---
+// --- MISSING LINE 1446 ---
+// --- MISSING LINE 1447 ---
+// --- MISSING LINE 1448 ---
+// --- MISSING LINE 1449 ---
+                    key={item.id}
+                    onClick={() => setActiveTab(index)}
+                    style={{
+                      background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                      border: '1px solid',
+                      borderColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
+                      padding: '1.25rem',
+                      borderRadius: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 0.2s',
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    {isActive && (
+                      <div style={{ position: 'absolute', left: 0, top: '25%', height: '50%', width: '4px', background: item.accent, borderRadius: '0 4px 4px 0', boxShadow: `0 0 12px ${item.accent}` }} />
+                    )}
+                    <div style={{ color: isActive ? item.accent : 'rgba(255,255,255,0.4)', transition: 'color 0.2s' }}>
+                      {item.icon}
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: isActive ? 600 : 400, color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }}>
+
+                {/* Visual Data Placeholder corresponding to Raycast's detailed previews */}
+                <div style={{ 
+                  marginTop: '1rem', height: '120px', borderRadius: '16px', 
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.0) 100%)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  position: 'relative', overflow: 'hidden'
+                }}>
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: `linear-gradient(0deg, ${currentIndustry.accent}11 0%, transparent 100%)` }} />
+                  <svg width="100%" height="100%" preserveAspectRatio="none">
+                    <path d="M0,80 Q50,60 150,100 T300,50 T450,90 T600,40" fill="none" stroke={currentIndustry.accent} strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+                    <circle cx="600" cy="40" r="4" fill={currentIndustry.accent} />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+              Applied intelligence across verticals.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '1rem auto 0' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+            
+            {/* Sidebar Navigation */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+              {industriesData.map((item, index) => {
+                const isActive = activeTab === index;
+                return (
+      </section>
+    );
+  }
+
+  return null;
+}
+
+// ────────────────────────────────────────────────────────
+// End of File
+// ────────────────────────────────────────────────────────
+
+
+// --- MISSING LINE 1523 ---
+// --- MISSING LINE 1524 ---
+// --- MISSING LINE 1525 ---
+// --- MISSING LINE 1526 ---
+// --- MISSING LINE 1527 ---
+// --- MISSING LINE 1528 ---
+// --- MISSING LINE 1529 ---
+// --- MISSING LINE 1530 ---
+// --- MISSING LINE 1531 ---
+// --- MISSING LINE 1532 ---
+// --- MISSING LINE 1533 ---
+// --- MISSING LINE 1534 ---
+// --- MISSING LINE 1535 ---
+// --- MISSING LINE 1536 ---
+// --- MISSING LINE 1537 ---
+// --- MISSING LINE 1538 ---
+// --- MISSING LINE 1539 ---
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ─── MODERN V2: The Official Raycast Interactive Side Menu ───
+  if (activeHero === 'modern_v2') {
+    return (
+      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+        
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>// Verticals</span>
+            <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem', marginTop: '1rem' }}>
+              Applied intelligence<br/>across verticals.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.5)', maxWidth: '600px', margin: '0 auto' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            gap: '1.5rem',
+// --- MISSING LINE 1566 ---
+// --- MISSING LINE 1567 ---
+// --- MISSING LINE 1568 ---
+// --- MISSING LINE 1569 ---
+// --- MISSING LINE 1570 ---
+// --- MISSING LINE 1571 ---
+// --- MISSING LINE 1572 ---
+// --- MISSING LINE 1573 ---
+// --- MISSING LINE 1574 ---
+// --- MISSING LINE 1575 ---
+// --- MISSING LINE 1576 ---
+// --- MISSING LINE 1577 ---
+// --- MISSING LINE 1578 ---
+// --- MISSING LINE 1579 ---
+                      {item.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Detail Pane */}
+            <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+              {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+              
+              <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '24px', background: 'rgba(255,255,255,0.05)', color: '#ffffff', width: 'fit-content', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+                </div>
+                <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.1, textTransform: 'uppercase' }}>
+                  {currentIndustry.title}
+                </h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+            
+            {/* Sidebar Navigation */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+              {industriesData.map((item, index) => {
+                const isActive = activeTab === index;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(index)}
+                    style={{
+                      background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  position: 'relative', overflow: 'hidden'
+                }}>
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: `linear-gradient(0deg, ${currentIndustry.accent}11 0%, transparent 100%)` }} />
+                  <svg width="100%" height="100%" preserveAspectRatio="none">
+                    <path d="M0,80 Q50,60 150,100 T300,50 T450,90 T600,40" fill="none" stroke={currentIndustry.accent} strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+                    <circle cx="600" cy="40" r="4" fill={currentIndustry.accent} />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+              })}
+            </div>
+
+            <div style={{ width: '1px', background: 'rgba(255,255,255,0.06)', margin: '0 0.5rem' }} />
+
+            {/* Detail Pane */}
+            <div style={{ flex: 1, padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+              <div key={currentIndustry.id} className="animate-blur-reveal" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                  <div style={{ 
+                    width: '64px', height: '64px', borderRadius: '20px', 
+                    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: currentIndustry.accent,
+                    boxShadow: `0 0 32px ${currentIndustry.accent}33, inset 0 2px 4px rgba(255,255,255,0.1)`
+                  }}>
+                    <div style={{ transform: 'scale(1.2)' }}>{currentIndustry.icon}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: currentIndustry.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+                      Industry Blueprint
+                    </div>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.1 }}>
+                      {currentIndustry.title}
+                    </h3>
+                  </div>
+                </div>
+                
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, maxWidth: '600px' }}>
+                  {currentIndustry.body}
+                </p>
+                
+                {/* Visual Data Placeholder corresponding to Raycast's detailed previews */}
+                <div style={{ 
+                  marginTop: '1rem', height: '120px', borderRadius: '16px', 
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.0) 100%)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                      border: 'none',
+                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)'
+                    }}
+                  >
+                    <div style={{ 
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#298dff', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Manifesto
+            </span>
+            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff', marginTop: '1rem' }}>
+              Built for the AI era.
+            </h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+ 
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Detail Pane */}
+            <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+              {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', padding: '1rem', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)' }}>
+            
+            {/* Sidebar Navigation */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}>
+              {industriesData.map((item, index) => {
+                const isActive = activeTab === index;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(index)}
+                    style={{
+                      background: isActive ? 'rgba(41, 141, 255, 0.1)' : 'transparent',
+                      padding: '1.2rem',
+                      borderRadius: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      border: isActive ? '1px solid rgba(41, 141, 255, 0.2)' : '1px solid transparent',
+                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}
+                  >
+                    <div style={{ color: isActive ? 
+            </h2>
+          </div>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ─── TECH V4: Smooth Premium Glassmorphism (Video 0627) ───
+  return (
+    <section style={{ padding: '9rem 0', position: 'relative', zIndex: 20 }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+          <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.8rem', color: 'var(--color-accent)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+            Verticals
+          </span>
+          <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
+            Applied intelligence across verticals.
+          </h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.6)', maxWidth: '600px', margin: '1rem auto 0' }}>
+              Tailored architectures for complex industry challenges.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '3rem', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', padding: '1rem', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+  }
+
+  // ─── TECH V4: Smooth Premium Glassmorphism (Video 0627) ───
+  return (
+    <section style={{ padding: '9rem 0', position: 'relative', zIndex: 20 }}>
+              })}
+            </div>
+
+            {/* Detail Pane */}
+            <div style={{ background: 'rgba(0,0,0,0.4)', borderRadius: '24px', padding: '4rem', border: '1px solid rgba(255,255,255,0.05)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: '#298dff', filter: 'blur(150px)', opacity: 0.15, pointerEvents: 'none' }} />
+              
+              <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '16px', background: 'rgba(41,141,255,0.1)', color: '#298dff', width: 'fit-content', border: '1px solid rgba(41,141,255,0.2)' }}>
+                  <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+                </div>
+                <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '2.5rem', fontWeight: 600, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+                  {currentIndustry.title}
+                </h3>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.15rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, maxWidth: '600px' }}>
+                  {currentIndustry.body}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return null;
+}
+
+// ────────────────────────────────────────────────────────
+// End of File
+// ────────────────────────────────────────────────────────
+
+
+// --- MISSING LINE 1784 ---
+// --- MISSING LINE 1785 ---
+// --- MISSING LINE 1786 ---
+// --- MISSING LINE 1787 ---
+// --- MISSING LINE 1788 ---
+// --- MISSING LINE 1789 ---
+// --- MISSING LINE 1790 ---
+// --- MISSING LINE 1791 ---
+// --- MISSING LINE 1792 ---
+// --- MISSING LINE 1793 ---
+// --- MISSING LINE 1794 ---
+// --- MISSING LINE 1795 ---
+// --- MISSING LINE 1796 ---
+// --- MISSING LINE 1797 ---
+// --- MISSING LINE 1798 ---
+// --- MISSING LINE 1799 ---
+            {industriesData.map((item, index) => {
+              const isActive = activeTab === index;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(index)}
+                  style={{
+                    background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                    padding: '1.5rem',
+                    borderRadius: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    border: 'none',
+                    color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)'
+                  }}
+                >
+                  <div style={{
+                    width: '40px', height: '40px', borderRadius: '50%',
+                    background: isActive ? 'rgba(255,255,255,0.1)' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.3s'
+                  }}>
+                    {item.icon}
+                  </div>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', fontWeight: isActive ? 600 : 400 }}>
+                    {item.title}
+                  </span>
+                </button>
+              );
+            })}
+                {currentIndustry.title}
+              </h3>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+                {currentIndustry.body}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ────────────────────────────────────────────────────────
+// End of File
+
+          {/* Detail Pane */}
+          <div style={{ position: 'relative', background: 'rgba(0,0,0,0.2)', borderRadius: '32px', padding: '4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+            {/* Soft colored glow representing the industry, forced to lime for tech_v4 */}
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '300px', height: '300px', background: 'rgba(198,255,52,1)', filter: 'blur(120px)', opacity: 0.15, zIndex: 0, pointerEvents: 'none' }} />
+
+            <div key={currentIndustry.id} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ display: 'inline-flex', padding: '1.5rem', borderRadius: '24px', background: 'rgba(255,255,255,0.05)', color: '#ffffff', width: 'fit-content', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+              </div>
+              <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.1, textTransform: 'uppercase' }}>
+                {currentIndustry.title}
+              </h3>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, maxWidth: '600px' }}>
+                {currentIndus
+// --- MISSING LINE 1865 ---
+// --- MISSING LINE 1866 ---
+// --- MISSING LINE 1867 ---
+// --- MISSING LINE 1868 ---
+// --- MISSING LINE 1869 ---
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 7: IMPACT (EMPIRICAL PROOF) ───
+function Impact({ activeHero }) {
+  const metrics = [
+    { number: "10x", label: "Faster deployment cycles vs. traditional dev." },
+    { number: "-85%", label: "Reduction in manual reporting hours." },
+    { number: "50M+", label: "Data rows securely orchestrated daily." }
+  ];
+
+  // Pick colors and fonts based on activeHero
+  const getTheme = () => {
+    switch (activeHero) {
+      case 'spline1':
+        return {
+          fontTitle: 'var(--font-serif)',
+          fontNumber: 'var(--font-serif)',
+          fontSans: 'var(--font-sans)',
+          colorAccent: '#c6ff34',
+          bgGradient: 'radial-gradient(circle at 50% 50%, #0e1201 0%, #000000 100%)',
+          highlightGlow: 'rgba(198, 255, 52, 0.04)',
+          highlightBorder: 'rgba(198, 255, 52, 0.2)'
+        };
+      case 'cinematic':
+        return {
+          fontTitle: 'var(--font-ui)',
+          fontNumber: 'var(--font-ui)',
+          fontSans: 'var(--font-sans)',
+          colorAccent: '#ffffff',
+          bgGradient: 'radial-gradient(circle at 50% 50%, #0f1026 0%, #000000 100%)',
+          highlightGlow: 'rgba(255, 255, 255, 0.03)',
+          highlightBorder: 'rgba(255, 255, 255, 0.15)'
+        };
+      case 'modern_v2':
+        return {
+          fontTitle: 'var(--font-display)',
+// --- MISSING LINE 1909 ---
+// --- MISSING LINE 1910 ---
+// --- MISSING LINE 1911 ---
+// --- MISSING LINE 1912 ---
+// --- MISSING LINE 1913 ---
+// --- MISSING LINE 1914 ---
+// --- MISSING LINE 1915 ---
+        </div>
+      </section>
+    );
+  }
+
+  if (activeHero === 'cinematic') {
+    return (
+      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em' }}>
+              The math speaks for itself.
+            </h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(255,255,255,0.1)' }}>
+            {metrics.map((m, index) => (
+              <div key={index} style={{ background: '#000000', padding: '4rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(4rem, 6vw, 6rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.04em' }}>
+                  {m.number}
+                </span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#71717a', maxWidth: '240px', margin: '0 auto', lineHeight: 1.5 }}>
+                  {m.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (activeHero === 'modern_v2') {
+    return (
+      <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+            <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: '1rem' }}>
+              The math speaks for itself.
+            </h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            {metrics.map((m, index) => (
+              <div key={index} style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                borderRadius: '24px',
+                padding: '3.5rem 2.5rem',
+                textAlign: 'center',
+                boxShadow: '0 12px 40px rgba(198, 255, 52, 0.03)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem'
+              }} className="sui-card-hover">
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3.5rem, 5vw, 5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.03em' }}>
+                  {m.number}
+                </span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
+              
+// --- MISSING LINE 1975 ---
+// --- MISSING LINE 1976 ---
+// --- MISSING LINE 1977 ---
+// --- MISSING LINE 1978 ---
+// --- MISSING LINE 1979 ---
+// --- MISSING LINE 1980 ---
+// --- MISSING LINE 1981 ---
+// --- MISSING LINE 1982 ---
+// --- MISSING LINE 1983 ---
+// --- MISSING LINE 1984 ---
+// --- MISSING LINE 1985 ---
+// --- MISSING LINE 1986 ---
+// --- MISSING LINE 1987 ---
+// --- MISSING LINE 1988 ---
+// --- MISSING LINE 1989 ---
+// --- MISSING LINE 1990 ---
+// --- MISSING LINE 1991 ---
+// --- MISSING LINE 1992 ---
+// --- MISSING LINE 1993 ---
+// --- MISSING LINE 1994 ---
+// --- MISSING LINE 1995 ---
+// --- MISSING LINE 1996 ---
+// --- MISSING LINE 1997 ---
+// --- MISSING LINE 1998 ---
+// --- MISSING LINE 1999 ---
+// --- MISSING LINE 2000 ---
+// --- MISSING LINE 2001 ---
+// --- MISSING LINE 2002 ---
+// --- MISSING LINE 2003 ---
+// --- MISSING LINE 2004 ---
+// --- MISSING LINE 2005 ---
+// --- MISSING LINE 2006 ---
+// --- MISSING LINE 2007 ---
+// --- MISSING LINE 2008 ---
+// --- MISSING LINE 2009 ---
+// --- MISSING LINE 2010 ---
+// --- MISSING LINE 2011 ---
+// --- MISSING LINE 2012 ---
+// --- MISSING LINE 2013 ---
+// --- MISSING LINE 2014 ---
+// --- MISSING LINE 2015 ---
+// --- MISSING LINE 2016 ---
+    );
+  }
+
+  return (
+    <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+          <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.5rem, 3.5vw, 3.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em' }}>
+            The math speaks for itself.
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          {metrics.map((m, index) => (
+            <div key={index} style={{
+              background: 'rgba(255,255,255,0.02)',
+            centerY={0.0}
+            zoom={0.9}
+          />
+        );
+    }
+  };
+
+  return (
+    <section style={{ 
+      padding: '8rem 0 0 0', 
+      position: 'relative', 
+      zIndex: 10,
+      background: theme.bgGradient,
+      transition: 'background 0.5s ease'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        
+        {/* Title Block */}
+        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+          <h2 style={{ 
+            fontFamily: theme.fontTitle, 
+            fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', 
+            fontWeight: activeHero === 'spline1' ? 400 : 800, 
+            color: '#ffffff', 
+            letterSpacing: theme.fontTitle === 'var(--font-serif)' ? '0' : '-0.04em',
+            lineHeight: 1.25,
+            textTransform: activeHero === 'tech_v4' ? 'uppercase' : 'none'
+          }}>
+            The math speaks for itself.
+          </h2>
+        </div>
+
+        {/* Top Horizontal Divider */}
+        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', marginBottom: '3rem' }} />
+
+        {/* Horizontal Metrics Grid */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(3, 1fr)', 
+          alignItems: 'stretch',
+          marginBottom: '3rem'
+        }}>
+          {metrics.map((m, index) => {
+            const isHighlighted = index === 1; // Highlight the middle one (-85%)
+            
+            return (
+              <div 
+                key={index} 
+                style={{
+                  padding: '3rem 2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem',
+                  textAlign: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRight: index < 2 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
+                  // Highlight styling similar to Stripe's premium card
+                  background: isHighlighted ? theme.highlightGlow : 'transparent',
+                  borderTop: isHighlighted ? `1px solid ${theme.highlightBorder}` : '1px solid transparent',
+                  borderBottom: isHighlighted ? `1px solid ${theme.highlightBorder}` : '1px solid transparent',
+                  boxShadow: isHighlighted ? `0 20px 40px ${theme.highlightGlow}` : 'none',
+                  borderRadius: isHighlighted ? '16px' : '0',
+                  transform: isHighlighted ? 'scale(1.03)' : 'scale(1)',
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                  zIndex: isHighlighted ? 2 : 1
+                }}
+              >
+                {/* Micro indicator tag above for tech versions */}
+                {activeHero === 'tech_v4' && (
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: isHighlighted ? theme.colorAccent : 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>
+                 
+          <div style={{ position: 'absolute', top: '50%', left: '20%', width: '30%', height: '5px', background: 'rgba(255,255,255,0.3)', borderRadius: '2px' }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function IsometricTelemetry({ colorAccent }) {
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'relative', width: '180px', height: '140px' }}>
+                }}>
+                  {m.number}
+                </span>
+                
+                <span style={{ 
+                  fontFamily: 'var(--font-sans)', 
+                  fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', 
+                  color: isHighlighted ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)', 
+                  lineHeight: 1.5,
+                  maxWidth: '280px',
+                  fontWeight: isHighlighted ? 500 : 400
+                }}>
+                  {m.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom Horizontal Divider */}
+        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }} />
+      </div>
+
+      {/* Bottom Animation Container (matches Hero style, masked with gradient to black at the bottom) */}
+      <div style={{ 
+        position: 'relative', 
+        width: '100%', 
+        height: '320px', 
+        marginTop: '0', 
+        overflow: 'hidden'
+      }}>
+        {/* Render actual background component */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+          {renderBottomAnimation()}
+        </div>
+
+        {/* Radial Dark overlay for text/element separation */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(circle at 50% 20%, transparent 20%, #000000 95%)',
+          zIndex: 2,
+          pointerEvents: 'none'
+        }} />
+
+        {/* Bottom mask to fade seamlessly into Methodology section */}
+        <div style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: '180px',
+          background: 'linear-gradient(to bottom, transparent, #000000)',
+          zIndex: 3,
+          pointerEvents: 'none'
+        }} />
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 8: METHODOLOGY (THE DEPLOYMENT PROTOCOL) ───
+// Isometric CSS Diagrams for Methodology Phases
+// Fully Animated, Style-Specific Isometric SVG/CSS Diagrams for all 15 variants (5 versions * 3 phases)

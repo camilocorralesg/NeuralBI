@@ -1,0 +1,25 @@
+
+Created At: 2026-06-29T16:06:38Z
+Completed At: 2026-06-29T16:06:38Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 2876
+Total Bytes: 144154
+Showing lines 2670 to 2685
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+2670:                 {phases[2].desc}
+2671:               </p>
+2672:             </div>
+2673:           </div>
+2674: 
+2675:         </div>
+2676:       </div>
+2677:     </section>
+2678:   );
+2679: }
+2680: 
+2681: // ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───
+2682: function FooterCTA({ activeHero }) {
+2683:   if (activeHero === 'spline1') {
+2684:     return (
+2685:       <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

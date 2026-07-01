@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "\"Select-String -Path \\\"src\\\\App.jsx\\\" -Pattern \\\"Manifesto\\\"\"",
+    "Cwd": "\"c:/Users/camil/My Repos/Figma Design\"",
+    "WaitMsBeforeAsync": "3000",
+    "toolAction": "\"Find Manifesto in App.jsx\"",
+    "toolSummary": "\"Find Manifesto\""
+  }
+}

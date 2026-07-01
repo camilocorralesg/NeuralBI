@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "1565",
+    "StartLine": "1540",
+    "toolAction": "\"View Industries cinematic eyebrow in App.jsx\"",
+    "toolSummary": "\"View Industries cinematic eyebrow\""
+  }
+}

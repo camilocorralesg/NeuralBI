@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "\"Select-String -Path \\\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\\\" -Pattern \\\"function Industries\\\"\"",
+    "Cwd": "\"c:/Users/camil/My Repos/Figma Design\"",
+    "WaitMsBeforeAsync": "3000",
+    "toolAction": "\"Find Industries\"",
+    "toolSummary": "\"Find Industries\""
+  }
+}

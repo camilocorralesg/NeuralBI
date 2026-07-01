@@ -1,0 +1,85 @@
+
+Created At: 2026-06-29T21:54:09Z
+Completed At: 2026-06-29T21:54:09Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/scratch/restored-trustbar-76589e9c-80e6-4be4-bc91-9526b7378b6a-667.txt`
+Total Lines: 96
+Total Bytes: 4121
+Showing lines 1 to 96
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: Created At: 2026-06-27T18:39:06Z
+2: Completed At: 2026-06-27T18:39:08Z
+3: The following changes were made by the replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+4: [diff_block_start]
+5: @@ -268,6 +268,749 @@
+6:        <button onClick={() => setActiveHero('tech_v4')} style={btnStyle('tech_v4')}>Video 0627 (Tech)</button>
+7:      </div>
+8:    );
+9: +}
+10: +
+11: +// =========================================================
+12: +// Trust Bar — Silent Authority (Hallmark · component-scope)
+13: +// Four premium treatments, one per hero iteration.
+14: +// Uses real SVG logos for Power BI, Power Apps, Copilot Studio.
+15: +// =========================================================
+16: +const toolLogos = [
+17: +  { src: powerBiLogo, name: 'Power BI' },
+18: +  { src: powerAppsLogo, name: 'Power Apps' },
+19: +  { src: copilotStudioLogo, name: 'Copilot Studio' },
+20: +];
+21: +
+22: +function TrustBar({ activeHero }) {
+23: +  // Each hero gets a COMPLETELY different Trust Bar layout & treatment
+24: +  switch (activeHero) {
+25: +
+26: +    // ─── NEBULA: Pure inline strip. No cards, no chrome. Just logos floating. ───
+27: +    case 'spline1':
+28: +      return (
+29: +        <section style={{
+30: +          padding: '3rem 0',
+31: +          background: 'transparent',
+32: +          position: 'relative',
+33: +          zIndex: 20,
+34: +        }}>
+35: +          <div className="animat
+<truncated 982 bytes>
+   </div>
+58: +
+59: +      {/* Glass card element 2 - Front overlapping (TinyPNG style) */}
+60: +      <div style={{
+61: +        position: 'absolute',
+62: +        width: '130px',
+63: +        height: '90px',
+64: +        right: '25px',
+65: +        bottom: hovered ? '35px' : '20px',
+66: +        background: 'rgba(14, 165, 233, 0.05)',
+67: +        backdropFilter: 'blur(16px)',
+68: +        WebkitBackdropFilter: 'blur(16px)',
+69: +        border: hovered ? '1px solid rgba(14, 165, 233, 0.25)' : '1px solid rgba(14, 165, 233, 0.1)',
+70: +        borderRadius: '14px',
+71: +        boxShadow: hovered 
+72: +          ? '0 12px 40px rgba(0,0,0,0.6), 0 0 16px rgba(14, 165, 233, 0.1)' 
+73: +          : '0 8px 32px rgba(0,0,0,0.5)',
+74: +        padding: '12px',
+75: +        transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+76: +      }}>
+77: +        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+78: +          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0ea5e9' }} />
+79: +          <div style={{ fontSize: '8px', color: '#0ea5e9', fontWeight: 'bold', fontFamily: 'monospace' }}>ACTIVE</div>
+80: +        </div>
+81: +        <div style={{ fontSize: '11px', color: '#ffffff', fontWeight: 'bold', fontFamily: 'var(--font-sans)', marginBottom: '4px' }}>
+82: +          Zero Chaos
+83: +        </div>
+84: +        <div style={{ fontSize: '7px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
+85: +          Spreadsheet eradicated.
+86: +        </div>
+87: +      </div>
+88: +    </div>
+89: +  );
+90: +}
+91:  
+92:  // ─── Sub-components for each Trust Bar variant ───
+93:  
+94: [diff_block_end]
+95: 
+96: Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.
+The above content shows the entire, complete file contents of the requested file.

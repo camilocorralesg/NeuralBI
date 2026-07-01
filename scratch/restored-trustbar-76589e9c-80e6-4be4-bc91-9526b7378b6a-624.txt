@@ -1,0 +1,102 @@
+Created At: 2026-06-27T18:11:20Z
+Completed At: 2026-06-27T18:11:22Z
+The following changes were made by the multi_replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -264,4 +264,141 @@
+     </div>
+   );
+ }
++
++// =========================================================
++// Dynamic Trust Bar Component (Silent Authority)
++// =========================================================
++function TrustBar({ activeHero }) {
++  // Styles based on active iteration
++  const getStyle = () => {
++    switch(activeHero) {
++      case 'spline1':
++        return {
++          wrapper: {
++            background: 'rgba(10, 10, 10, 0.5)',
++            backdropFilter: 'blur(32px)',
++            WebkitBackdropFilter: 'blur(32px)',
++            borderTop: '1px solid rgba(255,255,255,0.06)',
++            borderBottom: '1px solid rgba(255,255,255,0.03)',
++            boxShadow: '0 -4px 32px rgba(0,0,0,0.4)'
++          },
++          text: { color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em' },
++          logoColor: 'rgba(255,255,255,0.6)',
++          hoverColor: '#ffffff'
++        };
++      case 'cinematic':
++        return {
++          wrapper: {
++            background: '#050505',
++            borderTop: '1px solid #1a1a1a',
++            borderBottom: '1px solid #111111',
++          },
++          text: { color: '#52525b', letterSpacing: '0.2em' }, // ultra discreet
++          logoColor: '#71717a',
++          hoverColor: '#e4e4e7'
++        };
++      case 'modern_v2':
++        return {
++          wrapper: {
++            background: 'linear-gradient(180deg, #0a0a0a 0%, #030303 100%)',
++            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
++            borderTop: '1px solid rgba(255,255,255,0.08)'
++          },
++          text: { color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' },
++          logoColor: 'rgba(255,255,255,0.4)',
++          hoverColor: '#ffffff'
++       
+<truncated 1811 bytes>
+e={20} />} text="Power BI" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <LogoItem icon={<Zap size={20} />} text="Power Apps" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <LogoItem icon={<Cloud size={20} />} text="Azure" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <LogoItem icon={<Sparkles size={20} />} text="Copilot Studio" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <LogoItem icon={<BrainCircuit size={20} />} text="OpenAI" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.1)' }} />
++          <LogoItem icon={<Globe2 size={20} />} text="Global Corp" color={styles.logoColor} hoverColor={styles.hoverColor} />
++          <LogoItem icon={<ShieldCheck size={20} />} text="SecureFin" color={styles.logoColor} hoverColor={styles.hoverColor} />
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function LogoItem({ icon, text, color, hoverColor }) {
++  return (
++    <div style={{ 
++      display: 'flex', 
++      alignItems: 'center', 
++      gap: '0.75rem',
++      color: color,
++      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
++      cursor: 'default',
++    }}
++    onMouseEnter={(e) => {
++      e.currentTarget.style.color = hoverColor;
++      e.currentTarget.style.transform = 'translateY(-2px)';
++    }}
++    onMouseLeave={(e) => {
++      e.currentTarget.style.color = color;
++      e.currentTarget.style.transform = 'translateY(0)';
++    }}
++    >
++      {icon}
++      <span style={{ 
++        fontFamily: 'var(--font-ui)', 
++        fontWeight: 600, 
++        fontSize: '0.95rem',
++        letterSpacing: '-0.02em'
++      }}>
++        {text}
++      </span>
++    </div>
++  )
++}
+ 
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

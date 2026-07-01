@@ -1,0 +1,12 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "ArtifactMetadata": "{\"ArtifactType\":\"task\",\"RequestFeedback\":false,\"Summary\":\"Tracking execution of sui_fork hero glow and impeccable polish\"}",
+    "Description": "\"Update task.md\"",
+    "Instruction": "\"Replace the old tasks with the new tasks for the sui_fork hero glow and impeccable polish\"",
+    "ReplacementChunks": "[{\"AllowMultiple\":false,\"EndLine\":9,\"ReplacementContent\":\"# Execution Tasks: Sui_fork Hero & Impeccable Polish\\n\\n- `[ ]` Create `PRODUCT.md` with dark premium style configuration.\\n- `[ ]` Implement interactive mouse-tracking blur/unblur effect for `sui_fork` hero in `App.jsx`.\\n- `[ ]` Apply lime/cyan gradient text styling to the `sui_fork` hero title.\\n- `[ ]` Update `index.css` with required animation classes and utility classes for the new effect.\\n- `[ ]` Run `impeccable polish` check on other versions to apply heuristics while keeping existing font stack.\",\"StartLine\":1,\"TargetContent\":\"# Sui.io DNA Integration Tasks\\n\\n- [x] Implement Sui-inspired CSS classes (`.bg-sui-ambient`, `.sui-card-hover`, `.sui-btn`)\\n- [x] Update `App.jsx` state and mapping to support `sui_fork` version\\n- [x] Build `Manifesto` UI for `sui_fork` (Bento grids, glow/blur)\\n- [x] Build `Arsenal` UI for `sui_fork` (Bento arrays, distinct cards)\\n- [x] Build `Industries` UI for `sui_fork` (Tab layout with extreme detail panes)\\n- [x] Standardize fonts across `sui_fork` sections\\n- [x] Final code review / Fix syntax errors in `Arsenal` component (Masonry-style bento grid with blue slide arrows).\"}]",
+    "TargetFile": "\"C:/Users/camil/.gemini/antigravity-ide/brain/76589e9c-80e6-4be4-bc91-9526b7378b6a/task.md\"",
+    "toolAction": "\"Update task.md\"",
+    "toolSummary": "\"Update task.md\""
+  }
+}

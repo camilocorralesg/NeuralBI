@@ -1,0 +1,11 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "Description": "\"Adding animated background classes to Industries sections\"",
+    "Instruction": "\"Replace inline backgrounds with animated CSS classes for Industries section\"",
+    "ReplacementChunks": "[{\"AllowMultiple\":false,\"EndLine\":1191,\"ReplacementContent\":\"      <section className=\\\"bg-nebula-glow\\\" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>\",\"StartLine\":1191,\"TargetContent\":\"      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>\"},{\"AllowMultiple\":false,\"EndLine\":1262,\"ReplacementContent\":\"      <section className=\\\"bg-shift-cinematic\\\" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>\",\"StartLine\":1262,\"TargetContent\":\"      <section style={{ padding: '8rem 0', background: '#050505', position: 'relative', zIndex: 20 }}>\"},{\"AllowMultiple\":false,\"EndLine\":1323,\"ReplacementContent\":\"      <section className=\\\"bg-mesh-modern\\\" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>\",\"StartLine\":1323,\"TargetContent\":\"      <section style={{ padding: '8rem 0', background: '#030303', position: 'relative', zIndex: 20 }}>\"},{\"AllowMultiple\":false,\"EndLine\":1440,\"ReplacementContent\":\"      <section className=\\\"bg-cyber-grid\\\" style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>\",\"StartLine\":1440,\"TargetContent\":\"      <section style={{ padding: '8rem 0', background: '#000000', position: 'relative', zIndex: 20 }}>\"}]",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Updating section backgrounds\"",
+    "toolSummary": "\"Add background classes to Industries\""
+  }
+}

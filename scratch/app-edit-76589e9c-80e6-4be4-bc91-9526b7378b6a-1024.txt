@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Fix corrupted Industries component start\"",
+    "EndLine": "1498",
+    "Instruction": "\"Restore the missing lines in the Industries component that were accidentally deleted by the fuzzy match.\"",
+    "ReplacementContent": "\"  // ─── TECH V4: Smooth Premium Glassmorphism (Video 0627) ───\\n  return (\\n    <section style={{ padding: '9rem 0', position: 'relative', zIndex: 20 }}>\\n      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>\\n        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>\\n          <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.8rem', color: 'var(--color-accent)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>\\n            Verticals\\n          </span>\\n          <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, color: '#ffffff', marginTop: '1rem', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>\\n            Applied intelligence across verticals.\\n          </h2>\"",
+    "StartLine": "1497",
+    "TargetContent": "\"              Applied intelligence across verticals.\\n            </h2>\"",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Fix missing Industries lines\"",
+    "toolSummary": "\"Fix Industries App.jsx\""
+  }
+}

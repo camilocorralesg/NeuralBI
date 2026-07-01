@@ -1,0 +1,104 @@
+
+Created At: 2026-06-27T18:30:19Z
+Completed At: 2026-06-27T18:30:19Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 624
+Total Bytes: 23146
+Showing lines 280 to 462
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+280: 
+281: function TrustBar({ activeHero }) {
+282:   // Each hero gets a COMPLETELY different Trust Bar layout & treatment
+283:   switch (activeHero) {
+284: 
+285:     // ─── NEBULA: Pure inline strip. No cards, no chrome. Just logos floating. ───
+286:     case 'spline1':
+287:       return (
+288:         <section style={{
+289:           padding: '3rem 0',
+290:           background: 'transparent',
+291:           position: 'relative',
+292:           zIndex: 20,
+293:         }}>
+294:           <div className="animate-blur-reveal" style={{
+295:             display: 'flex',
+296:             justifyContent: 'center',
+297:             alignItems: 'center',
+298:             gap: '4rem',
+299:             flexWrap: 'wrap',
+300:             padding: '0 2rem',
+301:           }}>
+302:             {toolLogos.map((tool) => (
+303:               <InlineLogo key={tool.name} tool={tool}
+304:                 opacity={0.25} hoverOpacity={0.7}
+305:                 labelColor="rgba(255,255,255,0.0)" hoverLabelColor="rgba(255,255,255,0.5)"
+306:               />
+307:             ))}
+308:           </div>
+309:         </section>
+310:       );
+311: 
+312:     // ─── CINEMATIC: Full-width dark strip with hairline borders and centered logos ───
+313:     case 'cinematic':
+314:       return (
+315:         <section style={{
+316:           padding: '0',
+317:           background: '#050505',
+318:           position: 'relative',
+319:           zIndex: 20,
+320:         }}>
+321:           {/* Top hairline */}
+322:           <div style={{ height: '1px', background: 'linear-gradient(90deg, tr
+<truncated 3775 bytes>
+    zIndex: 20,
+413:         }}>
+414:           <div style={{
+415:             position: 'absolute',
+416:             top: 0, left: 0, right: 0, height: '1px',
+417:             background: 'linear-gradient(90deg, transparent, rgba(198,255,52,0.5), transparent)',
+418:             boxShadow: '0 0 20px rgba(198,255,52,0.3)',
+419:           }} />
+420: 
+421:           <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem' }}>
+422:             <p className="animate-blur-reveal" style={{
+423:               fontFamily: 'var(--font-mono)',
+424:               fontSize: '0.6rem',
+425:               fontWeight: 600,
+426:               textTransform: 'uppercase',
+427:               textAlign: 'center',
+428:               letterSpacing: '0.2em',
+429:               color: 'rgba(198,255,52,0.5)',
+430:               marginBottom: '3rem',
+431:             }}>
+432:               Natively integrated with
+433:             </p>
+434: 
+435:             <div className="animate-blur-reveal delay-200" style={{
+436:               display: 'flex',
+437:               justifyContent: 'center',
+438:               alignItems: 'stretch',
+439:               gap: '1.5rem',
+440:               flexWrap: 'wrap',
+441:             }}>
+442:               {toolLogos.map((tool) => (
+443:                 <NeonCard key={tool.name} tool={tool} />
+444:               ))}
+445:             </div>
+446:           </div>
+447:         </section>
+448:       );
+449: 
+450:     default:
+451:       return null;
+452:   }
+453: }
+454: 
+455: // ─── Sub-components for each Trust Bar variant ───
+456: 
+457: // NEBULA: Ghost logos, no label until hover
+458: function InlineLogo({ tool, opacity, hoverOpacity, labelColor, hoverLabelColor }) {
+459:   const [hovered, setHovered] = useState(false);
+460:   return (
+461:     <div
+462:       onMouseEnter={() => setHovered(true)}
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

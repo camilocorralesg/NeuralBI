@@ -1,0 +1,12 @@
+{
+  "name": "grep_search",
+  "args": {
+    "CaseInsensitive": "true",
+    "IsRegex": "false",
+    "MatchPerLine": "true",
+    "Query": "\"function Methodology\"",
+    "SearchPath": "\"c:/Users/camil/My Repos/Figma Design/src\"",
+    "toolAction": "\"Search for Methodology function declaration in App.jsx\"",
+    "toolSummary": "\"Search Methodology declaration\""
+  }
+}

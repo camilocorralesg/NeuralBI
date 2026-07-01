@@ -1,0 +1,69 @@
+
+Created At: 2026-06-29T21:52:49Z
+Completed At: 2026-06-29T21:52:50Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/scratch/restored-76589e9c-80e6-4be4-bc91-9526b7378b6a-980.txt`
+Total Lines: 60
+Total Bytes: 3421
+Showing lines 1 to 60
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: Created At: 2026-06-27T20:41:30Z
+2: Completed At: 2026-06-27T20:41:30Z
+3: File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+4: Total Lines: 1568
+5: Total Bytes: 78191
+6: Showing lines 550 to 600
+7: The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+8: 550:                     <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 700, color: '#ffffff', marginBottom: '1rem', letterSpacing: '-0.01em', textTransform: 'uppercase' }}>{item.title}</h3>
+9: 551:                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{item.body}</p>
+10: 552:                   </div>
+11: 553:                 </div>
+12: 554:               ))}
+13: 555:             </div>
+14: 556:           </div>
+15: 557:           <style>{`.hover-glass-soft:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.15) !important; background: rgba(255,255,255,0.04) !important; }`}</style>
+16: 558:         </section>
+17: 559:       );
+18: 560: 
+19: 561:     default:
+20: 562:       return null;
+21: 563:   }
+22: 564: }
+23: 565: 
+24: 566: // Simple Inline SVG for Power Automate (Blue flow arrow)
+25: 567: function PowerAutomateIcon({ size = 48, color = "currentColor" }) {
+26: 
+<truncated 129 bytes>
+28: 570:       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z" fill={color}/>
+29: 571:       <path d="M13.5 7H16L12 3L8 7h2.5v7h3V7z" fill="#0078D4"/>
+30: 572:       <path d="M10.5 17H8l4 4 4-4h-2.5v-7h-3v7z" fill="#0078D4"/>
+31: 573:     </svg>
+32: 574:   );
+33: 575: }
+34: 576: 
+35: 577: // =========================================================
+36: 578: // Why NeuralBI: The Manifesto Section (Radically Different per Hero)
+37: 579: // =========================================================
+38: 580: function Manifesto({ activeHero }) {
+39: 581:   const data = [
+40: 582:     {
+41: 583:       id: "ai-native",
+42: 584:       title: "AI-Native Blueprint",
+43: 585:       body: "We don’t bolt on AI as an afterthought. We architect your data foundation from day zero to seamlessly integrate with Copilot and advanced LLMs.",
+44: 586:       icon: (
+45: 587:         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+46: 588:           <circle cx="12" cy="12" r="10" />
+47: 589:           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+48: 590:           <path d="M2 12h20" />
+49: 591:         </svg>
+50: 592:       ),
+51: 593:       glow: "radial-gradient(circle at 50% 120%, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0) 70%)",
+52: 594:       glowColor: "rgba(198, 255, 52, 0.25)",
+53: 595:       accentColor: "var(--color-accent)",
+54: 596:       graphic: (hovered) => <AiNativeGraphic hovered={hovered} />
+55: 597:     },
+56: 598:     {
+57: 599:       id: "warp-speed",
+58: 600:       title: "Warp-Speed Velocity",
+59: The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+60: 
+The above content shows the entire, complete file contents of the requested file.

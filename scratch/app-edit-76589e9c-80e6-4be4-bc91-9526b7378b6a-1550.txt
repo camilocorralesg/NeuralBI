@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": "false",
+    "Description": "\"Fix stray div closing tag in spline1 Manifesto\"",
+    "EndLine": "791",
+    "Instruction": "\"Remove the stray closing div tag (line 786) to restore valid JSX structure.\"",
+    "ReplacementContent": "\"              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>\\n                Built for the AI era. Unbound by legacy.\\n              </h2>\\n            <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', lineHeight: 1.6, maxWidth: '480px' }}>\\n              Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.\\n            </p>\\n          </div>\"",
+    "StartLine": "783",
+    "TargetContent": "\"              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>\\n                Built for the AI era. Unbound by legacy.\\n              </h2>\\n            </div>\\n            <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', lineHeight: 1.6, maxWidth: '480px' }}>\\n              Why modern enterprises choose the NeuralBI blueprint over traditional IT consulting.\\n            </p>\\n          </div>\"",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Fix stray div tag in Manifesto\"",
+    "toolSummary": "\"Fix stray div tag\""
+  }
+}

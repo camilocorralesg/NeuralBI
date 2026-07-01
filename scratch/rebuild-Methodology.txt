@@ -1,0 +1,503 @@
+function MethodologyDiagram({ phase, activeHero }) {
+  const colorAccent = '#c6ff34';
+  
+  const animationStyles = `
+    @keyframes float-p1 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+// --- MISSING LINE 2186 ---
+// --- MISSING LINE 2187 ---
+// --- MISSING LINE 2188 ---
+// --- MISSING LINE 2189 ---
+// --- MISSING LINE 2190 ---
+// --- MISSING LINE 2191 ---
+// --- MISSING LINE 2192 ---
+// --- MISSING LINE 2193 ---
+// --- MISSING LINE 2194 ---
+// --- MISSING LINE 2195 ---
+// --- MISSING LINE 2196 ---
+// --- MISSING LINE 2197 ---
+// --- MISSING LINE 2198 ---
+// --- MISSING LINE 2199 ---
+// --- MISSING LINE 2200 ---
+// --- MISSING LINE 2201 ---
+// --- MISSING LINE 2202 ---
+// --- MISSING LINE 2203 ---
+// --- MISSING LINE 2204 ---
+// --- MISSING LINE 2205 ---
+// --- MISSING LINE 2206 ---
+// --- MISSING LINE 2207 ---
+// --- MISSING LINE 2208 ---
+// --- MISSING LINE 2209 ---
+// --- MISSING LINE 2210 ---
+// --- MISSING LINE 2211 ---
+// --- MISSING LINE 2212 ---
+// --- MISSING LINE 2213 ---
+// --- MISSING LINE 2214 ---
+// --- MISSING LINE 2215 ---
+// --- MISSING LINE 2216 ---
+// --- MISSING LINE 2217 ---
+// --- MISSING LINE 2218 ---
+// --- MISSING LINE 2219 ---
+// --- MISSING LINE 2220 ---
+// --- MISSING LINE 2221 ---
+// --- MISSING LINE 2222 ---
+// --- MISSING LINE 2223 ---
+// --- MISSING LINE 2224 ---
+// --- MISSING LINE 2225 ---
+// --- MISSING LINE 2226 ---
+// --- MISSING LINE 2227 ---
+// --- MISSING LINE 2228 ---
+// --- MISSING LINE 2229 ---
+      )}
+
+      {activeHero === 'cinematic' && phase === 3 && (
+        <div style={{ position: 'relative', width: '200px', height: '160px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', padding: '15px' }}>
+          {/* Strobe binary cell grid */}
+          {`{`}Array.from({ length: 16 }).map((_, i) => (
+            <div key={i} style={{
+              border: '1px solid rgba(255,255,255,0.1)',
+              background: i % 3 === 0 ? colorAccent : 'transparent',
+              opacity: i % 2 === 0 ? 0.8 : 0.2,
+              animation: i % 5 === 0 ? 'brutalist-strobe 0.8s steps(1) infinite' : i % 3 === 0 ? 'brutalist-strobe 1.2s steps(1) infinite 0.3s' : 'none'
+            }} />
+          )){`}`}
+        </div>
+      )}
+
+// --- MISSING LINE 2246 ---
+// --- MISSING LINE 2247 ---
+// --- MISSING LINE 2248 ---
+// --- MISSING LINE 2249 ---
+// --- MISSING LINE 2250 ---
+// --- MISSING LINE 2251 ---
+// --- MISSING LINE 2252 ---
+// --- MISSING LINE 2253 ---
+// --- MISSING LINE 2254 ---
+// --- MISSING LINE 2255 ---
+// --- MISSING LINE 2256 ---
+// --- MISSING LINE 2257 ---
+// --- MISSING LINE 2258 ---
+// --- MISSING LINE 2259 ---
+// --- MISSING LINE 2260 ---
+// --- MISSING LINE 2261 ---
+// --- MISSING LINE 2262 ---
+// --- MISSING LINE 2263 ---
+// --- MISSING LINE 2264 ---
+// --- MISSING LINE 2265 ---
+// --- MISSING LINE 2266 ---
+// --- MISSING LINE 2267 ---
+// --- MISSING LINE 2268 ---
+// --- MISSING LINE 2269 ---
+// --- MISSING LINE 2270 ---
+// --- MISSING LINE 2271 ---
+// --- MISSING LINE 2272 ---
+// --- MISSING LINE 2273 ---
+// --- MISSING LINE 2274 ---
+// --- MISSING LINE 2275 ---
+// --- MISSING LINE 2276 ---
+// --- MISSING LINE 2277 ---
+// --- MISSING LINE 2278 ---
+// --- MISSING LINE 2279 ---
+// --- MISSING LINE 2280 ---
+// --- MISSING LINE 2281 ---
+// --- MISSING LINE 2282 ---
+// --- MISSING LINE 2283 ---
+// --- MISSING LINE 2284 ---
+// --- MISSING LINE 2285 ---
+// --- MISSING LINE 2286 ---
+// --- MISSING LINE 2287 ---
+// --- MISSING LINE 2288 ---
+// --- MISSING LINE 2289 ---
+// --- MISSING LINE 2290 ---
+// --- MISSING LINE 2291 ---
+// --- MISSING LINE 2292 ---
+// --- MISSING LINE 2293 ---
+// --- MISSING LINE 2294 ---
+// --- MISSING LINE 2295 ---
+// --- MISSING LINE 2296 ---
+// --- MISSING LINE 2297 ---
+// --- MISSING LINE 2298 ---
+// --- MISSING LINE 2299 ---
+// --- MISSING LINE 2300 ---
+// --- MISSING LINE 2301 ---
+// --- MISSING LINE 2302 ---
+// --- MISSING LINE 2303 ---
+// --- MISSING LINE 2304 ---
+// --- MISSING LINE 2305 ---
+// --- MISSING LINE 2306 ---
+// --- MISSING LINE 2307 ---
+// --- MISSING LINE 2308 ---
+// --- MISSING LINE 2309 ---
+// --- MISSING LINE 2310 ---
+// --- MISSING LINE 2311 ---
+// --- MISSING LINE 2312 ---
+// --- MISSING LINE 2313 ---
+// --- MISSING LINE 2314 ---
+// --- MISSING LINE 2315 ---
+// --- MISSING LINE 2316 ---
+// --- MISSING LINE 2317 ---
+// --- MISSING LINE 2318 ---
+// --- MISSING LINE 2319 ---
+// --- MISSING LINE 2320 ---
+// --- MISSING LINE 2321 ---
+// --- MISSING LINE 2322 ---
+// --- MISSING LINE 2323 ---
+// --- MISSING LINE 2324 ---
+// --- MISSING LINE 2325 ---
+// --- MISSING LINE 2326 ---
+// --- MISSING LINE 2327 ---
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--color-accent)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                    STAGE_0{index + 1} // STATUS: READY
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                    {p.title}
+                  </h3>
+                  <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '1.1rem' }}>
+                    {p.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: colorAccent, animation: 'tech-led 1s infinite' }}>ONLINE</span>
+            </div>
+            
+            {/* Blinking LED Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '6px' }}>
+              {`{`}Array.from({ length: 18 }).map((_, i) => (
+                <div key={i} style={{
+                  width: '6px', height: '6px', borderRadius: '50%',
+                  background: i % 4 === 0 ? colorAccent : '#27272a',
+                  boxShadow: i % 4 === 0 ? `0 0 6px ${colorAccent}` : 'none',
+                  animation: i % 3 === 0 ? 'tech-led 0.6s infinite' : i % 5 === 0 ? 'tech-led 1.2s infinite 0.4s' : 'none'
+                }} />
+              )){`}`}
+            </div>
+          </div>
+        </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Display Console Grid */}
+            <div style={{
+              background: 'rgba(255,255,255,0.01)',
+              backdropFilter: 'blur(45px)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: '24px',
+              padding: '3rem',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+            }} className="sui-card-hover">
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '250px', height: '250px', background: '#c6ff34', filter: 'blur(130px)', opacity: 0.06, pointerEvents: 'none' }} />
+
+              <div key={activePhase} className="animate-blur-reveal" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                {/* Console Illustration Box */}
+                <div style={{
+                  height: '240px',
+                  borderRadius: '16px',
+                  background: 'rgba(255,255,255,0.01)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+   
+                  backgroundPosition: 'center',
+    return (
+      <section style={{ padding: '10rem 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.1, zIndex: 0, pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+            You already have the data.
+          </h2>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 5vw, 5.5rem)', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1.1, marginBottom: '2.5rem' }}>
+            Now, make it think.
+// --- MISSING LINE 2401 ---
+// --- MISSING LINE 2402 ---
+// --- MISSING LINE 2403 ---
+// --- MISSING LINE 2404 ---
+// --- MISSING LINE 2405 ---
+// --- MISSING LINE 2406 ---
+// --- MISSING LINE 2407 ---
+// --- MISSING LINE 2408 ---
+// --- MISSING LINE 2409 ---
+// --- MISSING LINE 2410 ---
+// --- MISSING LINE 2411 ---
+// --- MISSING LINE 2412 ---
+// --- MISSING LINE 2413 ---
+// --- MISSING LINE 2414 ---
+// --- MISSING LINE 2415 ---
+// --- MISSING LINE 2416 ---
+// --- MISSING LINE 2417 ---
+// --- MISSING LINE 2418 ---
+// --- MISSING LINE 2419 ---
+// --- MISSING LINE 2420 ---
+// --- MISSING LINE 2421 ---
+// --- MISSING LINE 2422 ---
+// --- MISSING LINE 2423 ---
+// --- MISSING LINE 2424 ---
+// --- MISSING LINE 2425 ---
+// --- MISSING LINE 2426 ---
+// --- MISSING LINE 2427 ---
+// --- MISSING LINE 2428 ---
+// --- MISSING LINE 2429 ---
+// --- MISSING LINE 2430 ---
+// --- MISSING LINE 2431 ---
+// --- MISSING LINE 2432 ---
+// --- MISSING LINE 2433 ---
+// --- MISSING LINE 2434 ---
+// --- MISSING LINE 2435 ---
+// --- MISSING LINE 2436 ---
+// --- MISSING LINE 2437 ---
+// --- MISSING LINE 2438 ---
+// --- MISSING LINE 2439 ---
+// --- MISSING LINE 2440 ---
+// --- MISSING LINE 2441 ---
+// --- MISSING LINE 2442 ---
+// --- MISSING LINE 2443 ---
+// --- MISSING LINE 2444 ---
+// --- MISSING LINE 2445 ---
+// --- MISSING LINE 2446 ---
+// --- MISSING LINE 2447 ---
+// --- MISSING LINE 2448 ---
+// --- MISSING LINE 2449 ---
+// --- MISSING LINE 2450 ---
+// --- MISSING LINE 2451 ---
+// --- MISSING LINE 2452 ---
+// --- MISSING LINE 2453 ---
+// --- MISSING LINE 2454 ---
+// --- MISSING LINE 2455 ---
+// --- MISSING LINE 2456 ---
+// --- MISSING LINE 2457 ---
+// --- MISSING LINE 2458 ---
+// --- MISSING LINE 2459 ---
+// --- MISSING LINE 2460 ---
+// --- MISSING LINE 2461 ---
+// --- MISSING LINE 2462 ---
+// --- MISSING LINE 2463 ---
+// --- MISSING LINE 2464 ---
+// --- MISSING LINE 2465 ---
+// --- MISSING LINE 2466 ---
+// --- MISSING LINE 2467 ---
+// --- MISSING LINE 2468 ---
+// --- MISSING LINE 2469 ---
+// --- MISSING LINE 2470 ---
+// --- MISSING LINE 2471 ---
+// --- MISSING LINE 2472 ---
+// --- MISSING LINE 2473 ---
+// --- MISSING LINE 2474 ---
+// --- MISSING LINE 2475 ---
+// --- MISSING LINE 2476 ---
+// --- MISSING LINE 2477 ---
+// --- MISSING LINE 2478 ---
+// --- MISSING LINE 2479 ---
+// --- MISSING LINE 2480 ---
+// --- MISSING LINE 2481 ---
+// --- MISSING LINE 2482 ---
+// --- MISSING LINE 2483 ---
+// --- MISSING LINE 2484 ---
+// --- MISSING LINE 2485 ---
+// --- MISSING LINE 2486 ---
+// --- MISSING LINE 2487 ---
+// --- MISSING LINE 2488 ---
+// --- MISSING LINE 2489 ---
+// --- MISSING LINE 2490 ---
+// --- MISSING LINE 2491 ---
+// --- MISSING LINE 2492 ---
+// --- MISSING LINE 2493 ---
+// --- MISSING LINE 2494 ---
+// --- MISSING LINE 2495 ---
+// --- MISSING LINE 2496 ---
+// --- MISSING LINE 2497 ---
+// --- MISSING LINE 2498 ---
+// --- MISSING LINE 2499 ---
+// --- MISSING LINE 2500 ---
+// --- MISSING LINE 2501 ---
+// --- MISSING LINE 2502 ---
+// --- MISSING LINE 2503 ---
+// --- MISSING LINE 2504 ---
+// --- MISSING LINE 2505 ---
+// --- MISSING LINE 2506 ---
+// --- MISSING LINE 2507 ---
+// --- MISSING LINE 2508 ---
+// --- MISSING LINE 2509 ---
+// --- MISSING LINE 2510 ---
+// --- MISSING LINE 2511 ---
+// --- MISSING LINE 2512 ---
+// --- MISSING LINE 2513 ---
+// --- MISSING LINE 2514 ---
+// --- MISSING LINE 2515 ---
+// --- MISSING LINE 2516 ---
+// --- MISSING LINE 2517 ---
+// --- MISSING LINE 2518 ---
+// --- MISSING LINE 2519 ---
+// --- MISSING LINE 2520 ---
+// --- MISSING LINE 2521 ---
+// --- MISSING LINE 2522 ---
+// --- MISSING LINE 2523 ---
+// --- MISSING LINE 2524 ---
+// --- MISSING LINE 2525 ---
+// --- MISSING LINE 2526 ---
+// --- MISSING LINE 2527 ---
+// --- MISSING LINE 2528 ---
+// --- MISSING LINE 2529 ---
+// --- MISSING LINE 2530 ---
+// --- MISSING LINE 2531 ---
+// --- MISSING LINE 2532 ---
+// --- MISSING LINE 2533 ---
+// --- MISSING LINE 2534 ---
+// --- MISSING LINE 2535 ---
+// --- MISSING LINE 2536 ---
+// --- MISSING LINE 2537 ---
+// --- MISSING LINE 2538 ---
+// --- MISSING LINE 2539 ---
+// --- MISSING LINE 2540 ---
+// --- MISSING LINE 2541 ---
+// --- MISSING LINE 2542 ---
+// --- MISSING LINE 2543 ---
+// --- MISSING LINE 2544 ---
+// --- MISSING LINE 2545 ---
+// --- MISSING LINE 2546 ---
+// --- MISSING LINE 2547 ---
+// --- MISSING LINE 2548 ---
+// --- MISSING LINE 2549 ---
+// --- MISSING LINE 2550 ---
+// --- MISSING LINE 2551 ---
+// --- MISSING LINE 2552 ---
+// --- MISSING LINE 2553 ---
+// --- MISSING LINE 2554 ---
+// --- MISSING LINE 2555 ---
+// --- MISSING LINE 2556 ---
+// --- MISSING LINE 2557 ---
+// --- MISSING LINE 2558 ---
+// --- MISSING LINE 2559 ---
+// --- MISSING LINE 2560 ---
+// --- MISSING LINE 2561 ---
+// --- MISSING LINE 2562 ---
+// --- MISSING LINE 2563 ---
+// --- MISSING LINE 2564 ---
+// --- MISSING LINE 2565 ---
+// --- MISSING LINE 2566 ---
+// --- MISSING LINE 2567 ---
+// --- MISSING LINE 2568 ---
+// --- MISSING LINE 2569 ---
+// --- MISSING LINE 2570 ---
+// --- MISSING LINE 2571 ---
+// --- MISSING LINE 2572 ---
+// --- MISSING LINE 2573 ---
+// --- MISSING LINE 2574 ---
+// --- MISSING LINE 2575 ---
+// --- MISSING LINE 2576 ---
+// --- MISSING LINE 2577 ---
+// --- MISSING LINE 2578 ---
+// --- MISSING LINE 2579 ---
+// --- MISSING LINE 2580 ---
+// --- MISSING LINE 2581 ---
+// --- MISSING LINE 2582 ---
+// --- MISSING LINE 2583 ---
+// --- MISSING LINE 2584 ---
+// --- MISSING LINE 2585 ---
+// --- MISSING LINE 2586 ---
+// --- MISSING LINE 2587 ---
+// --- MISSING LINE 2588 ---
+// --- MISSING LINE 2589 ---
+// --- MISSING LINE 2590 ---
+// --- MISSING LINE 2591 ---
+// --- MISSING LINE 2592 ---
+// --- MISSING LINE 2593 ---
+// --- MISSING LINE 2594 ---
+// --- MISSING LINE 2595 ---
+// --- MISSING LINE 2596 ---
+// --- MISSING LINE 2597 ---
+// --- MISSING LINE 2598 ---
+// --- MISSING LINE 2599 ---
+// --- MISSING LINE 2600 ---
+// --- MISSING LINE 2601 ---
+// --- MISSING LINE 2602 ---
+// --- MISSING LINE 2603 ---
+// --- MISSING LINE 2604 ---
+// --- MISSING LINE 2605 ---
+// --- MISSING LINE 2606 ---
+// --- MISSING LINE 2607 ---
+// --- MISSING LINE 2608 ---
+// --- MISSING LINE 2609 ---
+// --- MISSING LINE 2610 ---
+// --- MISSING LINE 2611 ---
+// --- MISSING LINE 2612 ---
+// --- MISSING LINE 2613 ---
+// --- MISSING LINE 2614 ---
+// --- MISSING LINE 2615 ---
+// --- MISSING LINE 2616 ---
+// --- MISSING LINE 2617 ---
+// --- MISSING LINE 2618 ---
+// --- MISSING LINE 2619 ---
+// --- MISSING LINE 2620 ---
+// --- MISSING LINE 2621 ---
+// --- MISSING LINE 2622 ---
+// --- MISSING LINE 2623 ---
+// --- MISSING LINE 2624 ---
+// --- MISSING LINE 2625 ---
+// --- MISSING LINE 2626 ---
+// --- MISSING LINE 2627 ---
+// --- MISSING LINE 2628 ---
+// --- MISSING LINE 2629 ---
+// --- MISSING LINE 2630 ---
+// --- MISSING LINE 2631 ---
+// --- MISSING LINE 2632 ---
+// --- MISSING LINE 2633 ---
+// --- MISSING LINE 2634 ---
+// --- MISSING LINE 2635 ---
+// --- MISSING LINE 2636 ---
+// --- MISSING LINE 2637 ---
+// --- MISSING LINE 2638 ---
+// --- MISSING LINE 2639 ---
+// --- MISSING LINE 2640 ---
+// --- MISSING LINE 2641 ---
+// --- MISSING LINE 2642 ---
+// --- MISSING LINE 2643 ---
+// --- MISSING LINE 2644 ---
+            background: 'rgba(255,255,255,0.02)',
+            backdropFilter: 'blur(30px)',
+            borderRadius: '24px',
+            border: '1px solid rgba(255,255,255,0.06)',
+            padding: '3rem',
+            display: 'grid',
+            gridTemplateColumns: '1.2fr 1.8fr',
+            gap: '2.5rem',
+            alignItems: 'center',
+            position: 'relative'
+          }} className="sui-card-hover">
+            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+              FIG_03 // SCALE
+            </div>
+            <div style={{ height: '180px', backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center' }}>
+              <MethodologyDiagram phase={3} colorAccent={colorAccent} />
+            </div>
+            <div>
+              <span style={{ fontFamily: 'var(--font-ui)', fontSize: '1.75rem', fontWeight: 900, color: colorAccent, display: 'block', marginBottom: '0.5rem' }}>
+                03
+              </span>
+              <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '1.5rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.8rem' }}>
+                {phases[2].title}
+              </h3>
+              <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '1rem' }}>
+                {phases[2].desc}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── SECTION 9: FOOTER CTA (THE BLACK HOLE) ───

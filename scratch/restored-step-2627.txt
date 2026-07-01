@@ -1,0 +1,31 @@
+
+Created At: 2026-06-29T21:54:20Z
+Completed At: 2026-06-29T21:54:23Z
+
+				The command completed successfully.
+				Output:
+				First 1000 chars:
+Created At: 2026-06-27T18:39:06Z
+Completed At: 2026-06-27T18:39:08Z
+The following changes were made by the replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -268,6 +268,749 @@
+       <button onClick={() => setActiveHero('tech_v4')} style={btnStyle('tech_v4')}>Video 0627 (Tech)</button>
+     </div>
+   );
++}
++
++// =========================================================
++// Trust Bar — Silent Authority (Hallmark · component-scope)
++// Four premium treatments, one per hero iteration.
++// Uses real SVG logos for Power BI, Power Apps, Copilot Studio.
++// =========================================================
++const toolLogos = [
++  { src: powerBiLogo, name: 'Power BI' },
++  { src: powerAppsLogo, name: 'Power Apps' },
++  { src: copilotStudioLogo, name: 'Copilot Studio' },
++];
++
++function TrustBar({ activeHero }) {
++  // Each hero 
+

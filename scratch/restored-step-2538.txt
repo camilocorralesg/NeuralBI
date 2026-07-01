@@ -1,0 +1,25 @@
+
+Created At: 2026-06-29T21:49:39Z
+Completed At: 2026-06-29T21:49:40Z
+Task: 76589e9c-80e6-4be4-bc91-9526b7378b6a/task-2536
+Status: DONE
+Log: C:\Users\camil\.gemini\antigravity-ide\brain\76589e9c-80e6-4be4-bc91-9526b7378b6a\.system_generated\tasks\task-2536.log
+Log output:
+<truncated 838 lines>
+" -Context 0, 5\"","Cwd":"\"c:/Users/camil/My Repos/Figma 
+Design\"","WaitMsBeforeAsync":"3000","toolAction":"\"Search for Manifesto definition in 
+transcript.jsonl\"","toolSummary":"\"Search Manifesto in logs\""}}]}
+> C:\Users\camil\.gemini\antigravity-ide\brain\76589e9c-80e6-4be4-bc91-9526b7378b6a\.system_generated\logs\transcript.j
+sonl:2503:{"step_index":2536,"source":"MODEL","type":"RUN_COMMAND","status":"RUNNING","created_at":"2026-06-29T21:49:32
+Z","content":"Created At: 2026-06-29T21:49:32Z\nTool is running as a background task with task id: 
+76589e9c-80e6-4be4-bc91-9526b7378b6a/task-2536\nTask Description: Select-String -Path \"C:\\Users\\camil\\.gemini\\anti
+gravity-ide\\brain\\76589e9c-80e6-4be4-bc91-9526b7378b6a\\.system_generated\\logs\\transcript.jsonl\" -Pattern 
+\"function Manifesto\" -Context 0, 5\nTask logs are available at: file:///C:/Users/camil/.gemini/antigravity-ide/brain/
+76589e9c-80e6-4be4-bc91-9526b7378b6a/.system_generated/tasks/task-2536.log"}
+
+
+
+Last progress: 1s ago
+
+
+REMINDER: Do not call this tool again to poll or wait for updates. You will be automatically notified when the task completes or a message arrives. If you need a bounded wait, use the `schedule` tool -- it waits silently in the background and suppresses its notification if you are woken by another event.

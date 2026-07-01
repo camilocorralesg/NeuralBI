@@ -1,0 +1,100 @@
+Created At: 2026-06-27T18:27:50Z
+Completed At: 2026-06-27T18:27:53Z
+The following changes were made by the replace_file_content tool to: c:\Users\camil\My Repos\Figma Design\src\App.jsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -279,136 +279,302 @@
+ ];
+ 
+ function TrustBar({ activeHero }) {
+-  // ── Per-variation visual config ──
+-  const config = {
+-    spline1: {
+-      // Glassmorphism: frosted panel behind logos
+-      sectionBg: 'transparent',
+-      topLine: null,
+-      copyColor: 'rgba(255,255,255,0.45)',
+-      cardBg: 'rgba(255,255,255,0.04)',
+-      cardBorder: '1px solid rgba(255,255,255,0.08)',
+-      cardBackdrop: 'blur(24px)',
+-      cardShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+-      cardHoverBorder: '1px solid rgba(255,255,255,0.18)',
+-      cardHoverShadow: '0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
+-      labelColor: 'rgba(255,255,255,0.7)',
+-      labelHoverColor: '#ffffff',
+-      logoFilter: 'brightness(0) invert(1)',
+-      logoOpacity: 0.7,
+-      logoHoverOpacity: 1,
+-    },
+-    cinematic: {
+-      // Ultra-minimal: hairline dividers, desaturated logos
+-      sectionBg: '#050505',
+-      topLine: { background: 'linear-gradient(90deg, transparent 20%, rgba(255,255,255,0.06) 50%, transparent 80%)' },
+-      copyColor: '#3f3f46',
+-      cardBg: 'transparent',
+-      cardBorder: 'none',
+-      cardBackdrop: 'none',
+-      cardShadow: 'none',
+-      cardHoverBorder: 'none',
+-      cardHoverShadow: 'none',
+-      labelColor: '#52525b',
+-      labelHoverColor: '#d4d4d8',
+-      logoFilter: 'brightness(0) invert(1)',
+-      logoOpacity: 0.35,
+-      logoHoverOpacity: 0.85,
+-    },
+-    modern_v2: {
+-      // Gradient panel: each card floats on a soft gradient surface
+-      sectionBg: 'linear-gradient(180deg, #080808 0%, #020202 100%)',
+-      topLine: { background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)' 
+<truncated 13129 bytes>
+'1.25rem',
+         padding: '2.5rem 3rem',
+         borderRadius: '16px',
+-        background: c.cardBg,
+-        border: hovered ? c.cardHoverBorder : c.cardBorder,
+-        backdropFilter: c.cardBackdrop,
+-        WebkitBackdropFilter: c.cardBackdrop,
+-        boxShadow: hovered ? c.cardHoverShadow : c.cardShadow,
++        background: 'rgba(198,255,52,0.03)',
++        border: hovered ? '1px solid rgba(198,255,52,0.35)' : '1px solid rgba(198,255,52,0.1)',
++        boxShadow: hovered
++          ? '0 4px 32px rgba(198,255,52,0.12), 0 0 0 1px rgba(198,255,52,0.2)'
++          : '0 4px 24px rgba(0,0,0,0.4)',
+         transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+         transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+         cursor: 'default',
+@@ -432,17 +432,13 @@
+         maxWidth: '280px',
+       }}
+     >
+-      <img
+-        src={tool.src}
+-        alt={tool.name}
+-        style={{
+-          height: '40px',
+-          width: 'auto',
+-          filter: c.logoFilter,
+-          opacity: hovered ? c.logoHoverOpacity : c.logoOpacity,
+-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+-        }}
+-      />
++      <img src={tool.src} alt={tool.name} style={{
++        height: '40px',
++        width: 'auto',
++        filter: 'brightness(0) invert(1)',
++        opacity: hovered ? 1 : 0.55,
++        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
++      }} />
+       <span style={{
+         fontFamily: 'var(--font-ui)',
+         fontSize: '0.85rem',
+@@ -449,5 +449,5 @@
+         letterSpacing: '-0.01em',
+-        color: hovered ? c.labelHoverColor : c.labelColor,
++        color: hovered ? 'var(--color-accent)' : 'rgba(255,255,255,0.6)',
+         transition: 'color 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+         textAlign: 'center',
+       }}>
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

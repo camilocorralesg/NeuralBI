@@ -1,0 +1,11 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "Description": "\"Updating Manifesto gradients to lime\"",
+    "Instruction": "\"Update the glow, glowColor, and accentColor fields in Manifesto data to only use lime green variants per audit rules.\"",
+    "ReplacementChunks": "[{\"AllowMultiple\":false,\"EndLine\":581,\"ReplacementContent\":\"      glow: \\\"radial-gradient(circle at 50% 120%, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0) 70%)\\\",\\n      glowColor: \\\"rgba(198, 255, 52, 0.25)\\\",\\n      accentColor: \\\"var(--color-accent)\\\",\",\"StartLine\":579,\"TargetContent\":\"      glow: \\\"radial-gradient(circle at 50% 120%, rgba(99, 102, 241, 0.18) 0%, rgba(99, 102, 241, 0) 70%)\\\",\\n      glowColor: \\\"rgba(99, 102, 241, 0.25)\\\",\\n      accentColor: \\\"#818cf8\\\",\"},{\"AllowMultiple\":false,\"EndLine\":613,\"ReplacementContent\":\"      glow: \\\"radial-gradient(circle at 50% 120%, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0) 70%)\\\",\\n      glowColor: \\\"rgba(198, 255, 52, 0.25)\\\",\\n      accentColor: \\\"var(--color-accent)\\\",\",\"StartLine\":611,\"TargetContent\":\"      glow: \\\"radial-gradient(circle at 50% 120%, rgba(14, 165, 233, 0.18) 0%, rgba(14, 165, 233, 0) 70%)\\\",\\n      glowColor: \\\"rgba(14, 165, 233, 0.25)\\\",\\n      accentColor: \\\"#38bdf8\\\",\"}]",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "toolAction": "\"Convert Manifesto data to Lime\"",
+    "toolSummary": "\"Update Manifesto colors in App.jsx\""
+  }
+}

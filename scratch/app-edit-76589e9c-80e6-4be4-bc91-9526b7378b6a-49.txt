@@ -1,0 +1,13 @@
+{
+  "name": "write_to_file",
+  "args": {
+    "ArtifactMetadata": "{\"ArtifactType\":\"task\",\"RequestFeedback\":false,\"Summary\":\"Task list for Neural BI Landing Page\"}",
+    "CodeContent": "\"# Tareas: Landing Page \\\"Neural BI\\\"\\n\\n- [ ] Instalar dependencias base de Vite + React.\\n- [ ] Configurar variables de diseño (Vanilla CSS) para la estética Dark Mode y \\\"Glassmorphism\\\" con los colores `#c6ff34` (Brand) y fondos `#0A0A0A`.\\n- [ ] Construir la estructura general en `App.jsx`.\\n- [ ] Implementar la Navegación (Navbar) flotante.\\n- [ ] Implementar el Hero Section (Titular masivo, subtítulo, botones, visual abstracto).\\n- [ ] Implementar el Hub de Soluciones Embebidas (Pestañas laterales, vista de contenido derecha simulando dashboard).\\n- [ ] Implementar la Cuadrícula de Ideas de Negocio (Bento Grid) con 4 productos.\\n- [ ] Implementar la sección de Social Proof (Logos monocromáticos).\\n- [ ] Implementar el Footer Premium.\\n- [ ] Añadir interactividad, animaciones sutiles (hover effects y glows) y diseño responsivo.\\n- [ ] Probar y visualizar en el entorno de desarrollo (`npm run dev`).\"",
+    "Description": "\"Task checklist for building the Neural BI Landing Page\"",
+    "IsArtifact": "true",
+    "Overwrite": "true",
+    "TargetFile": "\"C:\\\\Users\\\\camil\\\\.gemini\\\\antigravity-ide\\\\brain\\\\76589e9c-80e6-4be4-bc91-9526b7378b6a\\\\task.md\"",
+    "toolAction": "\"Creating task list\"",
+    "toolSummary": "\"Create task checklist\""
+  }
+}

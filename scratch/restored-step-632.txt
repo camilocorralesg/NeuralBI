@@ -1,0 +1,93 @@
+
+Created At: 2026-06-27T18:23:38Z
+Completed At: 2026-06-27T18:23:38Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 404
+Total Bytes: 16456
+Showing lines 268 to 404
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+268: // =========================================================
+269: // Dynamic Trust Bar Component (Silent Authority)
+270: // =========================================================
+271: function TrustBar({ activeHero }) {
+272:   // Styles based on active iteration
+273:   const getStyle = () => {
+274:     switch(activeHero) {
+275:       case 'spline1':
+276:         return {
+277:           wrapper: {
+278:             background: 'rgba(10, 10, 10, 0.5)',
+279:             backdropFilter: 'blur(32px)',
+280:             WebkitBackdropFilter: 'blur(32px)',
+281:             borderTop: '1px solid rgba(255,255,255,0.06)',
+282:             borderBottom: '1px solid rgba(255,255,255,0.03)',
+283:             boxShadow: '0 -4px 32px rgba(0,0,0,0.4)'
+284:           },
+285:           text: { color: 'rgba(255,255,255,0.5)', letterSpacing: '0.15em' },
+286:           logoColor: 'rgba(255,255,255,0.6)',
+287:           hoverColor: '#ffffff'
+288:         };
+289:       case 'cinematic':
+290:         return {
+291:           wrapper: {
+292:             background: '#050505',
+293:             borderTop: '1px solid #1a1a1a',
+294:             borderBottom: '1px solid #111111',
+295:           },
+296:           text: { color: '#52525b', letterSpacing: '0.2em' }, // ultra discreet
+297:           logoColor: '#71717a',
+298:           hoverColor: '#e4e4e7'
+299:         };
+300:       case 'modern_v2':
+301:         return {
+302:           wrapper: {
+303:             background: 'linear-gradient(180deg, #0a0a0a 0%, #030303 100%)',
+304:             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+305:      
+<truncated 2381 bytes>
+size={20} />} text="Power Apps" color={styles.logoColor} hoverColor={styles.hoverColor} />
+361:           <LogoItem icon={<Cloud size={20} />} text="Azure" color={styles.logoColor} hoverColor={styles.hoverColor} />
+362:           <LogoItem icon={<Sparkles size={20} />} text="Copilot Studio" color={styles.logoColor} hoverColor={styles.hoverColor} />
+363:           <LogoItem icon={<BrainCircuit size={20} />} text="OpenAI" color={styles.logoColor} hoverColor={styles.hoverColor} />
+364:           <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.1)' }} />
+365:           <LogoItem icon={<Globe2 size={20} />} text="Global Corp" color={styles.logoColor} hoverColor={styles.hoverColor} />
+366:           <LogoItem icon={<ShieldCheck size={20} />} text="SecureFin" color={styles.logoColor} hoverColor={styles.hoverColor} />
+367:         </div>
+368:       </div>
+369:     </section>
+370:   )
+371: }
+372: 
+373: function LogoItem({ icon, text, color, hoverColor }) {
+374:   return (
+375:     <div style={{ 
+376:       display: 'flex', 
+377:       alignItems: 'center', 
+378:       gap: '0.75rem',
+379:       color: color,
+380:       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+381:       cursor: 'default',
+382:     }}
+383:     onMouseEnter={(e) => {
+384:       e.currentTarget.style.color = hoverColor;
+385:       e.currentTarget.style.transform = 'translateY(-2px)';
+386:     }}
+387:     onMouseLeave={(e) => {
+388:       e.currentTarget.style.color = color;
+389:       e.currentTarget.style.transform = 'translateY(0)';
+390:     }}
+391:     >
+392:       {icon}
+393:       <span style={{ 
+394:         fontFamily: 'var(--font-ui)', 
+395:         fontWeight: 600, 
+396:         fontSize: '0.95rem',
+397:         letterSpacing: '-0.02em'
+398:       }}>
+399:         {text}
+400:       </span>
+401:     </div>
+402:   )
+403: }
+404: 
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

@@ -1,0 +1,86 @@
+
+Created At: 2026-06-29T21:49:55Z
+Completed At: 2026-06-29T21:49:56Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/scratch/replace-diagrams.js`
+Total Lines: 427
+Total Bytes: 23229
+Showing lines 1 to 427
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: const fs = require('fs');
+2: 
+3: const filePath = 'c:/Users/camil/My Repos/Figma Design/src/App.jsx';
+4: let content = fs.readFileSync(filePath, 'utf8');
+5: 
+6: // Identify the block of diagrams from lines 2056 to 2151.
+7: // Let's replace the segment starting with `function IsometricBlueprint` up to `return <IsometricTelemetry colorAccent={colorAccent}; }` or `return <IsometricTelemetry colorAccent={colorAccent} />;\n}`.
+8: 
+9: const startPattern = 'function IsometricBlueprint({ colorAccent }) {';
+10: const endPattern = 'return <IsometricTelemetry colorAccent={colorAccent} />;\n}';
+11: 
+12: const startIndex = content.indexOf(startPattern);
+13: let endIndex = content.indexOf(endPattern);
+14: 
+15: if (startIndex === -1) {
+16:   console.error("Could not find start pattern!");
+17:   process.exit(1);
+18: }
+19: 
+20: if (endIndex === -1) {
+21:   // Try with CRLF
+22:   const endPatternCRLF = 'return <IsometricTelemetry colorAccent={colorAccent} />;\r\n}';
+23:   endIndex = content.indexOf(endPatternCRLF);
+24:   if (endIndex === -1) {
+25:     console.error("Could not find end pattern!");
+26:     process.exit(1);
+27:   } else {
+28:     endIndex += endPatternCRLF.length;
+29:   }
+30: } else {
+31:   endIndex += endPattern.length;
+32: }
+33: 
+34: const replacementCode = `// Fully Animated, Style-Specific Isometric SVG/CSS Diagrams for all 15 variants (5 versions * 3 phases)
+35: function MethodologyDiagram({ phase, activeHero }) {
+36:   const colorAccent = '#c6ff34';
+37:   
+38:   const animationStyles = \`
+39:     @keyframes float-p1 {
+40:       0%, 100% { transform: translat
+<truncated 21702 bytes>
+2:             <div style={{
+393:               position: 'absolute', bottom: 0, right: 0, width: '45px', height: '45px',
+394:               border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px',
+395:               background: 'rgba(255,255,255,0.03)',
+396:               animation: 'sui-bento-assemble 3s ease-in-out infinite 1s'
+397:             }} />
+398:           </div>
+399:         </div>
+400:       )}
+401: 
+402:       {activeHero === 'sui_fork' && phase === 3 && (
+403:         <div style={{ position: 'relative', width: '220px', height: '180px' }}>
+404:           {/* Bento loop trace with animated motion particle */}
+405:           <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+406:             <path id="infinity_loop" d="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90 C 180,50 110,50 110,90 C 110,130 40,130 40,90 Z" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5" />
+407:             <path d="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90" fill="none" stroke={colorAccent} strokeWidth="1.5" strokeDasharray="15, 60" style={{ animation: 'tech-dash 4s linear infinite' }} />
+408:             
+409:             <circle r="4" fill="#ffffff" filter="drop-shadow(0 0 6px #c6ff34)">
+410:               <animateMotion dur="4s" repeatCount="indefinite" path="M 40,90 C 40,50 110,50 110,90 C 110,130 180,130 180,90 C 180,50 110,50 110,90 C 110,130 40,130 40,90 Z" />
+411:             </circle>
+412:           </svg>
+413:         </div>
+414:       )}
+415:     </div>
+416:   );
+417: }
+418: 
+419: function MethodologyDiagramStub({ phase, activeHero }) {
+420:   return <MethodologyDiagram phase={phase} activeHero={activeHero} />;
+421: }
+422: `;
+423: 
+424: const replacedContent = content.slice(0, startIndex) + replacementCode + content.slice(endIndex);
+425: fs.writeFileSync(filePath, replacedContent, 'utf8');
+426: console.log("Successfully replaced diagrams block in App.jsx!");
+427: 
+The above content shows the entire, complete file contents of the requested file.

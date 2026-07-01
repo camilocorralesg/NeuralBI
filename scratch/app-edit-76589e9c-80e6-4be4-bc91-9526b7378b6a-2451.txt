@@ -1,0 +1,12 @@
+{
+  "name": "write_to_file",
+  "args": {
+    "CodeContent": "\"const fs = require('fs');\\n\\nconst filePath = 'c:/Users/camil/My Repos/Figma Design/src/App.jsx';\\nlet content = fs.readFileSync(filePath, 'utf8');\\n\\n// We need to import the new logos at the top\\nif (!content.includes(\\\"import powerAutomateLogo from './assets/Power Automate logo.svg';\\\")) {\\n  content = content.replace(\\n    \\\"import copilotStudioLogo from './assets/Copilot Studio.svg';\\\",\\n    \\\"import copilotStudioLogo from './assets/Copilot Studio.svg';\\\\nimport powerAutomateLogo from './assets/Power Automate logo.svg';\\\"\\n  );\\n}\\n\\n// Find the Arsenal section to replace\\nconst arsenalStartPattern = '// =========================================================\\\\n// Bento Box: The Arsenal (Solutions)';\\nconst arsenalStartIndex = content.indexOf(arsenalStartPattern);\\n\\nif (arsenalStartIndex === -1) {\\n  console.error(\\\"Could not find Arsenal section\\\");\\n  process.exit(1);\\n}\\n\\n// Find where Arsenal ends. It's right before '// =========================================================\\\\n// SECTION 6: INTEGRATIONS HUB'\\nconst arsenalEndPattern = '// =========================================================\\\\n// SECTION 6:';\\nlet arsenalEndIndex = content.indexOf(arsenalEndPattern, arsenalStartIndex);\\nif (arsenalEndIndex === -1) {\\n    // try SECTION 7, or SECTION 9.2, etc. Let's look for the next major component.\\n    const nextSectionPattern = '// ─── SECTION';\\n    arsenalEndIndex = content.indexOf(nextSectionPattern, arsenalStartIndex);\\n}\\n\\nif (arsenalEndIndex === -1) {\\n    // If we can't find it with comments, let's look for the function CaseStudy or IntegrationsHub.\\n    arsenalEndIndex = content.indexOf('function IntegrationsHub', arsenalStartIndex);\\n    if(arsenalEndIndex !== -1) {\\n        arsenalEndIndex = content.lastIndexOf('//', arsenalEndIndex);\\n    }\\n}\\n\\nconst newArsenalCode = `// =========================================================\\n// SECTION: THE ARSENAL (Scroll-Driven Premium Experience)\\n// =========================================================\\n\\nconst arsenalData = \n<truncated 20641 bytes>",
+    "Description": "\"Create upgrade-arsenal script\"",
+    "IsArtifact": "false",
+    "Overwrite": "true",
+    "TargetFile": "\"c:/Users/camil/My Repos/Figma Design/scratch/upgrade-arsenal.cjs\"",
+    "toolAction": "\"Create upgrade-arsenal.cjs\"",
+    "toolSummary": "\"Create upgrade script\""
+  }
+}

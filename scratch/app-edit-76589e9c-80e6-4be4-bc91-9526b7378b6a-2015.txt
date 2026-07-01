@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "\"c:/Users/camil/My Repos/Figma Design/src/App.jsx\"",
+    "EndLine": "420",
+    "StartLine": "395",
+    "toolAction": "\"View render method containing FooterCTA in App.jsx\"",
+    "toolSummary": "\"View main render method\""
+  }
+}

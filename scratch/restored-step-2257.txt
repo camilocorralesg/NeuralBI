@@ -1,0 +1,59 @@
+
+Created At: 2026-06-29T20:55:50Z
+Completed At: 2026-06-29T20:55:50Z
+File Path: `file:///c:/Users/camil/My%20Repos/Figma%20Design/src/App.jsx`
+Total Lines: 5556
+Total Bytes: 256040
+Showing lines 3801 to 3850
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+3801:                 color: '#ffffff',
+3802:                 fontWeight: 700,
+3803:                 lineHeight: 1,
+3804:                 marginTop: '0.5rem'
+3805:               }}>
+3806:                 {hoursSaved} <span style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>Hrs</span>
+3807:               </div>
+3808:             </div>
+3809: 
+3810:             <div>
+3811:               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+3812:                 Projected Annual Savings
+3813:               </span>
+3814:               <div style={{
+3815:                 fontFamily: style.font,
+3816:                 fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+3817:                 color: '#c6ff34',
+3818:                 fontWeight: 800,
+3819:                 lineHeight: 1,
+3820:                 marginTop: '0.5rem',
+3821:                 textShadow: '0 0 15px rgba(198, 255, 52, 0.15)'
+3822:               }}>
+3823:                 ${annualSavings.toLocaleString()} <span style={{ fontSize: '1.25rem', color: 'rgba(198,255,52,0.5)', fontWeight: 400 }}>USD</span>
+3824:               </div>
+3825:             </div>
+3826:           </div>
+3827: 
+3828:         </div>
+3829: 
+3830:       </div>
+3831:     </section>
+3832:   );
+3833: }
+3834: 
+3835: // ─── SECTION 9.4: CASE STUDY SPOTLIGHT (SUCCESS STORY PULL QUOTE) ───
+3836: function CaseStudy({ activeHero }) {
+3837:   const getStyle = () => {
+3838:     switch (activeHero) {
+3839:       case 'spline1':
+3840:         return {
+3841:           font: 'var(--font-serif)',
+3842:           cardBg: 'linear-gradient(to right, rgba(10,18,1,0.5), rgba(0,0,0,0.8))',
+3843:           borderColor: 'rgba(198, 255, 52, 0.12)',
+3844:           avatarRadius: '9999px',
+3845:           bgGradient: 'linear-gradient(to bottom, #000000 0%, #040900 100%)'
+3846:         };
+3847:       case 'cinematic':
+3848:         return {
+3849:           font: 'var(--font-ui)',
+3850:           cardBg: '#020202',
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

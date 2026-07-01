@@ -1,0 +1,13 @@
+{
+  "name": "write_to_file",
+  "args": {
+    "ArtifactMetadata": "{\"ArtifactType\":\"task\",\"RequestFeedback\":false,\"Summary\":\"Tasks to implement the Iteration Hub (Hero variants)\"}",
+    "CodeContent": "\"# Tasks: Iteration Hub (4 Hero Variants)\\n\\n- [x] Create Implementation Plan for 4 variants.\\n- [ ] Install `three`, `@react-three/fiber`, and `@react-three/drei`.\\n- [ ] Create `NetworkCanvas.jsx` (Custom Three.js Neural Network).\\n- [ ] Clean up `App.jsx` (Remove Bento Grid, Footer, CTA).\\n- [ ] Implement Hero Switcher UI in `App.jsx`.\\n- [ ] Connect Spline URL, Veo Videos, and NetworkCanvas to the Switcher.\\n- [ ] Create Walkthrough of the new Hub.\"",
+    "Description": "\"Update tasks for the new iteration hub plan\"",
+    "IsArtifact": "true",
+    "Overwrite": "true",
+    "TargetFile": "\"c:\\\\Users\\\\camil\\\\.gemini\\\\antigravity-ide\\\\brain\\\\76589e9c-80e6-4be4-bc91-9526b7378b6a\\\\task.md\"",
+    "toolAction": "\"Updating task list\"",
+    "toolSummary": "\"Update task list\""
+  }
+}
