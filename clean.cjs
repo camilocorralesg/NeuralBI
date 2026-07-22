@@ -1,5 +1,5 @@
 const fs = require('fs');
-let code = fs.readFileSync('src/App.jsx', 'utf8');
+let code = fs.readFileSync('components/App.jsx', 'utf8');
 
 // 1. Remove eyebrows
 code = code.replace(/\s*eyebrow: ".*?",/g, '');
@@ -27,5 +27,5 @@ code = code.replace(new RegExp(regexStr, 'g'), '');
 // 5. Clean up nodes status
 code = code.replace(/\{node\.status\} \(\{node\.latency\}\)/g, '{node.latency}');
 
-fs.writeFileSync('src/App.jsx', code);
+fs.writeFileSync('components/App.jsx', code);
 console.log('Cleanup complete');
