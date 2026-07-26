@@ -8452,400 +8452,400 @@ function SectionDivider() {
 // 
 // /* ─── TACTILE SOLUTION WORKBENCH (HALLMARK ANTI-SLOP DEMONSTRATOR) ─── */
 // 
-// function FabricDirectLakeWorkbench() {
-//   const [metricTab, setMetricTab] = useState('stockout');
-//   const [volumeLoad, setVolumeLoad] = useState(72);
-//   const [isSyncing, setIsSyncing] = useState(false);
-// 
-//   const handleSync = () => {
-//     setIsSyncing(true);
-//     setTimeout(() => setIsSyncing(false), 900);
-//   };
-// 
-//   return (
-//     <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-//       {/* Top Bar / Header */}
-//       <div className="flex items-center justify-between border-b border-white/10 pb-4">
-//         <div className="flex items-center gap-3">
-//           <div className="w-3 h-3 rounded-full bg-lime-400 animate-pulse shadow-[0_0_10px_#c6ff34]" />
-//           <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Fabric + Power BI DirectLake Engine</span>
-//         </div>
-//         <button
-//           onClick={handleSync}
-//           className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-lime-400/10 hover:bg-lime-400/20 border border-lime-400/40 text-xs font-mono text-lime-300 transition-all active:scale-95"
-//         >
-//           <span className={isSyncing ? "animate-spin" : ""}>⚡</span>
-//           <span>{isSyncing ? "Syncing DirectLake..." : "14ms Sync Speed"}</span>
-//         </button>
-//       </div>
-// 
-//       {/* Main Metric Cards */}
-//       <div className="grid grid-cols-3 gap-3 my-4">
-//         <button
-//           onClick={() => setMetricTab('stockout')}
-//           className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'stockout'
-//             ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
-//             : 'bg-white/5 border-white/10 hover:bg-white/10'
-//             }`}
-//         >
-//           <div className="text-[10px] text-gray-400 font-mono uppercase">Stockout Risk</div>
-//           <div className="text-xl font-black text-lime-400 mt-1">{(volumeLoad * 0.12).toFixed(1)}%</div>
-//           <div className="text-[10px] text-emerald-400 mt-1">↓ -4.2% vs last week</div>
-//         </button>
-// 
-//         <button
-//           onClick={() => setMetricTab('leadtime')}
-//           className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'leadtime'
-//             ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
-//             : 'bg-white/5 border-white/10 hover:bg-white/10'
-//             }`}
-//         >
-//           <div className="text-[10px] text-gray-400 font-mono uppercase">Lead-Time Variance</div>
-//           <div className="text-xl font-black text-white mt-1">1.4 Days</div>
-//           <div className="text-[10px] text-lime-300 mt-1">Predictive AI Active</div>
-//         </button>
-// 
-//         <button
-//           onClick={() => setMetricTab('bottleneck')}
-//           className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'bottleneck'
-//             ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
-//             : 'bg-white/5 border-white/10 hover:bg-white/10'
-//             }`}
-//         >
-//           <div className="text-[10px] text-gray-400 font-mono uppercase">DirectLake Query</div>
-//           <div className="text-xl font-black text-cyan-400 mt-1">14.2 ms</div>
-//           <div className="text-[10px] text-cyan-300 mt-1">Zero ETL Pipelines</div>
-//         </button>
-//       </div>
-// 
-//       {/* Simulated Live Chart / Bar Visualizer */}
-//       <div className="p-4 rounded-xl bg-black/40 border border-white/10 flex-1 flex flex-col justify-between">
-//         <div className="flex items-center justify-between text-xs font-mono text-gray-400">
-//           <span>Global Warehouse Load Simulator</span>
-//           <span className="text-lime-400 font-bold">{volumeLoad}% Active Capacity</span>
-//         </div>
-// 
-//         {/* Dynamic Bars */}
-//         <div className="h-24 flex items-end gap-2 my-2">
-//           {[45, 62, 78, 55, 90, volumeLoad, 68, 84, 92, 70, volumeLoad * 0.9, 88].map((val, idx) => (
-//             <div key={idx} className="flex-1 bg-white/5 rounded-t-sm h-full flex items-end overflow-hidden">
-//               <div
-//                 className="w-full bg-gradient-to-t from-lime-500 to-lime-300 transition-all duration-500 rounded-t-sm"
-//                 style={{ height: `${Math.min(100, Math.max(15, val))}%` }}
-//               />
-//             </div>
-//           ))}
-//         </div>
-// 
-//         {/* Load Slider Control */}
-//         <div className="flex items-center gap-4 mt-2">
-//           <span className="text-[10px] font-mono text-gray-400">Simulate Shipment Volume:</span>
-//           <input
-//             type="range"
-//             min="20"
-//             max="100"
-//             value={volumeLoad}
-//             onChange={(e) => setVolumeLoad(Number(e.target.value))}
-//             className="flex-1 accent-[#c6ff34] cursor-pointer"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-// 
-// function PowerAppsFieldWorkbench() {
-//   const [items, setItems] = useState([
-//     { id: 'PLT-8942', status: 'VERIFIED', destination: 'Port of Rotterdam', qty: '420 Units' },
-//     { id: 'PLT-8943', status: 'PENDING', destination: 'Hamburg Hub', qty: '150 Units' },
-//     { id: 'PLT-8944', status: 'PENDING', destination: 'Miami Dispatch', qty: '310 Units' },
-//   ]);
-//   const [isScanning, setIsScanning] = useState(false);
-//   const [offlineMode, setOfflineMode] = useState(true);
-// 
-//   const handleScan = () => {
-//     setIsScanning(true);
-//     setTimeout(() => {
-//       setItems((prev) =>
-//         prev.map((item) => (item.status === 'PENDING' ? { ...item, status: 'VERIFIED' } : item))
-//       );
-//       setIsScanning(false);
-//     }, 1000);
-//   };
-// 
-//   return (
-//     <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-//       {/* Header */}
-//       <div className="flex items-center justify-between border-b border-white/10 pb-4">
-//         <div className="flex items-center gap-3">
-//           <div className="w-3 h-3 rounded-full bg-lime-400" />
-//           <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Power Apps + Custom PCF Field Terminal</span>
-//         </div>
-//         <button
-//           onClick={() => setOfflineMode(!offlineMode)}
-//           className={`px-3 py-1 rounded-full text-[10px] font-mono border transition-all ${offlineMode
-//             ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
-//             : 'bg-amber-500/20 border-amber-400 text-amber-300'
-//             }`}
-//         >
-//           {offlineMode ? '● Offline-First Active (Local DB Sync)' : '○ Connected to Dataverse'}
-//         </button>
-//       </div>
-// 
-//       {/* Scanner Visual Container */}
-//       <div className="relative my-3 p-4 rounded-xl bg-black/50 border border-white/10 overflow-hidden">
-//         {isScanning && (
-//           <div className="absolute inset-0 bg-lime-400/10 z-10 flex items-center justify-center">
-//             <div className="w-full h-1 bg-lime-400 shadow-[0_0_15px_#c6ff34] animate-bounce" />
-//           </div>
-//         )}
-// 
-//         <div className="flex items-center justify-between mb-3">
-//           <span className="text-xs font-mono text-gray-300">Live Inventory Scanner (PCF Custom Control)</span>
-//           <button
-//             onClick={handleScan}
-//             disabled={isScanning}
-//             className="px-4 py-1.5 rounded-lg bg-lime-400 text-black font-bold text-xs font-mono hover:bg-lime-300 transition-all active:scale-95 shadow-[0_0_15px_rgba(198,255,52,0.3)] disabled:opacity-50"
-//           >
-//             {isScanning ? 'Scanning Barcode...' : '📷 Scan Inventory Barcode'}
-//           </button>
-//         </div>
-// 
-//         {/* Inventory Item List */}
-//         <div className="space-y-2">
-//           {items.map((item) => (
-//             <div key={item.id} className="flex items-center justify-between p-2.5 rounded-lg bg-white/5 border border-white/10 text-xs">
-//               <div className="flex items-center gap-3">
-//                 <span className="font-mono text-lime-300 font-bold">{item.id}</span>
-//                 <span className="text-gray-400">{item.destination}</span>
-//               </div>
-//               <div className="flex items-center gap-3">
-//                 <span className="text-gray-400 font-mono">{item.qty}</span>
-//                 <span
-//                   className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${item.status === 'VERIFIED'
-//                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-//                     : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-//                     }`}
-//                 >
-//                   {item.status}
-//                 </span>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-// 
-//       <div className="text-[11px] font-mono text-gray-400 flex items-center justify-between">
-//         <span>Operators can record scans offline and auto-sync manifests upon reconnection.</span>
-//       </div>
-//     </div>
-//   );
-// }
-// 
-// function CognitiveDocumentWorkbench() {
-//   const [docType, setDocType] = useState('invoice');
-//   const [isProcessing, setIsProcessing] = useState(false);
-//   const [processed, setProcessed] = useState(true);
-// 
-//   const docs = {
-//     invoice: { title: 'Customs Declaration #8942-EU', vendor: 'Maersk Global Logistics', amount: '$412,850.00', confidence: '99.4%' },
-//     bol: { title: 'Bill of Lading #BOL-9902', vendor: 'Hapag-Lloyd Fleet', amount: '1,420 Metric Tons', confidence: '98.8%' },
-//   };
-// 
-//   const currentDoc = docs[docType];
-// 
-//   const handleProcess = () => {
-//     setIsProcessing(true);
-//     setProcessed(false);
-//     setTimeout(() => {
-//       setIsProcessing(false);
-//       setProcessed(true);
-//     }, 1200);
-//   };
-// 
-//   return (
-//     <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-//       {/* Header */}
-//       <div className="flex items-center justify-between border-b border-white/10 pb-4">
-//         <div className="flex items-center gap-3">
-//           <div className="w-3 h-3 rounded-full bg-lime-400" />
-//           <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Power Automate + Cognitive OCR Ingestion</span>
-//         </div>
-//         <div className="flex gap-2">
-//           <button
-//             onClick={() => { setDocType('invoice'); handleProcess(); }}
-//             className={`px-3 py-1 rounded-lg text-xs font-mono border transition-all ${docType === 'invoice' ? 'bg-lime-400/20 border-lime-400 text-lime-300' : 'bg-white/5 border-white/10 text-gray-400'
-//               }`}
-//           >
-//             Customs Invoice
-//           </button>
-//           <button
-//             onClick={() => { setDocType('bol'); handleProcess(); }}
-//             className={`px-3 py-1 rounded-lg text-xs font-mono border transition-all ${docType === 'bol' ? 'bg-lime-400/20 border-lime-400 text-lime-300' : 'bg-white/5 border-white/10 text-gray-400'
-//               }`}
-//           >
-//             Bill of Lading
-//           </button>
-//         </div>
-//       </div>
-// 
-//       {/* Main Extracted Metadata Stage */}
-//       <div className="my-3 p-4 rounded-xl bg-black/50 border border-white/10 relative overflow-hidden">
-//         {isProcessing && (
-//           <div className="absolute inset-0 bg-lime-400/10 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-2">
-//             <div className="w-12 h-12 rounded-full border-2 border-lime-400 border-t-transparent animate-spin" />
-//             <span className="text-xs font-mono text-lime-300 font-bold">Running Headless RPA & AI OCR Extraction...</span>
-//           </div>
-//         )}
-// 
-//         <div className="flex items-center justify-between mb-3">
-//           <div className="text-xs font-mono text-gray-300">{currentDoc.title}</div>
-//           <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-//             AI Confidence: {currentDoc.confidence}
-//           </span>
-//         </div>
-// 
-//         {/* JSON / Extracted Fields Grid */}
-//         <div className="grid grid-cols-2 gap-3 text-xs">
-//           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-//             <span className="text-[10px] text-gray-400 font-mono uppercase block">Extracted Vendor</span>
-//             <span className="font-bold text-white mt-1 block">{currentDoc.vendor}</span>
-//           </div>
-//           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-//             <span className="text-[10px] text-gray-400 font-mono uppercase block">Parsed Total</span>
-//             <span className="font-bold text-lime-400 mt-1 block">{currentDoc.amount}</span>
-//           </div>
-//         </div>
-//       </div>
-// 
-//       <div className="flex items-center justify-between text-xs font-mono">
-//         <span className="text-gray-400">Automated RPA Bot matches incoming PDFs against SAP ERP purchase orders.</span>
-//         <button
-//           onClick={handleProcess}
-//           className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs transition-all border border-white/20"
-//         >
-//           🔄 Re-run Extraction
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-// 
-// function CopilotAgentFleetWorkbench() {
-//   const [activePrompt, setActivePrompt] = useState(0);
-//   const [isExecuting, setIsExecuting] = useState(false);
-// 
-//   const prompts = [
-//     {
-//       title: '🔀 Reroute Shipment #4092',
-//       reasoning: [
-//         '1. Grounded in Dataverse & Port API...',
-//         '2. Detected 48h congestion at Hamburg Terminal.',
-//         '3. Rerouted shipment via Port of Rotterdam.',
-//         '4. Updated Fleet Allocation Schedule in real time.',
-//       ],
-//       action: 'Shipment #4092 Rerouted (Saved 48h)',
-//     },
-//     {
-//       title: '📦 Query Supplier Inventory',
-//       reasoning: [
-//         '1. Querying Supplier REST API endpoints...',
-//         '2. Response 200 OK: 12,400 raw units available.',
-//         '3. Triggered automated PO creation in Power Automate.',
-//       ],
-//       action: 'Supplier Inventory Verified & Synced',
-//     },
-//   ];
-// 
-//   const current = prompts[activePrompt];
-// 
-//   const handlePromptSelect = (idx) => {
-//     setActivePrompt(idx);
-//     setIsExecuting(true);
-//     setTimeout(() => setIsExecuting(false), 800);
-//   };
-// 
-//   return (
-//     <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-//       {/* Header */}
-//       <div className="flex items-center justify-between border-b border-white/10 pb-4">
-//         <div className="flex items-center gap-3">
-//           <div className="w-3 h-3 rounded-full bg-lime-400 animate-pulse shadow-[0_0_10px_#c6ff34]" />
-//           <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Copilot Studio — Autonomous Logistics Agent</span>
-//         </div>
-//         <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-lime-400/20 text-lime-300 border border-lime-400/40">
-//           Autonomous Fleet Active
-//         </span>
-//       </div>
-// 
-//       {/* Prompt Selector Pills */}
-//       <div className="flex gap-2 my-2">
-//         {prompts.map((p, idx) => (
-//           <button
-//             key={idx}
-//             onClick={() => handlePromptSelect(idx)}
-//             className={`px-3 py-1.5 rounded-lg text-xs font-mono border transition-all ${activePrompt === idx
-//               ? 'bg-lime-400/20 border-lime-400 text-lime-300 shadow-[0_0_10px_rgba(198,255,52,0.2)]'
-//               : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-//               }`}
-//           >
-//             {p.title}
-//           </button>
-//         ))}
-//       </div>
-// 
-//       {/* Reasoning Log Console */}
-//       <div className="my-2 p-4 rounded-xl bg-black/60 border border-white/10 flex-1 flex flex-col justify-between relative overflow-hidden font-mono text-xs">
-//         {isExecuting && (
-//           <div className="absolute inset-0 bg-lime-400/10 backdrop-blur-sm z-10 flex items-center justify-center">
-//             <span className="text-xs text-lime-300 font-bold animate-pulse">Copilot Agent Thinking & Querying APIs...</span>
-//           </div>
-//         )}
-// 
-//         <div className="space-y-1 text-gray-300">
-//           {current.reasoning.map((step, idx) => (
-//             <div key={idx} className="flex items-center gap-2">
-//               <span className="text-lime-400">›</span>
-//               <span>{step}</span>
-//             </div>
-//           ))}
-//         </div>
-// 
-//         <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-emerald-400 font-bold">
-//           <span>✓ {current.action}</span>
-//           <span className="text-[10px] text-gray-500">Autonomous Decision Executed</span>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-// 
-// function TactileSolutionWorkbench({ activeTab, activeSubCard, currentIndustry }) {
-//   return (
-//     <div className="w-full h-[380px] relative flex items-center justify-center p-2">
-//       {activeTab === 0 && activeSubCard === 0 && <FabricDirectLakeWorkbench />}
-//       {activeTab === 0 && activeSubCard === 1 && <PowerAppsFieldWorkbench />}
-//       {activeTab === 0 && activeSubCard === 2 && <CognitiveDocumentWorkbench />}
-//       {activeTab === 0 && activeSubCard === 3 && <CopilotAgentFleetWorkbench />}
-// 
-//       {/* Fallback for other tabs */}
-//       {(activeTab !== 0 || activeSubCard > 3) && (
-//         <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl">
-//           <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-//             <div className="w-3 h-3 rounded-full bg-lime-400" />
-//             <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">{currentIndustry.title} Solution</span>
-//           </div>
-//           <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-center">
-//             <h4 className="text-lg font-bold text-white mb-2">{currentIndustry.bentoCards?.[activeSubCard]?.title || currentIndustry.title}</h4>
-//             <p className="text-xs text-gray-300 max-w-md mx-auto">{currentIndustry.bentoCards?.[activeSubCard]?.body || currentIndustry.headlineBody}</p>
-//           </div>
-//           <div className="text-xs font-mono text-lime-300 text-right">Enterprise Grade Architecture</div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-// 
+function FabricDirectLakeWorkbench() {
+  const [metricTab, setMetricTab] = useState('stockout');
+  const [volumeLoad, setVolumeLoad] = useState(72);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleSync = () => {
+    setIsSyncing(true);
+    setTimeout(() => setIsSyncing(false), 900);
+  };
+
+  return (
+    <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Top Bar / Header */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-lime-400 animate-pulse shadow-[0_0_10px_#c6ff34]" />
+          <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Fabric + Power BI DirectLake Engine</span>
+        </div>
+        <button
+          onClick={handleSync}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-lime-400/10 hover:bg-lime-400/20 border border-lime-400/40 text-xs font-mono text-lime-300 transition-all active:scale-95"
+        >
+          <span className={isSyncing ? "animate-spin" : ""}>⚡</span>
+          <span>{isSyncing ? "Syncing DirectLake..." : "14ms Sync Speed"}</span>
+        </button>
+      </div>
+
+      {/* Main Metric Cards */}
+      <div className="grid grid-cols-3 gap-3 my-4">
+        <button
+          onClick={() => setMetricTab('stockout')}
+          className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'stockout'
+            ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
+            : 'bg-white/5 border-white/10 hover:bg-white/10'
+            }`}
+        >
+          <div className="text-[10px] text-gray-400 font-mono uppercase">Stockout Risk</div>
+          <div className="text-xl font-black text-lime-400 mt-1">{(volumeLoad * 0.12).toFixed(1)}%</div>
+          <div className="text-[10px] text-emerald-400 mt-1">↓ -4.2% vs last week</div>
+        </button>
+
+        <button
+          onClick={() => setMetricTab('leadtime')}
+          className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'leadtime'
+            ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
+            : 'bg-white/5 border-white/10 hover:bg-white/10'
+            }`}
+        >
+          <div className="text-[10px] text-gray-400 font-mono uppercase">Lead-Time Variance</div>
+          <div className="text-xl font-black text-white mt-1">1.4 Days</div>
+          <div className="text-[10px] text-lime-300 mt-1">Predictive AI Active</div>
+        </button>
+
+        <button
+          onClick={() => setMetricTab('bottleneck')}
+          className={`p-3 rounded-xl border text-left transition-all ${metricTab === 'bottleneck'
+            ? 'bg-lime-400/15 border-lime-400 shadow-[0_0_15px_rgba(198,255,52,0.15)]'
+            : 'bg-white/5 border-white/10 hover:bg-white/10'
+            }`}
+        >
+          <div className="text-[10px] text-gray-400 font-mono uppercase">DirectLake Query</div>
+          <div className="text-xl font-black text-cyan-400 mt-1">14.2 ms</div>
+          <div className="text-[10px] text-cyan-300 mt-1">Zero ETL Pipelines</div>
+        </button>
+      </div>
+
+      {/* Simulated Live Chart / Bar Visualizer */}
+      <div className="p-4 rounded-xl bg-black/40 border border-white/10 flex-1 flex flex-col justify-between">
+        <div className="flex items-center justify-between text-xs font-mono text-gray-400">
+          <span>Global Warehouse Load Simulator</span>
+          <span className="text-lime-400 font-bold">{volumeLoad}% Active Capacity</span>
+        </div>
+
+        {/* Dynamic Bars */}
+        <div className="h-24 flex items-end gap-2 my-2">
+          {[45, 62, 78, 55, 90, volumeLoad, 68, 84, 92, 70, volumeLoad * 0.9, 88].map((val, idx) => (
+            <div key={idx} className="flex-1 bg-white/5 rounded-t-sm h-full flex items-end overflow-hidden">
+              <div
+                className="w-full bg-gradient-to-t from-lime-500 to-lime-300 transition-all duration-500 rounded-t-sm"
+                style={{ height: `${Math.min(100, Math.max(15, val))}%` }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Load Slider Control */}
+        <div className="flex items-center gap-4 mt-2">
+          <span className="text-[10px] font-mono text-gray-400">Simulate Shipment Volume:</span>
+          <input
+            type="range"
+            min="20"
+            max="100"
+            value={volumeLoad}
+            onChange={(e) => setVolumeLoad(Number(e.target.value))}
+            className="flex-1 accent-[#c6ff34] cursor-pointer"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PowerAppsFieldWorkbench() {
+  const [items, setItems] = useState([
+    { id: 'PLT-8942', status: 'VERIFIED', destination: 'Port of Rotterdam', qty: '420 Units' },
+    { id: 'PLT-8943', status: 'PENDING', destination: 'Hamburg Hub', qty: '150 Units' },
+    { id: 'PLT-8944', status: 'PENDING', destination: 'Miami Dispatch', qty: '310 Units' },
+  ]);
+  const [isScanning, setIsScanning] = useState(false);
+  const [offlineMode, setOfflineMode] = useState(true);
+
+  const handleScan = () => {
+    setIsScanning(true);
+    setTimeout(() => {
+      setItems((prev) =>
+        prev.map((item) => (item.status === 'PENDING' ? { ...item, status: 'VERIFIED' } : item))
+      );
+      setIsScanning(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-lime-400" />
+          <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Power Apps + Custom PCF Field Terminal</span>
+        </div>
+        <button
+          onClick={() => setOfflineMode(!offlineMode)}
+          className={`px-3 py-1 rounded-full text-[10px] font-mono border transition-all ${offlineMode
+            ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
+            : 'bg-amber-500/20 border-amber-400 text-amber-300'
+            }`}
+        >
+          {offlineMode ? '● Offline-First Active (Local DB Sync)' : '○ Connected to Dataverse'}
+        </button>
+      </div>
+
+      {/* Scanner Visual Container */}
+      <div className="relative my-3 p-4 rounded-xl bg-black/50 border border-white/10 overflow-hidden">
+        {isScanning && (
+          <div className="absolute inset-0 bg-lime-400/10 z-10 flex items-center justify-center">
+            <div className="w-full h-1 bg-lime-400 shadow-[0_0_15px_#c6ff34] animate-bounce" />
+          </div>
+        )}
+
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs font-mono text-gray-300">Live Inventory Scanner (PCF Custom Control)</span>
+          <button
+            onClick={handleScan}
+            disabled={isScanning}
+            className="px-4 py-1.5 rounded-lg bg-lime-400 text-black font-bold text-xs font-mono hover:bg-lime-300 transition-all active:scale-95 shadow-[0_0_15px_rgba(198,255,52,0.3)] disabled:opacity-50"
+          >
+            {isScanning ? 'Scanning Barcode...' : '📷 Scan Inventory Barcode'}
+          </button>
+        </div>
+
+        {/* Inventory Item List */}
+        <div className="space-y-2">
+          {items.map((item) => (
+            <div key={item.id} className="flex items-center justify-between p-2.5 rounded-lg bg-white/5 border border-white/10 text-xs">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-lime-300 font-bold">{item.id}</span>
+                <span className="text-gray-400">{item.destination}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-gray-400 font-mono">{item.qty}</span>
+                <span
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${item.status === 'VERIFIED'
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                    : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                    }`}
+                >
+                  {item.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-[11px] font-mono text-gray-400 flex items-center justify-between">
+        <span>Operators can record scans offline and auto-sync manifests upon reconnection.</span>
+      </div>
+    </div>
+  );
+}
+
+function CognitiveDocumentWorkbench() {
+  const [docType, setDocType] = useState('invoice');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processed, setProcessed] = useState(true);
+
+  const docs = {
+    invoice: { title: 'Customs Declaration #8942-EU', vendor: 'Maersk Global Logistics', amount: '$412,850.00', confidence: '99.4%' },
+    bol: { title: 'Bill of Lading #BOL-9902', vendor: 'Hapag-Lloyd Fleet', amount: '1,420 Metric Tons', confidence: '98.8%' },
+  };
+
+  const currentDoc = docs[docType];
+
+  const handleProcess = () => {
+    setIsProcessing(true);
+    setProcessed(false);
+    setTimeout(() => {
+      setIsProcessing(false);
+      setProcessed(true);
+    }, 1200);
+  };
+
+  return (
+    <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-lime-400" />
+          <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Power Automate + Cognitive OCR Ingestion</span>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => { setDocType('invoice'); handleProcess(); }}
+            className={`px-3 py-1 rounded-lg text-xs font-mono border transition-all ${docType === 'invoice' ? 'bg-lime-400/20 border-lime-400 text-lime-300' : 'bg-white/5 border-white/10 text-gray-400'
+              }`}
+          >
+            Customs Invoice
+          </button>
+          <button
+            onClick={() => { setDocType('bol'); handleProcess(); }}
+            className={`px-3 py-1 rounded-lg text-xs font-mono border transition-all ${docType === 'bol' ? 'bg-lime-400/20 border-lime-400 text-lime-300' : 'bg-white/5 border-white/10 text-gray-400'
+              }`}
+          >
+            Bill of Lading
+          </button>
+        </div>
+      </div>
+
+      {/* Main Extracted Metadata Stage */}
+      <div className="my-3 p-4 rounded-xl bg-black/50 border border-white/10 relative overflow-hidden">
+        {isProcessing && (
+          <div className="absolute inset-0 bg-lime-400/10 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-2">
+            <div className="w-12 h-12 rounded-full border-2 border-lime-400 border-t-transparent animate-spin" />
+            <span className="text-xs font-mono text-lime-300 font-bold">Running Headless RPA & AI OCR Extraction...</span>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-xs font-mono text-gray-300">{currentDoc.title}</div>
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+            AI Confidence: {currentDoc.confidence}
+          </span>
+        </div>
+
+        {/* JSON / Extracted Fields Grid */}
+        <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+            <span className="text-[10px] text-gray-400 font-mono uppercase block">Extracted Vendor</span>
+            <span className="font-bold text-white mt-1 block">{currentDoc.vendor}</span>
+          </div>
+          <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+            <span className="text-[10px] text-gray-400 font-mono uppercase block">Parsed Total</span>
+            <span className="font-bold text-lime-400 mt-1 block">{currentDoc.amount}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between text-xs font-mono">
+        <span className="text-gray-400">Automated RPA Bot matches incoming PDFs against SAP ERP purchase orders.</span>
+        <button
+          onClick={handleProcess}
+          className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs transition-all border border-white/20"
+        >
+          🔄 Re-run Extraction
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function CopilotAgentFleetWorkbench() {
+  const [activePrompt, setActivePrompt] = useState(0);
+  const [isExecuting, setIsExecuting] = useState(false);
+
+  const prompts = [
+    {
+      title: '🔀 Reroute Shipment #4092',
+      reasoning: [
+        '1. Grounded in Dataverse & Port API...',
+        '2. Detected 48h congestion at Hamburg Terminal.',
+        '3. Rerouted shipment via Port of Rotterdam.',
+        '4. Updated Fleet Allocation Schedule in real time.',
+      ],
+      action: 'Shipment #4092 Rerouted (Saved 48h)',
+    },
+    {
+      title: '📦 Query Supplier Inventory',
+      reasoning: [
+        '1. Querying Supplier REST API endpoints...',
+        '2. Response 200 OK: 12,400 raw units available.',
+        '3. Triggered automated PO creation in Power Automate.',
+      ],
+      action: 'Supplier Inventory Verified & Synced',
+    },
+  ];
+
+  const current = prompts[activePrompt];
+
+  const handlePromptSelect = (idx) => {
+    setActivePrompt(idx);
+    setIsExecuting(true);
+    setTimeout(() => setIsExecuting(false), 800);
+  };
+
+  return (
+    <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-lime-400 animate-pulse shadow-[0_0_10px_#c6ff34]" />
+          <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">Copilot Studio — Autonomous Logistics Agent</span>
+        </div>
+        <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-lime-400/20 text-lime-300 border border-lime-400/40">
+          Autonomous Fleet Active
+        </span>
+      </div>
+
+      {/* Prompt Selector Pills */}
+      <div className="flex gap-2 my-2">
+        {prompts.map((p, idx) => (
+          <button
+            key={idx}
+            onClick={() => handlePromptSelect(idx)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-mono border transition-all ${activePrompt === idx
+              ? 'bg-lime-400/20 border-lime-400 text-lime-300 shadow-[0_0_10px_rgba(198,255,52,0.2)]'
+              : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
+              }`}
+          >
+            {p.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Reasoning Log Console */}
+      <div className="my-2 p-4 rounded-xl bg-black/60 border border-white/10 flex-1 flex flex-col justify-between relative overflow-hidden font-mono text-xs">
+        {isExecuting && (
+          <div className="absolute inset-0 bg-lime-400/10 backdrop-blur-sm z-10 flex items-center justify-center">
+            <span className="text-xs text-lime-300 font-bold animate-pulse">Copilot Agent Thinking & Querying APIs...</span>
+          </div>
+        )}
+
+        <div className="space-y-1 text-gray-300">
+          {current.reasoning.map((step, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <span className="text-lime-400">›</span>
+              <span>{step}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-emerald-400 font-bold">
+          <span>✓ {current.action}</span>
+          <span className="text-[10px] text-gray-500">Autonomous Decision Executed</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TactileSolutionWorkbench({ activeTab, activeSubCard, currentIndustry }) {
+  return (
+    <div className="w-full h-[380px] relative flex items-center justify-center p-2">
+      {activeTab === 0 && activeSubCard === 0 && <FabricDirectLakeWorkbench />}
+      {activeTab === 0 && activeSubCard === 1 && <PowerAppsFieldWorkbench />}
+      {activeTab === 0 && activeSubCard === 2 && <CognitiveDocumentWorkbench />}
+      {activeTab === 0 && activeSubCard === 3 && <CopilotAgentFleetWorkbench />}
+
+      {/* Fallback for other tabs */}
+      {(activeTab !== 0 || activeSubCard > 3) && (
+        <div className="w-full h-full p-6 flex flex-col justify-between text-white font-sans bg-slate-950/80 rounded-2xl border border-lime-400/30 shadow-2xl backdrop-blur-xl">
+          <div className="flex items-center gap-3 border-b border-white/10 pb-4">
+            <div className="w-3 h-3 rounded-full bg-lime-400" />
+            <span className="text-xs font-mono tracking-wider text-lime-400 font-bold uppercase">{currentIndustry.title} Solution</span>
+          </div>
+          <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-center">
+            <h4 className="text-lg font-bold text-white mb-2">{currentIndustry.bentoCards?.[activeSubCard]?.title || currentIndustry.title}</h4>
+            <p className="text-xs text-gray-300 max-w-md mx-auto">{currentIndustry.bentoCards?.[activeSubCard]?.body || currentIndustry.headlineBody}</p>
+          </div>
+          <div className="text-xs font-mono text-lime-300 text-right">Enterprise Grade Architecture</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // 
 // --- END OF BACKUP ---
 export default function App() {
