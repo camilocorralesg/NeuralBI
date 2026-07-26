@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function CharacterReveal({
+const CharacterReveal = React.memo(function CharacterReveal({
   text,
   className = "",
   style = {},
@@ -16,7 +16,7 @@ export default function CharacterReveal({
     return <span className={className} style={style}>{text}</span>;
   }
 
-  const words = text.split(' ');
+  const words = React.useMemo(() => text.split(' '), [text]);
 
   const containerVariants = {
     hidden: {},
@@ -92,4 +92,6 @@ export default function CharacterReveal({
       ))}
     </motion.span>
   );
-}
+});
+
+export default CharacterReveal;
