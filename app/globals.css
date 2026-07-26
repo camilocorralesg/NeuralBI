@@ -40,12 +40,12 @@ html {
 
   /* Typography */
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-ui: 'Manrope', system-ui, sans-serif;
-  --font-button: 'Cabin', system-ui, sans-serif;
-  --font-serif: 'Instrument Serif', serif;
-  --font-display: 'Absolut', sans-serif;
+  --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-button: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-serif: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-tech: 'Space Grotesk', system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   /* Spacing (4pt system) */
   --space-1: 0.25rem;
