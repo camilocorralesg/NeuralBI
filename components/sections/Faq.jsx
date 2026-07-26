@@ -2,6 +2,7 @@
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CharacterReveal from '../CharacterReveal';
 
 // ─── SECTION 10: PREMIUM STYLE-SPECIFIC FAQ (ACCORDIONS, GRID & COMMAND CONSOLE) ───
 function Faq({ activeHero }) {

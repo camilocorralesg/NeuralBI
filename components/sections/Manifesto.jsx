@@ -2,6 +2,8 @@
 
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
+import CharacterReveal from '../CharacterReveal';
+import TiltCard from '../TiltCard';
 
 function Manifesto({ activeHero }) {
   const data = [

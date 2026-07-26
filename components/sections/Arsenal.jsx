@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Spline from '@splinetool/react-spline/next';
 import TiltCard from '../TiltCard';
 import FloatingLines from '../FloatingLines';
+import CharacterReveal from '../CharacterReveal';
 
 const powerBiLogo = '/assets/New_Power_BI_Logo.svg';
 const powerAppsLogo = '/assets/Powerapps-logo.svg.svg';

@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
+import CharacterReveal from '../CharacterReveal';
+import Magnetic from '../Magnetic';
 
 function FooterCTA({ activeHero }) {
   const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });

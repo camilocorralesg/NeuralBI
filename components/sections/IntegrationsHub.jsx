@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
+import CharacterReveal from '../CharacterReveal';
 
 function IntegrationsHub({ activeHero }) {
   const [hoveredNode, setHoveredNode] = React.useState(null);
