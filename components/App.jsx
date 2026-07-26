@@ -20771,30 +20771,25 @@ function Footer({ activeHero }) {
   const [lang, setLang] = React.useState('English');
 
   const links = {
-    platform: [
-      { name: "About Power Platform", href: "#" },
-      { name: "Enterprise Blueprint", href: "#" },
-      { name: "AI Integration", href: "#" }
+    "Power BI": [
+      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-bi/", target: "_blank" },
+      { name: "Arquitectura Direct Lake", href: "https://learn.microsoft.com/power-bi/enterprise/direct-lake-overview", target: "_blank" },
+      { name: "Guías Enterprise Data", href: "https://learn.microsoft.com/power-bi/guidance/", target: "_blank" }
     ],
-    solutions: [
-      { name: "Fintech Engine", href: "#" },
-      { name: "Retail Pipeline", href: "#" },
-      { name: "Health Telemetry", href: "#" }
+    "Power Apps": [
+      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-apps/", target: "_blank" },
+      { name: "Componentes PCF & React", href: "https://learn.microsoft.com/power-apps/developer/component-framework/overview", target: "_blank" },
+      { name: "Desarrollo Canvas & Model", href: "https://learn.microsoft.com/power-apps/maker/", target: "_blank" }
     ],
-    company: [
-      { name: "About Us", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Manifesto", href: "#" }
+    "Power Automate": [
+      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-automate/", target: "_blank" },
+      { name: "Headless RPA & Desktop", href: "https://learn.microsoft.com/power-automate/desktop-flows/introduction", target: "_blank" },
+      { name: "Flujos Cloud & AI Builder", href: "https://learn.microsoft.com/power-automate/guidance/", target: "_blank" }
     ],
-    developers: [
-      { name: "PowerApps SDK", href: "#" },
-      { name: "Developer APIs", href: "#" },
-      { name: "Copilot Studio", href: "#" }
-    ],
-    resources: [
-      { name: "Incident History", href: "#" },
-      { name: "Terms of Service", href: "#" },
-      { name: "Privacy Policy", href: "#" }
+    "Copilot Studio": [
+      { name: "Documentación Oficial", href: "https://learn.microsoft.com/copilot-studio/", target: "_blank" },
+      { name: "Agentes Autónomos & GPT", href: "https://learn.microsoft.com/copilot-studio/nlu-gpt-overview", target: "_blank" },
+      { name: "Acciones & Plug-ins API", href: "https://learn.microsoft.com/copilot-studio/advanced-plugin-actions", target: "_blank" }
     ]
   };
 
@@ -21258,14 +21253,7 @@ function Footer({ activeHero }) {
             gap: '2rem',
             marginBottom: '6rem'
           }} className="raycast-footer-grid">
-            {Object.keys(links).concat(["community"]).map((category, index) => {
-              const catName = category === "platform" ? "Product" : category === "solutions" ? "Core Features" : category === "company" ? "Company" : category === "developers" ? "Developers" : category === "resources" ? "Resources" : "Community";
-              const catLinks = links[category] || [
-                { name: "Community Stories", href: "#" },
-                { name: "Ambassadors", href: "#" },
-                { name: "Slack", href: "#" }
-              ];
-
+            {Object.keys(links).map((category, index) => {
               return (
                 <div key={index} className="footer-link-group" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <h4 style={{
@@ -21275,12 +21263,12 @@ function Footer({ activeHero }) {
                     color: '#ffffff',
                     letterSpacing: '-0.01em'
                   }}>
-                    {catName}
+                    {category}
                   </h4>
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                    {catLinks.map((l, idx) => (
+                    {links[category].map((l, idx) => (
                       <li key={idx}>
-                        <a href={l.href} style={{
+                        <a href={l.href} target={l.target || "_self"} rel="noopener noreferrer" style={{
                           fontFamily: 'var(--font-sans)',
                           fontSize: '0.85rem',
                           color: '#8e8e93',
@@ -21314,10 +21302,8 @@ function Footer({ activeHero }) {
             </div>
 
             <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>X / Twitter</a>
-              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>LinkedIn</a>
-              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>Discord</a>
-              <a href="#" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>YouTube</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>YouTube</a>
             </div>
           </div>
         </div>
@@ -21399,7 +21385,7 @@ function Footer({ activeHero }) {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {links[category].map((l, idx) => (
                   <li key={idx}>
-                    <a href={l.href} style={{
+                    <a href={l.href} target={l.target || "_self"} rel="noopener noreferrer" style={{
                       fontFamily: 'var(--font-sans)',
                       fontSize: '0.9rem',
                       color: 'rgba(255, 255, 255, 0.45)',
@@ -21430,17 +21416,13 @@ function Footer({ activeHero }) {
             <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', alignSelf: 'flex-start', opacity: 0.95 }} />
 
             <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
-              </a>
-              <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.094 13.094 0 0 1-1.873-.894.077.077 0 0 1-.008-.128c.126-.093.252-.19.372-.287a.075.075 0 0 1 .077-.011c3.92 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.009c.12.099.246.195.373.289a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.156 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.156 2.418z" /></svg>
-              </a>
-              <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
+              {/* LinkedIn */}
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
               </a>
-              <a href="#" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.6.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z" /></svg>
+              {/* YouTube */}
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
               </a>
             </div>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.05em' }}>
