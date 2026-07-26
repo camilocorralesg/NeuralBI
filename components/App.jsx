@@ -20772,24 +20772,24 @@ function Footer({ activeHero }) {
 
   const links = {
     "Power BI": [
-      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-bi/", target: "_blank" },
-      { name: "Arquitectura Direct Lake", href: "https://learn.microsoft.com/power-bi/enterprise/direct-lake-overview", target: "_blank" },
-      { name: "Guías Enterprise Data", href: "https://learn.microsoft.com/power-bi/guidance/", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/power-bi/", target: "_blank" },
+      { name: "Direct Lake Architecture", href: "https://learn.microsoft.com/power-bi/enterprise/direct-lake-overview", target: "_blank" },
+      { name: "Enterprise Data Guidance", href: "https://learn.microsoft.com/power-bi/guidance/", target: "_blank" }
     ],
     "Power Apps": [
-      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-apps/", target: "_blank" },
-      { name: "Componentes PCF & React", href: "https://learn.microsoft.com/power-apps/developer/component-framework/overview", target: "_blank" },
-      { name: "Desarrollo Canvas & Model", href: "https://learn.microsoft.com/power-apps/maker/", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/power-apps/", target: "_blank" },
+      { name: "PCF Components & React", href: "https://learn.microsoft.com/power-apps/developer/component-framework/overview", target: "_blank" },
+      { name: "Canvas & Model-Driven", href: "https://learn.microsoft.com/power-apps/maker/", target: "_blank" }
     ],
     "Power Automate": [
-      { name: "Documentación Oficial", href: "https://learn.microsoft.com/power-automate/", target: "_blank" },
+      { name: "Official Documentation", href: "https://learn.microsoft.com/power-automate/", target: "_blank" },
       { name: "Headless RPA & Desktop", href: "https://learn.microsoft.com/power-automate/desktop-flows/introduction", target: "_blank" },
-      { name: "Flujos Cloud & AI Builder", href: "https://learn.microsoft.com/power-automate/guidance/", target: "_blank" }
+      { name: "Cloud Flows & AI Builder", href: "https://learn.microsoft.com/power-automate/guidance/", target: "_blank" }
     ],
     "Copilot Studio": [
-      { name: "Documentación Oficial", href: "https://learn.microsoft.com/copilot-studio/", target: "_blank" },
-      { name: "Agentes Autónomos & GPT", href: "https://learn.microsoft.com/copilot-studio/nlu-gpt-overview", target: "_blank" },
-      { name: "Acciones & Plug-ins API", href: "https://learn.microsoft.com/copilot-studio/advanced-plugin-actions", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/copilot-studio/", target: "_blank" },
+      { name: "Autonomous Agents & GPT", href: "https://learn.microsoft.com/copilot-studio/nlu-gpt-overview", target: "_blank" },
+      { name: "API Actions & Plug-ins", href: "https://learn.microsoft.com/copilot-studio/advanced-plugin-actions", target: "_blank" }
     ]
   };
 
@@ -20839,7 +20839,7 @@ function Footer({ activeHero }) {
           {/* Link columns */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '3rem',
             marginBottom: '6rem'
           }}>
@@ -20980,7 +20980,7 @@ function Footer({ activeHero }) {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 3 }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '3rem',
             marginBottom: '6rem'
           }} className="raycast-footer-grid">
@@ -21087,7 +21087,7 @@ function Footer({ activeHero }) {
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
+              gridTemplateColumns: 'repeat(4, 1fr)',
               gap: '2.5rem'
             }} className="raycast-footer-grid">
               {Object.keys(links).map((category, index) => (
@@ -21249,7 +21249,7 @@ function Footer({ activeHero }) {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 3 }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(6, 1fr)',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '2rem',
             marginBottom: '6rem'
           }} className="raycast-footer-grid">
@@ -21366,7 +21366,7 @@ function Footer({ activeHero }) {
         {/* Link columns */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: '3rem',
           marginBottom: '6rem'
         }}>
