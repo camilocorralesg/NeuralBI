@@ -17357,36 +17357,16 @@ function IsometricVerticalStage({ activeTab, activeSubCard, currentIndustry }) {
 
 function Industries({ activeHero }) {
   const [activeTab, setActiveTab] = useState(0);
-  const [activeSubCard, setActiveSubCard] = useState(0);
-  const cardRefs = useRef([]);
 
   const currentIndustry = industriesData[activeTab] || industriesData[0];
   const isRemix = activeHero === 'remix';
-
-  // Auto-track visible solution sub-card as user scrolls
-  useEffect(() => {
-    const handleScroll = () => {
-      const pageCenter = window.innerHeight * 0.45;
-      cardRefs.current.forEach((ref, index) => {
-        if (ref) {
-          const rect = ref.getBoundingClientRect();
-          if (rect.top <= pageCenter && rect.bottom >= pageCenter) {
-            setActiveSubCard(index);
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
 
         {/* Section Header Block */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
           <h2 style={{ textAlign: 'center', margin: 0 }}>
             <CharacterReveal
               text="Applied Intelligence Across Verticals"
@@ -17423,17 +17403,14 @@ function Industries({ activeHero }) {
             {industriesData.map((item, index) => (
               <button
                 key={item.id}
-                onClick={() => {
-                  setActiveTab(index);
-                  setActiveSubCard(0);
-                }}
+                onClick={() => setActiveTab(index)}
                 style={{
                   background: activeTab === index ? 'rgba(198, 255, 52, 0.12)' : 'rgba(255,255,255,0.03)',
                   border: `1px solid ${activeTab === index ? 'rgba(198, 255, 52, 0.45)' : 'rgba(255,255,255,0.06)'}`,
                   padding: '0.65rem 1.4rem',
                   borderRadius: '9999px',
                   color: activeTab === index ? '#ffffff' : 'rgba(255,255,255,0.5)',
-                  fontFamily: 'var(--font-sans)',
+                  fontFamily: 'var(--font-ui)',
                   fontSize: '0.9rem',
                   fontWeight: 600,
                   display: 'flex',
@@ -17449,170 +17426,111 @@ function Industries({ activeHero }) {
               </button>
             ))}
           </div>
-
-
         </div>
 
-        {/* 2-Column Scrollytelling Layout */}
+        {/* Industry Header (Full Width Bento Item) */}
+        <div style={{
+          background: 'rgba(20, 24, 18, 0.45)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(198, 255, 52, 0.12)',
+          borderRadius: '24px',
+          padding: '2.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          gap: '1.25rem',
+          boxShadow: '0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
+          marginBottom: '3rem'
+        }}>
+          <div style={{
+            width: '64px',
+            height: '64px',
+            borderRadius: '16px',
+            background: 'rgba(198, 255, 52, 0.08)',
+            border: '1px solid rgba(198, 255, 52, 0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#c6ff34',
+            boxShadow: '0 0 30px rgba(198, 255, 52, 0.2)'
+          }}>
+            <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+          </div>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 800, color: '#ffffff', margin: 0, lineHeight: 1.2, letterSpacing: '-0.02em' }}>
+            {currentIndustry.headlineTitle || currentIndustry.title}
+          </h3>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, margin: 0, maxWidth: '800px' }}>
+            {currentIndustry.headlineBody || currentIndustry.body}
+          </p>
+        </div>
+
+        {/* Sub-Solutions Bento Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.25fr) minmax(0, 1fr)',
-          gap: '3.5rem',
-          alignItems: 'start',
-          position: 'relative'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.5rem'
         }}>
-
-          {/* LEFT COLUMN: Header + 4 Granular Solution Sub-Cards Flow */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-
-            {/* Industry Header Block — Glassmorphism */}
-            <div style={{
-              background: 'rgba(20, 24, 18, 0.45)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(198, 255, 52, 0.12)',
-              borderRadius: '24px',
-              padding: '2.25rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.25rem',
-              boxShadow: '0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '14px',
-                  background: 'rgba(198, 255, 52, 0.08)',
-                  border: '1px solid rgba(198, 255, 52, 0.25)',
+          {currentIndustry.bentoCards?.map((card, idx) => {
+            return (
+              <div
+                key={idx}
+                className="sui-card-hover"
+                style={{
+                  background: 'rgba(20, 24, 18, 0.35)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderRadius: '20px',
+                  padding: '2rem',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  cursor: 'pointer',
+                  position: 'relative',
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#c6ff34',
-                  boxShadow: '0 0 20px rgba(198, 255, 52, 0.18)'
-                }}>
-                  <div style={{ transform: 'scale(1.15)' }}>{currentIndustry.icon}</div>
-                </div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.4rem, 2vw, 1.85rem)', fontWeight: 800, color: '#ffffff', margin: 0, lineHeight: 1.2, letterSpacing: '-0.02em' }}>
-                  {currentIndustry.headlineTitle || currentIndustry.title}
-                </h3>
-              </div>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, margin: 0 }}>
-                {currentIndustry.headlineBody || currentIndustry.body}
-              </p>
-            </div>
-
-            {/* Solution Cards Flow — Glassmorphism */}
-            {currentIndustry.bentoCards?.map((card, idx) => {
-              const isCardActive = activeSubCard === idx;
-              return (
-                <div
-                  key={idx}
-                  ref={el => cardRefs.current[idx] = el}
-                  onClick={() => setActiveSubCard(idx)}
-                  style={{
-                    opacity: isCardActive ? 1 : 0.45,
-                    transform: isCardActive ? 'translateX(0)' : 'translateX(-4px)',
-                    transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
-                    cursor: 'pointer',
-                    position: 'relative'
-                  }}
-                >
-                  {/* Active indicator bar */}
-                  {isCardActive && (
-                    <div style={{
-                      position: 'absolute',
-                      left: '-1rem',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: '3px',
-                      height: '40%',
-                      borderRadius: '2px',
-                      background: 'linear-gradient(180deg, rgba(198, 255, 52, 0.9) 0%, rgba(198, 255, 52, 0.2) 100%)',
-                      boxShadow: '0 0 12px rgba(198, 255, 52, 0.45)'
-                    }} />
-                  )}
-
-                  <div style={{
-                    background: isCardActive
-                      ? 'rgba(20, 24, 18, 0.55)'
-                      : 'rgba(20, 24, 18, 0.25)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    border: `1px solid ${isCardActive ? 'rgba(198, 255, 52, 0.28)' : 'rgba(255,255,255,0.04)'}`,
-                    borderRadius: '20px',
-                    padding: '1.75rem',
-                    boxShadow: isCardActive
-                      ? '0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(198, 255, 52, 0.1), inset 0 1px 0 rgba(255,255,255,0.06)'
-                      : '0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
-                    transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)'
-                  }}>
-                    <IndustrySubCard card={card} accent={'#c6ff34'} />
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Per-Industry CTA */}
-            <div style={{
-              marginTop: '1rem',
-              paddingTop: '2rem',
-              borderTop: '1px solid rgba(255,255,255,0.06)',
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <button style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.65rem',
-                padding: '0.85rem 2rem',
-                borderRadius: '12px',
-                background: 'rgba(198, 255, 52, 0.08)',
-                border: '1px solid rgba(198, 255, 52, 0.35)',
-                color: '#ffffff',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxShadow: '0 0 20px rgba(198, 255, 52, 0.12)'
-              }}
+                  flexDirection: 'column',
+                  gap: '1.5rem',
+                  overflow: 'hidden'
+                }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.borderColor = 'rgba(198, 255, 52, 0.7)';
-                  e.currentTarget.style.boxShadow = '0 0 30px rgba(198, 255, 52, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.borderColor = 'rgba(198, 255, 52, 0.35)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(198, 255, 52, 0.2), inset 0 1px 0 rgba(255,255,255,0.08)';
+                  e.currentTarget.style.background = 'rgba(20, 24, 18, 0.65)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'rgba(198, 255, 52, 0.35)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(198, 255, 52, 0.12)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)';
+                  e.currentTarget.style.background = 'rgba(20, 24, 18, 0.35)';
                 }}
               >
-                <span>Explore {currentIndustry.title}</span>
-                <span style={{ color: '#c6ff34', transition: 'transform 0.3s ease' }}>→</span>
-              </button>
-            </div>
+                {/* Tech tag */}
+                <div style={{
+                  position: 'absolute',
+                  top: '1.5rem',
+                  right: '1.5rem',
+                  fontFamily: 'var(--font-tech)',
+                  fontSize: '0.75rem',
+                  color: 'rgba(255,255,255,0.3)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  padding: '0.25rem 0.6rem',
+                  borderRadius: '8px',
+                  letterSpacing: '0.02em',
+                  background: 'rgba(255,255,255,0.02)'
+                }}>
+                  {card.title.split(' ')[0]}
+                </div>
 
-          </div>
-
-          {/* RIGHT COLUMN: Sticky 3D Isometric Engine Viewport */}
-          <div style={{
-            position: 'sticky',
-            top: '120px',
-            height: 'calc(100vh - 160px)',
-            maxHeight: '620px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <TactileSolutionWorkbench
-              activeTab={activeTab}
-              activeSubCard={activeSubCard}
-              currentIndustry={currentIndustry}
-            />
-          </div>
-
+                <div style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
+                  <IndustrySubCard card={card} accent={'#c6ff34'} />
+                </div>
+              </div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
