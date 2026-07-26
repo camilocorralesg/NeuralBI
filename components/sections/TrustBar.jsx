@@ -1,5 +1,5 @@
 'use client';
-import React, { memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 
 function TrustBar({ activeHero }) {

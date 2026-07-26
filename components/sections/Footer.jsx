@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 
 const logoUrl = 'https://cdn.dribbble.com/userupload/45579979/file/original-e39fe7bbbf27a199d799042b31174ef8.png?resize=1504x1128&vertical=center';
 
