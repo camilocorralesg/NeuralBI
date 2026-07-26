@@ -1313,3 +1313,26 @@ button {
 .sui-btn-outline-pill:disabled .sui-btn-arrow {
   color: rgba(255, 255, 255, 0.3) !important;
 }
+
+/* ─── GPU HARDWARE ACCELERATION & COMPOSITOR LAYER ISOLATION ─── */
+.sui-gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.sui-card-bento-gpu {
+  will-change: transform, border-color, box-shadow, background-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              background-color 0.35s ease;
+}
+
+.sui-card-bento-gpu:hover {
+  transform: translateY(-4px) translateZ(0);
+}
+
