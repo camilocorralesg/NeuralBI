@@ -17513,14 +17513,16 @@ function Industries({ activeHero }) {
                   right: '1.5rem',
                   fontFamily: 'var(--font-tech)',
                   fontSize: '0.75rem',
-                  color: 'rgba(255,255,255,0.3)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  padding: '0.25rem 0.6rem',
+                  fontWeight: 600,
+                  color: '#c6ff34',
+                  border: '1px solid rgba(198, 255, 52, 0.25)',
+                  padding: '0.3rem 0.75rem',
                   borderRadius: '8px',
                   letterSpacing: '0.02em',
-                  background: 'rgba(255,255,255,0.02)'
+                  background: 'rgba(198, 255, 52, 0.06)',
+                  boxShadow: '0 0 12px rgba(198, 255, 52, 0.08)'
                 }}>
-                  {card.title.split(' ')[0]}
+                  {card.tag}
                 </div>
 
                 <div style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
