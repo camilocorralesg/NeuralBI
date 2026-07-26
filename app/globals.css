@@ -870,11 +870,11 @@ button {
 }
 
 .sui-hero-text {
-  font-family: var(--font-ui);
-  font-size: clamp(4.5rem, 10vw, 10rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7.5vw, 7.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   margin-bottom: var(--space-6);
   /* Completely white text */
   color: #ffffff;
