@@ -7,7 +7,7 @@ const logoUrl = 'https://cdn.dribbble.com/userupload/45579979/file/original-e39f
 
 
 // ─── SECTION 10: PREMIUM STYLE-SPECIFIC FOOTER (SUI & RAYCAST DNA) ───
-const Footer = memo(function Footer({ activeHero }) {
+function Footer({ activeHero }) {
   const [lang, setLang] = React.useState('English');
 
   const links = {
@@ -698,6 +698,7 @@ const Footer = memo(function Footer({ activeHero }) {
       </div>
     </footer>
   );
-});
 
-export default Footer;
+}
+
+export default memo(Footer);
