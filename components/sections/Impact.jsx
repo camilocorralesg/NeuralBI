@@ -2,6 +2,9 @@
 
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
+import CharacterReveal from '../CharacterReveal';
+import TiltCard from '../TiltCard';
+import Counter from '../Counter';
 
 
 function Impact({ activeHero }) {
