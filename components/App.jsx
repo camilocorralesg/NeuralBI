@@ -20772,24 +20772,24 @@ function Footer({ activeHero }) {
 
   const links = {
     "Power BI": [
-      { name: "Official Documentation", href: "https://learn.microsoft.com/power-bi/", target: "_blank" },
-      { name: "Direct Lake Architecture", href: "https://learn.microsoft.com/power-bi/enterprise/direct-lake-overview", target: "_blank" },
-      { name: "Enterprise Data Guidance", href: "https://learn.microsoft.com/power-bi/guidance/", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/en-us/power-bi/", target: "_blank" },
+      { name: "Direct Lake Architecture", href: "https://learn.microsoft.com/en-us/fabric/get-started/direct-lake-overview", target: "_blank" },
+      { name: "Enterprise Data Guidance", href: "https://learn.microsoft.com/en-us/power-bi/guidance/", target: "_blank" }
     ],
     "Power Apps": [
-      { name: "Official Documentation", href: "https://learn.microsoft.com/power-apps/", target: "_blank" },
-      { name: "PCF Components & React", href: "https://learn.microsoft.com/power-apps/developer/component-framework/overview", target: "_blank" },
-      { name: "Canvas & Model-Driven", href: "https://learn.microsoft.com/power-apps/maker/", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/en-us/power-apps/", target: "_blank" },
+      { name: "PCF Components & React", href: "https://learn.microsoft.com/en-us/power-apps/developer/component-framework/overview", target: "_blank" },
+      { name: "Canvas & Model-Driven Apps", href: "https://learn.microsoft.com/en-us/power-apps/maker/", target: "_blank" }
     ],
     "Power Automate": [
-      { name: "Official Documentation", href: "https://learn.microsoft.com/power-automate/", target: "_blank" },
-      { name: "Headless RPA & Desktop", href: "https://learn.microsoft.com/power-automate/desktop-flows/introduction", target: "_blank" },
-      { name: "Cloud Flows & AI Builder", href: "https://learn.microsoft.com/power-automate/guidance/", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/en-us/power-automate/", target: "_blank" },
+      { name: "Headless RPA & Desktop", href: "https://learn.microsoft.com/en-us/power-automate/desktop-flows/introduction", target: "_blank" },
+      { name: "Cloud Flows Guidance", href: "https://learn.microsoft.com/en-us/power-automate/guidance/", target: "_blank" }
     ],
     "Copilot Studio": [
-      { name: "Official Documentation", href: "https://learn.microsoft.com/copilot-studio/", target: "_blank" },
-      { name: "Autonomous Agents & GPT", href: "https://learn.microsoft.com/copilot-studio/nlu-gpt-overview", target: "_blank" },
-      { name: "API Actions & Plug-ins", href: "https://learn.microsoft.com/copilot-studio/advanced-plugin-actions", target: "_blank" }
+      { name: "Official Documentation", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/", target: "_blank" },
+      { name: "Generative AI & GPT", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/nlu-gpt-overview", target: "_blank" },
+      { name: "Actions & Plug-ins", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-plugin-actions", target: "_blank" }
     ]
   };
 
