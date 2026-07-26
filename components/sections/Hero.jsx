@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import FloatingLines from '../FloatingLines';
 import Magnetic from '../Magnetic';
