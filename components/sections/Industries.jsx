@@ -84,9 +84,9 @@ const industriesData = [
         )
       },
       {
-        title: "Institutional Trader Apps",
+        title: "Credit Risk & Loan Approval Portals",
         tag: "Power Apps + React/PCF",
-        body: "Custom pro-code trading interfaces for rapid order processing, client onboarding, and secure portfolio management.",
+        body: "Audit-ready applications for credit risk assessment, commercial loan origination, and deal committee reviews. Combines Microsoft 365 security with tailored React/PCF controls for accelerated, compliant financial approvals.",
         icon: (
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c6ff34" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />

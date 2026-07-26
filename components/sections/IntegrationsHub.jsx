@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from '
 import { motion } from 'framer-motion';
 import CharacterReveal from '../CharacterReveal';
 
+const logoSoloUrl = '/assets/Neuralbi logo solo.svg';
+
 function IntegrationsHub({ activeHero }) {
   const [hoveredNode, setHoveredNode] = React.useState(null);
 

@@ -85,10 +85,10 @@ export default function App() {
             <div>
               <Impact activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            {/* <SectionDivider />
             <div>
               <CaseStudy activeHero={activeHero} />
-            </div>
+            </div> */}
             <SectionDivider />
             <div>
               <Faq activeHero={activeHero} />

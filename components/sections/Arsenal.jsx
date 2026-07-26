@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Spline from '@splinetool/react-spline/next';
 import TiltCard from '../TiltCard';
 import FloatingLines from '../FloatingLines';
