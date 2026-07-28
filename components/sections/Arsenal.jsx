@@ -156,7 +156,7 @@ function PbiAiInsightsOverlayAnim() {
       </div>
 
       {/* Main Container Layered Area */}
-      <div style={{ position: 'relative', minHeight: '120px', borderRadius: '12px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', minHeight: '120px', borderRadius: '16px', overflow: 'hidden' }}>
         {/* Background Layer: Faint Blurred Built Enterprise Report Chart */}
         <div style={{ position: 'absolute', inset: 0, opacity: 0.16, filter: 'blur(1.5px)', pointerEvents: 'none' }}>
           <svg viewBox="0 0 320 120" fill="none" style={{ width: '100%', height: '100%' }}>
@@ -226,7 +226,7 @@ function PbiAiInsightsOverlayAnim() {
           zIndex: 3,
           background: 'rgba(10, 14, 22, 0.78)',
           border: '1px solid rgba(255, 255, 255, 0.12)',
-          borderRadius: '12px',
+          borderRadius: '16px',
           padding: '0.9rem 1.1rem',
           backdropFilter: 'blur(12px) saturate(180%)',
           WebkitBackdropFilter: 'blur(12px) saturate(180%)',
@@ -354,7 +354,7 @@ function PbiDataStorytellingUiAnim() {
         position: 'relative',
         height: '185px',
         width: '100%',
-        borderRadius: '12px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(8, 12, 18, 0.85)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -511,7 +511,7 @@ function PbiSemanticModelGraphAnim() {
         position: 'relative',
         height: '185px',
         width: '100%',
-        borderRadius: '12px',
+        borderRadius: '16px',
         background: 'rgba(6, 9, 15, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         boxShadow: 'inset 0 0 24px rgba(0,0,0,0.85)',
@@ -731,7 +731,7 @@ function PbaThreeParadigmsAnim() {
         position: 'relative',
         width: '100%',
         height: '215px',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 4, 10, 0.92)',
         border: '1px solid rgba(255, 255, 255, 0.16)',
@@ -1063,7 +1063,7 @@ function PbaProCodeApiEngineAnim() {
         position: 'relative',
         width: '100%',
         height: '215px',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 4, 10, 0.92)',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -1251,7 +1251,7 @@ function PbaEnterpriseDataverseMeshAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 4, 10, 0.94)',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -1445,7 +1445,7 @@ function PauSelfHealingFlowAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 10, 18, 0.96)',
         border: '1px solid rgba(255, 255, 255, 0.16)',
@@ -1685,7 +1685,7 @@ function PauEventDrivenMeshAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 10, 18, 0.96)',
         border: '1px solid rgba(255, 255, 255, 0.16)',
@@ -1945,7 +1945,7 @@ function PauResilientDlqMeshAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: '#09090B',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -2184,7 +2184,7 @@ function McsGroundedReasoningAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 14, 10, 0.94)',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -2381,7 +2381,7 @@ function McsMultiStepChainAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 14, 10, 0.94)',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -2584,7 +2584,7 @@ function McsZeroHallucinationFieldAnim() {
         position: 'relative',
         height: '215px',
         width: '100%',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         background: 'rgba(6, 14, 10, 0.94)',
         border: '1px solid rgba(255, 255, 255, 0.14)',
@@ -2976,11 +2976,11 @@ export function ToolDetailModal({ tool, onClose }) {
           overflowX: 'hidden'
         }}>
         {/* NeuralBI Ambient Mesh Background Overlay */}
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           onClick={onClose}
           style={{
             position: 'fixed',
@@ -3003,7 +3003,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }} />
 
           {/* Mesh Orb 1 (Bottom Left: Vibrant Neon Lime) */}
-          <div style={{
+          <div className="arsenal-desktop-only-flex" style={{
             position: 'absolute',
             bottom: '-120px',
             left: '-100px',
@@ -3016,7 +3016,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }} />
 
           {/* Mesh Orb 2 (Bottom Right: Sophisticated Emerald Green) */}
-          <div style={{
+          <div className="arsenal-desktop-only-flex" style={{
             position: 'absolute',
             bottom: '-140px',
             right: '-120px',
@@ -3029,7 +3029,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }} />
 
           {/* Mesh Orb 3 (Center Top: Cool Tech Cyan) */}
-          <div style={{
+          <div className="arsenal-desktop-only-flex" style={{
             position: 'absolute',
             top: '-160px',
             left: '50%',
@@ -3043,7 +3043,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }} />
 
           {/* Mesh Orb 4 (Side Accent: Warm Amber Gold) */}
-          <div style={{
+          <div className="arsenal-desktop-only-flex" style={{
             position: 'absolute',
             top: '30%',
             right: '4%',
@@ -3057,7 +3057,7 @@ export function ToolDetailModal({ tool, onClose }) {
         </motion.div>
 
         {/* Floating Pop-up Glassmorphism Card */}
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           className={details?.isPbiModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pbi' : details?.isPbaModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pba' : details?.isPauModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pau' : details?.isMcsModal ? 'custom-modal-scrollbar custom-modal-scrollbar-mcs' : 'custom-modal-scrollbar'}
           initial={{ opacity: 0, scale: 0.94, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -3086,7 +3086,7 @@ export function ToolDetailModal({ tool, onClose }) {
                   : details?.isMcsModal
                     ? '1px solid rgba(16, 185, 129, 0.5)'
                     : '1px solid rgba(198, 255, 52, 0.25)',
-            borderRadius: '24px',
+            borderRadius: '16px',
             padding: '3rem',
             boxShadow: details?.isPbiModal
               ? `0 50px 120px -20px rgba(0,0,0,0.95), 0 0 60px rgba(242,200,17,0.18), inset 0 1px 0 rgba(255,255,255,0.18)`
@@ -3101,10 +3101,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }}
         >
           {/* Top-right brand glow */}
-          <div style={{
-            position: 'absolute',
-            top: -40,
-            right: -40,
+          <div className="arsenal-desktop-only-flex" style={{ position: 'absolute', top: -40, right: -40,
             width: '400px',
             height: '400px',
             background: details?.color,
@@ -3115,7 +3112,7 @@ export function ToolDetailModal({ tool, onClose }) {
           }} />
 
           {/* Sticky Glass Top Header Bar */}
-          <div style={{
+          <div className="arsenal-mobile-hidden" style={{
             position: 'sticky',
             top: '-3rem',
             marginTop: '-3rem',
@@ -3134,18 +3131,22 @@ export function ToolDetailModal({ tool, onClose }) {
             marginBottom: '2rem'
           }}>
             {/* Logo + Title */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', minWidth: 0, overflow: 'hidden' }}>
               <div style={{
                 width: '48px',
                 height: '48px',
                 padding: '0.55rem',
                 background: `linear-gradient(135deg, ${details?.color}18, transparent)`,
-                borderRadius: '12px',
+                borderRadius: '999px',
                 border: `1px solid ${details?.color}35`,
                 boxShadow: `0 4px 16px ${details?.color}15`
               }}>
                 <img src={tool.logo} alt={tool.tool} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
+                      {/* Mobile Title (Visible only on small screens) */}
+                      <div className="arsenal-mobile-only-flex" style={{ marginTop: '1rem', fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 800, color: '#fff', textAlign: 'center' }}>
+                        {tool.tool}
+                      </div>
               <div>
                 {!details?.isPbiModal && !details?.isPbaModal && !details?.isPauModal && !details?.isMcsModal && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
@@ -3171,6 +3172,9 @@ export function ToolDetailModal({ tool, onClose }) {
                   color: '#ffffff',
                   margin: 0,
                   letterSpacing: '-0.02em',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                   textShadow: details?.isPbiModal
                     ? '0 0 24px rgba(242, 200, 17, 0.3)'
                     : details?.isPbaModal
@@ -3193,11 +3197,13 @@ export function ToolDetailModal({ tool, onClose }) {
               style={{
                 width: '38px',
                 height: '38px',
+                flexShrink: 0,
                 borderRadius: '50%',
                 background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                color: 'rgba(255, 255, 255, 0.7)',
-                fontSize: '1.1rem',
+                border: `1px solid ${details?.color}40`,
+                color: details?.color || '#ffffff',
+                fontSize: '1.25rem',
+                fontWeight: 'bold',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -3240,17 +3246,16 @@ export function ToolDetailModal({ tool, onClose }) {
 
           {/* Section Snap Focus Reveal Layout (For Power BI Modal) vs Single View */}
           {details?.isPbiModal ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8rem', paddingBottom: '6rem', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Executive Adoption Narrative */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3284,7 +3289,7 @@ export function ToolDetailModal({ tool, onClose }) {
                   <div style={{
                     background: 'rgba(242, 200, 17, 0.05)',
                     border: '1px solid rgba(242, 200, 17, 0.22)',
-                    borderRadius: '14px',
+                    borderRadius: '999px',
                     padding: '1.1rem 1.35rem',
                     display: 'flex',
                     alignItems: 'center',
@@ -3313,20 +3318,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 01 (Executive Dashboard) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbiDataStorytellingUiAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 02: Automated Reasoning & UX */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3357,7 +3361,7 @@ export function ToolDetailModal({ tool, onClose }) {
                         padding: '1rem 1.1rem',
                         background: 'rgba(255,255,255,0.03)',
                         border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px'
+                        borderRadius: '16px'
                       }}>
                         <span style={{
                           fontFamily: 'var(--font-display)',
@@ -3383,20 +3387,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 02 (AI Insights Overlay) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbiAiInsightsOverlayAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 03: Semantic Mesh Architecture */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3426,60 +3429,32 @@ export function ToolDetailModal({ tool, onClose }) {
                     ))}
                   </ul>
 
-                  <button
-                    style={{
-                      width: '100%',
-                      padding: '1rem',
-                      fontSize: '0.95rem',
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, rgba(242, 200, 17, 0.22) 0%, rgba(242, 200, 17, 0.08) 100%)',
-                      border: '1px solid rgba(242, 200, 17, 0.45)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 8px 25px rgba(242, 200, 17, 0.18)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(242, 200, 17, 0.35) 0%, rgba(242, 200, 17, 0.15) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(242, 200, 17, 0.7)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(242, 200, 17, 0.3)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(242, 200, 17, 0.22) 0%, rgba(242, 200, 17, 0.08) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(242, 200, 17, 0.45)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(242, 200, 17, 0.18)';
-                    }}
-                  >
-                    Deploy Power BI Architecture →
-                  </button>
+                  
                 </div>
 
                 {/* Right Visual 03 (Semantic Model Graph) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbiSemanticModelGraphAnim />
                 </div>
               </motion.div>
 
+            
+              
+            
+              
             </div>
           ) : details?.isPbaModal ? (
             /* Section Snap Focus Reveal Layout (For Power Apps Modal) */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8rem', paddingBottom: '6rem', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Three Paradigms High-Level Overview & Zoom Drill-Down */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3513,7 +3488,7 @@ export function ToolDetailModal({ tool, onClose }) {
                   <div style={{
                     background: 'rgba(199, 53, 144, 0.08)',
                     border: '1px solid rgba(199, 53, 144, 0.3)',
-                    borderRadius: '14px',
+                    borderRadius: '999px',
                     padding: '1.1rem 1.35rem',
                     display: 'flex',
                     alignItems: 'center',
@@ -3542,20 +3517,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 01 (High-Level Paradigms Zoom Matrix) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbaThreeParadigmsAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 02: Pro-Code & Dataverse Integration Engine */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3586,7 +3560,7 @@ export function ToolDetailModal({ tool, onClose }) {
                         padding: '1rem 1.1rem',
                         background: 'rgba(255,255,255,0.03)',
                         border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px'
+                        borderRadius: '16px'
                       }}>
                         <span style={{
                           fontFamily: 'var(--font-display)',
@@ -3612,20 +3586,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 02 (Real-Time PCF Streaming Engine) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbaProCodeApiEngineAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 03: Unified Dataverse Relational Mesh */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3655,60 +3628,32 @@ export function ToolDetailModal({ tool, onClose }) {
                     ))}
                   </ul>
 
-                  <button
-                    style={{
-                      width: '100%',
-                      padding: '1rem',
-                      fontSize: '0.95rem',
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, rgba(199, 53, 144, 0.35) 0%, rgba(199, 53, 144, 0.12) 100%)',
-                      border: '1px solid rgba(199, 53, 144, 0.55)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 8px 25px rgba(199, 53, 144, 0.25)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(199, 53, 144, 0.55) 0%, rgba(199, 53, 144, 0.25) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(199, 53, 144, 0.85)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(199, 53, 144, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(199, 53, 144, 0.35) 0%, rgba(199, 53, 144, 0.12) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(199, 53, 144, 0.55)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(199, 53, 144, 0.25)';
-                    }}
-                  >
-                    Deploy Power Apps Architecture →
-                  </button>
+                  
                 </div>
 
                 {/* Right Visual 03 (Dataverse Relational Mesh) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PbaEnterpriseDataverseMeshAnim />
                 </div>
               </motion.div>
 
+            
+              
+            
+              
             </div>
           ) : details?.isPauModal ? (
             /* Section Snap Focus Reveal Layout (For Power Automate Modal) */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8rem', paddingBottom: '6rem', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Autonomous Workflows & Process Mesh */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3742,7 +3687,7 @@ export function ToolDetailModal({ tool, onClose }) {
                   <div style={{
                     background: 'rgba(0, 188, 242, 0.05)',
                     border: '1px solid rgba(0, 188, 242, 0.25)',
-                    borderRadius: '14px',
+                    borderRadius: '999px',
                     padding: '1.1rem 1.35rem',
                     display: 'flex',
                     alignItems: 'center',
@@ -3771,20 +3716,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 01 (Self-Healing Autonomous Process Engine) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PauSelfHealingFlowAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 02: Resilient Capabilities */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3815,7 +3759,7 @@ export function ToolDetailModal({ tool, onClose }) {
                         padding: '1rem 1.1rem',
                         background: 'rgba(255,255,255,0.03)',
                         border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px'
+                        borderRadius: '16px'
                       }}>
                         <span style={{
                           fontFamily: 'var(--font-display)',
@@ -3841,20 +3785,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 02 (The Event-Driven Automation Mesh) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PauEventDrivenMeshAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 03: NeuralBI Differentiators */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3884,60 +3827,32 @@ export function ToolDetailModal({ tool, onClose }) {
                     ))}
                   </ul>
 
-                  <button
-                    style={{
-                      width: '100%',
-                      padding: '1rem',
-                      fontSize: '0.95rem',
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, rgba(0, 188, 242, 0.35) 0%, rgba(0, 120, 212, 0.12) 100%)',
-                      border: '1px solid rgba(0, 188, 242, 0.55)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 8px 25px rgba(0, 188, 242, 0.25)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 188, 242, 0.55) 0%, rgba(0, 120, 212, 0.25) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(0, 188, 242, 0.85)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(0, 188, 242, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 188, 242, 0.35) 0%, rgba(0, 120, 212, 0.12) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(0, 188, 242, 0.55)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 188, 242, 0.25)';
-                    }}
-                  >
-                    Deploy Power Automate Architecture →
-                  </button>
+                  
                 </div>
 
                 {/* Right Visual 03 (Zero-Trust Resilient Mesh & DLQ Auto-Recovery) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <PauResilientDlqMeshAnim />
                 </div>
               </motion.div>
 
+            
+              
+            
+              
             </div>
           ) : details?.isMcsModal ? (
             /* Section Snap Focus Reveal Layout (For Copilot Studio Modal) */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8rem', paddingBottom: '6rem', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Cognitive Agent Framework */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -3971,7 +3886,7 @@ export function ToolDetailModal({ tool, onClose }) {
                   <div style={{
                     background: 'rgba(16, 185, 129, 0.05)',
                     border: '1px solid rgba(16, 185, 129, 0.25)',
-                    borderRadius: '14px',
+                    borderRadius: '999px',
                     padding: '1.1rem 1.35rem',
                     display: 'flex',
                     alignItems: 'center',
@@ -4000,20 +3915,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 01 (The Grounded Reasoning & Action Loop) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <McsGroundedReasoningAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 02: Enterprise Agent Capabilities */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -4044,7 +3958,7 @@ export function ToolDetailModal({ tool, onClose }) {
                         padding: '1rem 1.1rem',
                         background: 'rgba(255,255,255,0.03)',
                         border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px'
+                        borderRadius: '16px'
                       }}>
                         <span style={{
                           fontFamily: 'var(--font-display)',
@@ -4070,20 +3984,19 @@ export function ToolDetailModal({ tool, onClose }) {
                 </div>
 
                 {/* Right Visual 02 (Multi-Step Agentic Chain) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <McsMultiStepChainAnim />
                 </div>
               </motion.div>
 
               {/* Section Snap Row 03: NeuralBI Differentiators */}
-              <motion.div
-                initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ amount: 0.45 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '1.05fr 0.95fr',
+                  
                   gap: '3.5rem',
                   alignItems: 'center',
                   minHeight: '58vh',
@@ -4127,46 +4040,19 @@ export function ToolDetailModal({ tool, onClose }) {
                     ))}
                   </ul>
 
-                  <button
-                    style={{
-                      width: '100%',
-                      padding: '1rem',
-                      fontSize: '0.95rem',
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.55)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 8px 25px rgba(16, 185, 129, 0.25)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.55) 0%, rgba(5, 150, 105, 0.25) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.85)';
-                      e.currentTarget.style.boxShadow = '0 12px 35px rgba(16, 185, 129, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 100%)';
-                      e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.55)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.25)';
-                    }}
-                  >
-                    Deploy Copilot Studio Architecture →
-                  </button>
+                  
                 </div>
 
                 {/* Right Visual 03 (The Zero-Hallucination Containment Field) */}
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div className="arsenal-desktop-only-flex" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                   <McsZeroHallucinationFieldAnim />
                 </div>
               </motion.div>
 
+            
+              
+            
+              
             </div>
           ) : (
             /* General Single Column Modal for non-PBI Tools */
@@ -4178,13 +4064,13 @@ export function ToolDetailModal({ tool, onClose }) {
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '1.75rem' }}>
                   {details?.subheadline}
                 </p>
-                <div style={{ background: details?.isMcsModal ? 'rgba(16, 185, 129, 0.05)' : 'rgba(198, 255, 52, 0.04)', border: details?.isMcsModal ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid rgba(198, 255, 52, 0.15)', borderRadius: '14px', padding: '1rem 1.25rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ background: details?.isMcsModal ? 'rgba(16, 185, 129, 0.05)' : 'rgba(198, 255, 52, 0.04)', border: details?.isMcsModal ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid rgba(198, 255, 52, 0.15)', borderRadius: '999px', padding: '1rem 1.25rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <span style={{ fontFamily: 'var(--font-display)', fontSize: '2.2rem', fontWeight: 900, color: details?.color || '#c6ff34', lineHeight: 1 }}>{details?.roiMetric}</span>
                   <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.3 }}>{details?.roiLabel}</span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
                   {details?.capabilities.map((cap, idx) => (
-                    <div key={idx} style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px' }}>
+                    <div key={idx} style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '999px' }}>
                       <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.8rem', fontWeight: 700, color: details?.color, display: 'block', marginBottom: '0.3rem' }}>{cap.label}</span>
                       <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.4 }}>{cap.desc}</span>
                     </div>
@@ -4214,7 +4100,7 @@ export function ToolDetailModal({ tool, onClose }) {
                     color: '#ffffff',
                     background: details?.isMcsModal ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 100%)' : 'linear-gradient(135deg, rgba(198, 255, 52, 0.2) 0%, rgba(198, 255, 52, 0.05) 100%)',
                     border: details?.isMcsModal ? '1px solid rgba(16, 185, 129, 0.55)' : '1px solid rgba(198, 255, 52, 0.4)',
-                    borderRadius: '12px',
+                    borderRadius: '999px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -4403,7 +4289,7 @@ function CinematicArsenal() {
 
         <div style={{ position: 'relative', height: '400px' }}>
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.div style={{ willChange: 'transform, opacity' }}
               key={currentItem.id}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -4452,7 +4338,7 @@ function ModernV2Arsenal() {
       <div style={{ position: 'relative', width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2.5rem' }}>
         <div style={{ position: 'relative', width: '100%', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.div style={{ willChange: 'transform, opacity' }}
               key={currentItem.id}
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -4584,12 +4470,12 @@ function TechV4Arsenal({ isRemix }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
           {arsenalData.map((item, idx) => (
-            <motion.div
+            <motion.div style={{ willChange: 'transform, opacity' }}
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 3fr',
@@ -4882,7 +4768,7 @@ function ArsenalCard({ item, effect, onOpenModal }) {
               : isMcs
                 ? (isHovered ? '1px solid rgba(16, 185, 129, 0.5)' : '1px solid rgba(255, 255, 255, 0.12)')
                 : '1px solid rgba(255,255,255,0.04)',
-        borderRadius: '24px',
+        borderRadius: '16px',
         padding: '2.5rem',
         boxShadow: isPbi
           ? (isHovered
@@ -5048,7 +4934,19 @@ function ArsenalCard({ item, effect, onOpenModal }) {
         }} />
       )}
 
-      {/* Raycast Header Row (App Icon + Title + Expand Action Pill Button) */}
+            {/* Impeccable Halftone Texture Overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)',
+        backgroundSize: '16px 16px',
+        opacity: isHovered ? 0.8 : 0.3,
+        transition: 'opacity 0.6s ease',
+        pointerEvents: 'none',
+        zIndex: 1
+      }} />
+
+{/* Raycast Header Row (App Icon + Title + Expand Action Pill Button) */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -5123,12 +5021,12 @@ function ArsenalCard({ item, effect, onOpenModal }) {
         </div>
 
         {/* Right: Raycast Action Pill inviting user to Expand Card */}
-        <div style={{
+        <div className="arsenal-expand-btn" style={{
           display: 'flex',
           alignItems: 'center',
           gap: '0.55rem',
           padding: '0.5rem 0.95rem',
-          borderRadius: '12px',
+          borderRadius: '999px',
           background: isHovered
             ? (isPbi ? 'rgba(245, 158, 11, 0.14)' : isPba ? 'rgba(199, 53, 144, 0.16)' : isPau ? 'rgba(0, 188, 242, 0.16)' : isMcs ? 'rgba(16, 185, 129, 0.16)' : 'rgba(255, 255, 255, 0.08)')
             : 'rgba(255, 255, 255, 0.04)',
@@ -5138,9 +5036,10 @@ function ArsenalCard({ item, effect, onOpenModal }) {
           boxShadow: isHovered
             ? (isPbi ? '0 0 20px rgba(245, 158, 11, 0.2)' : isPba ? '0 0 20px rgba(199, 53, 144, 0.2)' : isPau ? '0 0 20px rgba(0, 188, 242, 0.2)' : isMcs ? '0 0 20px rgba(16, 185, 129, 0.2)' : 'none')
             : 'none',
-          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
+          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          cursor: 'pointer'
         }}>
-          <span style={{
+          <span className="arsenal-expand-text" style={{
             fontFamily: 'var(--font-sans)',
             fontSize: '0.8rem',
             fontWeight: 600,
@@ -5149,16 +5048,13 @@ function ArsenalCard({ item, effect, onOpenModal }) {
           }}>
             Expand Architecture
           </span>
-          <span style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '0.9rem',
-            fontWeight: 800,
-            color: isPbi ? '#F2C811' : isPba ? '#E24AA8' : isPau ? '#00BCF2' : isMcs ? '#10B981' : '#c6ff34',
-            transform: isHovered ? 'translateX(3px)' : 'translateX(0)',
-            transition: 'transform 0.3s ease'
-          }}>
-            →
-          </span>
+          <svg style={{
+            transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+            transition: 'transform 0.3s ease',
+            color: isPbi ? '#F2C811' : isPba ? '#E24AA8' : isPau ? '#00BCF2' : isMcs ? '#10B981' : '#c6ff34'
+          }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+          </svg>
         </div>
       </div>
 
@@ -5215,7 +5111,7 @@ function ArsenalCard({ item, effect, onOpenModal }) {
                   border: isThisPillHovered
                     ? (isPbi ? '1px solid rgba(245, 158, 11, 0.45)' : isPba ? '1px solid rgba(199, 53, 144, 0.45)' : isPau ? '1px solid rgba(0, 188, 242, 0.45)' : isMcs ? '1px solid rgba(16, 185, 129, 0.45)' : '1px solid rgba(255, 255, 255, 0.15)')
                     : '1px solid rgba(255, 255, 255, 0.05)',
-                  borderRadius: '14px',
+                  borderRadius: '999px',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   boxShadow: isThisPillHovered
@@ -5252,7 +5148,7 @@ function ArsenalCard({ item, effect, onOpenModal }) {
                 padding: '0.75rem 1.15rem',
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.05)',
-                borderRadius: '14px',
+                borderRadius: '999px',
                 color: 'rgba(255, 255, 255, 0.85)',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.9rem',
@@ -5341,75 +5237,108 @@ function Spline1Arsenal({ isRemix, onOpenModal }) {
 
   // Remix horizontal bento-slide showcase
   return (
-    <section ref={targetRef} style={{ position: 'relative', width: '100%', height: '400vh', background: '#020202', zIndex: 10 }}>
-      <style>{`
-        @media (max-width: 768px) {
-          .arsenal-horizontal-card {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-            padding: 2.5rem !important;
-            width: clamp(280px, 90vw, 420px) !important;
-          }
-        }
-      `}</style>
+    <>
+      {/* DESKTOP BLOCK */}
+      <div className="arsenal-desktop-only">
+        <section ref={targetRef} style={{ position: 'relative', width: '100%', height: '400vh', background: '#020202', zIndex: 10 }}>
+          {/* Background radial glows for aesthetic depth */}
+          <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', background: 'rgba(198,255,52,0.015)', filter: 'blur(120px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '500px', height: '500px', background: 'rgba(255,255,255,0.01)', filter: 'blur(150px)', pointerEvents: 'none' }} />
 
-      {/* Background radial glows for aesthetic depth */}
-      <div style={{ position: 'absolute', top: '15%', left: '20%', width: '400px', height: '400px', background: 'rgba(198,255,52,0.015)', filter: 'blur(120px)', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '15%', right: '20%', width: '500px', height: '500px', background: 'rgba(255,255,255,0.01)', filter: 'blur(150px)', pointerEvents: 'none' }} />
+          <div style={{
+            position: 'sticky',
+            top: 0,
+            height: '100vh',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            background: 'transparent'
+          }}>
+            <motion.div ref={trackRef} style={{
+              display: 'flex',
+              gap: '5rem',
+              paddingLeft: '10%',
+              paddingRight: '20%',
+              x,
+              width: 'max-content',
+              perspective: '1200px',
+              willChange: 'transform'
+            }}>
+              {/* Header Panel */}
+              <div style={{ width: '450px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'center' }}>
+                <h2 style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
+                  <CharacterReveal
+                    text="The"
+                    className="text-gradient-premium"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
+                  />
+                  <CharacterReveal
+                    text="Arsenal"
+                    className="text-gradient-premium"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
+                  />
+                </h2>
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: 0 }}>
+                  <CharacterReveal text="Pro-code applications, autonomous AI workflows, and modern Fabric-driven intelligence architectures. Engineered to eliminate operational debt across your entire ecosystem." stagger={0.008} />
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Scroll down to slide</span>
+                  <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.15)' }} />
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#c6ff34' }}>→</span>
+                </div>
+              </div>
 
-      <div style={{
-        position: 'sticky',
-        top: 0,
-        height: '100vh',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        background: 'transparent'
-      }}>
-        <motion.div ref={trackRef} style={{
-          display: 'flex',
-          gap: '5rem',
-          paddingLeft: '10%',
-          paddingRight: '20%',
-          x,
-          width: 'max-content',
-          perspective: '1200px',
-          willChange: 'transform'
-        }}>
-          {/* Header Panel */}
-          <div style={{ width: '450px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '2rem', justifyContent: 'center' }}>
-            <h2 style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
-              <CharacterReveal
-                text="The"
-                className="text-gradient-premium"
-                style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
-              />
-              <CharacterReveal
-                text="Arsenal"
-                className="text-gradient-premium"
-                style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
-              />
-            </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: 0 }}>
-              <CharacterReveal text="Pro-code applications, autonomous AI workflows, and modern Fabric-driven intelligence architectures. Engineered to eliminate operational debt across your entire ecosystem." stagger={0.008} />
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Scroll down to slide</span>
-              <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.15)' }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#c6ff34' }}>→</span>
-            </div>
+              {/* Cards Panels */}
+              {arsenalData.map((item, idx) => {
+                const effect = cardEffects[idx];
+                return (
+                  <ArsenalCard key={item.id} item={item} effect={effect} onOpenModal={onOpenModal} />
+                );
+              })}
+            </motion.div>
           </div>
-
-          {/* Cards Panels */}
-          {arsenalData.map((item, idx) => {
-            const effect = cardEffects[idx];
-            return (
-              <ArsenalCard key={item.id} item={item} effect={effect} onOpenModal={onOpenModal} />
-            );
-          })}
-        </motion.div>
+        </section>
       </div>
-    </section>
+
+      {/* MOBILE BLOCK */}
+      <div className="arsenal-mobile-only">
+        <section style={{ position: 'relative', width: '100%', padding: '6rem 0', background: '#020202', zIndex: 10 }}>
+           {/* Header Panel (Static, Top) */}
+           <div className="arsenal-mobile-title" style={{ padding: '0 2rem', marginBottom: '4rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <h2 style={{ margin: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <CharacterReveal
+                  text="The"
+                  className="text-gradient-premium"
+                  style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
+                />
+                <CharacterReveal
+                  text="Arsenal"
+                  className="text-gradient-premium"
+                  style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05 }}
+                />
+              </h2>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: '1.5rem 0 0 0' }}>
+                <CharacterReveal text="Pro-code applications, autonomous AI workflows, and modern Fabric-driven intelligence architectures." stagger={0.008} />
+              </p>
+           </div>
+           
+           {/* Mobile Track (Vertical Stack) */}
+           <div style={{
+             display: 'flex',
+             flexDirection: 'column',
+             gap: '3rem',
+             padding: '0 1.5rem 4rem 1.5rem',
+           }}>
+             {arsenalData.map((item, idx) => (
+                <div key={item.id} style={{ width: '100%' }}>
+                  {/* Note: NO effect prop passed here so opacity stays 1! */}
+                  <ArsenalCard item={item} onOpenModal={onOpenModal} />
+                </div>
+             ))}
+           </div>
+        </section>
+      </div>
+    </>
   );
 }
 

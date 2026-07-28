@@ -15,20 +15,7 @@ import Faq from './sections/Faq';
 import FooterCTA from './sections/FooterCTA';
 import Footer from './sections/Footer';
 
-function SectionDivider() {
-  return (
-    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', padding: '2rem 0', position: 'relative', zIndex: 15 }}>
-      <div style={{
-        width: '100%',
-        maxWidth: '800px',
-        height: '1px',
-        background: 'linear-gradient(90deg, transparent 0%, rgba(198,255,52,0.8) 50%, transparent 100%)',
-        boxShadow: '0 0 15px rgba(198,255,52,0.5), 0 0 5px rgba(198,255,52,1)',
-        opacity: 0.7
-      }} />
-    </div>
-  );
-}
+
 
 export default function App() {
   const activeHero = 'remix';
@@ -61,39 +48,37 @@ export default function App() {
             <div id="manifesto">
               <Manifesto activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            
             <div>
               <TrustBar activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            
             <div id="arsenal">
               <Arsenal activeHero={activeHero} onOpenModal={(tool) => setSelectedTool(tool)} />
             </div>
-            <SectionDivider />
+            
             <div id="protocol">
               <Methodology activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            
             <div id="integrations">
               <IntegrationsHub activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            
             <div id="verticals">
               <Industries activeHero={activeHero} />
             </div>
-            <SectionDivider />
             <div>
               <Impact activeHero={activeHero} />
             </div>
-            {/* <SectionDivider />
+            {/* 
             <div>
               <CaseStudy activeHero={activeHero} />
             </div> */}
-            <SectionDivider />
             <div>
               <Faq activeHero={activeHero} />
             </div>
-            <SectionDivider />
+            
             <div>
               <FooterCTA activeHero={activeHero} />
             </div>

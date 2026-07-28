@@ -39,12 +39,12 @@ html {
   --glass-border: rgba(255, 255, 255, 0.08);
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-button: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-serif: 'Plus Jakarta Sans', sans-serif;
-  --font-display: 'Plus Jakarta Sans', sans-serif;
-  --font-tech: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-ui: 'Sora', system-ui, sans-serif;
+  --font-button: 'Sora', system-ui, sans-serif;
+  --font-serif: 'Sora', sans-serif;
+  --font-display: 'Sora', sans-serif;
+  --font-tech: 'Schibsted Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   /* Spacing (4pt system) */
@@ -163,10 +163,7 @@ button {
 
 /* Utilities */
 .gradient-text {
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-accent);
 }
 
 .glow-accent {
@@ -253,19 +250,7 @@ button {
 
 /* Stunning metallic gradient text */
 .text-gradient-premium {
-  background: linear-gradient(
-    180deg, 
-    #ffffff 0%, 
-    #f8f8f8 40%, 
-    #d0d0d0 75%, 
-    #999999 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  /* Metallic Bloom + Subtle Brand Accent Glow - Softened per user request */
-  filter: drop-shadow(0 2px 12px rgba(255,255,255,0.15)) drop-shadow(0 4px 16px rgba(198, 255, 52, 0.08));
+  color: var(--color-ink);
 }
 
 /* Accent (Lime) gradient text for Tech vibe */
@@ -871,7 +856,7 @@ button {
 
 .sui-hero-text {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 7.5vw, 7.5rem);
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -983,7 +968,8 @@ button {
 @media (max-width: 900px) {
   .raycast-footer-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 3rem !important;
+    gap: 1.5rem !important;
+    min-height: auto !important;
   }
 }
 @media (max-width: 600px) {
@@ -1336,3 +1322,208 @@ button {
   transform: translateY(-4px) translateZ(0);
 }
 
+
+/* MOBILE OPTIMIZATIONS (HERO BLUR FIX) */
+@media (max-width: 768px) {
+  .animate-blur-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .sui-hero-text.blur-layer {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  .sui-hero-text.sharp-layer {
+    display: none !important;
+  }
+}
+
+/* MOBILE VISIBILITY CLASSES */
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
+}
+
+/* HERO MOBILE SIZE REDUCTIONS */
+@media (max-width: 768px) {
+  .sui-hero-text {
+    font-size: clamp(2.25rem, 8vw, 7.5rem) !important;
+    line-height: 1.05 !important;
+  }
+  .btn-glow-border {
+    padding: 0.6rem 1.5rem !important;
+  }
+}
+
+/* RESPONSIVE UTILITIES */
+.grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+@media (max-width: 992px) {
+  .grid-3-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .grid-3-col {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ARSENAL MOBILE NATIVE CAROUSEL */
+@media (max-width: 768px) {
+  .arsenal-mobile-container {
+    height: auto !important;
+    position: relative !important;
+    padding: 2rem 0 4rem 0 !important;
+  }
+  .arsenal-mobile-sticky {
+    height: auto !important;
+    position: relative !important;
+  }
+  .arsenal-mobile-track {
+    transform: none !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 1.5rem !important;
+    gap: 1.5rem !important;
+    width: 100vw !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+  }
+  .arsenal-mobile-only .arsenal-horizontal-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    opacity: 1 !important;
+    scroll-snap-align: center !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    min-height: 500px !important;
+    padding: 2rem !important;
+  }
+  .arsenal-mobile-track::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ARSENAL MOBILE CARD FONT TWEAKS */
+@media (max-width: 768px) {
+  .arsenal-mobile-card h3 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+  }
+  .arsenal-mobile-card p {
+    font-size: clamp(0.9rem, 2vw, 1.05rem) !important;
+  }
+}
+
+/* ARSENAL DOM RESTRUCTURING */
+.arsenal-mobile-only { display: none !important; }
+@media (max-width: 768px) {
+  .arsenal-desktop-only { display: none !important; }
+  .arsenal-mobile-only { display: block !important; }
+}
+
+/* ARSENAL MOBILE CARD COMPRESSION */
+@media (max-width: 768px) {
+  .arsenal-mobile-hidden-details {
+    display: none !important;
+  }
+  .arsenal-mobile-card {
+    padding: 1.5rem !important;
+    gap: 1rem !important;
+    min-height: auto !important;
+  }
+}
+
+.arsenal-desktop-only-flex { display: flex !important; }
+.arsenal-mobile-only-flex { display: none !important; }
+@media (max-width: 768px) {
+  .arsenal-desktop-only-flex { display: none !important; }
+  .arsenal-mobile-only-flex { display: flex !important; }
+}
+/* ARSENAL MODAL MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .custom-modal-scrollbar > div {
+    padding: 2rem !important; /* Reduce padding of the modal card on mobile */
+  }
+  .custom-modal-scrollbar [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important; /* Stack all grids */
+    gap: 2rem !important; /* Reduce gaps between stacked columns */
+  }
+  .arsenal-expand-text {
+    display: none !important;
+  }
+  .arsenal-expand-btn {
+    padding: 0.5rem !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  /* Fix popup animations scroll dependency */
+  .custom-modal-scrollbar [style*="opacity: 0.1"],
+  .custom-modal-scrollbar [style*="opacity: 0;"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* Center The Arsenal Title */
+  .arsenal-mobile-title {
+    text-align: center !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+}
+
+
+.arsenal-modal-grid {
+  display: grid !important;
+  grid-template-columns: 1.05fr 0.95fr !important;
+}
+
+@media (max-width: 768px) {
+  .arsenal-modal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+  
+  /* Constrain SVGs in mobile modal */
+  .custom-modal-scrollbar svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .arsenal-mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-modal-scrollbar {
+    scroll-snap-type: none !important;
+  }
+  .arsenal-modal-grid {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .arsenal-modal-content {
+    padding: 1.25rem 1rem !important;
+  }
+}

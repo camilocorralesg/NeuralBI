@@ -47,7 +47,7 @@ function FooterCTA({ activeHero }) {
 
           <div style={{ background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '2.5rem', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}>
             {submitted ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ textAlign: 'center', padding: '2rem 0' }}>
+              <motion.div style={{ willChange: 'transform, opacity' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ textAlign: 'center', padding: '2rem 0' }}>
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', color: '#fff', marginBottom: '1rem' }}>Thank you.</h3>
                 <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)' }}>Our architects will reach out shortly.</p>
               </motion.div>
@@ -277,11 +277,11 @@ function FooterCTA({ activeHero }) {
           />
         </div>
 
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           style={{ background: 'rgba(255, 255, 255, 0.01)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: isRemix ? '12px' : '16px', padding: '2.5rem', boxShadow: '0 30px 60px rgba(0,0,0,0.4)' }}
         >
           {submitted ? (

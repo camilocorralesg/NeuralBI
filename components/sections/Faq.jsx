@@ -518,6 +518,17 @@ function Faq({ activeHero }) {
       zIndex: 10,
       borderTop: '1px solid ' + theme.borderColor
     }}>
+      {/* Impeccable Halftone Texture Overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)',
+        backgroundSize: '16px 16px',
+        opacity: 0.5,
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 2rem' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <CharacterReveal
@@ -533,7 +544,7 @@ function Faq({ activeHero }) {
           />
         </h2>
 
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           variants={{
             hidden: {},
             visible: {
@@ -544,7 +555,7 @@ function Faq({ activeHero }) {
           }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
         >
           {faqData.map((item, idx) => {
@@ -554,11 +565,7 @@ function Faq({ activeHero }) {
               visible: {
                 opacity: 1,
                 y: 0,
-                transition: {
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 20
-                }
+                transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
               }
             };
             return (
@@ -567,10 +574,10 @@ function Faq({ activeHero }) {
                 variants={itemVariants}
                 onClick={() => setActiveIdx(isOpen ? null : idx)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.01)',
+                  background: isOpen ? 'rgba(198, 255, 52, 0.04)' : 'rgba(12, 16, 26, 0.4)',
                   backdropFilter: 'blur(24px)',
                   border: '1px solid ' + (isOpen ? 'rgba(198, 255, 52, 0.25)' : 'rgba(255, 255, 255, 0.05)'),
-                  borderRadius: '20px',
+                  borderRadius: '16px',
                   padding: '2rem 2.25rem',
                   cursor: 'pointer',
                   position: 'relative',
@@ -651,6 +658,7 @@ function Faq({ activeHero }) {
             );
           })}
         </motion.div>
+      </div>
       </div>
     </section>
   );

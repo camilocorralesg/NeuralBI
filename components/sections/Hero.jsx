@@ -47,7 +47,7 @@ function Hero({ activeHero = 'remix' }) {
   return (
     <section style={{
       position: 'relative',
-      minHeight: '100vh',
+      minHeight: '100dvh',
       display: 'flex',
       alignItems: 'center',
       backgroundColor: 'var(--color-paper)',
@@ -98,7 +98,7 @@ function Hero({ activeHero = 'remix' }) {
           <p className="animate-blur-reveal delay-200" style={{
             fontFamily: 'var(--font-sans)',
             color: 'rgba(255,255,255,0.85)',
-            fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
+            fontSize: 'clamp(0.85rem, 1.5vw, 1.25rem)',
             fontWeight: 400,
             marginBottom: 'var(--space-12)',
             lineHeight: 1.6,
@@ -115,7 +115,7 @@ function Hero({ activeHero = 'remix' }) {
             <Magnetic>
               <button className={currentContent.btnClass} style={{
                 fontFamily: 'var(--font-button)',
-                fontSize: '1.125rem'
+                fontSize: 'clamp(0.8rem, 1.5vw, 1.125rem)'
               }}>
                 {currentContent.cta}
               </button>
