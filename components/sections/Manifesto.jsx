@@ -138,11 +138,11 @@ function Manifesto({ activeHero }) {
   // 5. SUI_FORK: Dark, highly tactile Bento glass grids
   if (activeHero === 'sui_fork') {
     return (
-      <motion.section
+      <motion.section style={{ willChange: 'transform, opacity' }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
@@ -183,28 +183,28 @@ function Manifesto({ activeHero }) {
 
   // 4. TECH V4 (Video 0627): Smooth Premium Mesh (Glassmorphism)
   return (
-    <motion.section
+    <motion.section style={{ willChange: 'transform, opacity' }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 6vw, 6rem)' }}>
           <h2 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 0 }}>
             <CharacterReveal
               text="The New Enterprise Blueprint."
               className="text-gradient-premium"
-              style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-tech)', fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, textTransform: isRemix ? 'none' : 'uppercase' }}
+              style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-tech)', fontSize: 'clamp(2rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, textTransform: isRemix ? 'none' : 'uppercase', textAlign: 'center' }}
             />
           </h2>
-          <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.2rem', maxWidth: '600px', margin: '1.5rem auto 0', lineHeight: 1.6 }}>
+          <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '1.5rem auto 0', lineHeight: 1.6, padding: '0 1rem', textAlign: 'center' }}>
             <CharacterReveal text="Why forward-thinking companies choose NeuralBI over rigid, legacy IT consulting." stagger={0.01} />
           </p>
         </div>
 
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           variants={{
             hidden: {},
             visible: {
@@ -215,11 +215,11 @@ function Manifesto({ activeHero }) {
           }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid-3-col"
         >
-          {data.map((item) => (
-            <ManifestoTiltCard key={item.id} item={item} isRemix={isRemix} />
+          {data.map((item, index) => (
+            <ManifestoTiltCard key={item.id} item={item} isRemix={isRemix} index={index} />
           ))}
         </motion.div>
       </div>
@@ -227,8 +227,44 @@ function Manifesto({ activeHero }) {
   );
 }
 
-function ManifestoTiltCard({ item, isRemix }) {
+function ManifestoTiltCard({ item, isRemix, index = 0 }) {
   const [hovered, setHovered] = React.useState(false);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mql = window.matchMedia('(max-width: 768px)');
+    let timeout;
+    let interval;
+
+    const runMobileAnimation = () => {
+      timeout = setTimeout(() => {
+        setHovered(true);
+        interval = setInterval(() => {
+          setHovered(prev => !prev);
+        }, 2000);
+      }, index * 1000);
+    };
+
+    const handleMatch = (e) => {
+      if (e.matches) {
+        runMobileAnimation();
+      } else {
+        clearTimeout(timeout);
+        clearInterval(interval);
+        setHovered(false);
+      }
+    };
+
+    handleMatch(mql);
+    mql.addEventListener('change', handleMatch);
+    
+    return () => {
+      mql.removeEventListener('change', handleMatch);
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [index]);
 
   return (
     <TiltCard
@@ -246,7 +282,7 @@ function ManifestoTiltCard({ item, isRemix }) {
         alignItems: 'center',
         textAlign: 'center',
         justifyContent: 'space-between',
-        minHeight: '610px',
+        minHeight: 'clamp(450px, 60vh, 610px)',
         border: hovered ? '1px solid rgba(198, 255, 52, 0.35)' : '1px solid rgba(255, 255, 255, 0.08)',
         boxShadow: hovered
           ? 'inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 45px rgba(198, 255, 52, 0.12)'
@@ -653,7 +689,7 @@ function AiNativeGraphic({ hovered }) {
         </g>
 
         {/* Final Output Node (Transforms to $ Growth Icon on Hover) */}
-        <g style={{ transformOrigin: '195px 75px', transform: hovered ? 'scale(1.2)' : 'scale(1)', transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+        <g style={{ transformOrigin: '195px 75px', transform: hovered ? 'scale(1.2)' : 'scale(1)', transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }}>
           <circle cx="195" cy="75" r="14" fill={hovered ? "#162306" : "#0d0e15"} stroke={hovered ? "#c6ff34" : "#6366f1"} strokeWidth={hovered ? "2.5" : "1.5"} style={{ transition: 'all 0.4s ease' }} />
           {hovered ? (
             <text x="195" y="80" textAnchor="middle" fill="#c6ff34" fontSize="13" fontWeight="900" fontFamily="sans-serif" style={{ filter: 'drop-shadow(0 0 4px #c6ff34)' }}>
@@ -785,7 +821,7 @@ function WarpSpeedGraphic({ hovered }) {
           ].map((col, i) => {
             const x = hovered ? col.xWarp : col.xBase;
             return (
-              <g key={i} style={{ transform: `translateX(${x - col.xBase}px)`, transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+              <g key={i} style={{ transform: `translateX(${x - col.xBase}px)`, transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}>
                 <line x1={col.xBase} y1="30" x2={col.xBase} y2="110" stroke={hovered && i === 3 ? "rgba(198, 255, 52, 0.4)" : "rgba(255,255,255,0.06)"} strokeDasharray={hovered ? "none" : "3 3"} />
                 <text
                   x={col.xBase}
@@ -970,14 +1006,14 @@ function ZeroFrictionGraphic({ hovered }) {
           padding: '8px 10px',
           boxShadow: hovered ? '0 4px 14px rgba(198,255,52,0.1)' : 'none',
           transform: hovered ? 'translate(0, 0) rotate(0deg)' : 'translate(-10px, -12px) rotate(-4deg)',
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
           <div style={{ fontSize: '7px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.5)', marginBottom: '3px' }}>OPERATIONAL_EFFICIENCY</div>
           <div style={{ fontSize: '12px', fontWeight: '800', fontFamily: 'var(--font-sans)', color: hovered ? '#c6ff34' : '#ffffff', transition: 'color 0.4s ease' }}>
             +98.4%
           </div>
           <div style={{ width: '100%', height: '3px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px', marginTop: '4px', overflow: 'hidden' }}>
-            <div style={{ width: hovered ? '92%' : '40%', height: '100%', background: '#c6ff34', transition: 'width 0.8s ease' }} />
+            <div style={{ width: hovered ? '92%' : '40%', height: '100%', background: '#c6ff34', transition: 'transform 0.8s ease' }} />
           </div>
         </div>
 
@@ -991,7 +1027,7 @@ function ZeroFrictionGraphic({ hovered }) {
           flexDirection: 'column',
           justifyContent: 'center',
           transform: hovered ? 'translate(0, 0) rotate(0deg)' : 'translate(12px, -8px) rotate(3deg)',
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
           <div style={{ display: 'flex', gap: '3px', alignItems: 'flex-end', height: '22px' }}>
             {[40, 65, 50, 85, 100].map((h, i) => (
@@ -1019,7 +1055,7 @@ function ZeroFrictionGraphic({ hovered }) {
           flexDirection: 'column',
           gap: '4px',
           transform: hovered ? 'translate(0, 0) rotate(0deg)' : 'translate(-8px, 10px) rotate(3deg)',
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
           <div style={{ width: '70%', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '2px' }} />
           <div style={{ width: '90%', height: '4px', background: hovered ? 'rgba(56, 189, 248, 0.5)' : 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
@@ -1036,7 +1072,7 @@ function ZeroFrictionGraphic({ hovered }) {
           alignItems: 'center',
           justifyContent: 'center',
           transform: hovered ? 'translate(0, 0) rotate(0deg)' : 'translate(10px, 12px) rotate(-4deg)',
-          transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)'
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
           <div style={{
             background: hovered ? '#c6ff34' : 'rgba(255,255,255,0.1)',

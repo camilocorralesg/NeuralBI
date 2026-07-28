@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import CharacterReveal from '../CharacterReveal';
 import TiltCard from '../TiltCard';
 import Counter from '../Counter';
+import ColorBends from '../ColorBends';
+
 
 
 function Impact({ activeHero }) {
@@ -19,10 +21,49 @@ function Impact({ activeHero }) {
 
   if (isRemix) {
     return (
-      <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '4rem', alignItems: 'center' }}>
-            <div>
+      <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10, overflow: 'hidden' }}>
+        {/* Full Section Fluid Background */ }
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, opacity: 0.7 }}>
+            <ColorBends 
+               colors={['#c6ff34', '#8bcc18', '#e3ff80', '#0a0a0a']} 
+               speed={0.4} 
+               intensity={1.2}
+               mouseInfluence={0}
+               parallax={0}
+               style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)',
+            backgroundSize: '16px 16px',
+            opacity: 0.5,
+            pointerEvents: 'none',
+            zIndex: 1
+          }} />
+        </div>
+        
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1300px', margin: '0 auto', padding: '0 2rem' }}>
+          
+          {/* Raycast-style Card Container */}
+          <div style={{ 
+            background: 'rgba(8, 10, 12, 0.65)', 
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderTop: '1px solid rgba(255,255,255,0.15)',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            position: 'relative',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1.2fr',
+            boxShadow: '0 30px 60px -15px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)'
+          }}>
+            
+            {/* Left Column (Text) */}
+            <div style={{ padding: '6rem 4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', zIndex: 1, position: 'relative' }}>
               <h2 style={{ display: 'flex', flexDirection: 'column', margin: 0 }}>
                 <CharacterReveal
                   text="The Math Speaks"
@@ -47,41 +88,58 @@ function Impact({ activeHero }) {
                   }}
                 />
               </h2>
+              <p style={{ marginTop: '1.5rem', fontFamily: 'var(--font-sans)', fontSize: '1.15rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, maxWidth: '90%' }}>
+                Transform your architecture with intelligent orchestration. Unparalleled speed, absolute precision, and radical efficiency.
+              </p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            
+            {/* Right Column (Metrics) */}
+            <div style={{ padding: '4rem 4rem 4rem 2rem', display: 'flex', flexDirection: 'column', gap: '2rem', zIndex: 1, position: 'relative' }}>
               {metrics.map((m, index) => (
                 <TiltCard key={index} className="sui-card-hover" style={{
                   borderRadius: '16px',
-                  padding: '2.5rem 2rem',
+                  padding: '2rem 3rem',
                   display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: index === 1 ? '3rem' : '0',
-                  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.4)'
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                  background: 'linear-gradient(135deg, rgba(20, 25, 30, 0.6) 0%, rgba(10, 12, 15, 0.8) 100%)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderTop: '1px solid rgba(255,255,255,0.2)',
+                  borderLeft: '1px solid rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(20px)',
+                  transition: 'all 0.4s ease',
+                  width: '100%'
                 }}>
-                  <div style={{ width: '180px', flexShrink: 0, marginRight: '1.5rem' }}>
+                  <div style={{ width: '100%', flexShrink: 0 }}>
                     <span style={{
                       fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)',
-                      color: 'var(--color-accent)',
+                      fontSize: 'clamp(3rem, 5vw, 4.5rem)',
+                      color: '#ffffff',
                       fontWeight: 900,
                       letterSpacing: '-0.02em',
-                      lineHeight: 1
+                      lineHeight: 1,
+                      textShadow: '0 0 40px rgba(255, 255, 255, 0.4)'
                     }}>
                       <Counter value={m.number} />
                     </span>
                   </div>
                   <div style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '1.15rem',
+                    fontSize: '1rem',
                     color: 'rgba(255,255,255,0.7)',
                     lineHeight: 1.5,
-                    flex: 1
+                    marginTop: '0.5rem',
+                    maxWidth: '85%'
                   }}>
                     {m.label}
                   </div>
                 </TiltCard>
               ))}
             </div>
+
           </div>
         </div>
       </section>

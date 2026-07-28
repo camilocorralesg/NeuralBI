@@ -1688,8 +1688,9 @@ function Industries({ activeHero }) {
   const isRemix = activeHero === 'remix';
 
   return (
-    <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20 }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
+    <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20, background: '#000000', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")', opacity: 0.02, mixBlendMode: 'overlay', pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1 }}>
 
         {/* Section Header Block */}
         <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>

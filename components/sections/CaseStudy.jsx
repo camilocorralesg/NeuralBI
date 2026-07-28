@@ -71,11 +71,11 @@ function CaseStudy({ activeHero }) {
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
 
-        <motion.div
+        <motion.div style={{ willChange: 'transform, opacity' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           style={{
             background: style.cardBg,
             backdropFilter: 'blur(28px)',
@@ -196,12 +196,12 @@ function CaseStudy({ activeHero }) {
                 {/* Simulated Chart */}
                 <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: '1rem', paddingTop: '2rem' }}>
                   {[40, 70, 45, 90, 60, 100, 80].map((h, i) => (
-                    <motion.div
+                    <motion.div style={{ willChange: 'transform, opacity' }}
                       key={i}
                       initial={{ height: 0 }}
                       whileInView={{ height: `${h}%` }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: 0.2 + (i * 0.1), ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, delay: 0.1 + (i * 0.05), ease: [0.16, 1, 0.3, 1] }}
                       style={{
                         flex: 1,
                         background: i === 5 ? '#c6ff34' : 'rgba(255,255,255,0.1)',

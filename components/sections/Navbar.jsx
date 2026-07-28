@@ -12,6 +12,16 @@ function Navbar({ activeHero }) {
   const [hoveredIdx, setHoveredIdx] = React.useState(null);
   const [isNavHovered, setIsNavHovered] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMobileMenuOpen]);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +72,7 @@ function Navbar({ activeHero }) {
                 borderRadius: '50%',
                 background: '#c6ff34',
                 boxShadow: '0 0 8px #c6ff34',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s'
               }} />
               {link.label}
             </a>
@@ -276,10 +286,7 @@ function Navbar({ activeHero }) {
         </div>
 
         {/* Links */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: isCapsule ? '2rem' : '3rem',
+        <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: isCapsule ? "2rem" : "3rem",
           margin: isCapsule ? '0' : '0 auto',
           maxWidth: showLinks ? '650px' : '0px',
           opacity: showLinks ? 1 : 0,
@@ -333,8 +340,7 @@ function Navbar({ activeHero }) {
         </div>
 
         {/* CTA Button (Hidden on Hero, Unfolds when Scrolled + Hovered) */}
-        <div style={{
-          maxWidth: showCta ? '200px' : '0px',
+        <div className="desktop-only" style={{ maxWidth: showCta ? "200px" : "0px",
           opacity: showCta ? 1 : 0,
           overflow: 'hidden',
           pointerEvents: showCta ? 'auto' : 'none',
@@ -361,10 +367,113 @@ function Navbar({ activeHero }) {
             </button>
           </Magnetic>
         </div>
+      
+        {/* Mobile Hamburger Menu */}
+        <div className="mobile-only" style={{ display: 'none', alignItems: 'center' }}>
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: '#ffffff',
+              cursor: 'pointer',
+              padding: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '6px'
+            }}
+          >
+            <span style={{ width: '24px', height: '2px', background: 'currentColor', borderRadius: '2px' }}></span>
+            <span style={{ width: '24px', height: '2px', background: 'currentColor', borderRadius: '2px' }}></span>
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div style={{ willChange: 'transform, opacity' }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: '100dvh',
+              backgroundColor: 'rgba(10, 14, 24, 0.95)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              zIndex: 9999,
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '1.5rem 1rem'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px' }} />
+              <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                  padding: '0.5rem',
+                  fontSize: '2.5rem',
+                  lineHeight: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                &times;
+              </button>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'min(1.5rem, 3.5vh)', flex: 1, justifyContent: 'center', alignItems: 'center', overflowY: 'auto', paddingBottom: '2rem' }}>
+              {navLinks.map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.5rem, 5vh, 2rem)',
+                    fontWeight: 600,
+                    color: '#ffffff',
+                    textDecoration: 'none'
+                  }}
+                >
+                  {link.label}
+                </a>
+              ))}
+              
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="btn-glow-border"
+                style={{
+                  marginTop: '2rem',
+                  padding: '1rem 2.5rem',
+                  fontSize: '1.25rem',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 800,
+                  borderRadius: '9999px',
+                  cursor: 'pointer'
+                }}
+              >
+                Book a Call
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
-
 }
 
 export default memo(Navbar);

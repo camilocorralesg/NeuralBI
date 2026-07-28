@@ -279,13 +279,55 @@ function IntegrationsHub({ activeHero }) {
 
   return (
     <section style={{
-      background: s.bgGradient,
       padding: '8rem 0',
       position: 'relative',
-      zIndex: 10
+      zIndex: 10,
+      overflow: 'hidden'
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+      {/* Impeccable Background Image Container for Integrations */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+         <div style={{
+           position: 'absolute', inset: 0,
+           backgroundImage: 'url("/assets/gradient%20lila.jpeg")',
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           filter: 'brightness(1.2) contrast(1.1) saturate(1.2)'
+         }} />
+         
+         {/* Dazzling Background - No heavy tint, let the gradient shine! */}
+         
+         {/* Vignette to blend perfectly with dark sections above and below */}
+         <div style={{
+           position: 'absolute', inset: 0,
+           background: 'linear-gradient(to bottom, #000000 0%, transparent 20%, transparent 80%, #000000 100%)',
+           zIndex: 1
+         }} />
+
+         {/* Sub-blend of the original gradient for depth */}
+         <div style={{
+           position: 'absolute', inset: 0,
+           background: s.bgGradient,
+           opacity: 0.2
+         }} />
+      </div>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1 }}>
+        {/* Raycast-style Premium Glass Card */}
+        <div style={{
+          background: 'rgba(5, 8, 5, 0.45)', 
+          backdropFilter: 'blur(40px)',
+          WebkitBackdropFilter: 'blur(40px)',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderTop: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '32px',
+          padding: '5rem 2rem',
+          boxShadow: '0 30px 60px -15px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)',
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+        <div style={{ textAlign: 'center', marginBottom: '5rem', maxWidth: '800px', position: 'relative', zIndex: 2 }}>
           <h2 style={{ textAlign: 'center', margin: 0 }}>
             <CharacterReveal
               text={s.title}
@@ -458,10 +500,10 @@ function IntegrationsHub({ activeHero }) {
               height: '90px',
               zIndex: 3
             }}>
-              <motion.div
+              <motion.div style={{ willChange: 'transform, opacity' }}
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ type: 'spring', stiffness: 85, damping: 15 }}
                 style={{
                   width: '100%',
@@ -535,10 +577,10 @@ function IntegrationsHub({ activeHero }) {
                   onMouseEnter={() => setHoveredNode(node.id)}
                   onMouseLeave={() => setHoveredNode(null)}
                 >
-                  <motion.div
+                  <motion.div style={{ willChange: 'transform, opacity' }}
                     initial={{ scale: 0, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: true, margin: "-50px" }}
                     transition={{ type: 'spring', stiffness: 90, damping: 14, delay: delay }}
                     style={{ position: 'relative', width: '100%', height: '100%' }}
                   >
@@ -653,6 +695,7 @@ function IntegrationsHub({ activeHero }) {
             })}
 
           </div>
+        </div>
         </div>
       </div>
     </section>
