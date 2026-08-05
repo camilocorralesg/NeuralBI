@@ -64,10 +64,10 @@ function Manifesto({ activeHero }) {
   // 1. NEBULA (spline1): Editorial, Asymmetric, pure glass, organic flowing curves.
   if (activeHero === 'spline1') {
     return (
-      <section style={{ padding: '6rem 0', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '5rem', alignItems: 'end' }}>
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>
+      <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '4rem', alignItems: 'end' }}>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 4rem)', fontWeight: 400, lineHeight: 1.1 }}>
               The New Enterprise Blueprint.
             </h2>
             <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: '1.125rem', lineHeight: 1.6, maxWidth: '480px' }}>
@@ -75,7 +75,7 @@ function Manifesto({ activeHero }) {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          <div className="grid-3-col">
             {data.map((item) => (
               <NebulaManifestoCard key={item.id} item={item} />
             ))}
@@ -88,10 +88,10 @@ function Manifesto({ activeHero }) {
   // 2. CINEMATIC: Clean, ultra-minimal, horizontal, razor-sharp alignment.
   if (activeHero === 'cinematic') {
     return (
-      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3.5vw, 3.25rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.5rem' }}>
+      <section style={{ padding: 'clamp(4rem, 8vw, 8rem) 0', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.75rem, 3.5vw, 3.25rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.5rem' }}>
               The New Enterprise Blueprint.
             </h2>
             <p style={{ fontFamily: 'var(--font-sans)', color: '#71717a', fontSize: '1.125rem', maxWidth: '600px', margin: '0 auto' }}>
@@ -99,7 +99,7 @@ function Manifesto({ activeHero }) {
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {data.map((item, index) => (
               <CinematicManifestoRow key={item.id} item={item} index={index} />
             ))}
@@ -112,12 +112,12 @@ function Manifesto({ activeHero }) {
   // 3. MODERN V2 (Video 2): 3D Brand Cards with premium colored glows matching the provided image.
   if (activeHero === 'modern_v2') {
     return (
-      <section style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
+      <section style={{ padding: 'clamp(4rem, 8vw, 8rem) 0', position: 'relative', zIndex: 10 }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-            <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1.05 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 className="text-gradient-premium" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1.05 }}>
               The New Enterprise Blueprint.
             </h2>
             <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.5)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
@@ -125,7 +125,7 @@ function Manifesto({ activeHero }) {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          <div className="grid-3-col">
             {data.map((item) => (
               <ModernManifestoCard key={item.id} item={item} />
             ))}
@@ -141,22 +141,22 @@ function Manifesto({ activeHero }) {
       <motion.section style={{ willChange: 'transform, opacity' }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
+        viewport={{ once: true, amount: 0.05 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{ padding: '8rem 0', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff' }}>
+        style={{ padding: 'clamp(4rem, 8vw, 8rem) 0', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.75rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff' }}>
               The New Enterprise Blueprint.
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          <div className="grid-3-col">
             {data.map((item) => (
               <div key={item.id} style={{
                 background: 'rgba(255,255,255,0.03)',
                 backdropFilter: 'blur(30px)',
                 borderRadius: '24px',
-                padding: '3rem 2rem',
+                padding: '2.5rem 1.5rem',
                 border: '1px solid rgba(255,255,255,0.06)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -184,14 +184,14 @@ function Manifesto({ activeHero }) {
   // 4. TECH V4 (Video 0627): Smooth Premium Mesh (Glassmorphism)
   return (
     <motion.section style={{ willChange: 'transform, opacity' }}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}
+      style={{ padding: 'clamp(4rem, 8vw, 9rem) 0', position: 'relative', zIndex: 10 }}
     >
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 6vw, 6rem)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 6rem)' }}>
           <h2 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 0 }}>
             <CharacterReveal
               text="The New Enterprise Blueprint."
@@ -215,7 +215,7 @@ function Manifesto({ activeHero }) {
           }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.05 }}
           className="grid-3-col"
         >
           {data.map((item, index) => (
@@ -276,13 +276,13 @@ function ManifestoTiltCard({ item, isRemix, index = 0 }) {
         backdropFilter: 'blur(28px)',
         WebkitBackdropFilter: 'blur(28px)',
         borderRadius: isRemix ? '16px' : '32px',
-        padding: '2.25rem',
+        padding: 'clamp(1.5rem, 4vw, 2.25rem)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
         justifyContent: 'space-between',
-        minHeight: 'clamp(450px, 60vh, 610px)',
+        minHeight: 'clamp(380px, 50vh, 610px)',
         border: hovered ? '1px solid rgba(198, 255, 52, 0.35)' : '1px solid rgba(255, 255, 255, 0.08)',
         boxShadow: hovered
           ? 'inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 45px rgba(198, 255, 52, 0.12)'

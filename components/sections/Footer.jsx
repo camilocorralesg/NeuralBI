@@ -42,7 +42,7 @@ function Footer({ activeHero }) {
       <footer style={{
         position: 'relative',
         background: 'linear-gradient(to top, #040900 0%, #000000 100%)',
-        padding: '7rem 0 4rem 0',
+        padding: 'clamp(3.5rem, 6vw, 7rem) 0 3rem 0',
         overflow: 'hidden',
         zIndex: 10,
         borderTop: '1px solid rgba(255, 255, 255, 0.05)'
@@ -75,12 +75,9 @@ function Footer({ activeHero }) {
           pointerEvents: 'none'
         }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 2 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 2 }}>
           {/* Link columns */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '3rem',
+          <div className="footer-links-grid" style={{
             marginBottom: '6rem'
           }}>
             {Object.keys(links).map((category) => (
@@ -100,7 +97,7 @@ function Footer({ activeHero }) {
                     <li key={idx}>
                       <a href={l.href} style={{
                         fontFamily: 'var(--font-sans)',
-                        fontSize: '0.9rem',
+                        fontSize: 'clamp(0.82rem, 2vw, 0.9rem)',
                         color: 'rgba(255, 255, 255, 0.45)',
                         textDecoration: 'none',
                         display: 'inline-block'
@@ -115,24 +112,19 @@ function Footer({ activeHero }) {
           </div>
 
           {/* Lower Row */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2rem',
+          <div className="footer-lower-row" style={{
             paddingTop: '2.5rem',
             borderTop: '1px solid rgba(255, 255, 255, 0.06)'
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div className="footer-brand-col" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', alignSelf: 'flex-start', opacity: 0.95 }} />
 
-              <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
                 {['Youtube', 'Discord', 'LinkedIn', 'X'].map((social, idx) => (
                   <a key={idx} href="#" className="sui-social-box" style={{
                     width: '38px',
                     height: '38px',
-                    borderRadius: '9999px', // round pill style
+                    borderRadius: '9999px',
                     border: '1px solid rgba(255, 255, 255, 0.08)',
                     background: 'rgba(255, 255, 255, 0.02)',
                     display: 'flex',
@@ -188,7 +180,7 @@ function Footer({ activeHero }) {
       <footer style={{
         position: 'relative',
         background: 'linear-gradient(to top, #08080c 0%, #000000 100%)',
-        padding: '6rem 0 5rem 0',
+        padding: 'clamp(3.5rem, 6vw, 6rem) 0 3.5rem 0',
         overflow: 'hidden',
         zIndex: 10,
         borderTop: '1px solid rgba(255, 255, 255, 0.08)'
@@ -217,13 +209,10 @@ function Footer({ activeHero }) {
           pointerEvents: 'none'
         }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 3 }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '3rem',
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 3 }}>
+          <div className="footer-links-grid" style={{
             marginBottom: '6rem'
-          }} className="raycast-footer-grid">
+          }}>
             {Object.keys(links).map((category, index) => (
               <div key={index} className="footer-link-group" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <h4 style={{
@@ -241,7 +230,7 @@ function Footer({ activeHero }) {
                     <li key={idx}>
                       <a href={l.href} style={{
                         fontFamily: 'var(--font-sans)',
-                        fontSize: '0.85rem',
+                        fontSize: 'clamp(0.82rem, 2vw, 0.85rem)',
                         color: '#71717a',
                         textDecoration: 'none',
                         display: 'inline-block'
@@ -255,23 +244,18 @@ function Footer({ activeHero }) {
             ))}
           </div>
 
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2rem',
+          <div className="footer-lower-row" style={{
             paddingTop: '2.5rem',
             borderTop: '1px solid rgba(255, 255, 255, 0.05)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="footer-brand-col" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '22px', opacity: 0.8, filter: 'grayscale(1)' }} />
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#3f3f46' }}>
                 © 2026 Copyright NeuralBI. All rights reserved.
               </span>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               {['TW', 'LN', 'DS', 'YT'].map((soc, idx) => (
                 <a key={idx} href="#" style={{
                   width: '34px',
@@ -300,8 +284,8 @@ function Footer({ activeHero }) {
     return (
       <footer style={{
         position: 'relative',
-        background: 'linear-gradient(to bottom, #000000 0%, #071501 50%, #0f2c02 100%)', // Wide, fully cover gradient
-        padding: '8rem 0 4rem 0',
+        background: 'linear-gradient(to bottom, #000000 0%, #071501 50%, #0f2c02 100%)',
+        padding: 'clamp(3.5rem, 6vw, 8rem) 0 3rem 0',
         overflow: 'hidden',
         zIndex: 10,
         borderTop: '1px solid rgba(198, 255, 52, 0.08)'
@@ -315,21 +299,17 @@ function Footer({ activeHero }) {
           pointerEvents: 'none'
         }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 3 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 3 }}>
           {/* Glass layout wrapper */}
           <div style={{
             background: 'rgba(255, 255, 255, 0.01)',
             backdropFilter: 'blur(30px)',
             border: '1px solid rgba(255, 255, 255, 0.05)',
             borderRadius: '24px',
-            padding: '4rem 3rem',
-            marginBottom: '4rem'
+            padding: 'clamp(2rem, 4vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
+            marginBottom: '3.5rem'
           }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '2.5rem'
-            }} className="raycast-footer-grid">
+            <div className="footer-links-grid">
               {Object.keys(links).map((category, index) => (
                 <div key={index} className="footer-link-group" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                   <h4 style={{
@@ -346,7 +326,7 @@ function Footer({ activeHero }) {
                       <li key={idx}>
                         <a href={l.href} style={{
                           fontFamily: 'var(--font-sans)',
-                          fontSize: '0.9rem',
+                          fontSize: 'clamp(0.82rem, 2vw, 0.9rem)',
                           color: 'rgba(255, 255, 255, 0.5)',
                           textDecoration: 'none',
                           display: 'inline-block'
@@ -362,22 +342,17 @@ function Footer({ activeHero }) {
           </div>
 
           {/* Lower Row */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2rem',
+          <div className="footer-lower-row" style={{
             paddingTop: '2rem'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="footer-brand-col" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', opacity: 0.95 }} />
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.4)' }}>
                 © 2026 Copyright NeuralBI. All rights reserved.
               </span>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               {['Twitter', 'LinkedIn', 'Discord', 'YouTube'].map((social, idx) => (
                 <a key={idx} href="#" style={{
                   padding: '0.5rem 1.25rem',
@@ -405,7 +380,7 @@ function Footer({ activeHero }) {
       <footer style={{
         position: 'relative',
         background: 'linear-gradient(to top, #050505 0%, #000000 100%)',
-        padding: '0 0 5rem 0',
+        padding: '0 0 clamp(3rem, 5vw, 5rem) 0',
         overflow: 'hidden',
         zIndex: 10,
         borderTop: '1px solid rgba(255, 255, 255, 0.08)'
@@ -438,14 +413,14 @@ function Footer({ activeHero }) {
           </>
         )}
         {/* Angled slats header block expanded over the entire screen width */}
-        <div style={{
+        <div className="footer-slats-header" style={{
           height: '140px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'flex-end',
           position: 'relative',
           marginBottom: '5rem',
-          borderBottom: '2px solid rgba(198, 255, 52, 0.25)', // glowing slot line
+          borderBottom: '2px solid rgba(198, 255, 52, 0.25)',
           boxShadow: '0 5px 25px rgba(198, 255, 52, 0.08)',
           overflow: 'hidden',
           width: '100%'
@@ -466,9 +441,9 @@ function Footer({ activeHero }) {
             overflow: 'hidden'
           }}>
             {Array.from({ length: 28 }).map((_, idx) => {
-              const animType = (idx % 3) + 1; // Alternating keys: float-slat-1, float-slat-2, float-slat-3
+              const animType = (idx % 3) + 1;
               const delay = (idx * 0.12).toFixed(2) + 's';
-              const customHeight = 110 + (idx % 5) * 10; // varying heights for organic ripple look
+              const customHeight = 110 + (idx % 5) * 10;
               return (
                 <div
                   key={idx}
@@ -479,20 +454,16 @@ function Footer({ activeHero }) {
                     opacity: 0.25 + (idx % 4) * 0.1,
                     flexShrink: 0
                   }}
-
                 />
               );
             })}
           </div>
         </div>
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 3 }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2rem',
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 3 }}>
+          <div className="footer-links-grid" style={{
             marginBottom: '6rem'
-          }} className="raycast-footer-grid">
+          }}>
             {Object.keys(links).map((category, index) => {
               return (
                 <div key={index} className="footer-link-group" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -510,7 +481,7 @@ function Footer({ activeHero }) {
                       <li key={idx}>
                         <a href={l.href} target={l.target || "_self"} rel="noopener noreferrer" style={{
                           fontFamily: 'var(--font-sans)',
-                          fontSize: '0.85rem',
+                          fontSize: 'clamp(0.82rem, 2vw, 0.85rem)',
                           color: '#8e8e93',
                           textDecoration: 'none',
                           display: 'inline-block'
@@ -525,23 +496,18 @@ function Footer({ activeHero }) {
             })}
           </div>
 
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2.5rem',
+          <div className="footer-lower-row" style={{
             paddingTop: '2rem',
             borderTop: '1px solid rgba(255, 255, 255, 0.05)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="footer-brand-col" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '22px', opacity: 0.8 }} />
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: '#636366' }}>
                 © 2026 Copyright NeuralBI. All rights reserved.
               </span>
             </div>
 
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
               <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>LinkedIn</a>
               <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#8e8e93', fontSize: '0.8rem', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#8e8e93'}>YouTube</a>
             </div>
@@ -556,7 +522,7 @@ function Footer({ activeHero }) {
     <footer style={{
       position: 'relative',
       background: '#000000',
-      padding: '6rem 0 4rem 0',
+      padding: 'clamp(3.5rem, 6vw, 6rem) 0 3rem 0',
       overflow: 'hidden',
       zIndex: 10,
       borderTop: '1px solid rgba(255, 255, 255, 0.05)'
@@ -567,7 +533,7 @@ function Footer({ activeHero }) {
         bottom: 0,
         left: 0,
         right: 0,
-        height: '420px', // taller spread covering the full footer height
+        height: '420px',
         background: 'linear-gradient(to top, rgba(198, 255, 52, 0.12) 0%, rgba(198, 255, 52, 0.03) 60%, transparent 100%)',
         zIndex: 1,
         pointerEvents: 'none'
@@ -602,12 +568,9 @@ function Footer({ activeHero }) {
         <line x1="83.3%" y1="0" x2="83.3%" y2="100%" stroke="rgba(198, 255, 52, 0.12)" strokeWidth="1.5" strokeDasharray="4 8" style={{ animation: 'flow-dotted 5.5s linear infinite' }} />
       </svg>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 2 }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 2 }}>
         {/* Link columns */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '3rem',
+        <div className="footer-links-grid" style={{
           marginBottom: '6rem'
         }}>
           {Object.keys(links).map((category) => (
@@ -627,7 +590,7 @@ function Footer({ activeHero }) {
                   <li key={idx}>
                     <a href={l.href} target={l.target || "_self"} rel="noopener noreferrer" style={{
                       fontFamily: 'var(--font-sans)',
-                      fontSize: '0.9rem',
+                      fontSize: 'clamp(0.82rem, 2vw, 0.9rem)',
                       color: 'rgba(255, 255, 255, 0.45)',
                       textDecoration: 'none',
                       display: 'inline-block'
@@ -642,20 +605,15 @@ function Footer({ activeHero }) {
         </div>
 
         {/* Lower Row */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '2rem',
+        <div className="footer-lower-row" style={{
           paddingTop: '2.5rem',
           borderTop: '1px solid rgba(255, 255, 255, 0.06)'
         }}>
           {/* Left: Logo, Social boxes & Copyright */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="footer-brand-col" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', alignSelf: 'flex-start', opacity: 0.95 }} />
 
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
               {/* LinkedIn */}
               <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>

@@ -181,7 +181,7 @@ export default function ColorBends({
     });
     rendererRef.current = renderer;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setClearColor(0x000000, transparent ? 0 : 1);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
@@ -207,7 +207,11 @@ export default function ColorBends({
       window.addEventListener('resize', handleResize);
     }
 
+    let isVisible = true;
+    let isPageVisible = !document.hidden;
+
     const loop = () => {
+      if (!isVisible || !isPageVisible) return;
       const dt = clock.getDelta();
       const elapsed = clock.elapsedTime;
       material.uniforms.uTime.value = elapsed;
@@ -226,10 +230,41 @@ export default function ColorBends({
       renderer.render(scene, camera);
       rafRef.current = requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
+
+    const tryStart = () => {
+      if (isVisible && isPageVisible && rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(loop);
+      }
+    };
+
+    const tryStop = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const io = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(([entry]) => {
+          isVisible = entry.isIntersecting;
+          isVisible ? tryStart() : tryStop();
+        }, { threshold: 0 })
+      : null;
+
+    if (io) io.observe(container);
+
+    const onVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      isPageVisible ? tryStart() : tryStop();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    tryStart();
 
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      tryStop();
+      if (io) io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       if (resizeObserverRef.current) resizeObserverRef.current.disconnect();
       else window.removeEventListener('resize', handleResize);
       geometry.dispose();

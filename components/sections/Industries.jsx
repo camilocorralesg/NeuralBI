@@ -1688,19 +1688,19 @@ function Industries({ activeHero }) {
   const isRemix = activeHero === 'remix';
 
   return (
-    <section style={{ padding: '8rem 0', position: 'relative', zIndex: 20, background: '#000000', overflow: 'hidden' }}>
+    <section style={{ padding: 'clamp(4rem, 7vw, 8rem) 0', position: 'relative', zIndex: 20, background: '#000000', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")', opacity: 0.02, mixBlendMode: 'overlay', pointerEvents: 'none', zIndex: 0 }} />
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 1 }}>
 
         {/* Section Header Block */}
-        <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
           <h2 style={{ textAlign: 'center', margin: 0 }}>
             <CharacterReveal
               text="Applied Intelligence Across Verticals"
               className={isRemix ? 'text-gradient-premium' : ''}
               style={{
                 fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)',
-                fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+                fontSize: 'clamp(1.85rem, 4vw, 3.5rem)',
                 fontWeight: isRemix ? 800 : 700,
                 letterSpacing: '-0.02em',
                 color: '#ffffff'
@@ -1709,7 +1709,7 @@ function Industries({ activeHero }) {
           </h2>
           <p style={{
             fontFamily: 'var(--font-sans)',
-            fontSize: '1.15rem',
+            fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
             color: 'rgba(255, 255, 255, 0.6)',
             marginTop: '1rem',
             maxWidth: '620px',
@@ -1719,38 +1719,33 @@ function Industries({ activeHero }) {
             Tailored enterprise architectures engineered for complex industry challenges.
           </p>
 
-          {/* Industry Switcher Glass Tab Bar */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '0.75rem',
-            marginTop: '2.5rem',
-            flexWrap: 'wrap'
-          }}>
+          {/* Industry Switcher Glass Tab Bar (Horizontally Scrollable on Mobile) */}
+          <div className="industries-tab-bar">
             {industriesData.map((item, index) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(index)}
-                style={{
-                  background: activeTab === index ? 'rgba(198, 255, 52, 0.12)' : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${activeTab === index ? 'rgba(198, 255, 52, 0.45)' : 'rgba(255,255,255,0.06)'}`,
-                  padding: '0.65rem 1.4rem',
-                  borderRadius: '9999px',
-                  color: activeTab === index ? '#ffffff' : 'rgba(255,255,255,0.5)',
-                  fontFamily: 'var(--font-ui)',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.6rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: activeTab === index ? '0 0 20px rgba(198, 255, 52, 0.22)' : 'none'
-                }}
-              >
-                <div style={{ color: activeTab === index ? item.accent : 'inherit', display: 'flex' }}>{item.icon}</div>
-                {item.title}
-              </button>
+              <div key={item.id} className="industries-tab-item">
+                <button
+                  onClick={() => setActiveTab(index)}
+                  style={{
+                    background: activeTab === index ? 'rgba(198, 255, 52, 0.12)' : 'rgba(255,255,255,0.03)',
+                    border: `1px solid ${activeTab === index ? 'rgba(198, 255, 52, 0.45)' : 'rgba(255,255,255,0.06)'}`,
+                    padding: '0.65rem 1.4rem',
+                    borderRadius: '9999px',
+                    color: activeTab === index ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.6rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    boxShadow: activeTab === index ? '0 0 20px rgba(198, 255, 52, 0.22)' : 'none'
+                  }}
+                >
+                  <div style={{ color: activeTab === index ? item.accent : 'inherit', display: 'flex' }}>{item.icon}</div>
+                  {item.title}
+                </button>
+              </div>
             ))}
           </div>
         </div>
@@ -1762,18 +1757,18 @@ function Industries({ activeHero }) {
           WebkitBackdropFilter: 'blur(20px)',
           border: '1px solid rgba(198, 255, 52, 0.12)',
           borderRadius: '24px',
-          padding: '2.5rem',
+          padding: 'clamp(1.5rem, 4vw, 2.5rem)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
           gap: '1.25rem',
           boxShadow: '0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
-          marginBottom: '3rem'
+          marginBottom: 'clamp(1.75rem, 4vw, 3rem)'
         }}>
           <div style={{
-            width: '64px',
-            height: '64px',
+            width: '56px',
+            height: '56px',
             borderRadius: '16px',
             background: 'rgba(198, 255, 52, 0.08)',
             border: '1px solid rgba(198, 255, 52, 0.25)',
@@ -1783,27 +1778,23 @@ function Industries({ activeHero }) {
             color: '#c6ff34',
             boxShadow: '0 0 30px rgba(198, 255, 52, 0.2)'
           }}>
-            <div style={{ transform: 'scale(1.5)' }}>{currentIndustry.icon}</div>
+            <div style={{ transform: 'scale(1.35)' }}>{currentIndustry.icon}</div>
           </div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 800, color: '#ffffff', margin: 0, lineHeight: 1.2, letterSpacing: '-0.02em' }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.4rem, 3.5vw, 2.5rem)', fontWeight: 800, color: '#ffffff', margin: 0, lineHeight: 1.25, letterSpacing: '-0.02em' }}>
             {currentIndustry.headlineTitle || currentIndustry.title}
           </h3>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.1rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, margin: 0, maxWidth: '800px' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.92rem, 2vw, 1.1rem)', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, margin: 0, maxWidth: '800px' }}>
             {currentIndustry.headlineBody || currentIndustry.body}
           </p>
         </div>
 
         {/* Sub-Solutions Bento Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.5rem'
-        }}>
+        <div className="industries-bento-grid">
           {currentIndustry.bentoCards?.map((card, idx) => {
             return (
               <div
                 key={idx}
-                className="sui-card-hover"
+                className="sui-card-hover industries-bento-card"
                 style={{
                   background: 'rgba(20, 24, 18, 0.35)',
                   backdropFilter: 'blur(20px)',
@@ -1817,7 +1808,7 @@ function Industries({ activeHero }) {
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1.5rem',
+                  gap: '1.25rem',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
@@ -1834,7 +1825,7 @@ function Industries({ activeHero }) {
                 }}
               >
                 {/* Tech tag */}
-                <div style={{
+                <div className="industries-card-tag" style={{
                   position: 'absolute',
                   top: '1.5rem',
                   right: '1.5rem',
