@@ -112,7 +112,7 @@ function MethodologyDiagram({ phase, activeHero }) {
       )}
 
                   {effectiveHero === 'spline1' && phase === 2 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="250 200 600 600" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="210 150 680 540" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
   <defs>
     <!-- Gradiente de fondo radial (Spotlight sutil) -->
     <radialGradient id="bg-spot" cx="50%" cy="50%" r="60%">
@@ -120,25 +120,19 @@ function MethodologyDiagram({ phase, activeHero }) {
       <stop offset="100%" stop-color="#020302" />
     </radialGradient>
 
-    <!-- Filtros de Brillo Neón Premium -->
-    <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2" result="blur1" />
-      <feGaussianBlur stdDeviation="6" result="blur2" />
+    <!-- Filtros de Brillo Neón Optimizado (1 pase GPU) -->
+    <filter id="neon" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
       <feMerge>
-        <feMergeNode in="blur2" />
-        <feMergeNode in="blur1" />
+        <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
     
-    <filter id="neon-strong" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur1" />
-      <feGaussianBlur stdDeviation="8" result="blur2" />
-      <feGaussianBlur stdDeviation="15" result="blur3" />
+    <filter id="neon-strong" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
       <feMerge>
-        <feMergeNode in="blur3" />
-        <feMergeNode in="blur2" />
-        <feMergeNode in="blur1" />
+        <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
@@ -473,7 +467,7 @@ function MethodologyDiagram({ phase, activeHero }) {
       )}
 
       {effectiveHero === 'spline1' && phase === 3 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 100 1100 825" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -250 1800 1400" preserveAspectRatio="xMidYMid meet" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
   <defs>
     <!-- Paleta y Variables Globales -->
     <style>
@@ -767,7 +761,7 @@ function MethodologyDiagram({ phase, activeHero }) {
       )}
 
       {effectiveHero === 'cinematic' && phase === 3 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 100 1100 825" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1700 -1085 5000 3200" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
   <defs>
     <!-- Paleta y Variables Globales -->
     <style>
@@ -1358,7 +1352,7 @@ function MethodologyDiagram({ phase, activeHero }) {
 
       {/* ─── TECH V4 VERSION (tech_v4) ─── */}
             {effectiveHero === 'tech_v4' && phase === 1 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="300 200 600 600" style="background-color: transparent; font-family: 'Inter', system-ui, -apple-system, sans-serif; overflow: hidden; width: 100%; height: 100%;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="310 230 580 460" style="background-color: transparent; font-family: 'Inter', system-ui, -apple-system, sans-serif; overflow: hidden; width: 100%; height: 100%;">
   <defs>
     <!-- ==================== MOTORES DE ILUMINACIÓN NEÓN ==================== -->
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -1620,7 +1614,7 @@ function MethodologyDiagram({ phase, activeHero }) {
       )}
 
       {effectiveHero === 'tech_v4' && phase === 3 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 100 1100 825" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1700 -1085 5000 3200" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
   <defs>
     <!-- Paleta y Variables Globales -->
     <style>
@@ -1937,7 +1931,7 @@ function MethodologyDiagram({ phase, activeHero }) {
       )}
 
       {effectiveHero === 'sui_fork' && phase === 3 && (
-        <div style={{ position: 'absolute', top: '-30%', left: '-30%', width: '160%', height: '160%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 100 1100 825" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1700 -1085 5000 3200" style="background-color: transparent; width: 100%; height: 100%; overflow: hidden;">
   <defs>
     <!-- Paleta y Variables Globales -->
     <style>
@@ -2483,14 +2477,7 @@ function Methodology({ activeHero }) {
     return (
       <section style={{ padding: '9rem 0', position: 'relative', zIndex: 10 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gridTemplateRows: 'auto auto',
-            border: '1px solid rgba(255,255,255,0.08)',
-            position: 'relative'
-          }}>
+          <div className="protocol-bento-grid">
             {/* Crosshair markers */}
             <div style={{ position: 'absolute', top: 0, left: 0, width: '10px', height: '10px', transform: 'translate(-50%, -50%)', color: colorAccent, fontFamily: 'var(--font-mono)', fontSize: '12px', pointerEvents: 'none', zIndex: 5 }}>+</div>
             <div style={{ position: 'absolute', top: 0, right: 0, width: '10px', height: '10px', transform: 'translate(50%, -50%)', color: colorAccent, fontFamily: 'var(--font-mono)', fontSize: '12px', pointerEvents: 'none', zIndex: 5 }}>+</div>
@@ -2499,7 +2486,7 @@ function Methodology({ activeHero }) {
             <div style={{ position: 'absolute', top: '50%', left: '50%', width: '10px', height: '10px', transform: 'translate(-50%, -50%)', color: colorAccent, fontFamily: 'var(--font-mono)', fontSize: '12px', pointerEvents: 'none', zIndex: 5 }}>+</div>
 
             {/* Box 1 (top-left): Header box */}
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -2516,7 +2503,7 @@ function Methodology({ activeHero }) {
                 perspective: '1000px'
               }}
             >
-              <h2 style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-tech)', fontSize: '3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase', lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-tech)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase', lineHeight: 1.1 }}>
                 The Neural Protocol.
               </h2>
               <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.15rem', color: 'rgba(255,255,255,0.5)', marginTop: '1.5rem', lineHeight: 1.6 }}>
@@ -2525,7 +2512,7 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 2 (top-right): Phase 01 */}
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -2546,7 +2533,7 @@ function Methodology({ activeHero }) {
                   FIG_01 // SECURE_FLOW
                 </div>
               )}
-              <div style={{ height: '140px', width: '100%', position: 'relative' }}>
+              <div className="protocol-bento-diagram" style={{ height: '140px', width: '100%', position: 'relative' }}>
                 <MethodologyDiagram phase={1} activeHero={activeHero} />
               </div>
               <div>
@@ -2565,7 +2552,7 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 3 (bottom-left): Phase 02 */}
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -2586,7 +2573,7 @@ function Methodology({ activeHero }) {
                   FIG_02 // LAYER_STACK
                 </div>
               )}
-              <div style={{ height: '140px', width: '100%', position: 'relative' }}>
+              <div className="protocol-bento-diagram" style={{ height: '140px', width: '100%', position: 'relative' }}>
                 <MethodologyDiagram phase={2} activeHero={activeHero} />
               </div>
               <div>
@@ -2605,7 +2592,7 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 4 (bottom-right): Phase 03 */}
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -2625,7 +2612,7 @@ function Methodology({ activeHero }) {
                   FIG_03 // SCALE_TELEMETRY
                 </div>
               )}
-              <div style={{ height: '140px', width: '100%', position: 'relative' }}>
+              <div className="protocol-bento-diagram" style={{ height: '140px', width: '100%', position: 'relative' }}>
                 <MethodologyDiagram phase={3} activeHero={activeHero} />
               </div>
               <div>

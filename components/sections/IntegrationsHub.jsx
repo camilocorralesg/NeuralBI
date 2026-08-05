@@ -191,6 +191,36 @@ function IntegrationsHub({ activeHero }) {
     }
   ];
 
+  const mobileInputNodes = [
+    {
+      id: "crm-erp",
+      name: "CRM & ERP Systems",
+      desc: "Bi-directional automated sync for SAP, Salesforce, and HubSpot enterprise pipelines.",
+      status: "STABLE",
+      latency: "<10ms",
+      type: "Enterprise Pipelines",
+      iconKey: "SAP"
+    },
+    {
+      id: "databases",
+      name: "Databases & Warehouses",
+      desc: "High-speed query engine orchestrating Azure SQL, Oracle, and relational data stores.",
+      status: "SYNC_OK",
+      latency: "4ms",
+      type: "ODBC / OCI Native",
+      iconKey: "SQL"
+    },
+    {
+      id: "ms-office",
+      name: "Microsoft Ecosystem",
+      desc: "Unified document index mapping and file metadata syncing via Microsoft Graph API.",
+      status: "CONNECTED",
+      latency: "8ms",
+      type: "Graph Native",
+      iconKey: "SharePoint"
+    }
+  ];
+
   const getStyle = () => {
     switch (activeHero) {
       case 'spline1':
@@ -312,7 +342,7 @@ function IntegrationsHub({ activeHero }) {
       </div>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1 }}>
         {/* Raycast-style Premium Glass Card */}
-        <div style={{
+        <div className="integrations-glass-card" style={{
           background: 'rgba(5, 8, 5, 0.45)', 
           backdropFilter: 'blur(40px)',
           WebkitBackdropFilter: 'blur(40px)',
@@ -327,14 +357,14 @@ function IntegrationsHub({ activeHero }) {
           flexDirection: 'column',
           alignItems: 'center'
         }}>
-        <div style={{ textAlign: 'center', marginBottom: '5rem', maxWidth: '800px', position: 'relative', zIndex: 2 }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 5rem)', maxWidth: '800px', position: 'relative', zIndex: 2 }}>
           <h2 style={{ textAlign: 'center', margin: 0 }}>
             <CharacterReveal
               text={s.title}
               className={activeHero === 'remix' ? 'text-gradient-premium' : ''}
               style={{
                 fontFamily: s.font,
-                fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)',
+                fontSize: 'clamp(1.85rem, 4vw, 3.5rem)',
                 fontWeight: 800,
                 textTransform: activeHero === 'cinematic' || activeHero === 'tech_v4' ? 'uppercase' : 'none',
                 letterSpacing: '-0.02em',
@@ -342,9 +372,9 @@ function IntegrationsHub({ activeHero }) {
               }}
             />
           </h2>
-          <p style={{
+          <p className="integrations-subtitle-desktop" style={{
             fontFamily: s.fontBody,
-            fontSize: '1.05rem',
+            fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
             color: 'rgba(255, 255, 255, 0.55)',
             marginTop: '1rem',
             maxWidth: '720px',
@@ -353,10 +383,21 @@ function IntegrationsHub({ activeHero }) {
           }}>
             <CharacterReveal text={s.subtitle} stagger={0.008} />
           </p>
+          <p className="integrations-subtitle-mobile" style={{
+            fontFamily: s.fontBody,
+            fontSize: '0.98rem',
+            color: 'rgba(255, 255, 255, 0.6)',
+            marginTop: '0.75rem',
+            maxWidth: '480px',
+            margin: '0.75rem auto 0 auto',
+            lineHeight: 1.55
+          }}>
+            <CharacterReveal text="We pipe proprietary enterprise data directly into high-throughput semantic layers, custom React applications, and cognitive AI workflows with zero friction." stagger={0.008} />
+          </p>
         </div>
 
-        {/* Stripe-Inspired Interactive Network Map Container */}
-        <div style={{
+        {/* DESKTOP VIEW: Stripe-Inspired Interactive Network Map Container */}
+        <div className="integrations-desktop-view" style={{
           position: 'relative',
           width: '100%',
           maxWidth: '900px',
@@ -500,12 +541,13 @@ function IntegrationsHub({ activeHero }) {
               height: '90px',
               zIndex: 3
             }}>
-              <motion.div style={{ willChange: 'transform, opacity' }}
+              <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ type: 'spring', stiffness: 85, damping: 15 }}
                 style={{
+                  willChange: 'transform, opacity',
                   width: '100%',
                   height: '100%',
                   borderRadius: '50%',
@@ -577,12 +619,12 @@ function IntegrationsHub({ activeHero }) {
                   onMouseEnter={() => setHoveredNode(node.id)}
                   onMouseLeave={() => setHoveredNode(null)}
                 >
-                  <motion.div style={{ willChange: 'transform, opacity' }}
+                  <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ type: 'spring', stiffness: 90, damping: 14, delay: delay }}
-                    style={{ position: 'relative', width: '100%', height: '100%' }}
+                    style={{ willChange: 'transform, opacity', position: 'relative', width: '100%', height: '100%' }}
                   >
                     {/* Floating tooltip overlay (Safely aligned inward to avoid screen clipping) */}
                     <div style={{
@@ -695,6 +737,231 @@ function IntegrationsHub({ activeHero }) {
             })}
 
           </div>
+        </div>
+
+        {/* MOBILE VIEW: Dedicated Vertical Stream Architecture for Mobile Screens */}
+        <div className="integrations-mobile-view" style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '500px',
+          margin: '0 auto',
+          background: 'rgba(255, 255, 255, 0.01)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: '20px',
+          border: '1px solid ' + s.borderColor,
+          overflow: 'hidden',
+          padding: '1.75rem 1rem',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1.25rem'
+        }}>
+          {/* Background Grid Accent */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+            opacity: 0.25,
+            zIndex: 0
+          }} />
+
+          {/* 1. DATA INPUTS HEADER & GRID (1 Column x 3 Generic Category Cards on Mobile) */}
+          <div style={{ width: '100%', position: 'relative', zIndex: 1 }}>
+            <div style={{ fontFamily: s.font, fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem', textAlign: 'center' }}>
+              [ Data Inputs ]
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px', width: '100%' }}>
+              {mobileInputNodes.map((node) => {
+                const isHovered = hoveredNode === node.id;
+                return (
+                  <div
+                    key={node.id}
+                    onClick={() => setHoveredNode(prev => prev === node.id ? null : node.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      height: '44px',
+                      padding: '0 14px',
+                      background: isHovered ? '#0e1405' : '#040405',
+                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
+                      borderRadius: '10px',
+                      boxShadow: isHovered ? '0 0 18px rgba(198, 255, 52, 0.15)' : '0 4px 12px rgba(0,0,0,0.4)',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease'
+                    }}
+                  >
+                    <div style={{ color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.85)', display: 'flex', alignItems: 'center' }}>
+                      {icons[node.iconKey]}
+                    </div>
+                    <div style={{ width: '1px', height: '16px', background: isHovered ? 'rgba(198, 255, 52, 0.3)' : 'rgba(255, 255, 255, 0.1)' }} />
+                    <span style={{ fontFamily: s.fontBody, fontSize: '0.78rem', fontWeight: 600, color: isHovered ? '#c6ff34' : '#ffffff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {node.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 2. TOP-TO-HUB ANIMATED FLOW BEAMS */}
+          <div style={{ width: '100%', height: '40px', position: 'relative', zIndex: 1 }}>
+            <svg viewBox="0 0 300 40" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+              <path d="M 50 0 C 50 20, 150 20, 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 50 0 C 50 20, 150 20, 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 12s linear infinite' }} />
+              
+              <path d="M 150 0 L 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 150 0 L 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 10s linear infinite' }} />
+              
+              <path d="M 250 0 C 250 20, 150 20, 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 250 0 C 250 20, 150 20, 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 14s linear infinite' }} />
+            </svg>
+          </div>
+
+          {/* 3. CENTRAL NEURALBI HUB NODE */}
+          <div style={{ position: 'relative', width: '76px', height: '76px', zIndex: 2 }}>
+            <motion.div
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                background: '#000000',
+                border: '2.5px solid #c6ff34',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 30px rgba(198, 255, 52, 0.4)',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                inset: '-6px',
+                border: '1.5px dashed rgba(198, 255, 52, 0.45)',
+                borderRadius: '50%',
+                animation: 'rotate-gradient 20s linear infinite'
+              }} />
+              <img
+                src={logoSoloUrl}
+                alt="NeuralBI Hub"
+                style={{
+                  height: '38px',
+                  width: 'auto',
+                  opacity: 0.95,
+                  display: 'block'
+                }}
+              />
+            </motion.div>
+          </div>
+
+          {/* 4. HUB-TO-BOTTOM ANIMATED FLOW BEAMS */}
+          <div style={{ width: '100%', height: '40px', position: 'relative', zIndex: 1 }}>
+            <svg viewBox="0 0 300 40" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+              <path d="M 150 0 C 150 20, 50 20, 50 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 150 0 C 150 20, 50 20, 50 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 12s linear infinite' }} />
+              
+              <path d="M 150 0 L 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 150 0 L 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 10s linear infinite' }} />
+              
+              <path d="M 150 0 C 150 20, 250 20, 250 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
+              <path d="M 150 0 C 150 20, 250 20, 250 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 14s linear infinite' }} />
+            </svg>
+          </div>
+
+          {/* 5. BUSINESS DELIVERABLES HEADER & GRID */}
+          <div style={{ width: '100%', position: 'relative', zIndex: 1 }}>
+            <div style={{ fontFamily: s.font, fontSize: '0.65rem', color: '#c6ff34', opacity: 0.6, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem', textAlign: 'center' }}>
+              [ Business Deliverables ]
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', width: '100%' }}>
+              {nodes.slice(6, 9).map((node) => {
+                const isHovered = hoveredNode === node.id;
+                return (
+                  <div
+                    key={node.id}
+                    onClick={() => setHoveredNode(prev => prev === node.id ? null : node.id)}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '4px',
+                      padding: '10px 4px',
+                      background: isHovered ? '#0e1405' : '#040405',
+                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
+                      borderRadius: '8px',
+                      boxShadow: isHovered ? '0 0 16px rgba(198, 255, 52, 0.15)' : 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease'
+                    }}
+                  >
+                    <div style={{ color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.85)' }}>
+                      {icons[node.iconKey]}
+                    </div>
+                    <span style={{ fontFamily: s.fontBody, fontSize: '0.68rem', fontWeight: 600, color: isHovered ? '#c6ff34' : '#ffffff', textAlign: 'center', lineHeight: 1.2 }}>
+                      {node.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 6. MOBILE INTERACTIVE TOUCH TELEMETRY DRAWER */}
+          {hoveredNode && (() => {
+            const activeNodeData = [...nodes, ...mobileInputNodes].find(n => n.id === hoveredNode);
+            if (!activeNodeData) return null;
+            return (
+              <div style={{
+                width: '100%',
+                background: '#070a04',
+                border: '1px solid #c6ff34',
+                borderRadius: '12px',
+                padding: '1rem 1.25rem',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(198, 255, 52, 0.15)',
+                position: 'relative',
+                zIndex: 10,
+                marginTop: '0.5rem'
+              }}>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setHoveredNode(null); }}
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '12px',
+                    color: 'rgba(255,255,255,0.4)',
+                    fontSize: '14px',
+                    lineHeight: 1
+                  }}
+                >
+                  ✕
+                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <div style={{ color: '#c6ff34' }}>{icons[activeNodeData.iconKey]}</div>
+                  <strong style={{ fontFamily: s.font, fontSize: '0.9rem', color: '#c6ff34' }}>
+                    {activeNodeData.name}
+                  </strong>
+                </div>
+                <p style={{ fontFamily: s.fontBody, fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.45, marginBottom: '8px' }}>
+                  {activeNodeData.desc}
+                </p>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: '0.68rem',
+                  fontFamily: 'var(--font-mono)',
+                  borderTop: '1px solid rgba(255,255,255,0.1)',
+                  paddingTop: '6px',
+                  color: 'rgba(255,255,255,0.5)'
+                }}>
+                  <span>{activeNodeData.type}</span>
+                  <span style={{ color: '#c6ff34', fontWeight: 'bold' }}>{activeNodeData.latency}</span>
+                </div>
+              </div>
+            );
+          })()}
         </div>
         </div>
       </div>

@@ -95,22 +95,22 @@ function Faq({ activeHero }) {
     return (
       <section style={{
         background: theme.bgGradient,
-        padding: '8rem 0',
+        padding: 'clamp(4rem, 7vw, 8rem) 0',
         position: 'relative',
         zIndex: 10,
         borderTop: '1px solid ' + theme.borderColor
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '4rem' }} className="raycast-footer-grid">
-          <div style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 4vw, 4rem)', color: '#ffffff', fontWeight: 400, lineHeight: 1.15 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }} className="faq-grid-container">
+          <div className="faq-sticky-header">
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 4rem)', color: '#ffffff', fontWeight: 400, lineHeight: 1.15 }}>
               Frequently Asked Queries
             </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.45)', marginTop: '1.5rem', lineHeight: 1.6 }}>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', color: 'rgba(255, 255, 255, 0.45)', marginTop: '1.25rem', lineHeight: 1.6 }}>
               A curated overview of Power Platform capabilities, NeuralBI orchestrations, data sovereignty, and deployment timelines.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {faqData.map((item, idx) => {
               const isOpen = activeIdx === idx;
               return (
@@ -118,7 +118,7 @@ function Faq({ activeHero }) {
                   key={idx}
                   style={{
                     borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                    paddingBottom: '1.5rem',
+                    paddingBottom: '1.25rem',
                     cursor: 'pointer'
                   }}
                   onClick={() => setActiveIdx(isOpen ? null : idx)}
@@ -126,7 +126,7 @@ function Faq({ activeHero }) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
                     <h3 style={{
                       fontFamily: 'var(--font-serif)',
-                      fontSize: '1.25rem',
+                      fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)',
                       fontWeight: 400,
                       color: isOpen ? '#c6ff34' : '#ffffff',
                       transition: 'color 0.3s'
@@ -143,7 +143,7 @@ function Faq({ activeHero }) {
                     </span>
                   </div>
                   <div style={{
-                    maxHeight: isOpen ? '200px' : '0px',
+                    maxHeight: isOpen ? '250px' : '0px',
                     overflow: 'hidden',
                     transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                     opacity: isOpen ? 1 : 0
@@ -153,7 +153,7 @@ function Faq({ activeHero }) {
                       fontSize: '0.95rem',
                       color: 'rgba(255, 255, 255, 0.55)',
                       lineHeight: 1.6,
-                      marginTop: '1rem',
+                      marginTop: '0.75rem',
                       maxWidth: '620px'
                     }}>
                       {item.a}
@@ -173,41 +173,39 @@ function Faq({ activeHero }) {
     return (
       <section style={{
         background: theme.bgGradient,
-        padding: '8rem 0',
+        padding: 'clamp(4rem, 7vw, 8rem) 0',
         position: 'relative',
         zIndex: 10,
         borderTop: '1px solid ' + theme.borderColor
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <h2 style={{
             fontFamily: 'var(--font-ui)',
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(1.85rem, 3.5vw, 3rem)',
             color: '#ffffff',
             fontWeight: 900,
             textTransform: 'uppercase',
             letterSpacing: '-0.03em',
-            marginBottom: '4rem',
+            marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
             textAlign: 'center'
           }}>
             SYSTEM FAQ // CONSOLE
           </h2>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '1px',
             background: 'rgba(255, 255, 255, 0.08)',
             border: '1px solid rgba(255, 255, 255, 0.08)'
-          }} className="raycast-footer-grid">
+          }} className="faq-brutalist-grid">
             {faqData.map((item, idx) => {
               const isOpen = activeIdx === idx;
               return (
                 <div
                   key={idx}
+                  className="faq-card"
                   onClick={() => setActiveIdx(isOpen ? null : idx)}
                   style={{
                     background: '#020202',
-                    padding: '3rem 2.5rem',
+                    padding: 'clamp(1.5rem, 3vw, 3rem) clamp(1.25rem, 3vw, 2.5rem)',
                     cursor: 'pointer',
                     position: 'relative',
                     transition: 'all 0.3s',
@@ -227,7 +225,7 @@ function Faq({ activeHero }) {
                     </span>
                     <h3 style={{
                       fontFamily: 'var(--font-ui)',
-                      fontSize: '1.15rem',
+                      fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
                       fontWeight: 800,
                       color: isOpen ? '#ffffff' : 'rgba(255, 255, 255, 0.75)',
                       textTransform: 'uppercase',
@@ -249,7 +247,7 @@ function Faq({ activeHero }) {
                       fontSize: '0.9rem',
                       color: 'rgba(255,255,255,0.5)',
                       lineHeight: 1.6,
-                      marginTop: '1.5rem',
+                      marginTop: '1.25rem',
                       borderLeft: '2px solid #c6ff34',
                       paddingLeft: '1rem'
                     }}>
@@ -271,32 +269,29 @@ function Faq({ activeHero }) {
     return (
       <section style={{
         background: theme.bgGradient,
-        padding: '8rem 0',
+        padding: 'clamp(4rem, 7vw, 8rem) 0',
         position: 'relative',
         zIndex: 10,
         borderTop: '1px solid ' + theme.borderColor
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(1.85rem, 3.5vw, 3rem)',
             color: '#ffffff',
             fontWeight: 800,
             letterSpacing: '-0.03em',
-            marginBottom: '4rem',
+            marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
             textAlign: 'center'
           }}>
             Questions and Answers
           </h2>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1.3fr',
-            gap: '4rem',
             alignItems: 'stretch'
-          }} className="raycast-footer-grid">
+          }} className="faq-grid-container">
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', justifyContent: 'center' }}>
               {faqData.map((item, idx) => {
                 const isSelected = selectedIdx === idx;
                 return (
@@ -307,12 +302,12 @@ function Faq({ activeHero }) {
                       background: isSelected ? 'rgba(255, 255, 255, 0.02)' : 'transparent',
                       border: isSelected ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
                       borderRadius: '16px',
-                      padding: '1.25rem 1.5rem',
+                      padding: '1rem 1.25rem',
                       textAlign: 'left',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '1rem',
+                      gap: '0.85rem',
                       transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
                     }}
                     onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.01)'; }}
@@ -324,11 +319,12 @@ function Faq({ activeHero }) {
                       borderRadius: '50%',
                       background: isSelected ? '#c6ff34' : 'rgba(255,255,255,0.15)',
                       boxShadow: isSelected ? '0 0 8px #c6ff34' : 'none',
-                      transition: 'all 0.3s'
+                      transition: 'all 0.3s',
+                      flexShrink: 0
                     }} />
                     <span style={{
                       fontFamily: 'var(--font-display)',
-                      fontSize: '1rem',
+                      fontSize: 'clamp(0.92rem, 2vw, 1rem)',
                       fontWeight: 600,
                       color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.55)',
                       transition: 'color 0.3s'
@@ -345,7 +341,7 @@ function Faq({ activeHero }) {
               backdropFilter: 'blur(30px)',
               border: '1px solid rgba(255, 255, 255, 0.05)',
               borderRadius: '24px',
-              padding: '4rem 3rem',
+              padding: 'clamp(2rem, 4vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
@@ -377,10 +373,10 @@ function Faq({ activeHero }) {
 
                 <h3 style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: '1.75rem',
+                  fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
                   fontWeight: 800,
                   color: '#ffffff',
-                  marginTop: '1rem',
+                  marginTop: '0.75rem',
                   lineHeight: 1.25,
                   letterSpacing: '-0.02em'
                 }}>
@@ -389,10 +385,10 @@ function Faq({ activeHero }) {
 
                 <p style={{
                   fontFamily: 'var(--font-sans)',
-                  fontSize: '1.05rem',
+                  fontSize: 'clamp(0.92rem, 2vw, 1.05rem)',
                   color: 'rgba(255, 255, 255, 0.6)',
-                  lineHeight: 1.7,
-                  marginTop: '2rem'
+                  lineHeight: 1.65,
+                  marginTop: '1.25rem'
                 }}>
                   {faqData[selectedIdx].a}
                 </p>
@@ -410,17 +406,17 @@ function Faq({ activeHero }) {
     return (
       <section style={{
         background: theme.bgGradient,
-        padding: '8rem 0',
+        padding: 'clamp(4rem, 7vw, 8rem) 0',
         position: 'relative',
         zIndex: 10,
         borderTop: '1px solid ' + theme.borderColor
       }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
 
           <div style={{
             border: '1px solid rgba(198, 255, 52, 0.3)',
             background: 'rgba(5, 8, 1, 0.9)',
-            padding: '1.25rem 2rem',
+            padding: '1rem 1.5rem',
             borderBottom: 'none',
             display: 'flex',
             justifyContent: 'space-between',
@@ -432,23 +428,20 @@ function Faq({ activeHero }) {
                 FAQ
               </span>
             </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.3)' }}>
-
-            </span>
           </div>
 
-          <div style={{
+          <div className="faq-terminal-box" style={{
             border: '1px solid rgba(198, 255, 52, 0.3)',
             background: '#010200',
-            padding: '3rem',
+            padding: 'clamp(1.5rem, 4vw, 3rem)',
             display: 'grid',
             gridTemplateColumns: '1.1fr 1fr',
-            gap: '3rem',
+            gap: '2.5rem',
             position: 'relative'
-          }} className="raycast-footer-grid">
+          }}>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)', marginBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)', marginBottom: '0.25rem' }}>
                 Select a topic:
               </span>
 
@@ -460,29 +453,28 @@ function Faq({ activeHero }) {
                     onClick={() => setActiveIdx(idx)}
                     style={{
                       fontFamily: 'var(--font-mono)',
-                      fontSize: '0.85rem',
+                      fontSize: 'clamp(0.78rem, 2vw, 0.85rem)',
                       color: isSelected ? '#c6ff34' : 'rgba(255, 255, 255, 0.65)',
                       cursor: 'pointer',
-                      padding: '0.75rem 1rem',
+                      padding: '0.65rem 0.85rem',
                       border: '1px dashed ' + (isSelected ? 'rgba(198, 255, 52, 0.4)' : 'rgba(255, 255, 255, 0.08)'),
                       background: isSelected ? 'rgba(198, 255, 52, 0.03)' : 'transparent',
                       transition: 'all 0.25s'
                     }}
                   >
-                    <span>{isSelected ? '' : ''}</span>
                     <span>{item.q}</span>
                   </div>
                 );
               })}
             </div>
 
-            <div style={{
+            <div className="faq-terminal-answer" style={{
               borderLeft: '1px solid rgba(198, 255, 52, 0.2)',
-              paddingLeft: '3rem',
+              paddingLeft: '2.5rem',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              minHeight: '220px'
+              minHeight: '200px'
             }}>
               <div>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)' }}>
@@ -491,17 +483,15 @@ function Faq({ activeHero }) {
 
                 <p style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',
                   color: '#ffffff',
                   lineHeight: 1.6,
-                  marginTop: '1.5rem',
+                  marginTop: '1rem',
                   letterSpacing: '-0.02em'
                 }}>
                   {faqData[selectedIdx].a}
                 </p>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -513,7 +503,7 @@ function Faq({ activeHero }) {
   return (
     <section style={{
       background: theme.bgGradient,
-      padding: '8rem 0',
+      padding: 'clamp(4rem, 7vw, 8rem) 0',
       position: 'relative',
       zIndex: 10,
       borderTop: '1px solid ' + theme.borderColor
@@ -529,14 +519,14 @@ function Faq({ activeHero }) {
         zIndex: 0
       }} />
       <div style={{ position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 2rem' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '4rem' }}>
+      <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <CharacterReveal
             text="Frequently Asked Questions"
             className={activeHero === 'remix' ? 'text-gradient-premium' : ''}
             style={{
               fontFamily: activeHero === 'remix' ? 'var(--font-display)' : 'var(--font-ui)',
-              fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)',
+              fontSize: 'clamp(1.85rem, 3.5vw, 3.5rem)',
               fontWeight: 800,
               letterSpacing: '-0.03em',
               ...(activeHero !== 'remix' ? { color: '#ffffff' } : {})
@@ -544,7 +534,7 @@ function Faq({ activeHero }) {
           />
         </h2>
 
-        <motion.div style={{ willChange: 'transform, opacity' }}
+        <motion.div
           variants={{
             hidden: {},
             visible: {
@@ -556,7 +546,7 @@ function Faq({ activeHero }) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.15rem' }}
         >
           {faqData.map((item, idx) => {
             const isOpen = activeIdx === idx;
@@ -573,19 +563,19 @@ function Faq({ activeHero }) {
                 key={idx}
                 variants={itemVariants}
                 onClick={() => setActiveIdx(isOpen ? null : idx)}
+                className="sui-card-hover faq-card"
                 style={{
                   background: isOpen ? 'rgba(198, 255, 52, 0.04)' : 'rgba(12, 16, 26, 0.4)',
                   backdropFilter: 'blur(24px)',
                   border: '1px solid ' + (isOpen ? 'rgba(198, 255, 52, 0.25)' : 'rgba(255, 255, 255, 0.05)'),
                   borderRadius: '16px',
-                  padding: '2rem 2.25rem',
+                  padding: 'clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.25rem)',
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
                   boxShadow: isOpen ? '0 15px 35px rgba(198, 255, 52, 0.03)' : 'none',
                   transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
-                className="sui-card-hover"
               >
                 {isOpen && (
                   <div style={{
@@ -599,10 +589,10 @@ function Faq({ activeHero }) {
                   }} />
                 )}
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.25rem' }}>
                   <h3 style={{
                     fontFamily: 'var(--font-ui)',
-                    fontSize: '1.2rem',
+                    fontSize: 'clamp(1.02rem, 2.5vw, 1.2rem)',
                     fontWeight: 700,
                     color: isOpen ? '#c6ff34' : '#ffffff',
                     transition: 'color 0.3s'
@@ -619,7 +609,8 @@ function Faq({ activeHero }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: isOpen ? '#c6ff34' : '#ffffff',
-                    transition: 'all 0.3s'
+                    transition: 'all 0.3s',
+                    flexShrink: 0
                   }}>
                     <svg
                       width="12"
@@ -639,17 +630,17 @@ function Faq({ activeHero }) {
                 </div>
 
                 <div style={{
-                  maxHeight: isOpen ? '200px' : '0px',
+                  maxHeight: isOpen ? '250px' : '0px',
                   overflow: 'hidden',
                   transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   opacity: isOpen ? 1 : 0
                 }}>
                   <p style={{
                     fontFamily: 'var(--font-sans)',
-                    fontSize: '0.95rem',
+                    fontSize: 'clamp(0.88rem, 2vw, 0.95rem)',
                     color: 'rgba(255,255,255,0.65)',
                     lineHeight: 1.6,
-                    marginTop: '1.5rem'
+                    marginTop: '1.25rem'
                   }}>
                     {item.a}
                   </p>
