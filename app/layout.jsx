@@ -4,7 +4,33 @@ export const metadata = {
   title: 'NeuralBI - Make your data think.',
   description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems. Turn static data into a living, cognitive asset for your enterprise.',
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
+  openGraph: {
+    title: 'NeuralBI - Make your data think.',
+    description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems. Turn static data into a living, cognitive asset for your enterprise.',
+    url: 'https://neuralbi.com',
+    siteName: 'NeuralBI',
+    images: [
+      {
+        url: '/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'NeuralBI - Make your data think.',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NeuralBI - Make your data think.',
+    description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems.',
+    images: ['/og-image.svg'],
   },
 };
 
