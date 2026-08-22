@@ -79,7 +79,7 @@ export default function App() {
               <Faq activeHero={activeHero} />
             </div>
             
-            <div>
+            <div id="contact">
               <FooterCTA activeHero={activeHero} />
             </div>
             <Footer activeHero={activeHero} />

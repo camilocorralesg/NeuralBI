@@ -1352,7 +1352,7 @@ function MethodologyDiagram({ phase, activeHero }) {
 
       {/* ─── TECH V4 VERSION (tech_v4) ─── */}
             {effectiveHero === 'tech_v4' && phase === 1 && (
-        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="310 230 580 460" style="background-color: transparent; font-family: 'Inter', system-ui, -apple-system, sans-serif; overflow: hidden; width: 100%; height: 100%;">
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="310 230 580 460" style="background-color: transparent; font-family: var(--font-mono, monospace); overflow: hidden; width: 100%; height: 100%;">
   <defs>
     <!-- ==================== MOTORES DE ILUMINACIÓN NEÓN ==================== -->
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -2273,7 +2273,7 @@ function Methodology({ activeHero }) {
                   display: 'flex',
                   alignItems: 'center'
                 }}>
-                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>
+                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>
                     FIG_0{p.num} // NEURAL_PROT_SPEC
                   </div>
                   <MethodologyDiagram phase={index + 1} activeHero={activeHero} />
@@ -2328,7 +2328,7 @@ function Methodology({ activeHero }) {
                   borderBottom: '1px solid rgba(255,255,255,0.08)',
                   position: 'relative'
                 }}>
-                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
                     FIG_0{p.num} // CORE_NODE
                   </div>
                   <MethodologyDiagram phase={index + 1} activeHero={activeHero} />
@@ -2410,7 +2410,7 @@ function Methodology({ activeHero }) {
                       fontFamily: 'var(--font-display)',
                       fontSize: '1.25rem',
                       fontWeight: 800,
-                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)',
+                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.65)',
                       transition: 'all 0.3s'
                     }}>
                       {p.title}
@@ -2447,7 +2447,7 @@ function Methodology({ activeHero }) {
                   backgroundPosition: 'center',
                   position: 'relative'
                 }}>
-                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>
+                  <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>
                     FIG_0{phases[activePhase].num} // ACTIVE_RENDER
                   </div>
                   <MethodologyDiagram phase={activePhase + 1} activeHero={activeHero} />
@@ -2486,12 +2486,13 @@ function Methodology({ activeHero }) {
             <div style={{ position: 'absolute', top: '50%', left: '50%', width: '10px', height: '10px', transform: 'translate(-50%, -50%)', color: colorAccent, fontFamily: 'var(--font-mono)', fontSize: '12px', pointerEvents: 'none', zIndex: 5 }}>+</div>
 
             {/* Box 1 (top-left): Header box */}
-            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box"
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ type: 'spring', stiffness: 50, damping: 15, delay: 0 }}
               style={{
+                willChange: 'transform, opacity',
                 padding: '4rem 3rem',
                 borderRight: '1px solid rgba(255,255,255,0.08)',
                 borderBottom: '1px solid rgba(255,255,255,0.08)',
@@ -2512,12 +2513,13 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 2 (top-right): Phase 01 */}
-            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box"
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ type: 'spring', stiffness: 50, damping: 15, delay: 0.15 }}
               style={{
+                willChange: 'transform, opacity',
                 padding: '3.5rem 3rem',
                 borderBottom: '1px solid rgba(255,255,255,0.08)',
                 display: 'flex',
@@ -2529,7 +2531,7 @@ function Methodology({ activeHero }) {
               }}
             >
               {!isRemix && (
-                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
                   FIG_01 // SECURE_FLOW
                 </div>
               )}
@@ -2552,12 +2554,13 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 3 (bottom-left): Phase 02 */}
-            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box"
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ type: 'spring', stiffness: 50, damping: 15, delay: 0.3 }}
               style={{
+                willChange: 'transform, opacity',
                 padding: '3.5rem 3rem',
                 borderRight: '1px solid rgba(255,255,255,0.08)',
                 display: 'flex',
@@ -2569,7 +2572,7 @@ function Methodology({ activeHero }) {
               }}
             >
               {!isRemix && (
-                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
                   FIG_02 // LAYER_STACK
                 </div>
               )}
@@ -2592,12 +2595,13 @@ function Methodology({ activeHero }) {
             </motion.div>
 
             {/* Box 4 (bottom-right): Phase 03 */}
-            <motion.div className="protocol-bento-box" style={{ willChange: 'transform, opacity' }}
+            <motion.div className="protocol-bento-box"
               initial={{ opacity: 0, y: 40, rotateX: 12, rotateY: -8 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ type: 'spring', stiffness: 50, damping: 15, delay: 0.45 }}
               style={{
+                willChange: 'transform, opacity',
                 padding: '3.5rem 3rem',
                 display: 'flex',
                 flexDirection: 'column',
@@ -2608,7 +2612,7 @@ function Methodology({ activeHero }) {
               }}
             >
               {!isRemix && (
-                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+                <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
                   FIG_03 // SCALE_TELEMETRY
                 </div>
               )}
@@ -2648,12 +2652,13 @@ function Methodology({ activeHero }) {
         }}>
 
           {/* Title Bento Card (Span 2 Columns) */}
-          <motion.div style={{ willChange: 'transform, opacity' }}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             style={{
+              willChange: 'transform, opacity',
               gridColumn: 'span 2',
               background: 'rgba(255,255,255,0.02)',
               backdropFilter: 'blur(30px)',
@@ -2675,13 +2680,14 @@ function Methodology({ activeHero }) {
           </motion.div>
 
           {/* Phase 1 Bento Card (Span 1 Column) */}
-          <motion.div style={{ willChange: 'transform, opacity' }}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.4)', borderColor: 'rgba(198, 255, 52, 0.3)' }}
             style={{
+              willChange: 'transform, opacity',
               background: 'rgba(255,255,255,0.02)',
               backdropFilter: 'blur(30px)',
               borderRadius: '24px',
@@ -2699,7 +2705,7 @@ function Methodology({ activeHero }) {
               01
             </div>
 
-            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
               FIG_01 // AUDIT
             </div>
             <div style={{ height: '120px', backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -2716,13 +2722,14 @@ function Methodology({ activeHero }) {
           </motion.div>
 
           {/* Phase 2 Bento Card (Span 1 Column) */}
-          <motion.div style={{ willChange: 'transform, opacity' }}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.4)', borderColor: 'rgba(198, 255, 52, 0.3)' }}
             style={{
+              willChange: 'transform, opacity',
               background: 'rgba(255,255,255,0.02)',
               backdropFilter: 'blur(30px)',
               borderRadius: '24px',
@@ -2739,7 +2746,7 @@ function Methodology({ activeHero }) {
             <div style={{ position: 'absolute', right: '-10%', bottom: '-10%', fontFamily: 'var(--font-display)', fontSize: '12rem', color: 'rgba(255,255,255,0.02)', pointerEvents: 'none', lineHeight: 1 }}>
               02
             </div>
-            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
               FIG_02 // BUILD
             </div>
             <div style={{ height: '120px', backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -2756,13 +2763,14 @@ function Methodology({ activeHero }) {
           </motion.div>
 
           {/* Phase 3 Bento Card (Span 2 Columns, diagram left, text right) */}
-          <motion.div style={{ willChange: 'transform, opacity' }}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.4)', borderColor: 'rgba(198, 255, 52, 0.3)' }}
             style={{
+              willChange: 'transform, opacity',
               gridColumn: 'span 2',
               background: 'rgba(255,255,255,0.02)',
               backdropFilter: 'blur(30px)',
@@ -2782,7 +2790,7 @@ function Methodology({ activeHero }) {
               03
             </div>
 
-            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)' }}>
+            <div style={{ position: 'absolute', top: '15px', left: '15px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255,255,255,0.65)' }}>
               FIG_03 // SCALE
             </div>
             <div style={{ height: '180px', backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

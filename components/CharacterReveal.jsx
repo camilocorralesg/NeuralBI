@@ -11,14 +11,15 @@ const CharacterReveal = React.memo(function CharacterReveal({
   stagger = 0.015,
   mode = 'auto' // 'auto' | 'word' | 'char'
 }) {
+  const isString = typeof text === 'string' && text.length > 0;
+  const isWordMode = mode === 'word' || (mode === 'auto' && (isString ? text.length > 25 : false));
+  const words = React.useMemo(() => (isString ? text.split(' ') : []), [text, isString]);
+
   if (!text) return null;
   
-  if (typeof text !== 'string') {
+  if (!isString) {
     return <span className={className} style={style}>{text}</span>;
   }
-
-  const isWordMode = mode === 'word' || (mode === 'auto' && text.length > 25);
-  const words = React.useMemo(() => text.split(' '), [text]);
 
   const containerVariants = {
     hidden: {},
