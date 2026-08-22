@@ -298,6 +298,8 @@ function Faq({ activeHero }) {
                   <button
                     key={idx}
                     onClick={() => setActiveIdx(idx)}
+                    aria-expanded={isSelected}
+                    aria-controls={`faq-answer-${idx}`}
                     style={{
                       background: isSelected ? 'rgba(255, 255, 255, 0.02)' : 'transparent',
                       border: isSelected ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
@@ -441,7 +443,7 @@ function Faq({ activeHero }) {
           }}>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)', marginBottom: '0.25rem' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)', marginBottom: '0.25rem' }}>
                 Select a topic:
               </span>
 
@@ -477,7 +479,7 @@ function Faq({ activeHero }) {
               minHeight: '200px'
             }}>
               <div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)' }}>
                   Answer
                 </span>
 

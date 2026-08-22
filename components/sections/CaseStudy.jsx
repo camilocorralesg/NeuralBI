@@ -71,12 +71,13 @@ function CaseStudy({ activeHero }) {
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
 
-        <motion.div style={{ willChange: 'transform, opacity' }}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           style={{
+            willChange: 'transform, opacity',
             background: style.cardBg,
             backdropFilter: 'blur(28px)',
             border: '1px solid ' + style.borderColor,
@@ -103,7 +104,7 @@ function CaseStudy({ activeHero }) {
               <span style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.75rem',
-                color: 'rgba(255,255,255,0.3)'
+                color: 'rgba(255,255,255,0.65)'
               }}>
                 IMPACT: +80% EFFICIENCY
               </span>
@@ -196,13 +197,14 @@ function CaseStudy({ activeHero }) {
                 {/* Simulated Chart */}
                 <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: '1rem', paddingTop: '2rem' }}>
                   {[40, 70, 45, 90, 60, 100, 80].map((h, i) => (
-                    <motion.div style={{ willChange: 'transform, opacity' }}
+                    <motion.div
                       key={i}
                       initial={{ height: 0 }}
                       whileInView={{ height: `${h}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: 0.1 + (i * 0.05), ease: [0.16, 1, 0.3, 1] }}
                       style={{
+                        willChange: 'transform, opacity',
                         flex: 1,
                         background: i === 5 ? '#c6ff34' : 'rgba(255,255,255,0.1)',
                         borderRadius: '4px 4px 0 0',

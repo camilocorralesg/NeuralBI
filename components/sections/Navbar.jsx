@@ -43,6 +43,21 @@ function Navbar({ activeHero }) {
     { label: 'Protocol', href: '#protocol' }
   ];
 
+  const scrollToAudit = (e) => {
+    if (e) e.preventDefault();
+    setIsMobileMenuOpen(false);
+    const el = document.getElementById('audit') || document.getElementById('contact');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      const firstInput = el.querySelector('input');
+      if (firstInput) {
+        setTimeout(() => {
+          firstInput.focus({ preventScroll: true });
+        }, 600);
+      }
+    }
+  };
+
   // 1. NEBULA NAVBAR (var(--font-serif))
   if (activeHero === 'spline1') {
     return (
@@ -79,7 +94,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button className="btn-raycast btn-radius-8" style={{ padding: '0.375rem 1.25rem', fontSize: '0.85rem', fontFamily: 'var(--font-serif)' }}>
+        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" className="btn-raycast btn-radius-8" style={{ padding: '0.375rem 1.25rem', fontSize: '0.85rem', fontFamily: 'var(--font-serif)', cursor: 'pointer' }}>
           Get Quote
         </button>
       </nav>
@@ -117,7 +132,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button style={{
+        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" style={{
           padding: '0.5rem 1.5rem',
           fontSize: '0.8rem',
           fontWeight: 900,
@@ -175,7 +190,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button className="btn-glow-border" style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem', fontFamily: 'var(--font-display)', zIndex: 3 }}>
+        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" className="btn-glow-border" style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem', fontFamily: 'var(--font-display)', zIndex: 3, cursor: 'pointer' }}>
           Get Quote
         </button>
       </nav>
@@ -215,7 +230,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button className="btn-glow-border" style={{
+        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" className="btn-glow-border" style={{
           padding: '0.4rem 1.25rem',
           fontSize: '0.8rem',
           fontFamily: 'var(--font-mono)',
@@ -247,7 +262,7 @@ function Navbar({ activeHero }) {
       maxWidth: '1200px',
       zIndex: 1000,
       pointerEvents: 'auto',
-      transition: 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+      transition: 'top 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
     }}>
       <nav
         onMouseEnter={() => setIsNavHovered(true)}
@@ -350,6 +365,8 @@ function Navbar({ activeHero }) {
         }}>
           <Magnetic range={60} actionScale={0.2}>
             <button
+              onClick={scrollToAudit}
+              aria-label="Book a Technical Audit"
               className="btn-glow-border"
               style={{
                 padding: '0.45rem 1.25rem',
@@ -372,6 +389,8 @@ function Navbar({ activeHero }) {
         <div className="mobile-only" style={{ display: 'none', alignItems: 'center' }}>
           <button 
             onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={isMobileMenuOpen}
             style={{
               background: 'transparent',
               border: 'none',
@@ -392,12 +411,13 @@ function Navbar({ activeHero }) {
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div style={{ willChange: 'transform, opacity' }}
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{
+              willChange: 'transform, opacity',
               position: 'fixed',
               top: 0,
               left: 0,
@@ -417,6 +437,7 @@ function Navbar({ activeHero }) {
               <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px' }} />
               <button 
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close navigation menu"
                 style={{
                   background: 'transparent',
                   border: 'none',
@@ -453,7 +474,8 @@ function Navbar({ activeHero }) {
               ))}
               
               <button
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={scrollToAudit}
+                aria-label="Book a Technical Audit"
                 className="btn-glow-border"
                 style={{
                   marginTop: '2rem',

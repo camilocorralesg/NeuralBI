@@ -138,12 +138,12 @@ function Manifesto({ activeHero }) {
   // 5. SUI_FORK: Dark, highly tactile Bento glass grids
   if (activeHero === 'sui_fork') {
     return (
-      <motion.section style={{ willChange: 'transform, opacity' }}
+      <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.05 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{ padding: 'clamp(4rem, 8vw, 8rem) 0', position: 'relative', zIndex: 10 }}>
+        style={{ willChange: 'transform, opacity', padding: 'clamp(4rem, 8vw, 8rem) 0', position: 'relative', zIndex: 10 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(1.75rem, 3vw, 3rem)', fontWeight: 600, color: '#ffffff' }}>
@@ -183,12 +183,12 @@ function Manifesto({ activeHero }) {
 
   // 4. TECH V4 (Video 0627): Smooth Premium Mesh (Glassmorphism)
   return (
-    <motion.section style={{ willChange: 'transform, opacity' }}
+    <motion.section
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      style={{ padding: 'clamp(4rem, 8vw, 9rem) 0', position: 'relative', zIndex: 10 }}
+      style={{ willChange: 'transform, opacity', padding: 'clamp(4rem, 8vw, 9rem) 0', position: 'relative', zIndex: 10 }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 6rem)' }}>

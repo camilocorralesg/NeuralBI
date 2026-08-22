@@ -2975,7 +2975,7 @@ export function ToolDetailModal({ tool, onClose }) {
           overflowX: 'hidden'
         }}>
         {/* NeuralBI Ambient Mesh Background Overlay */}
-        <motion.div style={{ willChange: 'transform, opacity' }}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -3056,7 +3056,7 @@ export function ToolDetailModal({ tool, onClose }) {
         </motion.div>
 
         {/* Floating Pop-up Glassmorphism Card */}
-        <motion.div style={{ willChange: 'transform, opacity' }}
+        <motion.div
           className={details?.isPbiModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pbi' : details?.isPbaModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pba' : details?.isPauModal ? 'custom-modal-scrollbar custom-modal-scrollbar-pau' : details?.isMcsModal ? 'custom-modal-scrollbar custom-modal-scrollbar-mcs' : 'custom-modal-scrollbar'}
           initial={{ opacity: 0, scale: 0.94, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -3248,11 +3248,12 @@ export function ToolDetailModal({ tool, onClose }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Executive Adoption Narrative */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3323,11 +3324,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 02: Automated Reasoning & UX */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3392,11 +3394,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 03: Semantic Mesh Architecture */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3447,11 +3450,12 @@ export function ToolDetailModal({ tool, onClose }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Three Paradigms High-Level Overview & Zoom Drill-Down */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3522,11 +3526,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 02: Pro-Code & Dataverse Integration Engine */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3591,11 +3596,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 03: Unified Dataverse Relational Mesh */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3646,11 +3652,12 @@ export function ToolDetailModal({ tool, onClose }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Autonomous Workflows & Process Mesh */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3721,11 +3728,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 02: Resilient Capabilities */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3790,11 +3798,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 03: NeuralBI Differentiators */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3845,11 +3854,12 @@ export function ToolDetailModal({ tool, onClose }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', paddingBottom: '2rem', paddingTop: '1rem' }}>
 
               {/* Section Snap Row 01: Cognitive Agent Framework */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3920,11 +3930,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 02: Enterprise Agent Capabilities */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -3989,11 +4000,12 @@ export function ToolDetailModal({ tool, onClose }) {
               </motion.div>
 
               {/* Section Snap Row 03: NeuralBI Differentiators */}
-              <motion.div style={{ willChange: 'transform, opacity' }} className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
+              <motion.div className="arsenal-modal-grid" initial={{ opacity: 0.1, y: 50, scale: 0.95, filter: 'blur(4px)' }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                 viewport={{ once: true, amount: 0.45 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  willChange: 'transform, opacity',
                   display: 'grid',
                   
                   gap: '3.5rem',
@@ -4288,13 +4300,14 @@ function CinematicArsenal() {
 
         <div style={{ position: 'relative', height: '400px' }}>
           <AnimatePresence mode="wait">
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div
               key={currentItem.id}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               style={{
+                willChange: 'transform, opacity',
                 position: 'absolute',
                 inset: 0,
                 display: 'flex',
@@ -4337,13 +4350,14 @@ function ModernV2Arsenal() {
       <div style={{ position: 'relative', width: '100%', maxWidth: '900px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2.5rem' }}>
         <div style={{ position: 'relative', width: '100%', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <AnimatePresence mode="wait">
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div
               key={currentItem.id}
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               style={{
+                willChange: 'transform, opacity',
                 position: 'absolute',
                 width: '100%',
                 height: '100%',
@@ -4371,9 +4385,10 @@ function ModernV2Arsenal() {
           </AnimatePresence>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', zIndex: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', zIndex: 10 }}>
           <button
             onClick={prevSlide}
+            aria-label="Previous slide"
             style={{
               background: 'rgba(255,255,255,0.03)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -4399,27 +4414,42 @@ function ModernV2Arsenal() {
             ←
           </button>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.25rem' }}>
             {arsenalData.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                aria-current={slide === idx ? 'true' : undefined}
                 style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: slide === idx ? '#c6ff34' : 'rgba(255,255,255,0.2)',
+                  minWidth: '36px',
+                  minHeight: '36px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'transparent',
                   border: 'none',
                   padding: 0,
-                  cursor: 'pointer',
-                  transition: 'background 0.3s'
+                  cursor: 'pointer'
                 }}
-              />
+              >
+                <span
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: slide === idx ? '#c6ff34' : 'rgba(255,255,255,0.2)',
+                    display: 'block',
+                    transition: 'background 0.3s'
+                  }}
+                />
+              </button>
             ))}
           </div>
 
           <button
             onClick={nextSlide}
+            aria-label="Next slide"
             style={{
               background: 'rgba(255,255,255,0.03)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -4469,13 +4499,14 @@ function TechV4Arsenal({ isRemix }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
           {arsenalData.map((item, idx) => (
-            <motion.div style={{ willChange: 'transform, opacity' }}
+            <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
               style={{
+                willChange: 'transform, opacity',
                 display: 'grid',
                 gridTemplateColumns: '1fr 3fr',
                 gap: '4rem',
@@ -5281,7 +5312,7 @@ function Spline1Arsenal({ isRemix, onOpenModal }) {
                   <CharacterReveal text="Pro-code applications, autonomous AI workflows, and modern Fabric-driven intelligence architectures. Engineered to eliminate operational debt across your entire ecosystem." stagger={0.008} />
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Scroll down to slide</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>Scroll down to slide</span>
                   <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.15)' }} />
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#c6ff34' }}>→</span>
                 </div>

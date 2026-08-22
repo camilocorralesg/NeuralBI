@@ -26,6 +26,20 @@ function Hero({ activeHero = 'remix' }) {
     h1Color: "#ffffff"
   };
 
+  const scrollToAudit = (e) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById('audit') || document.getElementById('contact');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      const firstInput = el.querySelector('input');
+      if (firstInput) {
+        setTimeout(() => {
+          firstInput.focus({ preventScroll: true });
+        }, 600);
+      }
+    }
+  };
+
   const renderBackground = () => (
     <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
       <FloatingLines
@@ -113,10 +127,16 @@ function Hero({ activeHero = 'remix' }) {
             gap: '1rem'
           }}>
             <Magnetic>
-              <button className={currentContent.btnClass} style={{
-                fontFamily: 'var(--font-button)',
-                fontSize: 'clamp(0.8rem, 1.5vw, 1.125rem)'
-              }}>
+              <button
+                onClick={scrollToAudit}
+                aria-label="Book a Technical Audit"
+                className={currentContent.btnClass}
+                style={{
+                  fontFamily: 'var(--font-button)',
+                  fontSize: 'clamp(0.8rem, 1.5vw, 1.125rem)',
+                  cursor: 'pointer'
+                }}
+              >
                 {currentContent.cta}
               </button>
             </Magnetic>
