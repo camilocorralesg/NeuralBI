@@ -14,8 +14,7 @@ import CaseStudy from './sections/CaseStudy';
 import Faq from './sections/Faq';
 import FooterCTA from './sections/FooterCTA';
 import Footer from './sections/Footer';
-
-
+import StickyMobileCTA from './StickyMobileCTA';
 
 export default function App() {
   const activeHero = 'remix';
@@ -25,6 +24,9 @@ export default function App() {
     <div style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-ink)', backgroundColor: 'var(--color-paper)' }}>
       {/* Style-Specific Creative Navbar */}
       <Navbar activeHero={activeHero} />
+
+      {/* Sticky Mobile CTA for high conversion */}
+      <StickyMobileCTA />
 
       <main>
         {/* Hero Section */}

@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, memo } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import CharacterReveal from '../CharacterReveal';
 import Magnetic from '../Magnetic';
@@ -110,19 +111,46 @@ function SuccessState({ onReset }) {
 }
 
 function FooterCTA({ activeHero }) {
+  const router = useRouter();
   const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
+  const [touched, setTouched] = React.useState({ name: false, email: false, message: false });
   const [submitted, setSubmitted] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   const isEmailValid = (emailStr) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr.trim());
+  };
+
+  const getFieldError = (field, value) => {
+    if (field === 'name') {
+      if (!value.trim()) return 'Please enter your full name.';
+    }
+    if (field === 'email') {
+      if (!value.trim()) return 'Work email address is required.';
+      if (!isEmailValid(value)) return 'Please enter a valid work email (e.g. name@company.com).';
+    }
+    if (field === 'message') {
+      if (!value.trim()) return 'Please tell us what you would like to explore or optimize.';
+    }
+    return '';
+  };
+
+  const errors = {
+    name: touched.name ? getFieldError('name', formData.name) : '',
+    email: touched.email ? getFieldError('email', formData.email) : '',
+    message: touched.message ? getFieldError('message', formData.message) : '',
   };
 
   const isFormValid = formData.name.trim() !== '' && isEmailValid(formData.email) && formData.message.trim() !== '';
 
+  const handleBlur = (field) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTouched({ name: true, email: true, message: true });
     if (!isFormValid || isSubmitting) return;
 
     setIsSubmitting(true);
@@ -139,6 +167,7 @@ function FooterCTA({ activeHero }) {
 
       if (res.ok && data.success) {
         setSubmitted(true);
+        router.push('/thank-you');
       } else {
         setErrorMessage(data.error || 'Failed to submit inquiry. Please try again.');
       }
@@ -153,6 +182,7 @@ function FooterCTA({ activeHero }) {
   const handleReset = () => {
     setSubmitted(false);
     setFormData({ name: '', email: '', message: '' });
+    setTouched({ name: false, email: false, message: false });
     setErrorMessage(null);
   };
 
@@ -449,18 +479,105 @@ function FooterCTA({ activeHero }) {
           {submitted ? (
             <SuccessState onReset={handleReset} />
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
                 <label htmlFor="name-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Name</label>
-                <input id="name-sui" type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: isRemix ? '6px' : '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = '#c6ff34'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'} />
+                <input
+                  id="name-sui"
+                  type="text"
+                  name="name"
+                  autoComplete="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={() => handleBlur('name')}
+                  aria-invalid={!!errors.name}
+                  required
+                  placeholder="e.g. Alex Morgan"
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255,255,255,0.02)',
+                    border: `1px solid ${errors.name ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
+                    borderRadius: isRemix ? '6px' : '8px',
+                    padding: '0.75rem 1rem',
+                    color: '#fff',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.3s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = errors.name ? '#ff5252' : '#c6ff34'}
+                />
+                {errors.name && (
+                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
+                    {errors.name}
+                  </span>
+                )}
               </div>
               <div>
-                <label htmlFor="email-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Email</label>
-                <input id="email-sui" type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: isRemix ? '6px' : '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = '#c6ff34'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'} />
+                <label htmlFor="email-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Work Email</label>
+                <input
+                  id="email-sui"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={() => handleBlur('email')}
+                  aria-invalid={!!errors.email}
+                  required
+                  placeholder="e.g. alex@company.com"
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: `1px solid ${errors.email ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
+                    borderRadius: isRemix ? '6px' : '8px',
+                    padding: '0.75rem 1rem',
+                    color: '#fff',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.3s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = errors.email ? '#ff5252' : '#c6ff34'}
+                />
+                {errors.email && (
+                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
+                    {errors.email}
+                  </span>
+                )}
               </div>
               <div>
                 <label htmlFor="msg-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>What do you want to explore?</label>
-                <textarea id="msg-sui" name="message" value={formData.message} onChange={handleChange} required rows="3" style={{ width: '100%', background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: isRemix ? '6px' : '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', resize: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = '#c6ff34'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'} />
+                <textarea
+                  id="msg-sui"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  onBlur={() => handleBlur('message')}
+                  aria-invalid={!!errors.message}
+                  required
+                  placeholder="e.g. Migrating legacy reporting to Power BI Direct Lake or building an autonomous Copilot agent..."
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: `1px solid ${errors.message ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
+                    borderRadius: isRemix ? '6px' : '8px',
+                    padding: '0.75rem 1rem',
+                    color: '#fff',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    resize: 'none',
+                    transition: 'border-color 0.3s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = errors.message ? '#ff5252' : '#c6ff34'}
+                />
+                {errors.message && (
+                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
+                    {errors.message}
+                  </span>
+                )}
               </div>
               <Magnetic range={120} actionScale={0.08}>
                 {renderSubmitButton()}

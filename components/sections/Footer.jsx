@@ -30,6 +30,11 @@ function Footer({ activeHero }) {
       { name: "Official Documentation", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/", target: "_blank" },
       { name: "Generative AI & GPT", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/nlu-gpt-overview", target: "_blank" },
       { name: "Actions & Plug-ins", href: "https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-plugin-actions", target: "_blank" }
+    ],
+    "Legal & Governance": [
+      { name: "Privacy Policy", href: "/privacy" },
+      { name: "Terms of Service", href: "/terms" },
+      { name: "Contact Architects", href: "mailto:automation@aineuralnet.onmicrosoft.com" }
     ]
   };
 
@@ -622,6 +627,14 @@ function Footer({ activeHero }) {
               <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="sui-social-box" style={{ width: '36px', height: '36px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', background: 'rgba(255, 255, 255, 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255, 255, 255, 0.45)' }}>
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
               </a>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+              <a href="mailto:automation@aineuralnet.onmicrosoft.com" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#c6ff34', textDecoration: 'none' }}>
+                automation@aineuralnet.onmicrosoft.com
+              </a>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.45)' }}>
+                Vancouver, Canada • Medellín, Colombia
+              </span>
             </div>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '0.05em' }}>
               © 2026 Copyright NeuralBI. All rights reserved.

@@ -1813,11 +1813,10 @@ button {
   }
 }
 
-/* FOOTER COMPONENT MOBILE RESPONSIVENESS */
 .footer-links-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 2.5rem;
 }
 
 .footer-lower-row {
@@ -1888,5 +1887,16 @@ button {
   .grain-overlay,
   .glow-accent {
     display: none !important;
+  }
+}
+
+/* STICKY MOBILE CTA WRAPPER */
+.mobile-cta-wrapper {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-cta-wrapper {
+    display: block;
   }
 }
