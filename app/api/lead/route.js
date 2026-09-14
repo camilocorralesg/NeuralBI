@@ -123,3 +123,12 @@ export async function POST(request) {
     );
   }
 }
+
+/**
+ * Utility to reset in-memory token cache during testing.
+ */
+export function _resetTokenCache() {
+  cachedAccessToken = null;
+  tokenExpiresAt = 0;
+}
+
