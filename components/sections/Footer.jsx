@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 
-const logoUrl = '/assets/Neuralbi logo.svg';
+const logoUrl = '/NeuralBI/assets/Neuralbi logo.svg';
 
 
 

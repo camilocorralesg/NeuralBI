@@ -39,7 +39,7 @@ export default function NotFound() {
         zIndex: 10
       }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/assets/Neuralbi%20logo.svg" alt="NeuralBI Logo" style={{ height: '24px' }} />
+          <img src="/NeuralBI/assets/Neuralbi%20logo.svg" alt="NeuralBI Logo" style={{ height: '24px' }} />
         </Link>
       </header>
 

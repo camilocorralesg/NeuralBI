@@ -6,6 +6,7 @@ const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/NeuralBI',
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.alias['@splinetool/react-spline/next'] = path.resolve(

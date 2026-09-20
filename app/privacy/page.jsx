@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
           textDecoration: 'none',
           color: '#ffffff'
         }}>
-          <img src="/assets/Neuralbi%20logo.svg" alt="NeuralBI Logo" style={{ height: '22px' }} />
+          <img src="/NeuralBI/assets/Neuralbi%20logo.svg" alt="NeuralBI Logo" style={{ height: '22px' }} />
         </Link>
 
         <Link

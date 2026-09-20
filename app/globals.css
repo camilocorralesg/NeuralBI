@@ -14,7 +14,7 @@ html {
 
 @font-face {
   font-family: 'Absolut';
-  src: url('/assets/fonts/AbsolutMediumReduced.ttf') format('truetype');
+  src: url('/NeuralBI/assets/fonts/AbsolutMediumReduced.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }

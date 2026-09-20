@@ -42,7 +42,7 @@ export default function Loading() {
         zIndex: 1
       }}>
         <img
-          src="/favicon.svg"
+          src="/NeuralBI/favicon.svg"
           alt="NeuralBI Loading"
           style={{ width: '46px', height: '46px' }}
         />

@@ -6,10 +6,10 @@ import TiltCard from '../TiltCard';
 import FloatingLines from '../FloatingLines';
 import CharacterReveal from '../CharacterReveal';
 
-const powerBiLogo = '/assets/New_Power_BI_Logo.svg';
-const powerAppsLogo = '/assets/Powerapps-logo.svg.svg';
-const copilotStudioLogo = '/assets/Copilot Studio.svg';
-const powerAutomateLogo = '/assets/Power Automate logo.svg';
+const powerBiLogo = '/NeuralBI/assets/New_Power_BI_Logo.svg';
+const powerAppsLogo = '/NeuralBI/assets/Powerapps-logo.svg.svg';
+const copilotStudioLogo = '/NeuralBI/assets/Copilot Studio.svg';
+const powerAutomateLogo = '/NeuralBI/assets/Power Automate logo.svg';
 
 
 const arsenalData = [

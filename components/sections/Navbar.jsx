@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from '
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from '../Magnetic';
 
-const logoUrl = '/assets/Neuralbi logo.svg';
+const logoUrl = '/NeuralBI/assets/Neuralbi logo.svg';
 
 // ─── SECTION 11: PREMIUM STYLE-SPECIFIC NAVBARS (SUI, RAYCAST & NEBULA DNA) ───
 function Navbar({ activeHero }) {

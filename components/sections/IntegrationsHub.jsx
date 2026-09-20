@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from '
 import { motion } from 'framer-motion';
 import CharacterReveal from '../CharacterReveal';
 
-const logoSoloUrl = '/assets/Neuralbi logo solo.svg';
+const logoSoloUrl = '/NeuralBI/assets/Neuralbi logo solo.svg';
 
 function IntegrationsHub({ activeHero }) {
   const [hoveredNode, setHoveredNode] = React.useState(null);
@@ -318,7 +318,7 @@ function IntegrationsHub({ activeHero }) {
       <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
          <div style={{
            position: 'absolute', inset: 0,
-           backgroundImage: 'url("/assets/gradient%20lila.jpeg")',
+           backgroundImage: 'url("/NeuralBI/assets/gradient%20lila.jpeg")',
            backgroundSize: 'cover',
            backgroundPosition: 'center',
            filter: 'brightness(1.2) contrast(1.1) saturate(1.2)'
