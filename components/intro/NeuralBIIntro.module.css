@@ -1,0 +1,30 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--layer-intro, 99999);
+  visibility: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+:global(html[data-neuralbi-intro='pending']) .overlay,
+:global(html[data-neuralbi-intro='active']) .overlay {
+  visibility: visible;
+}
+
+.background {
+  fill: var(--color-paper, #000000);
+}
+
+/* Changing the OS preference immediately suppresses spatial motion, even
+   before its JS change listener swaps to the short, static-logo fade. */
+@media (prefers-reduced-motion: reduce) {
+  .overlay [data-intro-assembly],
+  .overlay [data-intro-glow],
+  .overlay [data-intro-signal],
+  .overlay [data-intro-aperture] {
+    display: none;
+  }
+}

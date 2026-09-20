@@ -37,6 +37,7 @@ html {
   --color-focus: var(--color-accent);
   --glass-bg: rgba(10, 10, 10, 0.6);
   --glass-border: rgba(255, 255, 255, 0.08);
+  --layer-intro: 99999;
 
   /* Typography */
   --font-sans: 'Manrope', system-ui, sans-serif;

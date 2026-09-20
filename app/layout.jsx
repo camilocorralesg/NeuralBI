@@ -1,6 +1,8 @@
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import CookieBanner from '../components/CookieBanner';
+import NeuralBIIntro from '../components/intro/NeuralBIIntro';
+import { INTRO_BOOTSTRAP } from '../components/intro/choreography';
 
 export const metadata = {
   metadataBase: new URL('https://neuralbi.com'),
@@ -43,8 +45,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOTSTRAP }} />
         <link rel="icon" type="image/svg+xml" href="/NeuralBI/favicon.svg" />
         <link rel="icon" type="image/png" href="/NeuralBI/favicon.png" />
         <link rel="apple-touch-icon" href="/NeuralBI/apple-touch-icon.png" />
@@ -53,6 +56,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700;800&family=Schibsted+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <NeuralBIIntro />
         {children}
         <Analytics />
         <CookieBanner />

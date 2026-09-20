@@ -2,7 +2,8 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div style={{
+    <div
+      style={{
       minHeight: '100vh',
       backgroundColor: '#030303',
       color: '#ffffff',

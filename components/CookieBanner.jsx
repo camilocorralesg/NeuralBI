@@ -45,7 +45,7 @@ export default function CookieBanner() {
             position: 'fixed',
             bottom: '1.5rem',
             left: '1.5rem',
-            zIndex: 9999,
+            zIndex: 900,
             maxWidth: '440px',
             width: 'calc(100vw - 3rem)',
             background: 'rgba(5, 7, 3, 0.92)',

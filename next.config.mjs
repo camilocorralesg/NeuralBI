@@ -8,6 +8,16 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   basePath: '/NeuralBI',
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/NeuralBI',
+        basePath: false,
+        permanent: false,
+      },
+    ];
+  },
   webpack: (config) => {
     config.resolve.alias['@splinetool/react-spline/next'] = path.resolve(
       __dirname,
