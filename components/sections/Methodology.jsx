@@ -2212,7 +2212,7 @@ function Methodology({ activeHero }) {
     {
       num: "01",
       title: "Audit & Blueprint",
-      desc: "We map your data infrastructure, identify latency bottlenecks, and define the strategic roadmap for maximum ROI."
+      desc: "We inspect your database schemas, tenant governance, and reporting bottlenecks. You receive a clear, fixed-scope engineering blueprint with zero technical fluff."
     },
     {
       num: "02",
@@ -2222,7 +2222,7 @@ function Methodology({ activeHero }) {
     {
       num: "03",
       title: "Deploy & Scale",
-      desc: "We launch intuitive dashboards, train your team, and activate Copilot environments to ensure exponential growth."
+      desc: "We deploy to production, train your team hands-on, and activate AI copilots with strict tenant boundaries. Measurable business impact on Day 1."
     }
   ];
 

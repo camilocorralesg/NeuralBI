@@ -17,7 +17,7 @@ function Hero({ activeHero = 'remix' }) {
   const currentContent = {
     h1: <>Intelligence<br />That Executes</>,
     sub: "We engineer enterprise data architectures, pro/low-code apps, and autonomous AI agents. We transform complex data into beautiful, actionable business intelligence.",
-    cta: <>Book a Technical Audit <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', height: '14px', lineHeight: 1, transition: 'all 0.5s' }}>↵</span></>,
+    cta: <>Book an Architecture Audit <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', height: '14px', lineHeight: 1, transition: 'all 0.5s' }}>↵</span></>,
     align: "center",
     textAlign: "center",
     btnClass: "btn-glow-border",
@@ -129,7 +129,7 @@ function Hero({ activeHero = 'remix' }) {
             <Magnetic>
               <button
                 onClick={scrollToAudit}
-                aria-label="Book a Technical Audit"
+                aria-label="Book an Architecture Audit"
                 className={currentContent.btnClass}
                 style={{
                   fontFamily: 'var(--font-button)',

@@ -25,7 +25,7 @@ describe('Component: FooterCTA Form Integration', () => {
     expect(screen.getByLabelText(/^Work Email$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/What do you want to explore\?/i)).toBeInTheDocument();
 
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
     expect(submitBtn).toBeInTheDocument();
     expect(submitBtn).toBeDisabled();
   });
@@ -57,7 +57,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     expect(submitBtn).toBeDisabled();
 
@@ -79,7 +79,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -112,7 +112,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -134,7 +134,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });

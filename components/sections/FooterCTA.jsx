@@ -221,7 +221,7 @@ function FooterCTA({ activeHero }) {
           <span>Transmitting...</span>
         ) : (
           <>
-            Book a Technical Audit
+            Book an Architecture Audit
             <span
               style={{
                 display: 'inline-flex',
@@ -241,6 +241,9 @@ function FooterCTA({ activeHero }) {
           </>
         )}
       </button>
+      <div style={{ marginTop: '0.75rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.45)', letterSpacing: '0.02em' }}>
+        🔒 100% confidential. Mutual NDA signed before accessing data.
+      </div>
     </div>
   );
 

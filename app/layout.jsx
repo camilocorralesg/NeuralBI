@@ -7,10 +7,10 @@ import { INTRO_BOOTSTRAP } from '../components/intro/choreography';
 export const metadata = {
   metadataBase: new URL('https://neuralbi.com'),
   title: {
-    default: 'NeuralBI - Make your data think.',
+    default: 'NeuralBI - Make your data think. | Business Intelligence & Power Platform Architecture',
     template: '%s | NeuralBI',
   },
-  description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems. Turn static data into a living, cognitive asset for your enterprise.',
+  description: 'We architect high-performance Business Intelligence, Power Platform, and Microsoft Fabric ecosystems. Turn static enterprise data into real-time dashboards and autonomous AI workflows.',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },

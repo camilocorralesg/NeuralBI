@@ -94,8 +94,8 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" className="btn-raycast btn-radius-8" style={{ padding: '0.375rem 1.25rem', fontSize: '0.85rem', fontFamily: 'var(--font-serif)', cursor: 'pointer' }}>
-          Get Quote
+        <button onClick={scrollToAudit} aria-label="Book an Architecture Audit" className="btn-raycast btn-radius-8" style={{ padding: '0.375rem 1.25rem', fontSize: '0.85rem', fontFamily: 'var(--font-serif)', cursor: 'pointer' }}>
+          Book Audit
         </button>
       </nav>
     );
@@ -132,7 +132,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" style={{
+        <button onClick={scrollToAudit} aria-label="Book an Architecture Audit" style={{
           padding: '0.5rem 1.5rem',
           fontSize: '0.8rem',
           fontWeight: 900,
@@ -145,7 +145,7 @@ function Navbar({ activeHero }) {
           cursor: 'pointer',
           letterSpacing: '0.05em'
         }}>
-          Get Quote
+          Book Audit
         </button>
       </nav>
     );
@@ -230,7 +230,7 @@ function Navbar({ activeHero }) {
           ))}
         </div>
 
-        <button onClick={scrollToAudit} aria-label="Book a Technical Audit" className="btn-glow-border" style={{
+        <button onClick={scrollToAudit} aria-label="Book an Architecture Audit" className="btn-glow-border" style={{
           padding: '0.4rem 1.25rem',
           fontSize: '0.8rem',
           fontFamily: 'var(--font-mono)',
@@ -241,7 +241,7 @@ function Navbar({ activeHero }) {
           boxShadow: '0 0 10px rgba(198, 255, 52, 0.2)',
           cursor: 'pointer'
         }}>
-          GET_QUOTE
+          BOOK_AUDIT
         </button>
       </nav>
     );
@@ -366,7 +366,7 @@ function Navbar({ activeHero }) {
           <Magnetic range={60} actionScale={0.2}>
             <button
               onClick={scrollToAudit}
-              aria-label="Book a Technical Audit"
+              aria-label="Book an Architecture Audit"
               className="btn-glow-border"
               style={{
                 padding: '0.45rem 1.25rem',
@@ -380,7 +380,7 @@ function Navbar({ activeHero }) {
                 justifyContent: 'center'
               }}
             >
-              Book a Call <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '6px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', paddingLeft: '6px', height: '12px', lineHeight: 1 }}>↗</span>
+              Book Audit <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '6px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', paddingLeft: '6px', height: '12px', lineHeight: 1 }}>↗</span>
             </button>
           </Magnetic>
         </div>
