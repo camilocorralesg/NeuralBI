@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-21T15:40:45Z",
+  "title": "Design System: NeuralBI",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Deep Obsidian Ground",
+        "canonical": "oklch(0% 0 0)",
+        "tonalRamp": ["#000000", "#0a0a0a", "#121212", "#1a1a1a", "#27272a", "#3f3f46", "#52525b", "#71717a"]
+      },
+      "surface-1": {
+        "role": "neutral",
+        "displayName": "Surface Elevation 1",
+        "canonical": "oklch(18% 0 0)",
+        "tonalRamp": ["#080808", "#0e0e0e", "#121212", "#171717", "#212121", "#2b2b2b", "#3d3d3d", "#525252"]
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "Surface Elevation 2",
+        "canonical": "oklch(22% 0 0)",
+        "tonalRamp": ["#0d0d0d", "#141414", "#1a1a1a", "#222222", "#2c2c2c", "#383838", "#494949", "#5e5e5e"]
+      },
+      "ink-primary": {
+        "role": "neutral",
+        "displayName": "Ink Primary (White)",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": ["#27272a", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#ffffff"]
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Ink Secondary (Zinc-400)",
+        "canonical": "oklch(73% 0.01 250)",
+        "tonalRamp": ["#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8", "#f4f4f5"]
+      },
+      "ink-tertiary": {
+        "role": "neutral",
+        "displayName": "Ink Tertiary (Zinc-500)",
+        "canonical": "oklch(55% 0.01 250)",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8"]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Electric Volt Lime",
+        "canonical": "oklch(91% 0.23 126)",
+        "tonalRamp": ["#203300", "#385900", "#558000", "#77a800", "#9dd100", "#c6ff34", "#d4ff66", "#e8ffaa"]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Volt Lime Hover",
+        "canonical": "oklch(94% 0.20 125)",
+        "tonalRamp": ["#2a4200", "#456a00", "#689600", "#8ec400", "#b5ea24", "#d4ff66", "#e4ff8f", "#f2ffbb"]
+      },
+      "accent-ai": {
+        "role": "secondary",
+        "displayName": "Neural Indigo",
+        "canonical": "oklch(58% 0.21 275)",
+        "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4338ca", "#4f46e5", "#6366f1", "#818cf8", "#a5b4fc"]
+      },
+      "accent-telemetry": {
+        "role": "secondary",
+        "displayName": "Mesh Cyan",
+        "canonical": "oklch(76% 0.15 220)",
+        "tonalRamp": ["#082f49", "#0c4a6e", "#0369a1", "#0284c7", "#0ea5e9", "#38bdf8", "#7dd3fc", "#bae6fd"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display 1 & 2 (Sora)",
+        "purpose": "Dominant hero titles, value proposition headlines, and key architectural metrics."
+      },
+      "body": {
+        "displayName": "Body & Paragraphs (Manrope)",
+        "purpose": "Explanatory architecture copy, enterprise methodologies, and conversion forms."
+      },
+      "label": {
+        "displayName": "Telemetry & Monospace (JetBrains Mono)",
+        "purpose": "Section kickers, live API statuses, latency numbers, and phase markers."
+      }
+    },
+    "shadows": [
+      {
+        "name": "raycast-inset",
+        "value": "inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(198, 255, 52, 0.15)",
+        "purpose": "Signature 3D beveled edge for primary action buttons."
+      },
+      {
+        "name": "volt-glow-active",
+        "value": "0 8px 32px rgba(198, 255, 52, 0.35)",
+        "purpose": "Intense ambient neon bloom under active buttons and hovered elements."
+      },
+      {
+        "name": "glass-elevation",
+        "value": "inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 40px rgba(0, 0, 0, 0.5)",
+        "purpose": "Elevation and grounding for bento glass panels and navigation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-snappy",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Deterministic, zero-latency response curve for UI interactions."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Immediate tactile micro-feedback (hover, tap, active states)."
+      },
+      {
+        "name": "duration-normal",
+        "value": "300ms",
+        "purpose": "Modal transitions, container reveals, and dropdown unfolds."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Raycast Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-impact CTA with top specular highlight, electric volt gradient, and neon bloom.",
+      "html": "<button class=\"ds-btn-raycast\">Book Architecture Audit <span class=\"ds-arrow\">↵</span></button>",
+      "css": ".ds-btn-raycast { position: relative; background: linear-gradient(180deg, rgba(198, 255, 52, 0.95) 0%, rgba(198, 255, 52, 0.75) 100%); color: #000000; padding: 14px 36px; border-radius: 9999px; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(198, 255, 52, 0.15); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease; } .ds-btn-raycast:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(212, 255, 102, 1) 0%, rgba(198, 255, 52, 0.9) 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 4px 8px rgba(0, 0, 0, 0.4), 0 8px 32px rgba(198, 255, 52, 0.35); } .ds-btn-raycast:active { transform: translateY(1px) scale(0.98); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3); } .ds-arrow { font-family: monospace; font-weight: bold; }"
+    },
+    {
+      "name": "Secondary Outlined Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Subtle outlined action button for secondary paths and documentation links.",
+      "html": "<button class=\"ds-btn-secondary\">Explore Arsenal</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #ffffff; border: 1px solid #27272a; padding: 12px 24px; border-radius: 9999px; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: #121212; border-color: rgba(255, 255, 255, 0.25); color: #ffffff; } .ds-btn-secondary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Bento Glass Card",
+      "kind": "card",
+      "refersTo": "card-glass",
+      "description": "Tactile obsidian bento panel with 24px backdrop blur, subtle perimeter border, and inset highlight.",
+      "html": "<div class=\"ds-card-glass\"><div class=\"ds-tag\">&gt; SYSTEM ACTIVE</div><h3 class=\"ds-card-title\">Direct Lake Architecture</h3><p class=\"ds-card-desc\">Sub-second DAX query execution directly over OneLake Delta tables without recurring cache refreshes.</p></div>",
+      "css": ".ds-card-glass { background: rgba(10, 10, 10, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 24px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 40px rgba(0, 0, 0, 0.5); transition: border-color 0.3s ease, transform 0.3s ease; } .ds-card-glass:hover { border-color: rgba(198, 255, 52, 0.25); transform: translateY(-2px); } .ds-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #c6ff34; letter-spacing: 0.05em; margin-bottom: 12px; } .ds-card-title { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; color: #ffffff; margin: 0 0 8px 0; } .ds-card-desc { font-family: 'Manrope', sans-serif; font-size: 14px; line-height: 1.5; color: #a1a1aa; margin: 0; }"
+    },
+    {
+      "name": "Floating Glass Nav Pill",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Suspended navigation island with frosted dark glass and embedded compact CTA.",
+      "html": "<nav class=\"ds-nav-pill\"><span class=\"ds-nav-brand\">NeuralBI</span><div class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-item active\">Arsenal</a><a href=\"#\" class=\"ds-nav-item\">Methodology</a></div><button class=\"ds-nav-cta\">Book Audit</button></nav>",
+      "css": ".ds-nav-pill { display: inline-flex; align-items: center; gap: 20px; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9999px; padding: 8px 16px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6); } .ds-nav-brand { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px; color: #ffffff; } .ds-nav-links { display: flex; gap: 14px; } .ds-nav-item { font-family: 'Sora', sans-serif; font-size: 13px; color: #a1a1aa; text-decoration: none; transition: color 0.2s ease; } .ds-nav-item:hover, .ds-nav-item.active { color: #ffffff; } .ds-nav-cta { background: #c6ff34; color: #000000; border: none; border-radius: 9999px; padding: 6px 14px; font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }"
+    },
+    {
+      "name": "Architecture Audit Input",
+      "kind": "input",
+      "refersTo": "input-dark",
+      "description": "Precision dark field input with subtle zinc border and electric volt focus ring.",
+      "html": "<div class=\"ds-input-wrapper\"><label class=\"ds-label\">Work Email</label><input type=\"email\" class=\"ds-input-dark\" placeholder=\"name@enterprise.com\" /></div>",
+      "css": ".ds-input-wrapper { display: flex; flex-direction: column; gap: 6px; } .ds-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #a1a1aa; letter-spacing: 0.02em; } .ds-input-dark { background: #121212; color: #ffffff; border: 1px solid #27272a; border-radius: 8px; padding: 12px 16px; font-family: 'Manrope', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ds-input-dark::placeholder { color: #71717a; } .ds-input-dark:focus { border-color: #c6ff34; box-shadow: 0 0 12px rgba(198, 255, 52, 0.2); }"
+    },
+    {
+      "name": "Monospace Telemetry Badge",
+      "kind": "custom",
+      "refersTo": "badge-status",
+      "description": "Terminal status indicator with glowing LED pulse for active runtime states.",
+      "html": "<div class=\"ds-badge-status\"><span class=\"ds-badge-dot\"></span><span class=\"ds-badge-text\">AUTONOMOUS IMPACT ACTIVE</span></div>",
+      "css": ".ds-badge-status { display: inline-flex; align-items: center; gap: 8px; background: rgba(15, 26, 10, 0.9); border: 1px solid rgba(198, 255, 52, 0.4); border-radius: 9999px; padding: 5px 12px; box-shadow: 0 4px 16px rgba(198, 255, 52, 0.15); } .ds-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #c6ff34; box-shadow: 0 0 6px #c6ff34; } .ds-badge-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #c6ff34; letter-spacing: 0.05em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Autonomous Blueprint",
+    "overview": "NeuralBI is an enterprise architecture platform engineered to communicate precision, velocity, and cognitive power. Rejecting the bland conventions of legacy corporate IT consulting and disposable SaaS templates, NeuralBI adopts an obsidian foundation with tactile glassmorphism, physical inset lighting, and high-voltage accents. The interface functions as a precision telemetry instrument, synthesizing schematics, 2D blueprint graphics, and live data telemetry into an environment that feels both industrial and extraordinarily refined.",
+    "keyCharacteristics": [
+      "Obsidian Foundation: Deep true-black backdrops (#000000) with high-contrast, pure-white typographic hierarchy.",
+      "Physical Inset Bevels: Multi-layered box shadows with top-edge specular highlights creating physical depth.",
+      "Electric Volt Accents: Strategic deployment of high-chroma volt lime (#c6ff34) reserved for primary actions and active telemetry states.",
+      "Cognitive Secondary Accents: Neural Indigo (#6366f1) for AI reasoning and Mesh Cyan (#38bdf8) for telemetry.",
+      "Tactile Bento Glassmorphism: Translucent dark container cards with 24px backdrop blur and delicate perimeter glow."
+    ],
+    "rules": [
+      {
+        "name": "The 10% Volt Rule",
+        "body": "The primary accent (#c6ff34) must never occupy more than 10% of any given viewport. Its power comes directly from its scarcity against the deep obsidian field.",
+        "section": "colors"
+      },
+      {
+        "name": "The True Black Foundation Rule",
+        "body": "Surfaces must never default to charcoal, slate blue, navy, or desaturated brown as background canvas. The ground is #000000.",
+        "section": "colors"
+      },
+      {
+        "name": "The Strict Font Stack Rule",
+        "body": "Only fonts defined in the official stack (Sora, Manrope, Schibsted Grotesk, JetBrains Mono, Absolut) may be rendered. System defaults or unapproved Google Fonts are forbidden.",
+        "section": "typography"
+      },
+      {
+        "name": "The Inset Edge Rule",
+        "body": "Every elevated or clickable surface must feature an internal 1px specular highlight along its top border (inset 0 1px 0 rgba(255, 255, 255, 0.1..0.8)).",
+        "section": "elevation"
+      },
+      {
+        "name": "The State-Driven Glow Rule",
+        "body": "Ambient neon glow effects must never be statically pinned across every card simultaneously; they ignite in response to hover, cursor proximity, or live streaming.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do anchor all views in deep obsidian black (#000000) to preserve dramatic contrast.",
+      "Do strictly limit Volt Lime (#c6ff34) to key interactive conversion triggers, active states, and critical ROI metrics.",
+      "Do use multi-layered inset highlights on buttons and glass cards to maintain a tactile, physical quality.",
+      "Do preserve the exact typography stack: Sora for headings, Manrope for paragraphs, JetBrains Mono for telemetry tags.",
+      "Do write crisp, assertive engineering copy that speaks to enterprise directors and CTOs with concrete technical architectures."
+    ],
+    "donts": [
+      "Don't use light, cream, beige, or sand background palettes under any circumstances.",
+      "Don't fall back to corporate IT consulting clichés (stock photos of handshakes, vague arrows, corporate blue swooshes).",
+      "Don't use standard Bootstrap or uncustomized Tailwind defaults.",
+      "Don't splash neon colors indiscriminately across borders, backgrounds, and paragraphs.",
+      "Don't introduce fonts outside the documented stack (no Inter, Roboto, Fraunces, or Comic Sans)."
+    ]
+  }
+}
