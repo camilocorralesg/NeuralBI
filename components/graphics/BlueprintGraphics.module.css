@@ -34,43 +34,38 @@
 .grid { stroke: var(--graphic-grid); stroke-width: 0.7; }
 .microLabel { fill: var(--graphic-soft); font: 500 8px var(--font-mono); letter-spacing: 0.5px; }
 
-/* AI: Precision optical data flow, autonomous aperture, and tactile impact seal */
-.cornerMarks { fill: none; stroke: #1e283c; stroke-width: 0.8; opacity: 0.7; }
-.connection { stroke: #161e2c; stroke-width: 1; }
-.packet { stroke: #818cf8; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 12 100; stroke-dashoffset: 112; opacity: 0; animation: inputPacket var(--graphic-duration) linear infinite; filter: drop-shadow(0 0 3px #818cf8); }
-.outgoing { stroke: var(--graphic-accent); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 16 100; stroke-dashoffset: 116; opacity: 0; animation: outputPacket var(--graphic-duration) linear infinite; filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.7)); }
+/* AI: Data ingress → autonomous reasoning → business impact */
+.connection { stroke: #182030; stroke-width: 1; }
+.packet { stroke: #818cf8; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; opacity: 0; animation: ingress var(--graphic-duration) ease infinite; }
+.outgoing { stroke: var(--graphic-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; opacity: 0; animation: discharge var(--graphic-duration) ease infinite; }
 
-.shieldLine { stroke: #1f2a3d; stroke-width: 0.8; stroke-dasharray: 2 4; opacity: 0.6; }
+.shieldLine { stroke: #1f2a3d; stroke-width: 0.7; stroke-dasharray: 2 4; opacity: 0.5; }
 
-/* Left Input Transceivers */
+/* Source Nodes */
 .sourceGroup { transform-box: fill-box; transform-origin: center; }
-.sourceCapsule { stroke: #1e273a; stroke-width: 0.9; animation: sourceCapsulePulse var(--graphic-duration) ease infinite; }
-.capsuleLed { fill: #3b82f6; opacity: 0.6; animation: sourceLedPulse var(--graphic-duration) ease infinite; }
-.capsuleLines { stroke: #2b384d; stroke-width: 1.1; stroke-linecap: round; }
-.portDot { fill: #6366f1; stroke: #070b13; stroke-width: 1; }
-.nodeLabel { fill: #55627a; font: 600 6px var(--font-mono); letter-spacing: 1.2px; }
+.sourceCapsule { stroke: #1e273a; stroke-width: 0.8; animation: capsuleBorder var(--graphic-duration) ease infinite; }
+.capsuleLed { fill: #3b82f6; opacity: 0.5; animation: ledBlink var(--graphic-duration) ease infinite; }
+.capsuleLines { stroke: #283548; stroke-width: 1; stroke-linecap: round; }
+.portDot { fill: #4f46e5; stroke: #080c14; stroke-width: 1; }
+.nodeLabel { fill: #4b5872; font: 600 6px var(--font-mono); letter-spacing: 1.2px; }
 
-/* Center Autonomous Reasoning Aperture */
+/* Reasoning Core */
 .coreGroup { transform-box: fill-box; transform-origin: 140px 70px; }
-.coreHalo { opacity: 0; transform-box: fill-box; transform-origin: 140px 70px; animation: coreHaloBreathe var(--graphic-duration) ease infinite; }
-.dialTicks { stroke: #212c40; stroke-width: 0.8; stroke-linecap: round; }
-.coreOrbit { fill: none; stroke: #4338ca; stroke-width: 0.8; stroke-dasharray: 3 4; transform-box: fill-box; transform-origin: 140px 70px; animation: orbitRotate var(--graphic-duration) linear infinite; }
-.coreChassis { fill: #060a12; stroke: #313c54; stroke-width: 1.2; animation: chassisEvolve var(--graphic-duration) ease infinite; }
-.reasoningHex { fill: rgba(99, 102, 241, 0.07); stroke: #818cf8; stroke-width: 1; transform-box: fill-box; transform-origin: 140px 70px; animation: hexApertureShift var(--graphic-duration) var(--graphic-ease) infinite; }
-.innerAperture { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 0.7; stroke-dasharray: 2 2; }
-.coreCrosshair { stroke: #6366f1; stroke-width: 0.6; opacity: 0.35; animation: crosshairPulse var(--graphic-duration) ease infinite; }
-.coreDot { fill: #818cf8; opacity: 0.5; animation: photonCorePulse var(--graphic-duration) ease infinite; }
+.coreHalo { opacity: 0; transform-box: fill-box; transform-origin: 140px 70px; animation: halo var(--graphic-duration) ease infinite; }
+.dialTicks { stroke: #1f2a3d; stroke-width: 0.8; stroke-linecap: round; }
+.coreOrbit { fill: none; stroke: #312e81; stroke-width: 0.8; stroke-dasharray: 3 5; transform-box: fill-box; transform-origin: 140px 70px; animation: orbit var(--graphic-duration) linear infinite; }
+.coreChassis { fill: #060a12; stroke: #2d3854; stroke-width: 1; animation: chassis var(--graphic-duration) ease infinite; }
+.reasoningHex { fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; stroke-width: 0.8; transform-box: fill-box; transform-origin: 140px 70px; animation: hex var(--graphic-duration) ease infinite; }
+.coreDot { fill: #6366f1; opacity: 0.4; transform-box: fill-box; transform-origin: 140px 70px; animation: photon var(--graphic-duration) ease infinite; }
 
-/* Right Sculpted Impact Disc Seal */
-.impactSealGroup { transform-box: fill-box; transform-origin: 230px 70px; }
-.impactHalo { opacity: 0; transform-box: fill-box; transform-origin: 230px 70px; animation: impactHaloGlow var(--graphic-duration) ease infinite; }
-.impactShockwave { fill: none; stroke: var(--graphic-accent); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: 230px 70px; animation: shockwaveRipple var(--graphic-duration) var(--graphic-ease) infinite; }
-.impactShockwaveSecond { fill: none; stroke: #818cf8; stroke-width: 1; opacity: 0; transform-box: fill-box; transform-origin: 230px 70px; animation: shockwaveRippleSecond var(--graphic-duration) var(--graphic-ease) infinite; }
-.sealOuterRing { fill: #060a12; stroke: #202a3d; stroke-width: 1.2; animation: sealRingPulse var(--graphic-duration) ease infinite; }
-.sealNotches { stroke: #313f56; stroke-width: 0.9; stroke-linecap: round; animation: sealNotchesPulse var(--graphic-duration) ease infinite; }
-.sealBody { stroke: #162033; stroke-width: 0.8; }
-.sealInnerRim { fill: none; stroke: rgba(255, 255, 255, 0.09); stroke-width: 0.7; }
-.impactDollar { fill: #273144; font: 800 21px var(--font-display); letter-spacing: -0.02em; transform-box: fill-box; transform-origin: 230px 70px; animation: dollarTriumph var(--graphic-duration) var(--graphic-ease) infinite; }
+/* Impact Seal */
+.impactSealGroup { transform-box: fill-box; transform-origin: 232px 70px; }
+.impactHalo { opacity: 0; transform-box: fill-box; transform-origin: 232px 70px; animation: impactHalo var(--graphic-duration) ease infinite; }
+.impactRipple { fill: none; stroke: var(--graphic-accent); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: 232px 70px; animation: ripple var(--graphic-duration) var(--graphic-ease) infinite; }
+.sealOuterRing { fill: #060a12; stroke: #1e283a; stroke-width: 1; animation: sealRing var(--graphic-duration) ease infinite; }
+.sealBody { stroke: #152030; stroke-width: 0.7; }
+.sealInnerRim { fill: none; stroke: rgba(255, 255, 255, 0.07); stroke-width: 0.6; }
+.impactDollar { fill: #283548; font: 800 20px var(--font-display); letter-spacing: -0.02em; transform-box: fill-box; transform-origin: 232px 70px; animation: dollar var(--graphic-duration) var(--graphic-ease) infinite; }
 
 .ai .before { animation-name: impactOff; }
 .ai .after { animation-name: impactOn; }
@@ -113,102 +108,77 @@
 @keyframes beforeState { 0%, 16%, 98%, 100% { opacity: 1; } 28%, 92% { opacity: 0; } }
 @keyframes afterState { 0%, 32%, 90%, 100% { opacity: 0; } 42%, 80% { opacity: 1; } }
 
-/* AI Ingress & Traversal */
-@keyframes inputPacket {
-  0%, 10% { opacity: 0; stroke-dashoffset: 114; }
-  14% { opacity: 1; }
-  34% { opacity: 1; stroke-dashoffset: 0; }
-  38%, 100% { opacity: 0; stroke-dashoffset: 0; }
+/* AI narrative: 0–15% context · 15–38% traverse · 38–55% result · 55–88% hold · 88–100% reset */
+@keyframes ingress {
+  0%, 12% { stroke-dashoffset: 18; opacity: 0; }
+  16% { opacity: 1; }
+  36% { stroke-dashoffset: -100; opacity: 1; }
+  40%, 100% { stroke-dashoffset: -100; opacity: 0; }
 }
-@keyframes sourceCapsulePulse {
-  0%, 8%, 100% { stroke: #1e273a; }
-  14%, 28% { stroke: #4f46e5; }
-  36% { stroke: #1e273a; }
+@keyframes capsuleBorder {
+  0%, 12%, 42%, 100% { stroke: #1e273a; }
+  18%, 36% { stroke: #4338ca; }
 }
-@keyframes sourceLedPulse {
-  0%, 8%, 100% { fill: #3b82f6; opacity: 0.6; filter: none; }
-  14%, 28% { fill: #60a5fa; opacity: 1; filter: drop-shadow(0 0 3px #60a5fa); }
-  36% { fill: #3b82f6; opacity: 0.6; filter: none; }
+@keyframes ledBlink {
+  0%, 12%, 42%, 100% { fill: #3b82f6; opacity: 0.5; }
+  18%, 36% { fill: #60a5fa; opacity: 1; }
 }
 
-/* AI Autonomous Reasoning Aperture */
-@keyframes orbitRotate {
-  0% { transform: rotate(0deg); opacity: 0.35; }
-  25% { opacity: 0.6; }
-  50% { transform: rotate(180deg); opacity: 0.85; }
-  85% { transform: rotate(360deg); opacity: 0.6; }
-  100% { transform: rotate(360deg); opacity: 0.35; }
+@keyframes orbit {
+  0% { transform: rotate(0deg); opacity: 0.3; }
+  50% { transform: rotate(180deg); opacity: 0.7; }
+  100% { transform: rotate(360deg); opacity: 0.3; }
 }
-@keyframes hexApertureShift {
-  0%, 28% { transform: rotate(0deg) scale(1); fill: rgba(99, 102, 241, 0.07); stroke: #818cf8; }
-  38%, 82% { transform: rotate(60deg) scale(1.12); fill: rgba(198, 255, 52, 0.14); stroke: var(--graphic-accent); filter: drop-shadow(0 0 4px rgba(198, 255, 52, 0.35)); }
-  92%, 100% { transform: rotate(120deg) scale(1); fill: rgba(99, 102, 241, 0.07); stroke: #818cf8; filter: none; }
+@keyframes chassis {
+  0%, 34%, 92%, 100% { stroke: #2d3854; }
+  42%, 86% { stroke: #818cf8; }
 }
-@keyframes chassisEvolve {
-  0%, 28%, 100% { stroke: #313c54; stroke-width: 1.2; filter: none; }
-  38%, 82% { stroke: var(--graphic-accent); stroke-width: 1.6; filter: drop-shadow(0 0 5px rgba(198, 255, 52, 0.4)); }
-  92% { stroke: #313c54; stroke-width: 1.2; filter: none; }
+@keyframes hex {
+  0%, 34%, 100% { transform: rotate(0deg); fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; }
+  42%, 86% { transform: rotate(30deg); fill: rgba(198, 255, 52, 0.1); stroke: var(--graphic-accent); }
+  92% { transform: rotate(60deg); fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; }
 }
-@keyframes crosshairPulse {
-  0%, 28%, 100% { opacity: 0.3; stroke: #6366f1; }
-  38%, 82% { opacity: 0.85; stroke: var(--graphic-accent); }
-  92% { opacity: 0.3; stroke: #6366f1; }
+@keyframes photon {
+  0%, 34%, 100% { fill: #6366f1; opacity: 0.4; transform: scale(1); }
+  38%, 40% { fill: #ffffff; opacity: 1; transform: scale(1.5); }
+  44%, 86% { fill: var(--graphic-accent); opacity: 1; transform: scale(1.2); }
+  92% { fill: #6366f1; opacity: 0.4; transform: scale(1); }
 }
-@keyframes photonCorePulse {
-  0%, 26%, 100% { fill: #818cf8; opacity: 0.5; transform: scale(1); filter: none; }
-  32%, 36% { fill: #ffffff; opacity: 1; transform: scale(1.6); filter: drop-shadow(0 0 6px #ffffff); }
-  42%, 82% { fill: var(--graphic-accent); opacity: 1; transform: scale(1.3); filter: drop-shadow(0 0 5px var(--graphic-accent)); }
-  92% { fill: #818cf8; opacity: 0.5; transform: scale(1); filter: none; }
-}
-@keyframes coreHaloBreathe {
-  0%, 24%, 94%, 100% { opacity: 0; transform: scale(0.9); }
-  36%, 82% { opacity: 0.85; transform: scale(1.05); }
+@keyframes halo {
+  0%, 30%, 92%, 100% { opacity: 0; }
+  42%, 86% { opacity: 0.7; }
 }
 
-/* AI Coherent Laser Discharge */
-@keyframes outputPacket {
-  0%, 48% { opacity: 0; stroke-dashoffset: 116; }
-  52% { opacity: 1; }
-  60% { opacity: 1; stroke-dashoffset: 0; }
-  64%, 100% { opacity: 0; stroke-dashoffset: 0; }
+@keyframes discharge {
+  0%, 44% { stroke-dashoffset: 18; opacity: 0; }
+  48% { opacity: 1; }
+  58% { stroke-dashoffset: -100; opacity: 1; }
+  62%, 100% { stroke-dashoffset: -100; opacity: 0; }
 }
 
-/* AI Impact Medallion Activation */
-@keyframes shockwaveRipple {
-  0%, 59% { opacity: 0; transform: scale(0.85); stroke-width: 1.8; }
-  61% { opacity: 0.95; stroke-width: 1.6; }
-  72% { opacity: 0; transform: scale(1.85); stroke-width: 0.6; }
-  100% { opacity: 0; transform: scale(1.85); }
+@keyframes ripple {
+  0%, 56% { opacity: 0; transform: scale(0.9); }
+  58% { opacity: 0.8; }
+  68% { opacity: 0; transform: scale(1.7); }
+  100% { opacity: 0; transform: scale(1.7); }
 }
-@keyframes shockwaveRippleSecond {
-  0%, 63% { opacity: 0; transform: scale(0.9); stroke-width: 1.2; }
-  65% { opacity: 0.7; stroke-width: 1; }
-  76% { opacity: 0; transform: scale(1.6); stroke-width: 0.4; }
-  100% { opacity: 0; transform: scale(1.6); }
+@keyframes impactHalo {
+  0%, 55%, 92%, 100% { opacity: 0; }
+  60%, 86% { opacity: 0.8; }
 }
-@keyframes impactHaloGlow {
-  0%, 58%, 94%, 100% { opacity: 0; }
-  63%, 83% { opacity: 0.95; }
+@keyframes sealRing {
+  0%, 55%, 92%, 100% { stroke: #1e283a; }
+  60%, 86% { stroke: var(--graphic-accent); filter: drop-shadow(0 0 4px rgba(198, 255, 52, 0.4)); }
 }
-@keyframes sealRingPulse {
-  0%, 58%, 100% { stroke: #202a3d; stroke-width: 1.2; filter: none; }
-  62%, 83% { stroke: var(--graphic-accent); stroke-width: 1.8; filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.5)); }
-  92% { stroke: #202a3d; stroke-width: 1.2; filter: none; }
-}
-@keyframes sealNotchesPulse {
-  0%, 58%, 100% { stroke: #313f56; filter: none; }
-  62%, 83% { stroke: var(--graphic-accent); filter: drop-shadow(0 0 3px var(--graphic-accent)); }
-  92% { stroke: #313f56; filter: none; }
-}
-@keyframes dollarTriumph {
-  0%, 58% { fill: #273144; transform: scale(0.96); filter: none; }
-  62% { fill: #ffffff; transform: scale(1.18); filter: drop-shadow(0 0 10px #ffffff); }
-  66%, 83% { fill: var(--graphic-accent); transform: scale(1.04); filter: drop-shadow(0 0 8px rgba(198, 255, 52, 0.8)) drop-shadow(0 0 2px #ffffff); }
-  92%, 100% { fill: #273144; transform: scale(0.96); filter: none; }
+@keyframes dollar {
+  0%, 55% { fill: #283548; transform: scale(1); }
+  58% { fill: #ffffff; transform: scale(1.12); }
+  62%, 86% { fill: var(--graphic-accent); transform: scale(1); filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.6)); }
+  92%, 100% { fill: #283548; transform: scale(1); filter: none; }
 }
 
-@keyframes impactOn { 0%, 58%, 92%, 100% { opacity: 0; } 62%, 84% { opacity: 1; } }
-@keyframes impactOff { 0%, 52%, 98%, 100% { opacity: 1; } 57%, 92% { opacity: 0; } }
+@keyframes impactOn { 0%, 56%, 92%, 100% { opacity: 0; } 62%, 86% { opacity: 1; } }
+@keyframes impactOff { 0%, 50%, 98%, 100% { opacity: 1; } 56%, 92% { opacity: 0; } }
 
 @keyframes compressTime { 0%, 16%, 100% { transform: translateX(0); } 39%, 82% { transform: translateX(var(--shift)); } }
 @keyframes baselineFade { 0%, 16%, 100% { opacity: 0.65; } 35%, 83% { opacity: 0.16; } }
@@ -232,9 +202,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .graphic * { animation: none !important; transition: none !important; }
-  .before, .quarterLabel, .slowPoint, .unbound, .packet, .velocityHighlight, .impactShockwave, .impactShockwaveSecond { opacity: 0 !important; }
+  .before, .quarterLabel, .slowPoint, .unbound, .packet, .velocityHighlight, .impactRipple { opacity: 0 !important; }
   .after, .weekLabel, .coreDot, .impactHalo, .coreHalo, .velocityArea, .deployPoint, .synced { opacity: 1 !important; }
-  .coreChassis, .reasoningHex, .sealOuterRing, .sealNotches, .syncButton { stroke: var(--graphic-accent) !important; }
+  .coreChassis, .reasoningHex, .sealOuterRing, .syncButton { stroke: var(--graphic-accent) !important; }
   .impactDollar { fill: var(--graphic-accent) !important; opacity: 1 !important; }
   .velocityCurve { opacity: 1; stroke-dashoffset: 0; }
   .baseline { opacity: 0.16; }

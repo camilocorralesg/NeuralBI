@@ -57,124 +57,84 @@ export const AiNativeGraphic = memo(function AiNativeGraphic({ hovered = false }
       description="Data from two sources converges in an autonomous AI reasoning node and becomes business impact, represented by a dollar symbol."
     >
       <defs>
-        {/* Atmospheric Ambient Glows */}
         <radialGradient id={`${id}-coreGlow`} cx="50%" cy="50%" r="50%">
-          <stop stopColor="var(--graphic-accent)" stopOpacity="0.25" />
-          <stop offset="55%" stopColor="#6366f1" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+          <stop stopColor="#6366f1" stopOpacity="0.18" />
+          <stop offset="70%" stopColor="#6366f1" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={`${id}-impactGlow`} cx="50%" cy="50%" r="50%">
-          <stop stopColor="var(--graphic-accent)" stopOpacity="0.32" />
-          <stop offset="55%" stopColor="var(--graphic-accent)" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="var(--graphic-accent)" stopOpacity="0" />
+          <stop stopColor="var(--graphic-accent)" stopOpacity="0.25" />
+          <stop offset="65%" stopColor="var(--graphic-accent)" stopOpacity="0" />
         </radialGradient>
-
-        {/* Tactile Hardware Gradients */}
-        <linearGradient id={`${id}-nodeSurface`} x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`${id}-nodeFill`} x1="0" y1="0" x2="0" y2="1">
           <stop stopColor="#131926" />
-          <stop offset="100%" stopColor="#070b13" />
+          <stop offset="100%" stopColor="#080c14" />
         </linearGradient>
-        <linearGradient id={`${id}-sealSurface`} x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#151f30" />
+        <linearGradient id={`${id}-sealFill`} x1="0" y1="0" x2="0" y2="1">
+          <stop stopColor="#141d2d" />
           <stop offset="100%" stopColor="#070b13" />
         </linearGradient>
       </defs>
 
-      {/* Swiss Architectural Registration Marks */}
-      <g className={styles.cornerMarks}>
-        <path d="M12 16h6M15 13v6" />
-        <path d="M262 16h6M265 13v6" />
-        <path d="M12 124h6M15 121v6" />
-        <path d="M262 124h6M265 121v6" />
-      </g>
-
-      {/* Discrete Architectural Telemetry Grid */}
+      {/* Architectural Grid */}
       <path d="M16 38H264M16 70H264M16 102H264" className={styles.grid} />
 
-      {/* Tenant Boundary Line */}
-      <path d="M84 20V120" className={styles.shieldLine} />
+      {/* Tenant Boundary */}
+      <path d="M84 22V118" className={styles.shieldLine} />
 
-      {/* High-Precision Hermite Connection Tracks */}
-      <Connection d="M54 38C88 38 106 70 140 70" />
-      <Connection d="M54 102C88 102 106 70 140 70" />
-      <Connection d="M160 70H206" outgoing />
+      {/* Connection Tracks */}
+      <Connection d="M52 38C84 38 104 70 140 70" />
+      <Connection d="M52 102C84 102 104 70 140 70" />
+      <Connection d="M160 70H210" outgoing />
 
-      {/* ─── LEFT: MINIMALIST TRANSCEIVERS ─── */}
-      {/* Source 1 (ERP Stream) */}
+      {/* ─── LEFT: SOURCE NODES ─── */}
       <g className={styles.sourceGroup}>
-        <rect x="20" y="27" width="34" height="22" rx="5" fill={`url(#${id}-nodeSurface)`} className={styles.sourceCapsule} />
-        <circle cx="27" cy="38" r="1.5" className={styles.capsuleLed} />
-        <path d="M33 35h12M33 41h8" className={styles.capsuleLines} />
-        <circle cx="54" cy="38" r="1.5" className={styles.portDot} />
-        <text x="37" y="59" textAnchor="middle" className={styles.nodeLabel}>ERP</text>
+        <rect x="18" y="27" width="34" height="22" rx="5" fill={`url(#${id}-nodeFill)`} className={styles.sourceCapsule} />
+        <circle cx="26" cy="38" r="1.5" className={styles.capsuleLed} />
+        <path d="M32 34h12M32 42h8" className={styles.capsuleLines} />
+        <circle cx="52" cy="38" r="1.5" className={styles.portDot} />
+        <text x="35" y="58" textAnchor="middle" className={styles.nodeLabel}>ERP</text>
+      </g>
+      <g className={styles.sourceGroup}>
+        <rect x="18" y="91" width="34" height="22" rx="5" fill={`url(#${id}-nodeFill)`} className={styles.sourceCapsule} />
+        <circle cx="26" cy="102" r="1.5" className={styles.capsuleLed} />
+        <path d="M32 98h12M32 106h8" className={styles.capsuleLines} />
+        <circle cx="52" cy="102" r="1.5" className={styles.portDot} />
+        <text x="35" y="122" textAnchor="middle" className={styles.nodeLabel}>CRM</text>
       </g>
 
-      {/* Source 2 (CRM Stream) */}
-      <g className={styles.sourceGroup}>
-        <rect x="20" y="91" width="34" height="22" rx="5" fill={`url(#${id}-nodeSurface)`} className={styles.sourceCapsule} />
-        <circle cx="27" cy="102" r="1.5" className={styles.capsuleLed} />
-        <path d="M33 99h12M33 105h8" className={styles.capsuleLines} />
-        <circle cx="54" cy="102" r="1.5" className={styles.portDot} />
-        <text x="37" y="123" textAnchor="middle" className={styles.nodeLabel}>CRM</text>
-      </g>
-
-      {/* ─── CENTER: AUTONOMOUS REASONING APERTURE ─── */}
+      {/* ─── CENTER: REASONING CORE ─── */}
       <g className={styles.coreGroup}>
-        {/* Ambient Breathing Core Aura */}
-        <circle cx="140" cy="70" r="38" fill={`url(#${id}-coreGlow)`} className={styles.coreHalo} />
+        <circle cx="140" cy="70" r="36" fill={`url(#${id}-coreGlow)`} className={styles.coreHalo} />
 
-        {/* Precision Dial Ticks (Swiss Watch Aesthetic) */}
+        {/* Dial Ticks */}
         <g className={styles.dialTicks}>
-          <line x1="140" y1="38" x2="140" y2="42" />
-          <line x1="140" y1="98" x2="140" y2="102" />
-          <line x1="108" y1="70" x2="112" y2="70" />
-          <line x1="168" y1="70" x2="172" y2="70" />
-          <line x1="118" y1="48" x2="121" y2="51" />
-          <line x1="159" y1="89" x2="162" y2="92" />
-          <line x1="118" y1="92" x2="121" y2="89" />
-          <line x1="159" y1="51" x2="162" y2="48" />
+          <line x1="140" y1="40" x2="140" y2="44" />
+          <line x1="140" y1="96" x2="140" y2="100" />
+          <line x1="110" y1="70" x2="114" y2="70" />
+          <line x1="166" y1="70" x2="170" y2="70" />
         </g>
 
-        {/* Rotating Telemetry Orbit Ring */}
-        <circle cx="140" cy="70" r="26" className={styles.coreOrbit} />
+        {/* Orbit Ring */}
+        <circle cx="140" cy="70" r="24" className={styles.coreOrbit} />
 
-        {/* Structural Core Chassis */}
-        <circle cx="140" cy="70" r="20" className={styles.coreChassis} />
+        {/* Chassis */}
+        <circle cx="140" cy="70" r="18" className={styles.coreChassis} />
 
-        {/* Crystalline Causal Aperture Hex */}
-        <polygon points="140,55 153,62.5 153,77.5 140,85 127,77.5 127,62.5" className={styles.reasoningHex} />
-        <circle cx="140" cy="70" r="11" className={styles.innerAperture} />
+        {/* Hex Aperture */}
+        <polygon points="140,56 152,63 152,77 140,84 128,77 128,63" className={styles.reasoningHex} />
 
-        {/* Fine Optical Crosshair Reticle */}
-        <path d="M136 70h8M140 66v8" className={styles.coreCrosshair} />
-
-        {/* Coherent Core Photon */}
+        {/* Core Photon */}
         <circle cx="140" cy="70" r="3" className={styles.coreDot} />
       </g>
 
-      {/* ─── RIGHT: SCULPTED IMPACT DISC SEAL ─── */}
+      {/* ─── RIGHT: IMPACT SEAL ─── */}
       <g className={styles.impactSealGroup}>
-        {/* Dynamic Dual Shockwave Flares */}
-        <circle cx="230" cy="70" r="44" fill={`url(#${id}-impactGlow)`} className={styles.impactHalo} />
-        <circle cx="230" cy="70" r="24" className={styles.impactShockwave} />
-        <circle cx="230" cy="70" r="24" className={styles.impactShockwaveSecond} />
-
-        {/* Tactile Beveled Seal Medallion */}
-        <circle cx="230" cy="70" r="24" className={styles.sealOuterRing} />
-
-        {/* Precision Indexing Notches */}
-        <g className={styles.sealNotches}>
-          <line x1="230" y1="46" x2="230" y2="49" />
-          <line x1="230" y1="91" x2="230" y2="94" />
-          <line x1="206" y1="70" x2="209" y2="70" />
-          <line x1="251" y1="70" x2="254" y2="70" />
-        </g>
-
-        <circle cx="230" cy="70" r="21" fill={`url(#${id}-sealSurface)`} className={styles.sealBody} />
-        <circle cx="230" cy="70" r="18" className={styles.sealInnerRim} />
-
-        {/* High-Impact Dollar Glyph */}
-        <text x="230" y="78" textAnchor="middle" className={styles.impactDollar}>$</text>
+        <circle cx="232" cy="70" r="38" fill={`url(#${id}-impactGlow)`} className={styles.impactHalo} />
+        <circle cx="232" cy="70" r="22" className={styles.impactRipple} />
+        <circle cx="232" cy="70" r="22" className={styles.sealOuterRing} />
+        <circle cx="232" cy="70" r="19" fill={`url(#${id}-sealFill)`} className={styles.sealBody} />
+        <circle cx="232" cy="70" r="16" className={styles.sealInnerRim} />
+        <text x="232" y="77" textAnchor="middle" className={styles.impactDollar}>$</text>
       </g>
     </GraphicFrame>
   );
