@@ -87,14 +87,14 @@ export const AiNativeGraphic = memo(function AiNativeGraphic({ hovered = false }
       <Connection d="M160 70H210" outgoing />
 
       {/* ─── LEFT: SOURCE NODES ─── */}
-      <g className={styles.sourceGroup}>
+      <g>
         <rect x="18" y="27" width="34" height="22" rx="5" fill={`url(#${id}-nodeFill)`} className={styles.sourceCapsule} />
         <circle cx="26" cy="38" r="1.5" className={styles.capsuleLed} />
         <path d="M32 34h12M32 42h8" className={styles.capsuleLines} />
         <circle cx="52" cy="38" r="1.5" className={styles.portDot} />
         <text x="35" y="58" textAnchor="middle" className={styles.nodeLabel}>ERP</text>
       </g>
-      <g className={styles.sourceGroup}>
+      <g>
         <rect x="18" y="91" width="34" height="22" rx="5" fill={`url(#${id}-nodeFill)`} className={styles.sourceCapsule} />
         <circle cx="26" cy="102" r="1.5" className={styles.capsuleLed} />
         <path d="M32 98h12M32 106h8" className={styles.capsuleLines} />
