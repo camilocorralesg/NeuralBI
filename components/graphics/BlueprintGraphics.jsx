@@ -103,38 +103,38 @@ export const AiNativeGraphic = memo(function AiNativeGraphic({ hovered = false }
       </g>
 
       {/* ─── CENTER: REASONING CORE ─── */}
-      <g className={styles.coreGroup}>
-        <circle cx="140" cy="70" r="36" fill={`url(#${id}-coreGlow)`} className={styles.coreHalo} />
+      <g transform="translate(140, 70)">
+        <circle cx="0" cy="0" r="36" fill={`url(#${id}-coreGlow)`} className={styles.coreHalo} />
 
         {/* Dial Ticks */}
         <g className={styles.dialTicks}>
-          <line x1="140" y1="40" x2="140" y2="44" />
-          <line x1="140" y1="96" x2="140" y2="100" />
-          <line x1="110" y1="70" x2="114" y2="70" />
-          <line x1="166" y1="70" x2="170" y2="70" />
+          <line x1="0" y1="-30" x2="0" y2="-26" />
+          <line x1="0" y1="26" x2="0" y2="30" />
+          <line x1="-30" y1="0" x2="-26" y2="0" />
+          <line x1="26" y1="0" x2="30" y2="0" />
         </g>
 
         {/* Orbit Ring */}
-        <circle cx="140" cy="70" r="24" className={styles.coreOrbit} />
+        <circle cx="0" cy="0" r="24" className={styles.coreOrbit} />
 
         {/* Chassis */}
-        <circle cx="140" cy="70" r="18" className={styles.coreChassis} />
+        <circle cx="0" cy="0" r="18" className={styles.coreChassis} />
 
         {/* Hex Aperture */}
-        <polygon points="140,56 152,63 152,77 140,84 128,77 128,63" className={styles.reasoningHex} />
+        <polygon points="0,-14 12,-7 12,7 0,14 -12,7 -12,-7" className={styles.reasoningHex} />
 
         {/* Core Photon */}
-        <circle cx="140" cy="70" r="3" className={styles.coreDot} />
+        <circle cx="0" cy="0" r="3" className={styles.coreDot} />
       </g>
 
       {/* ─── RIGHT: IMPACT SEAL ─── */}
-      <g className={styles.impactSealGroup}>
-        <circle cx="232" cy="70" r="38" fill={`url(#${id}-impactGlow)`} className={styles.impactHalo} />
-        <circle cx="232" cy="70" r="22" className={styles.impactRipple} />
-        <circle cx="232" cy="70" r="22" className={styles.sealOuterRing} />
-        <circle cx="232" cy="70" r="19" fill={`url(#${id}-sealFill)`} className={styles.sealBody} />
-        <circle cx="232" cy="70" r="16" className={styles.sealInnerRim} />
-        <text x="232" y="77" textAnchor="middle" className={styles.impactDollar}>$</text>
+      <g transform="translate(232, 70)">
+        <circle cx="0" cy="0" r="38" fill={`url(#${id}-impactGlow)`} className={styles.impactHalo} />
+        <circle cx="0" cy="0" r="22" className={styles.impactRipple} />
+        <circle cx="0" cy="0" r="22" className={styles.sealOuterRing} />
+        <circle cx="0" cy="0" r="19" fill={`url(#${id}-sealFill)`} className={styles.sealBody} />
+        <circle cx="0" cy="0" r="16" className={styles.sealInnerRim} />
+        <text x="0" y="7" textAnchor="middle" className={styles.impactDollar}>$</text>
       </g>
     </GraphicFrame>
   );
