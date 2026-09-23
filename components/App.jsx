@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './sections/Navbar';
 import Hero from './sections/Hero';
 import Manifesto from './sections/Manifesto';
 import TrustBar from './sections/TrustBar';
-import Arsenal, { ToolDetailModal } from './sections/Arsenal';
+import ArsenalExperience, { ArsenalDetailModal } from './sections/ArsenalExperience';
 import Methodology from './sections/Methodology';
 import IntegrationsHub from './sections/IntegrationsHub';
 import Industries from './sections/Industries';
@@ -21,7 +22,7 @@ export default function App() {
   const [selectedTool, setSelectedTool] = useState(null);
 
   return (
-    <div style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-ink)', backgroundColor: 'var(--color-paper)' }}>
+    <div style={{ fontFamily: 'var(--font-body)', color: 'var(--color-ink)', backgroundColor: 'var(--color-paper)' }}>
       {/* Style-Specific Creative Navbar */}
       <Navbar activeHero={activeHero} />
 
@@ -48,7 +49,7 @@ export default function App() {
           {/* Content Layer (Transparent) */}
           <div style={{ position: 'relative', zIndex: 10 }}>
             <div id="manifesto">
-              <Manifesto activeHero={activeHero} />
+              <Manifesto />
             </div>
             
             <div>
@@ -56,7 +57,7 @@ export default function App() {
             </div>
             
             <div id="arsenal">
-              <Arsenal activeHero={activeHero} onOpenModal={(tool) => setSelectedTool(tool)} />
+              <ArsenalExperience isModalOpen={Boolean(selectedTool)} onOpenModal={(toolId, chapter) => setSelectedTool({ toolId, chapter })} />
             </div>
             
             <div id="protocol">
@@ -87,9 +88,11 @@ export default function App() {
             <Footer activeHero={activeHero} />
           </div>
         </div>
-        {selectedTool && (
-          <ToolDetailModal tool={selectedTool} onClose={() => setSelectedTool(null)} />
-        )}
+        <AnimatePresence>
+          {selectedTool && (
+            <ArsenalDetailModal key={selectedTool.toolId} toolId={selectedTool.toolId} initialChapter={selectedTool.chapter} onClose={() => setSelectedTool(null)} />
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
