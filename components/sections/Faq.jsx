@@ -1,39 +1,125 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useId, useMemo, memo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import CharacterReveal from '../CharacterReveal';
+import { useLanguage } from '../../context/LanguageContext';
+import styles from './Faq.module.css';
+
+function RemixFaq({ title, items, activeIdx, onToggle }) {
+  const id = useId();
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <section className={styles.section} aria-labelledby={`${id}-heading`}>
+      <div className={styles.inner}>
+        <h2 id={`${id}-heading`} className={styles.title}>
+          {reduceMotion ? title.split(/(\*[^*]+\*)/g).map((part, index) => (
+            part.startsWith('*') ? <em key={index}>{part.slice(1, -1)}</em> : part
+          )) : <CharacterReveal text={title} />}
+        </h2>
+        <motion.div
+          className={styles.items}
+          initial={reduceMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: reduceMotion ? 0 : 0.08 } } }}
+        >
+          {items.map((item, index) => {
+            const isOpen = activeIdx === index;
+            const triggerId = `${id}-question-${index}`;
+            const panelId = `${id}-answer-${index}`;
+            return (
+              <motion.div
+                key={index}
+                className={styles.card}
+                data-open={isOpen}
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] } },
+                }}
+              >
+                <h3 className={styles.question}>
+                  <button
+                    id={triggerId}
+                    className={styles.trigger}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => onToggle(isOpen ? null : index)}
+                  >
+                    <span>{item.q}</span>
+                    <span className={styles.chevron} aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" focusable="false">
+                        <path d="M3 6L8 11L13 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </button>
+                </h3>
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={triggerId}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen}
+                  className={styles.answer}
+                  initial={false}
+                  animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className={styles.answerInner}><p>{item.a}</p></div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 // ─── SECTION 10: PREMIUM STYLE-SPECIFIC FAQ (ACCORDIONS, GRID & COMMAND CONSOLE) ───
 function Faq({ activeHero }) {
+  const { t } = useLanguage();
   const [activeIdx, setActiveIdx] = React.useState(null);
 
-  const faqData = [
-    {
-      q: "What is Microsoft Power Platform?",
-      a: "A suite of low-code tools (Power Apps, Automate, BI, Copilot Studio) that allows businesses to build apps, automate workflows, analyze data, and build agentic chatbots rapidly."
-    },
-    {
-      q: "How does NeuralBI differ from traditional IT consultancies?",
-      a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence'—orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments."
-    },
-    {
-      q: "What is the average timeline for the Neural Protocol?",
-      a: "Our precise three-phase protocol (Audit, Build, Scale) ranges from 2 weeks for targeted automation pilots to 8 weeks for full enterprise cognitive data engines."
-    },
-    {
-      q: "Is our enterprise data secure with NeuralBI solutions?",
-      a: "Absolutely. All workflows are built directly within your tenant boundary, utilizing Microsoft Azure enterprise-grade security protocols, end-to-end data encryption, and strict governance policies."
-    }
-  ];
+  const sectionTitle = t?.faq?.sectionTitle || "Frequently Asked Questions";
+  const sectionSubtitle = t?.faq?.sectionSubtitle || "A curated overview of Power Platform capabilities, NeuralBI orchestrations, data sovereignty, and deployment timelines.";
+  const answerLabel = t?.faq?.answerLabel || "Answer";
+  const selectTopicLabel = t?.faq?.selectTopic || "Select a topic:";
+
+  const faqData = useMemo(() => {
+    return t?.faq?.items || [
+      {
+        q: "What is Microsoft Power Platform?",
+        a: "A suite of low-code tools (Power Apps, Automate, BI, Copilot Studio) that allows businesses to build apps, automate workflows, analyze data, and build agentic chatbots rapidly."
+      },
+      {
+        q: "How does NeuralBI differ from traditional IT consultancies?",
+        a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence'—orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments."
+      },
+      {
+        q: "What is the average timeline for the Neural Protocol?",
+        a: "Our precise three-phase protocol (Audit, Build, Scale) ranges from 2 weeks for targeted automation pilots to 8 weeks for full enterprise cognitive data engines."
+      },
+      {
+        q: "Is our enterprise data secure with NeuralBI solutions?",
+        a: "Absolutely. All workflows are built directly within your tenant boundary, utilizing Microsoft Azure enterprise-grade security protocols, end-to-end data encryption, and strict governance policies."
+      }
+    ];
+  }, [t]);
+
+  if (activeHero === 'remix') {
+    return <RemixFaq title={sectionTitle} items={faqData} activeIdx={activeIdx} onToggle={setActiveIdx} />;
+  }
 
   // Pick theme fonts and colors
   const getTheme = () => {
     switch (activeHero) {
       case 'spline1':
         return {
-          fontTitle: 'var(--font-serif)',
-          fontSans: 'var(--font-sans)',
+          fontTitle: 'var(--font-display)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #040900)',
           borderColor: 'rgba(255, 255, 255, 0.05)',
@@ -41,8 +127,8 @@ function Faq({ activeHero }) {
         };
       case 'cinematic':
         return {
-          fontTitle: 'var(--font-ui)',
-          fontSans: 'var(--font-sans)',
+          fontTitle: 'var(--font-display)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #08080c)',
           borderColor: 'rgba(255, 255, 255, 0.08)',
@@ -51,7 +137,7 @@ function Faq({ activeHero }) {
       case 'modern_v2':
         return {
           fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-sans)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #071501)',
           borderColor: 'rgba(255, 255, 255, 0.06)',
@@ -59,8 +145,8 @@ function Faq({ activeHero }) {
         };
       case 'tech_v4':
         return {
-          fontTitle: 'var(--font-tech)',
-          fontSans: 'var(--font-sans)',
+          fontTitle: 'var(--font-display)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #050505)',
           borderColor: 'rgba(198, 255, 52, 0.2)',
@@ -69,7 +155,7 @@ function Faq({ activeHero }) {
       case 'remix':
         return {
           fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-sans)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #050505)',
           borderColor: 'rgba(198, 255, 52, 0.2)',
@@ -78,8 +164,8 @@ function Faq({ activeHero }) {
       case 'sui_fork':
       default:
         return {
-          fontTitle: 'var(--font-ui)',
-          fontSans: 'var(--font-sans)',
+          fontTitle: 'var(--font-display)',
+          fontSans: 'var(--font-body)',
           colorAccent: '#c6ff34',
           bgGradient: 'linear-gradient(to bottom, #000000, #000000)',
           borderColor: 'rgba(255, 255, 255, 0.05)',
@@ -102,11 +188,11 @@ function Faq({ activeHero }) {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }} className="faq-grid-container">
           <div className="faq-sticky-header">
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 4vw, 4rem)', color: '#ffffff', fontWeight: 400, lineHeight: 1.15 }}>
-              Frequently Asked Queries
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 4rem)', color: '#ffffff', fontWeight: 700, lineHeight: 1.15 }}>
+              {sectionTitle}
             </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', color: 'rgba(255, 255, 255, 0.45)', marginTop: '1.25rem', lineHeight: 1.6 }}>
-              A curated overview of Power Platform capabilities, NeuralBI orchestrations, data sovereignty, and deployment timelines.
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', color: 'rgba(255, 255, 255, 0.45)', marginTop: '1.25rem', lineHeight: 1.6 }}>
+              {sectionSubtitle}
             </p>
           </div>
 
@@ -125,9 +211,9 @@ function Faq({ activeHero }) {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
                     <h3 style={{
-                      fontFamily: 'var(--font-serif)',
+                      fontFamily: 'var(--font-display)',
                       fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)',
-                      fontWeight: 400,
+                      fontWeight: 600,
                       color: isOpen ? '#c6ff34' : '#ffffff',
                       transition: 'color 0.3s'
                     }}>
@@ -149,7 +235,7 @@ function Faq({ activeHero }) {
                     opacity: isOpen ? 1 : 0
                   }}>
                     <p style={{
-                      fontFamily: 'var(--font-sans)',
+                      fontFamily: 'var(--font-body)',
                       fontSize: '0.95rem',
                       color: 'rgba(255, 255, 255, 0.55)',
                       lineHeight: 1.6,
@@ -180,16 +266,16 @@ function Faq({ activeHero }) {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
           <h2 style={{
-            fontFamily: 'var(--font-ui)',
+            fontFamily: 'var(--font-display)',
             fontSize: 'clamp(1.85rem, 3.5vw, 3rem)',
             color: '#ffffff',
-            fontWeight: 900,
+            fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '-0.03em',
             marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
             textAlign: 'center'
           }}>
-            SYSTEM FAQ // CONSOLE
+            {sectionTitle.toUpperCase()} // CONSOLE
           </h2>
 
           <div style={{
@@ -224,9 +310,9 @@ function Faq({ activeHero }) {
                       0{idx + 1} //
                     </span>
                     <h3 style={{
-                      fontFamily: 'var(--font-ui)',
+                      fontFamily: 'var(--font-display)',
                       fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
-                      fontWeight: 800,
+                      fontWeight: 700,
                       color: isOpen ? '#ffffff' : 'rgba(255, 255, 255, 0.75)',
                       textTransform: 'uppercase',
                       letterSpacing: '-0.01em',
@@ -243,7 +329,7 @@ function Faq({ activeHero }) {
                     opacity: isOpen ? 1 : 0
                   }}>
                     <p style={{
-                      fontFamily: 'var(--font-sans)',
+                      fontFamily: 'var(--font-body)',
                       fontSize: '0.9rem',
                       color: 'rgba(255,255,255,0.5)',
                       lineHeight: 1.6,
@@ -284,7 +370,7 @@ function Faq({ activeHero }) {
             marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
             textAlign: 'center'
           }}>
-            Questions and Answers
+            {sectionTitle}
           </h2>
 
           <div style={{
@@ -370,7 +456,7 @@ function Faq({ activeHero }) {
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase'
                 }}>
-                  Response Panel
+                  {answerLabel}
                 </span>
 
                 <h3 style={{
@@ -386,7 +472,7 @@ function Faq({ activeHero }) {
                 </h3>
 
                 <p style={{
-                  fontFamily: 'var(--font-sans)',
+                  fontFamily: 'var(--font-body)',
                   fontSize: 'clamp(0.92rem, 2vw, 1.05rem)',
                   color: 'rgba(255, 255, 255, 0.6)',
                   lineHeight: 1.65,
@@ -444,7 +530,7 @@ function Faq({ activeHero }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)', marginBottom: '0.25rem' }}>
-                Select a topic:
+                {selectTopicLabel}
               </span>
 
               {faqData.map((item, idx) => {
@@ -480,7 +566,7 @@ function Faq({ activeHero }) {
             }}>
               <div>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)' }}>
-                  Answer
+                  {answerLabel}
                 </span>
 
                 <p style={{
@@ -524,10 +610,10 @@ function Faq({ activeHero }) {
       <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 1.5rem' }}>
         <h2 style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <CharacterReveal
-            text="Frequently Asked Questions"
+            text={sectionTitle}
             className={activeHero === 'remix' ? 'text-gradient-premium' : ''}
             style={{
-              fontFamily: activeHero === 'remix' ? 'var(--font-display)' : 'var(--font-ui)',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.85rem, 3.5vw, 3.5rem)',
               fontWeight: 800,
               letterSpacing: '-0.03em',
@@ -593,7 +679,7 @@ function Faq({ activeHero }) {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.25rem' }}>
                   <h3 style={{
-                    fontFamily: 'var(--font-ui)',
+                    fontFamily: 'var(--font-display)',
                     fontSize: 'clamp(1.02rem, 2.5vw, 1.2rem)',
                     fontWeight: 700,
                     color: isOpen ? '#c6ff34' : '#ffffff',
@@ -638,7 +724,7 @@ function Faq({ activeHero }) {
                   opacity: isOpen ? 1 : 0
                 }}>
                   <p style={{
-                    fontFamily: 'var(--font-sans)',
+                    fontFamily: 'var(--font-body)',
                     fontSize: 'clamp(0.88rem, 2vw, 0.95rem)',
                     color: 'rgba(255,255,255,0.65)',
                     lineHeight: 1.6,
