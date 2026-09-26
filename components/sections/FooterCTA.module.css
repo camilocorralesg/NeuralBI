@@ -1,0 +1,123 @@
+/* The closing call to action: one glass panel over a still Volt atmosphere, the promise on the left, the lead form
+ * on the right, one beam travelling the edge. The bottom padding leaves room for the NeuralBI
+ * mark, which sits on the seam with the footer. */
+.section {
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(5rem, 9vw, 8.5rem) 0 clamp(6.5rem, 11vw, 10rem);
+}
+
+/* A still Volt light behind the panel's lower-left and upper-right corners, so the glass has something to hold; it
+ * fades to black before both seams. Still by design: backdrop motion belongs to the Aurora sections. */
+.light {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(34% 46% at 16% 74%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 72%),
+    radial-gradient(26% 34% at 86% 22%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 70%);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 18%, #000000 78%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000000 18%, #000000 78%, transparent);
+}
+
+.inner { position: relative; max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+
+/* Glass, as DESIGN.md's bento spec; the edge is lit where a fine pointer is, and the beam travels it. */
+.panel {
+  --mx: -999px;
+  --my: -999px;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-radius: var(--radius-lg);
+  background: rgba(10, 10, 10, .5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(20px) saturate(1.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(198, 255, 52, .55), rgba(255, 255, 255, .1) 42%, rgba(255, 255, 255, .07));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.intro { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(2.25rem, 4.4vw, 4rem); }
+.title {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.2vw, 3.9rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+.subtitle { max-width: 44ch; margin: 1.3rem 0 0; color: rgba(255, 255, 255, .72); font-size: clamp(1rem, 1.15vw, 1.08rem); line-height: 1.65; text-wrap: pretty; }
+
+/* The form: fields as glass wells, the error in Signal Red, the submit in Fluid Glass. */
+.formSide { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(2rem, 4vw, 3.5rem); border-left: 1px solid rgba(255, 255, 255, .08); }
+.form { display: flex; flex-direction: column; gap: 1.15rem; }
+.field { display: grid; gap: .5rem; }
+.label { color: rgba(255, 255, 255, .78); font-family: var(--font-ui); font-size: .85rem; font-weight: 500; }
+.input {
+  width: 100%;
+  padding: .8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--radius-md);
+  color: #ffffff;
+  background: rgba(255, 255, 255, .03);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.45;
+  outline: none;
+  resize: none;
+  transition: border-color .25s var(--ease-out), box-shadow .25s var(--ease-out), background-color .25s var(--ease-out);
+}
+.input::placeholder { color: rgba(255, 255, 255, .5); }
+.input:focus { border-color: color-mix(in srgb, var(--color-accent) 65%, transparent); background: rgba(255, 255, 255, .045); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 14%, transparent); }
+.input[aria-invalid='true'] { border-color: color-mix(in srgb, #ff6a55 75%, transparent); }
+.input[aria-invalid='true']:focus { box-shadow: 0 0 0 3px color-mix(in srgb, #ff6a55 16%, transparent); }
+.error { color: #ff6a55; font-size: .8rem; line-height: 1.4; }
+.formError { color: #ff6a55; font-size: .85rem; text-align: center; }
+.submit { width: 100%; margin-top: .35rem; padding: 1rem 1.75rem; font-size: 1rem; font-weight: 700; }
+.enter { display: inline-flex; align-items: center; height: 14px; padding-left: 8px; border-left: 1px solid var(--span-border); color: var(--span-color); line-height: 1; }
+.note { display: flex; align-items: center; justify-content: center; gap: .45rem; margin: .1rem 0 0; color: rgba(255, 255, 255, .58); font-size: .78rem; text-align: center; }
+.note svg { flex: none; color: var(--color-accent); }
+
+/* After sending (before the thank-you page takes over). */
+.success { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem .5rem; text-align: center; }
+.check { display: grid; width: 58px; height: 58px; place-items: center; border-radius: var(--radius-pill); color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent); }
+.successTitle { margin: 0; color: #ffffff; font-family: var(--font-display); font-size: clamp(1.6rem, 3.2vw, 2.1rem); font-weight: 700; letter-spacing: -.02em; }
+.successBody { max-width: 40ch; margin: 0; color: rgba(255, 255, 255, .68); font-size: 1rem; line-height: 1.6; }
+
+@media (hover: hover) and (pointer: fine) {
+  .input:hover { border-color: rgba(255, 255, 255, .18); }
+}
+@media (max-width: 900px) {
+  .panel { grid-template-columns: minmax(0, 1fr); }
+  .intro { padding-bottom: 1.75rem; }
+  .formSide { border-top: 1px solid rgba(255, 255, 255, .08); border-left: 0; }
+}
+@media (max-width: 560px) {
+  .intro { padding: 2.25rem 1.5rem 1.5rem; }
+  .formSide { padding: 1.75rem 1.5rem 2rem; }
+}
+@supports not (offset-path: inset(0 round 1px)) {
+  .panel { --mx: 22%; --my: 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel { --mx: 22%; --my: 0%; }
+  .input { transition: none; }
+}

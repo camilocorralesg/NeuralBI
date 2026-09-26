@@ -2,8 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import ShaderButton from './ShaderButton';
+import { scrollToTarget } from '../lib/smoothScroll';
 
 export default function StickyMobileCTA() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ export default function StickyMobileCTA() {
   const scrollToAudit = () => {
     const el = document.getElementById('audit') || document.getElementById('contact');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      scrollToTarget(el);
       const firstInput = el.querySelector('input');
       if (firstInput) {
         setTimeout(() => {
@@ -73,52 +77,27 @@ export default function StickyMobileCTA() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
-                color: '#c6ff34',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.35rem'
-              }}>
-                <span style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#c6ff34',
-                  boxShadow: '0 0 8px #c6ff34'
-                }} />
-                Live Engineering
-              </div>
               <span style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: '0.85rem',
                 fontWeight: 700,
-                color: '#ffffff'
+                color: '#ffffff',
+                lineHeight: 1.25
               }}>
-                Ready to transform data?
+                {t.stickyCta?.question || 'Ready to transform data?'}
               </span>
             </div>
 
-            <button
+            <ShaderButton
+              type="button"
               onClick={scrollToAudit}
-              className="btn-glow-border"
               style={{
-                padding: '0.6rem 1.15rem',
+                padding: '0.65rem 1.2rem',
                 fontSize: '0.85rem',
-                fontFamily: 'var(--font-display)',
-                fontWeight: 700,
-                cursor: 'pointer',
-                borderRadius: '9999px',
-                whiteSpace: 'nowrap',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem'
+                fontWeight: 700
               }}
             >
-              Book Audit
+              {t.stickyCta?.cta || 'Book Audit'}
               <span style={{
                 color: 'rgba(255, 255, 255, 0.6)',
                 marginLeft: '4px',
@@ -128,7 +107,7 @@ export default function StickyMobileCTA() {
               }}>
                 ↵
               </span>
-            </button>
+            </ShaderButton>
           </motion.div>
         )}
       </AnimatePresence>

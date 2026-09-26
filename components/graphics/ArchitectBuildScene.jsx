@@ -32,7 +32,11 @@ function AppPiece({ index, children }) {
   return <g className={s.appPiece} style={{ '--delay': `${index * .55}s` }}>{children}</g>;
 }
 
-export const ArchitectBuildScene = memo(function ArchitectBuildScene() {
+const DEFAULT_LABEL = 'Architect & Build: from data to application';
+const DEFAULT_DESCRIPTION = "An isometric software workshop connects a semantic database, a data filter, and a custom application. Records align, irregular inputs become three structured modules, and those modules assemble the application's navigation, form, and data table before activation.";
+
+// `label` and `description` let the host localise what assistive technology announces.
+export const ArchitectBuildScene = memo(function ArchitectBuildScene({ label = DEFAULT_LABEL, description = DEFAULT_DESCRIPTION }) {
   const ref = useRef(null);
   const id = useId();
   useEffect(() => {
@@ -48,7 +52,7 @@ export const ArchitectBuildScene = memo(function ArchitectBuildScene() {
     return () => { observer?.disconnect(); document.removeEventListener('visibilitychange', visibility); };
   }, []);
 
-  return <figure ref={ref} className={s.scene} data-running="false" aria-label="Architect & Build: from data to application" aria-describedby={`${id}-desc`}>
+  return <figure ref={ref} className={s.scene} data-running="false" aria-label={label} aria-describedby={`${id}-desc`}>
     <svg viewBox="18 22 430 222" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-graphite`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#354031" /><stop offset="1" stopColor="#101b15" /></linearGradient>
@@ -101,6 +105,6 @@ export const ArchitectBuildScene = memo(function ArchitectBuildScene() {
       {/* The same three refined pieces arrive just before each UI module resolves. */}
       {[{ x: 99, y: -38 }, { x: 136, y: -38 }, { x: 136, y: 2 }].map((destination, i) => <g key={i} transform="translate(225 158)"><g className={s.transfer} style={{ '--delay': `${i * .55}s`, '--end-x': `${destination.x}px`, '--end-y': `${destination.y}px` }}><path d="m0-4 9 5v4l-9 5-9-5v-4z" className={s.cleanSide} /><path d="m0-4 9 5-9 5-9-5z" className={s.cleanTop} /><path d="m-3 1 3 1.8L4 .5" className={s.cleanMark} /></g></g>)}
     </svg>
-    <span id={`${id}-desc`} className={s.srOnly}>An isometric software workshop connects a semantic database, a data filter, and a custom application. Records align, irregular inputs become three structured modules, and those modules assemble the application's navigation, form, and data table before activation.</span>
+    <span id={`${id}-desc`} className={s.srOnly}>{description}</span>
   </figure>;
 });

@@ -9,7 +9,7 @@ const copy = {
     description: 'Enterprise records and documents converge in NeuralBI, align into a shared model, and build a Power BI chart, a Power Apps workflow and a grounded Copilot response.',
     hint: 'Explore a source or a deliverable to see its role in the system.',
     phases: ['Connect', 'Unify', 'Deliver'],
-    model: 'Unified model', chart: 'Performance', app: 'Operations', agent: 'Knowledge',
+    model: '', chart: 'Performance', app: 'Operations', agent: 'Knowledge',
     trend: 'Trend identified', record: 'New record', assigned: 'Assigned', approved: 'Approved',
     question: 'What needs attention?', answer: 'Answer grounded in your data', sources: 'Linked sources', action: 'Action prepared',
     mobile: ['CRM & ERP systems', 'Databases & warehouses', 'Microsoft ecosystem'],
@@ -19,7 +19,7 @@ const copy = {
     description: 'Los registros y documentos convergen en NeuralBI, se alinean en un modelo compartido y construyen un gráfico de Power BI, un flujo de Power Apps y una respuesta de Copilot con fuentes.',
     hint: 'Explora una fuente o un entregable para conocer su función en el sistema.',
     phases: ['Conectar', 'Unificar', 'Entregar'],
-    model: 'Modelo unificado', chart: 'Rendimiento', app: 'Operaciones', agent: 'Conocimiento',
+    model: '', chart: 'Rendimiento', app: 'Operaciones', agent: 'Conocimiento',
     trend: 'Tendencia identificada', record: 'Nuevo registro', assigned: 'Asignado', approved: 'Aprobado',
     question: '¿Qué necesita atención?', answer: 'Respuesta basada en tus datos', sources: 'Fuentes vinculadas', action: 'Acción preparada',
     mobile: ['Sistemas CRM y ERP', 'Bases de datos y almacenes', 'Ecosistema Microsoft'],
@@ -34,11 +34,19 @@ const desktop = {
   outgoing: ['M472 272C472 340 260 325 260 402', 'M500 281V421', 'M528 272C528 340 740 325 740 402'],
 };
 const mobile = {
-  width: 340, height: 1160, hub: [170, 342],
-  inputs: [[153, 54], [153, 136], [153, 218]],
-  outputs: [[182, 560], [182, 790], [182, 1020]],
-  incoming: ['M279 54H293Q307 54 307 68V246Q307 267 286 267H215Q196 267 190 284', 'M279 136H286Q295 136 295 151V241Q295 255 281 255H170V274', 'M279 218H281Q283 218 283 227V234Q283 243 272 243H146Q138 243 138 284'],
-  outgoing: ['M151 404H35Q20 404 20 420V554Q20 560 28 560H47', 'M170 410V417Q170 422 160 422H44Q32 422 32 436V781Q32 790 40 790H47', 'M189 404V418Q189 432 175 432H23Q8 432 8 447V1007Q8 1020 22 1020H47'],
+  width: 340, height: 1090, hub: [170, 360],
+  inputs: [[170, 75], [170, 150], [170, 225]],
+  outputs: [[170, 550], [170, 750], [170, 950]],
+  incoming: [
+    'M170 75V295',
+    'M170 150V295',
+    'M170 225V295',
+  ],
+  outgoing: [
+    'M170 430V500',
+    'M170 430V700',
+    'M170 430V900',
+  ],
 };
 
 function Check({ x = 0, y = 0 }) {

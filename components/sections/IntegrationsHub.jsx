@@ -1,12 +1,17 @@
 'use client';
-import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
-import { motion } from 'framer-motion';
+import React, { memo, useRef } from 'react';
 import CharacterReveal from '../CharacterReveal';
+import AuroraField from '../AuroraField';
+import { UnifiedDeliveryScene } from '../graphics/UnifiedDeliveryScene';
+import { useLanguage } from '../../context/LanguageContext';
+import styles from './IntegrationsHub.module.css';
+import Reveal from '../Reveal';
+import { wordsIn } from '../revealTiming';
 
-const logoSoloUrl = '/NeuralBI/assets/Neuralbi logo solo.svg';
-
-function IntegrationsHub({ activeHero }) {
-  const [hoveredNode, setHoveredNode] = React.useState(null);
+function IntegrationsHub() {
+  const { language } = useLanguage();
+  const stageRef = useRef(null);
+  const isEs = language === 'es';
 
   // SVG Icons for the integration nodes
   const icons = {
@@ -85,10 +90,12 @@ function IntegrationsHub({ activeHero }) {
       left: '18%',
       top: '20%',
       align: 'left',
-      desc: "Automated sync of inventory, procurement, and financial ledgers.",
+      desc: isEs
+        ? "Sincronización automatizada de inventario, compras y libros contables."
+        : "Automated sync of inventory, procurement, and financial ledgers.",
       status: "STABLE",
       latency: "12ms",
-      type: "ERP Native",
+      type: isEs ? "ERP Nativo" : "ERP Native",
       iconKey: "SAP"
     },
     {
@@ -97,7 +104,9 @@ function IntegrationsHub({ activeHero }) {
       left: '12%',
       top: '40%',
       align: 'left',
-      desc: "Bi-directional sync of sales pipelines, accounts, and contact records.",
+      desc: isEs
+        ? "Sincronización bidireccional de embudos de ventas, cuentas y contactos."
+        : "Bi-directional sync of sales pipelines, accounts, and contact records.",
       status: "CONNECTED",
       latency: "8ms",
       type: "REST Pipeline",
@@ -109,7 +118,9 @@ function IntegrationsHub({ activeHero }) {
       left: '18%',
       top: '60%',
       align: 'left',
-      desc: "High-speed query engine orchestrating structured enterprise databases.",
+      desc: isEs
+        ? "Motor de consulta de alta velocidad para bases de datos relacionales."
+        : "High-speed query engine orchestrating structured enterprise databases.",
       status: "SYNC_OK",
       latency: "4ms",
       type: "ODBC Pipeline",
@@ -122,10 +133,12 @@ function IntegrationsHub({ activeHero }) {
       left: '82%',
       top: '20%',
       align: 'right',
-      desc: "Enterprise ledger mapping and relational table ingestion.",
+      desc: isEs
+        ? "Mapeo de libros contables e ingesta de tablas relacionales empresariales."
+        : "Enterprise ledger mapping and relational table ingestion.",
       status: "STABLE",
       latency: "14ms",
-      type: "OCI Native",
+      type: isEs ? "OCI Nativo" : "OCI Native",
       iconKey: "Oracle"
     },
     {
@@ -134,7 +147,9 @@ function IntegrationsHub({ activeHero }) {
       left: '88%',
       top: '40%',
       align: 'right',
-      desc: "Automated sync of marketing campaigns and lead attribution.",
+      desc: isEs
+        ? "Sincronización automatizada de campañas de marketing y atribución de prospectos."
+        : "Automated sync of marketing campaigns and lead attribution.",
       status: "CONNECTED",
       latency: "7ms",
       type: "Web API",
@@ -146,7 +161,9 @@ function IntegrationsHub({ activeHero }) {
       left: '82%',
       top: '60%',
       align: 'right',
-      desc: "Unified document index mapping and file metadata syncing.",
+      desc: isEs
+        ? "Índice unificado de documentos y sincronización de metadatos de archivos."
+        : "Unified document index mapping and file metadata syncing.",
       status: "SYNC_OK",
       latency: "9ms",
       type: "Graph Native",
@@ -155,14 +172,16 @@ function IntegrationsHub({ activeHero }) {
     // --- OUTPUTS (Bottom Side) ---
     {
       id: "PowerBI",
-      name: "Power BI Reports",
+      name: isEs ? "Reportes de Power BI" : "Power BI Reports",
       left: '26%',
       top: '80%',
       align: 'bottom-left',
-      desc: "Executive analytics dashboards with real-time predictive insights.",
+      desc: isEs
+        ? "Tableros de analítica ejecutiva con información predictiva en tiempo real."
+        : "Executive analytics dashboards with real-time predictive insights.",
       status: "RENDERED",
       latency: "Live",
-      type: "Visualization",
+      type: isEs ? "Visualización" : "Visualization",
       iconKey: "PowerBI"
     },
     {
@@ -171,7 +190,9 @@ function IntegrationsHub({ activeHero }) {
       left: '50%',
       top: '84%',
       align: 'bottom-center',
-      desc: "Mobile and web business interfaces automating operations.",
+      desc: isEs
+        ? "Interfaces empresariales web y móviles para automatizar operaciones."
+        : "Mobile and web business interfaces automating operations.",
       status: "ACTIVE",
       latency: "<10ms",
       type: "Low-Code UI",
@@ -179,11 +200,13 @@ function IntegrationsHub({ activeHero }) {
     },
     {
       id: "Copilot",
-      name: "AI Copilot Agents",
+      name: isEs ? "Agentes AI Copilot" : "AI Copilot Agents",
       left: '74%',
       top: '80%',
       align: 'bottom-right',
-      desc: "Custom AI reasoning agents automating complex user chats.",
+      desc: isEs
+        ? "Agentes de razonamiento con IA personalizada para automatizar flujos complejos."
+        : "Custom AI reasoning agents automating complex user chats.",
       status: "ONLINE",
       latency: "Cognitive",
       type: "Copilot Studio",
@@ -194,17 +217,21 @@ function IntegrationsHub({ activeHero }) {
   const mobileInputNodes = [
     {
       id: "crm-erp",
-      name: "CRM & ERP Systems",
-      desc: "Bi-directional automated sync for SAP, Salesforce, and HubSpot enterprise pipelines.",
+      name: isEs ? "Sistemas CRM y ERP" : "CRM & ERP Systems",
+      desc: isEs
+        ? "Sincronización bidireccional automatizada para pipelines de SAP, Salesforce y HubSpot."
+        : "Bi-directional automated sync for SAP, Salesforce, and HubSpot enterprise pipelines.",
       status: "STABLE",
       latency: "<10ms",
-      type: "Enterprise Pipelines",
+      type: isEs ? "Pipelines Empresariales" : "Enterprise Pipelines",
       iconKey: "SAP"
     },
     {
       id: "databases",
-      name: "Databases & Warehouses",
-      desc: "High-speed query engine orchestrating Azure SQL, Oracle, and relational data stores.",
+      name: isEs ? "Bases de Datos y Almacenes" : "Databases & Warehouses",
+      desc: isEs
+        ? "Motor de consultas de alta velocidad para Azure SQL, Oracle y almacenes de datos relacionales."
+        : "High-speed query engine orchestrating Azure SQL, Oracle, and relational data stores.",
       status: "SYNC_OK",
       latency: "4ms",
       type: "ODBC / OCI Native",
@@ -212,8 +239,10 @@ function IntegrationsHub({ activeHero }) {
     },
     {
       id: "ms-office",
-      name: "Microsoft Ecosystem",
-      desc: "Unified document index mapping and file metadata syncing via Microsoft Graph API.",
+      name: isEs ? "Ecosistema Microsoft" : "Microsoft Ecosystem",
+      desc: isEs
+        ? "Indexación unificada de documentos y sincronización de metadatos mediante Microsoft Graph API."
+        : "Unified document index mapping and file metadata syncing via Microsoft Graph API.",
       status: "CONNECTED",
       latency: "8ms",
       type: "Graph Native",
@@ -221,754 +250,47 @@ function IntegrationsHub({ activeHero }) {
     }
   ];
 
-  const getStyle = () => {
-    switch (activeHero) {
-      case 'spline1':
-        return {
-          font: 'var(--font-serif)',
-          fontBody: 'var(--font-sans)',
-          title: "Seamless Connectivity. Unified Delivery.",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(198, 255, 52, 0.15)',
-          nodeBg: 'rgba(10, 18, 1, 0.75)',
-          nodeBorder: 'rgba(198, 255, 52, 0.25)',
-          bgGradient: 'linear-gradient(to bottom, #040900 0%, #000000 100%)',
-          cardRadius: '9999px',
-          borderColor: 'rgba(255,255,255,0.04)'
-        };
-      case 'cinematic':
-        return {
-          font: 'var(--font-ui)',
-          fontBody: 'var(--font-sans)',
-          title: "SEAMLESS CONNECTIVITY. UNIFIED DELIVERY.",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(255, 255, 255, 0.12)',
-          nodeBg: '#020202',
-          nodeBorder: 'rgba(255,255,255,0.18)',
-          bgGradient: 'linear-gradient(to bottom, #08080c 0%, #000000 100%)',
-          cardRadius: '0px',
-          borderColor: 'rgba(255,255,255,0.08)'
-        };
-      case 'modern_v2':
-        return {
-          font: 'var(--font-display)',
-          fontBody: 'var(--font-sans)',
-          title: "Seamless Connectivity. Unified Delivery.",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(198, 255, 52, 0.22)',
-          nodeBg: 'rgba(255, 255, 255, 0.02)',
-          nodeBorder: 'rgba(255,255,255,0.06)',
-          bgGradient: 'linear-gradient(to bottom, #071501 0%, #000000 100%)',
-          cardRadius: '16px',
-          borderColor: 'rgba(255,255,255,0.05)'
-        };
-      case 'tech_v4':
-        return {
-          font: 'var(--font-mono)',
-          fontBody: 'var(--font-mono)',
-          title: "SEAMLESS_CONNECTIVITY // UNIFIED_DELIVERY",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(198, 255, 52, 0.4)',
-          nodeBg: '#010200',
-          nodeBorder: 'rgba(198, 255, 52, 0.45)',
-          bgGradient: 'linear-gradient(to bottom, #050505 0%, #000000 100%)',
-          cardRadius: '0px',
-          borderColor: 'rgba(198,255,52,0.2)'
-        };
-      case 'remix':
-        return {
-          font: 'var(--font-display)',
-          fontBody: 'var(--font-sans)',
-          title: "Seamless Connectivity. Unified Delivery.",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(198, 255, 52, 0.4)',
-          nodeBg: '#010200',
-          nodeBorder: 'rgba(198, 255, 52, 0.45)',
-          bgGradient: 'linear-gradient(to bottom, #000000 0%, #000000 100%)',
-          cardRadius: '6px',
-          borderColor: 'rgba(198,255,52,0.2)'
-        };
-      case 'sui_fork':
-      default:
-        return {
-          font: 'var(--font-ui)',
-          fontBody: 'var(--font-sans)',
-          title: "Seamless Connectivity. Unified Delivery.",
-          subtitle: "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.",
-          connectorColor: 'rgba(198, 255, 52, 0.18)',
-          nodeBg: 'rgba(255, 255, 255, 0.01)',
-          nodeBorder: 'rgba(255,255,255,0.05)',
-          bgGradient: 'linear-gradient(to bottom, #000000 0%, #000000 100%)',
-          cardRadius: '24px',
-          borderColor: 'rgba(255,255,255,0.04)'
-        };
-    }
-  };
+  const inputsHeader = isEs ? '[ Fuentes de Datos ]' : '[ Data Inputs ]';
+  const deliverablesHeader = isEs ? '[ Entregables de Negocio ]' : '[ Business Deliverables ]';
 
-  const s = getStyle();
+  const title = isEs
+    ? ['Conectividad sin fisuras.', '*Entrega unificada.*']
+    : ['Seamless Connectivity.', '*Unified Delivery.*'];
+  const subtitle = isEs
+    ? "De bases de datos a arquitecturas modernas en la nube. Conectamos datos propietarios directamente a capas semánticas de alto rendimiento, reportes, aplicaciones y flujos de IA con cero fricción."
+    : "From databases to modern cloud architectures. We pipe proprietary enterprise data directly into high-throughput semantic layers, beautiful reports, custom React applications, and cognitive AI workflows with zero processing friction.";
+  const mobileSubtitle = isEs
+    ? "Conectamos datos empresariales directamente a capas semánticas de alto rendimiento, aplicaciones personalizadas y flujos cognitivos de IA sin fricción."
+    : "We pipe proprietary enterprise data directly into high-throughput semantic layers, custom React applications, and cognitive AI workflows with zero friction.";
 
   return (
-    <section style={{
-      padding: '8rem 0',
-      position: 'relative',
-      zIndex: 10,
-      overflow: 'hidden'
-    }}>
-      {/* Impeccable Background Image Container for Integrations */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-         <div style={{
-           position: 'absolute', inset: 0,
-           backgroundImage: 'url("/NeuralBI/assets/gradient%20lila.jpeg")',
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           filter: 'brightness(1.2) contrast(1.1) saturate(1.2)'
-         }} />
-         
-         {/* Dazzling Background - No heavy tint, let the gradient shine! */}
-         
-         {/* Vignette to blend perfectly with dark sections above and below */}
-         <div style={{
-           position: 'absolute', inset: 0,
-           background: 'linear-gradient(to bottom, #000000 0%, transparent 20%, transparent 80%, #000000 100%)',
-           zIndex: 1
-         }} />
+    <section className={styles.section}>
+      <AuroraField clearRef={stageRef} />
 
-         {/* Sub-blend of the original gradient for depth */}
-         <div style={{
-           position: 'absolute', inset: 0,
-           background: s.bgGradient,
-           opacity: 0.2
-         }} />
-      </div>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 1 }}>
-        {/* Raycast-style Premium Glass Card */}
-        <div className="integrations-glass-card" style={{
-          background: 'rgba(5, 8, 5, 0.45)', 
-          backdropFilter: 'blur(40px)',
-          WebkitBackdropFilter: 'blur(40px)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderTop: '1px solid rgba(255,255,255,0.15)',
-          borderRadius: '32px',
-          padding: '5rem 2rem',
-          boxShadow: '0 30px 60px -15px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)',
-          overflow: 'hidden',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-        <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 5rem)', maxWidth: '800px', position: 'relative', zIndex: 2 }}>
-          <h2 style={{ textAlign: 'center', margin: 0 }}>
-            <CharacterReveal
-              text={s.title}
-              className={activeHero === 'remix' ? 'text-gradient-premium' : ''}
-              style={{
-                fontFamily: s.font,
-                fontSize: 'clamp(1.85rem, 4vw, 3.5rem)',
-                fontWeight: 800,
-                textTransform: activeHero === 'cinematic' || activeHero === 'tech_v4' ? 'uppercase' : 'none',
-                letterSpacing: '-0.02em',
-                ...(activeHero !== 'remix' ? { color: '#ffffff' } : {})
-              }}
-            />
+      <div className={styles.inner}>
+        <header className={styles.header}>
+          <h2 className={styles.title}>
+            <CharacterReveal text={title[0]} style={{ display: 'block' }} />
+            <CharacterReveal text={title[1]} delay={wordsIn(title[0])} style={{ display: 'block' }} />
           </h2>
-          <p className="integrations-subtitle-desktop" style={{
-            fontFamily: s.fontBody,
-            fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
-            color: 'rgba(255, 255, 255, 0.55)',
-            marginTop: '1rem',
-            maxWidth: '720px',
-            margin: '1rem auto 0 auto',
-            lineHeight: 1.6
-          }}>
-            <CharacterReveal text={s.subtitle} stagger={0.008} />
-          </p>
-          <p className="integrations-subtitle-mobile" style={{
-            fontFamily: s.fontBody,
-            fontSize: '0.98rem',
-            color: 'rgba(255, 255, 255, 0.6)',
-            marginTop: '0.75rem',
-            maxWidth: '480px',
-            margin: '0.75rem auto 0 auto',
-            lineHeight: 1.55
-          }}>
-            <CharacterReveal text="We pipe proprietary enterprise data directly into high-throughput semantic layers, custom React applications, and cognitive AI workflows with zero friction." stagger={0.008} />
-          </p>
-        </div>
+          <Reveal as="p" className={styles.lede} delay={300}>{subtitle}</Reveal>
+          <Reveal as="p" className={`${styles.lede} ${styles.ledeCompact}`} delay={300}>{mobileSubtitle}</Reveal>
+        </header>
 
-        {/* DESKTOP VIEW: Stripe-Inspired Interactive Network Map Container */}
-        <div className="integrations-desktop-view" style={{
-          position: 'relative',
-          width: '100%',
-          maxWidth: '900px',
-          margin: '0 auto',
-          background: 'rgba(255, 255, 255, 0.01)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: s.cardRadius === '9999px' ? '32px' : s.cardRadius === '24px' ? '28px' : s.cardRadius === '16px' ? '20px' : '0px',
-          border: '1px solid ' + s.borderColor,
-          overflow: 'hidden',
-          padding: '3rem 0',
-          boxShadow: '0 30px 60px rgba(0,0,0,0.6)'
-        }}>
-          {/* Background Grid Accent */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)',
-            backgroundSize: '25px 25px',
-            opacity: 0.3,
-            zIndex: 0
-          }} />
-
-          <div style={{ position: 'relative', width: '100%', height: '500px', zIndex: 1 }}>
-
-            {/* SVG Connections Paths with viewBox and preserveAspectRatio for absolute alignment */}
-            <svg preserveAspectRatio="none" viewBox="0 0 900 500" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible' }}>
-              <defs>
-                <filter id="glow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="1000" height="600">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              {/* ─────────────────────────────────────────────────────────
-                  DIFFERENT FLOW PATH ITERATIONS PER VERSION
-                  ───────────────────────────────────────────────────────── */}
-              {(activeHero === 'cinematic' || activeHero === 'tech_v4') ? (
-                <>
-                  {/* SAP (162, 100) */}
-                  <path d="M 162 100 L 300 100 L 300 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 162 100 L 300 100 L 300 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 18s linear infinite' }} />
-
-                  {/* Salesforce (108, 200) */}
-                  <path d="M 108 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 108 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 14s linear infinite' }} />
-
-                  {/* Azure SQL (162, 300) */}
-                  <path d="M 162 300 L 300 300 L 300 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 162 300 L 300 300 L 300 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 15s linear infinite' }} />
-
-                  {/* Oracle DB (738, 100) */}
-                  <path d="M 738 100 L 600 100 L 600 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 738 100 L 600 100 L 600 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 18s linear infinite' }} />
-
-                  {/* HubSpot CRM (792, 200) */}
-                  <path d="M 792 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 792 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 14s linear infinite' }} />
-
-                  {/* SharePoint (738, 300) */}
-                  <path d="M 738 300 L 600 300 L 600 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 738 300 L 600 300 L 600 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 15s linear infinite' }} />
-
-                  {/* Outputs: Center to Deliverables */}
-                  {/* Reports (234, 400) */}
-                  <path d="M 450 200 L 450 300 L 234 300 L 234 400" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 450 200 L 450 300 L 234 300 L 234 400" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 17s linear infinite' }} />
-
-                  {/* Apps (450, 420) */}
-                  <path d="M 450 200 L 450 420" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 450 200 L 450 420" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 12s linear infinite' }} />
-
-                  {/* Agents (666, 400) */}
-                  <path d="M 450 200 L 450 300 L 666 300 L 666 400" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-                  <path d="M 450 200 L 450 300 L 666 300 L 666 400" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 20s linear infinite' }} />
-                </>
-              ) : (
-                <>
-                  {/* Inputs: left curved */}
-                  {/* SAP (162, 100) */}
-                  <path d="M 162 100 C 300 100, 370 170, 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 162 100 C 300 100, 370 170, 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 18s linear infinite' }} />
-
-                  {/* Salesforce (108, 200) */}
-                  <path d="M 108 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 108 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 14s linear infinite' }} />
-
-                  {/* Azure SQL (162, 300) */}
-                  <path d="M 162 300 C 300 300, 370 230, 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 162 300 C 300 300, 370 230, 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 15s linear infinite' }} />
-
-                  {/* Inputs: right curved */}
-                  {/* Oracle DB (738, 100) */}
-                  <path d="M 738 100 C 600 100, 530 170, 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 738 100 C 600 100, 530 170, 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 18s linear infinite' }} />
-
-                  {/* HubSpot CRM (792, 200) */}
-                  <path d="M 792 200 L 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 792 200 L 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 14s linear infinite' }} />
-
-                  {/* SharePoint (738, 300) */}
-                  <path d="M 738 300 C 600 300, 530 230, 450 200" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 738 300 C 600 300, 530 230, 450 200" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 15s linear infinite' }} />
-
-                  {/* Outputs: bottom curved */}
-                  {/* Reports (234, 400) */}
-                  <path d="M 450 200 C 450 310, 234 310, 234 400" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 450 200 C 450 310, 234 310, 234 400" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 17s linear infinite' }} />
-
-                  {/* Apps (450, 420) */}
-                  <path d="M 450 200 L 450 420" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 450 200 L 450 420" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 12s linear infinite' }} />
-
-                  {/* Agents (666, 400) */}
-                  <path d="M 450 200 C 450 310, 666 310, 666 400" fill="none" stroke={s.connectorColor} strokeWidth="2" />
-                  <path d="M 450 200 C 450 310, 666 310, 666 400" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="10, 20" filter="url(#glow)" style={{ animation: 'dash-flow 20s linear infinite' }} />
-                </>
-              )}
-            </svg>
-
-            {/* Semantic Layout Labels */}
-            <div style={{ position: 'absolute', top: '20px', left: '35px', fontFamily: s.font, fontSize: '0.65rem', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              [ Data Inputs ]
-            </div>
-            <div style={{ position: 'absolute', top: '20px', right: '35px', fontFamily: s.font, fontSize: '0.65rem', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              [ Data Inputs ]
-            </div>
-            <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', fontFamily: s.font, fontSize: '0.65rem', color: '#c6ff34', opacity: 0.5, letterSpacing: '0.1em', textTransform: 'uppercase', zIndex: 10 }}>
-              [ Business Deliverables ]
-            </div>
-
-            {/* Central Hub Node (Centered mathematically inside the 50%/50% parent grid) */}
-            <div style={{
-              position: 'absolute',
-              top: '40%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '90px',
-              height: '90px',
-              zIndex: 3
-            }}>
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ type: 'spring', stiffness: 85, damping: 15 }}
-                style={{
-                  willChange: 'transform, opacity',
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  background: '#000000',
-                  border: '2.5px solid #c6ff34',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 0 35px rgba(198, 255, 52, 0.4)',
-                  position: 'relative'
-                }}
-              >
-                {/* Spinning technical dash ring */}
-                <div style={{
-                  position: 'absolute',
-                  inset: '-8px',
-                  border: '1.5px dashed rgba(198, 255, 52, 0.4)',
-                  borderRadius: '50%',
-                  animation: 'rotate-gradient 25s linear infinite'
-                }} />
-
-                {/* Absolute mathematical logo centering */}
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'none'
-                }}>
-                  <img
-                    src={logoSoloUrl}
-                    alt="NeuralBI Hub"
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      height: '44px', /* Slightly larger for improved visual weight */
-                      width: 'auto',
-                      opacity: 0.95,
-                      display: 'block'
-                    }}
-                  />
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Outer System Nodes with SVG icons */}
-            {nodes.map((node, idx) => {
-              const isHovered = hoveredNode === node.id;
-              const leftVal = parseFloat(node.left) || 0;
-              const topVal = parseFloat(node.top) || 0;
-              const dx = leftVal - 50;
-              const dy = topVal - 40;
-              const distance = Math.sqrt(dx * dx + dy * dy);
-              const delay = distance * 0.007; // Synaptic radial ripple effect
-
-              return (
-                <div
-                  key={idx}
-                  style={{
-                    position: 'absolute',
-                    top: node.top,
-                    left: node.left,
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: isHovered ? 10 : 4
-                  }}
-                  onMouseEnter={() => setHoveredNode(node.id)}
-                  onMouseLeave={() => setHoveredNode(null)}
-                >
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ type: 'spring', stiffness: 90, damping: 14, delay: delay }}
-                    style={{ willChange: 'transform, opacity', position: 'relative', width: '100%', height: '100%' }}
-                  >
-                    {/* Floating tooltip overlay (Safely aligned inward to avoid screen clipping) */}
-                    <div style={{
-                      position: 'absolute',
-                      width: '280px', /* Increased width to prevent tight text wrapping */
-                      background: '#040405',
-                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255,255,255,0.08)'),
-                      borderRadius: s.cardRadius === '9999px' ? '20px' : s.cardRadius === '0px' ? '0px' : '12px',
-                      padding: '1.25rem',
-                      color: '#ffffff',
-                      fontSize: '0.75rem',
-                      textAlign: 'left',
-                      pointerEvents: 'none',
-                      opacity: isHovered ? 1 : 0,
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                      boxShadow: '0 15px 35px rgba(0,0,0,0.7)',
-                      zIndex: 10,
-
-                      // Tooltips point inward or upward depending on alignment
-                      ...(node.align === 'left' ? {
-                        left: 'calc(100% + 15px)',
-                        top: '50%',
-                        transform: 'translateY(-50%) scale(' + (isHovered ? 1 : 0.8) + ')',
-                        transformOrigin: 'left center'
-                      } : node.align === 'right' ? {
-                        right: 'calc(100% + 15px)',
-                        top: '50%',
-                        transform: 'translateY(-50%) scale(' + (isHovered ? 1 : 0.8) + ')',
-                        transformOrigin: 'right center'
-                      } : {
-                        // Bottom nodes: Tooltips point UPWARD
-                        bottom: 'calc(100% + 15px)',
-                        left: '50%',
-                        transform: 'translateX(-50%) scale(' + (isHovered ? 1 : 0.8) + ')',
-                        transformOrigin: 'bottom center'
-                      })
-                    }}>
-                      <strong style={{ fontFamily: s.font, display: 'block', fontSize: '0.85rem', marginBottom: '6px', color: '#c6ff34' }}>
-                        {node.name}
-                      </strong>
-                      <span style={{ fontFamily: s.fontBody, color: 'rgba(255,255,255,0.6)', lineHeight: 1.45, display: 'block', marginBottom: '8px' }}>
-                        {node.desc}
-                      </span>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        fontSize: '0.65rem',
-                        fontFamily: 'var(--font-mono)',
-                        borderTop: '1px dashed rgba(255,255,255,0.1)',
-                        paddingTop: '8px',
-                        color: 'rgba(255,255,255,0.4)'
-                      }}>
-                        <span>{node.type}</span>
-                        <span style={{ color: '#c6ff34' }}>{node.latency}</span>
-                      </div>
-                    </div>
-
-                    {/* Premium Integrated Node Card */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      height: '44px',
-                      padding: '0 16px 0 12px',
-                      background: isHovered ? '#0c0f05' : '#040405',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
-                      borderRadius: s.cardRadius === '9999px' ? '22px' : s.cardRadius === '0px' ? '0px' : '8px',
-                      boxShadow: isHovered
-                        ? '0 0 20px rgba(198, 255, 52, 0.12), inset 0 0 10px rgba(198, 255, 52, 0.02)'
-                        : '0 4px 12px rgba(0, 0, 0, 0.4)',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
-                    }}>
-                      {/* Icon Container */}
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.8)',
-                        transition: 'color 0.3s'
-                      }}>
-                        {icons[node.iconKey]}
-                      </div>
-
-                      {/* Divider Line */}
-                      <div style={{
-                        width: '1px',
-                        height: '16px',
-                        background: isHovered ? 'rgba(198, 255, 52, 0.25)' : 'rgba(255, 255, 255, 0.1)',
-                        transition: 'all 0.3s'
-                      }} />
-
-                      {/* Text Label */}
-                      <span style={{
-                        fontFamily: s.fontBody,
-                        fontSize: '0.74rem',
-                        fontWeight: 600,
-                        color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.9)',
-                        whiteSpace: 'nowrap',
-                        letterSpacing: '0.01em',
-                        transition: 'color 0.3s'
-                      }}>
-                        {node.name}
-                      </span>
-                    </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-
-          </div>
-        </div>
-
-        {/* MOBILE VIEW: Dedicated Vertical Stream Architecture for Mobile Screens */}
-        <div className="integrations-mobile-view" style={{
-          position: 'relative',
-          width: '100%',
-          maxWidth: '500px',
-          margin: '0 auto',
-          background: 'rgba(255, 255, 255, 0.01)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: '20px',
-          border: '1px solid ' + s.borderColor,
-          overflow: 'hidden',
-          padding: '1.75rem 1rem',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.25rem'
-        }}>
-          {/* Background Grid Accent */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)',
-            backgroundSize: '20px 20px',
-            opacity: 0.25,
-            zIndex: 0
-          }} />
-
-          {/* 1. DATA INPUTS HEADER & GRID (1 Column x 3 Generic Category Cards on Mobile) */}
-          <div style={{ width: '100%', position: 'relative', zIndex: 1 }}>
-            <div style={{ fontFamily: s.font, fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem', textAlign: 'center' }}>
-              [ Data Inputs ]
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px', width: '100%' }}>
-              {mobileInputNodes.map((node) => {
-                const isHovered = hoveredNode === node.id;
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setHoveredNode(prev => prev === node.id ? null : node.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      height: '44px',
-                      padding: '0 14px',
-                      background: isHovered ? '#0e1405' : '#040405',
-                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
-                      borderRadius: '10px',
-                      boxShadow: isHovered ? '0 0 18px rgba(198, 255, 52, 0.15)' : '0 4px 12px rgba(0,0,0,0.4)',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease'
-                    }}
-                  >
-                    <div style={{ color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.85)', display: 'flex', alignItems: 'center' }}>
-                      {icons[node.iconKey]}
-                    </div>
-                    <div style={{ width: '1px', height: '16px', background: isHovered ? 'rgba(198, 255, 52, 0.3)' : 'rgba(255, 255, 255, 0.1)' }} />
-                    <span style={{ fontFamily: s.fontBody, fontSize: '0.78rem', fontWeight: 600, color: isHovered ? '#c6ff34' : '#ffffff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {node.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* 2. TOP-TO-HUB ANIMATED FLOW BEAMS */}
-          <div style={{ width: '100%', height: '40px', position: 'relative', zIndex: 1 }}>
-            <svg viewBox="0 0 300 40" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-              <path d="M 50 0 C 50 20, 150 20, 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 50 0 C 50 20, 150 20, 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 12s linear infinite' }} />
-              
-              <path d="M 150 0 L 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 150 0 L 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 10s linear infinite' }} />
-              
-              <path d="M 250 0 C 250 20, 150 20, 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 250 0 C 250 20, 150 20, 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 14s linear infinite' }} />
-            </svg>
-          </div>
-
-          {/* 3. CENTRAL NEURALBI HUB NODE */}
-          <div style={{ position: 'relative', width: '76px', height: '76px', zIndex: 2 }}>
-            <motion.div
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '50%',
-                background: '#000000',
-                border: '2.5px solid #c6ff34',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 0 30px rgba(198, 255, 52, 0.4)',
-                position: 'relative'
-              }}
-            >
-              <div style={{
-                position: 'absolute',
-                inset: '-6px',
-                border: '1.5px dashed rgba(198, 255, 52, 0.45)',
-                borderRadius: '50%',
-                animation: 'rotate-gradient 20s linear infinite'
-              }} />
-              <img
-                src={logoSoloUrl}
-                alt="NeuralBI Hub"
-                style={{
-                  height: '38px',
-                  width: 'auto',
-                  opacity: 0.95,
-                  display: 'block'
-                }}
-              />
-            </motion.div>
-          </div>
-
-          {/* 4. HUB-TO-BOTTOM ANIMATED FLOW BEAMS */}
-          <div style={{ width: '100%', height: '40px', position: 'relative', zIndex: 1 }}>
-            <svg viewBox="0 0 300 40" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-              <path d="M 150 0 C 150 20, 50 20, 50 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 150 0 C 150 20, 50 20, 50 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 12s linear infinite' }} />
-              
-              <path d="M 150 0 L 150 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 150 0 L 150 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 10s linear infinite' }} />
-              
-              <path d="M 150 0 C 150 20, 250 20, 250 40" fill="none" stroke={s.connectorColor} strokeWidth="1.5" />
-              <path d="M 150 0 C 150 20, 250 20, 250 40" fill="none" stroke="#c6ff34" strokeWidth="2.5" strokeDasharray="6, 12" style={{ animation: 'dash-flow 14s linear infinite' }} />
-            </svg>
-          </div>
-
-          {/* 5. BUSINESS DELIVERABLES HEADER & GRID */}
-          <div style={{ width: '100%', position: 'relative', zIndex: 1 }}>
-            <div style={{ fontFamily: s.font, fontSize: '0.65rem', color: '#c6ff34', opacity: 0.6, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem', textAlign: 'center' }}>
-              [ Business Deliverables ]
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', width: '100%' }}>
-              {nodes.slice(6, 9).map((node) => {
-                const isHovered = hoveredNode === node.id;
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => setHoveredNode(prev => prev === node.id ? null : node.id)}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '4px',
-                      padding: '10px 4px',
-                      background: isHovered ? '#0e1405' : '#040405',
-                      border: '1px solid ' + (isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
-                      borderRadius: '8px',
-                      boxShadow: isHovered ? '0 0 16px rgba(198, 255, 52, 0.15)' : 'none',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease'
-                    }}
-                  >
-                    <div style={{ color: isHovered ? '#c6ff34' : 'rgba(255, 255, 255, 0.85)' }}>
-                      {icons[node.iconKey]}
-                    </div>
-                    <span style={{ fontFamily: s.fontBody, fontSize: '0.68rem', fontWeight: 600, color: isHovered ? '#c6ff34' : '#ffffff', textAlign: 'center', lineHeight: 1.2 }}>
-                      {node.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* 6. MOBILE INTERACTIVE TOUCH TELEMETRY DRAWER */}
-          {hoveredNode && (() => {
-            const activeNodeData = [...nodes, ...mobileInputNodes].find(n => n.id === hoveredNode);
-            if (!activeNodeData) return null;
-            return (
-              <div style={{
-                width: '100%',
-                background: '#070a04',
-                border: '1px solid #c6ff34',
-                borderRadius: '12px',
-                padding: '1rem 1.25rem',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(198, 255, 52, 0.15)',
-                position: 'relative',
-                zIndex: 10,
-                marginTop: '0.5rem'
-              }}>
-                <button
-                  onClick={(e) => { e.stopPropagation(); setHoveredNode(null); }}
-                  style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '12px',
-                    color: 'rgba(255,255,255,0.4)',
-                    fontSize: '14px',
-                    lineHeight: 1
-                  }}
-                >
-                  ✕
-                </button>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <div style={{ color: '#c6ff34' }}>{icons[activeNodeData.iconKey]}</div>
-                  <strong style={{ fontFamily: s.font, fontSize: '0.9rem', color: '#c6ff34' }}>
-                    {activeNodeData.name}
-                  </strong>
-                </div>
-                <p style={{ fontFamily: s.fontBody, fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.45, marginBottom: '8px' }}>
-                  {activeNodeData.desc}
-                </p>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  fontSize: '0.68rem',
-                  fontFamily: 'var(--font-mono)',
-                  borderTop: '1px solid rgba(255,255,255,0.1)',
-                  paddingTop: '6px',
-                  color: 'rgba(255,255,255,0.5)'
-                }}>
-                  <span>{activeNodeData.type}</span>
-                  <span style={{ color: '#c6ff34', fontWeight: 'bold' }}>{activeNodeData.latency}</span>
-                </div>
-              </div>
-            );
-          })()}
-        </div>
-        </div>
+        <Reveal ref={stageRef} variant="visual" delay={120} amount={0.12} className={styles.stage}>
+          {['tl', 'tr', 'bl', 'br'].map((corner) => <span key={corner} className={styles.mark} data-corner={corner} aria-hidden="true" />)}
+          <UnifiedDeliveryScene
+            nodes={nodes}
+            mobileInputNodes={mobileInputNodes}
+            icons={icons}
+            language={language}
+            inputsHeader={inputsHeader}
+            deliverablesHeader={deliverablesHeader}
+          />
+        </Reveal>
       </div>
     </section>
   );
 }
-
-// ─── SECTION 9.4: CASE STUDY SPOTLIGHT (SUCCESS STORY PULL QUOTE) ───
 
 export default memo(IntegrationsHub);

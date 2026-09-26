@@ -9,22 +9,27 @@
   color: var(--color-ink);
 }
 .container { max-width: 1280px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3rem); }
-.header { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .65fr); align-items: end; gap: 3rem; margin-bottom: 3.5rem; }
+.header { margin-bottom: 3.5rem; }
 .title { font-family: var(--font-display); font-size: clamp(2.4rem, 4.4vw, 4.25rem); font-weight: 600; line-height: 1.06; letter-spacing: -.04em; text-wrap: balance; overflow-wrap: anywhere; min-width: 0; margin: 0; }
-.title span { display: block; color: var(--color-accent); }
-.subtitle { font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); max-width: 32ch; margin: 0 0 .25rem; text-wrap: pretty; }
-.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--vertical-line); margin-bottom: 3.5rem; }
-.tab { min-height: 76px; display: flex; gap: .75rem; align-items: center; justify-content: center; padding: 1rem .5rem; font-family: var(--font-body); font-size: .9375rem; font-weight: 500; color: var(--vertical-quiet); position: relative; transition: color .2s, background .2s; }
+.tabsWrap { position: relative; margin-bottom: 3.5rem; }
+.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--vertical-line); }
+.tab { min-height: 76px; display: flex; gap: .75rem; align-items: center; justify-content: center; padding: 1rem .5rem; font-family: var(--font-body); font-size: .9375rem; font-weight: 500; line-height: 1.25; letter-spacing: normal; color: var(--vertical-quiet); position: relative; transition: color 200ms ease, background-color 200ms ease; }
 .tab + .tab { border-left: 1px solid var(--vertical-line); }
-.tab[aria-selected='true'] { color: var(--color-ink); background: linear-gradient(0deg, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent); box-shadow: inset 0 -1px var(--color-accent); }
-.tab[aria-selected='true'] > svg { color: var(--color-accent); }
 .tabDot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); opacity: 0; }
-.tab[aria-selected='true'] .tabDot { opacity: 1; }
+/* The lit copy: opaque, so the quiet tab beneath never shows through, and clipped to the selected cell (one column of
+ * four, or one cell of the 2 × 2 grid on narrower screens). */
+.tabsLit { position: absolute; inset: 0; pointer-events: none; border-color: transparent; clip-path: inset(0 calc((3 - var(--i)) * 25%) 0 calc(var(--i) * 25%)); transition: clip-path 240ms var(--ease-in-out); }
+.tabsLit .tab { color: var(--color-ink); background: linear-gradient(0deg, color-mix(in srgb, var(--color-accent) 7%, var(--color-paper)), var(--color-paper)); box-shadow: inset 0 -1px var(--color-accent); }
+.tabsLit .tab > svg { color: var(--color-accent); }
+.tabsLit .tabDot { opacity: 1; }
+.tab:active { background-color: color-mix(in srgb, var(--color-ink) 6%, var(--color-paper)); }
 .tab span:not(.tabDot) { white-space: nowrap; }
-.panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: clamp(2rem, 4vw, 4.5rem); align-items: start; }
+/* The product mockups get the wider column: their type scales with the stage, so width is readability. */
+.panel { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); column-gap: clamp(2rem, 4vw, 4.5rem); align-items: start; }
 .panel[hidden] { display: none; }
 .panel:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 8px; }
-.story { animation: storyIn .45s var(--ease-out); }
+/* A new sector arrives in 220 ms, through a 2px blur that melts the swap into one change. */
+.panel > * { animation: panelIn 220ms var(--ease-out); }
 .industryName { color: var(--vertical-quiet); font-size: .875rem; margin: 0 0 1rem; }
 .headline { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.7rem, 2.6vw, 2.5rem); letter-spacing: -.035em; line-height: 1.16; text-wrap: balance; overflow-wrap: anywhere; margin: 0; }
 .description { color: var(--color-ink-2); font-size: .9375rem; line-height: 1.75; margin: 1.25rem 0 2rem; max-width: 62ch; text-wrap: pretty; }
@@ -36,43 +41,44 @@
 .solution[data-selected='true'] .solutionButton svg { color: var(--color-accent); }
 .solutionBody { padding: 0 1.75rem 1.5rem 0; animation: storyIn .3s var(--ease-out); }
 .solutionBody[hidden] { display: none; }
-.technology { color: var(--color-accent); font-size: .8125rem; font-family: var(--font-mono); }
+.technology { color: var(--color-accent); font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 1.0625rem; letter-spacing: -.01em; line-height: 1.4; }
 .solutionBody p { font-size: .875rem; line-height: 1.75; color: var(--color-ink-2); margin: .75rem 0 0; text-wrap: pretty; }
 .visual { min-width: 0; margin: 0; position: sticky; top: 120px; border: 1px solid var(--vertical-line); border-radius: var(--radius-lg); background: linear-gradient(145deg, var(--color-paper-2), var(--color-paper) 65%); overflow: clip; }
-.visualHeader { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem 0; color: var(--vertical-quiet); font-size: .8125rem; }
-.motionButton { display: grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: var(--radius-pill); border: 1px solid var(--vertical-line); font-size: 1rem; color: var(--color-ink); box-shadow: inset 0 1px var(--glass-border); }
 .caption { display: flex; gap: .75rem; align-items: center; margin: 0 1.5rem; padding: 1.25rem 0; border-top: 1px solid var(--vertical-line); color: var(--vertical-quiet); font-size: .8125rem; line-height: 1.6; }
 .captionMark { color: var(--color-accent); font-size: 1.5rem; }
 .footer { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--vertical-line); }
 .footer p { font-size: 1rem; color: var(--color-ink-2); }
-.cta { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; padding: .875rem 1.5rem; border-radius: var(--radius-pill); border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent); background: var(--color-paper); box-shadow: inset 0 1px var(--glass-border); font-family: var(--font-ui); font-size: .875rem; color: var(--color-ink); white-space: nowrap; transition: background .2s, color .2s; }
+/* A Shader Button; this only sets its size. */
+.cta { gap: 1rem; padding: .875rem 1.5rem; font-size: .875rem; }
 .cta svg { color: var(--color-accent); transition: transform .25s var(--ease-out); }
-.section button:focus-visible, .cta:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
-.section button:active, .cta:active { transform: translateY(1px); }
-@media (hover: hover) {
-  .tab:hover, .motionButton:hover { background-color: var(--color-paper-2); color: var(--color-ink); }
+.section button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+.solutionButton:active { color: var(--color-ink); opacity: .75; }
+@media (hover: hover) and (pointer: fine) {
+  .tab:hover { background-color: var(--color-paper-2); color: var(--color-ink); }
   .solutionButton:hover { color: var(--color-accent); }
-  .cta:hover { background: var(--color-paper-2); }
   .cta:hover svg { transform: translate(2px, -2px); }
 }
 @keyframes storyIn { from { transform: translateY(8px); } to { transform: translateY(0); } }
-@media (max-width: 1000px) {
-  .header { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 2rem; }
-  .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tab:nth-child(3) { border-left: 0; }
-  .tab:nth-child(n+3) { border-top: 1px solid var(--vertical-line); }
+@keyframes panelIn { from { opacity: 0; transform: translateY(6px); filter: blur(2px); } }
+/* Small laptops: an even split puts the mockups in their compact layout, which reads larger than the full one here. */
+@media (max-width: 1100px) {
   .panel { column-gap: 2rem; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
+@media (max-width: 1000px) {
+  .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tabsLit { clip-path: inset(calc(var(--row) * 50%) calc((1 - var(--col)) * 50%) calc((1 - var(--row)) * 50%) calc(var(--col) * 50%)); }
+  .tab:nth-child(3) { border-left: 0; }
+  .tab:nth-child(n+3) { border-top: 1px solid var(--vertical-line); }
+}
 @media (max-width: 900px) {
-  .header { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
-  .subtitle { max-width: 48ch; }
-  .tabs { margin-bottom: 2rem; }
+  .header { margin-bottom: 2rem; }
+  .tabsWrap { margin-bottom: 2rem; }
   .tab { min-height: 62px; font-size: .875rem; gap: .5rem; }
   .tabDot { display: none; }
   .panel { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   .visual { position: relative; top: auto; }
   .headline { font-size: clamp(1.8rem, 6vw, 2.5rem); }
-  .technology, .visualHeader, .caption { font-size: .875rem; }
+  .caption { font-size: .875rem; }
   .footer { flex-direction: column; align-items: flex-start; margin-top: 2rem; }
 }
 @media (max-width: 380px) { .tab > svg { display: none; } }

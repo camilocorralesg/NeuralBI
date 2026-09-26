@@ -1,0 +1,30 @@
+/* The odometer. A digit is its final value as plain text (the face: it gives the width and the baseline, and it is what
+ * shows at rest), with a reel of digits stacked above it while the figure rolls (an ancestor sets data-count). The reel
+ * is anchored to the face (bottom: 0), so its last line sits exactly on it: landed, it is untransformed and the digit
+ * stays crisp; armed, it drops --stop lines so its first line, a 0, shows instead. One line is 1em (line-height: 1). */
+.counter { display: inline-flex; line-height: 1; font-variant-numeric: tabular-nums; }
+.digit { position: relative; display: inline-block; }
+.reel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  visibility: hidden;
+  transition: transform var(--roll) var(--ease-out) var(--count-delay);
+}
+
+/* Rolling: the wheel shows through a window the size of the digit, its top and bottom edges softened. */
+[data-count] .digit {
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 10%, #000000 90%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000000 10%, #000000 90%, transparent);
+}
+[data-count] .face { visibility: hidden; }
+[data-count] .reel { visibility: visible; }
+[data-count='armed'] .reel { transform: translateY(calc(var(--stop) * 1em)); transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reel { transition: none; }
+}

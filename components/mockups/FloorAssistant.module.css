@@ -1,0 +1,89 @@
+/* Floor Assistant mockup: the agent's conversation (ui/agent), asked aloud, beside the sources it grounds its answer in.
+ * Sized in em (see MockupStage); each source is readable as a skeleton before its tool returns
+ * (data-state 'idle' | 'loading' | 'ready'), and marks what the agent used from it. */
+.app { position: relative; }
+.body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+/* Sources: the manual, the schematic and the repair log, numbered as the answer cites them. */
+.pane { display: grid; align-content: start; gap: .55em; min-width: 0; padding: 1em 1.1em 1.1em; }
+.paneHead { display: flex; align-items: baseline; justify-content: space-between; gap: .6em; }
+.paneHead b { color: var(--mk-text); font: 600 .74em/1.15 var(--font-display, sans-serif); }
+.paneHead span { color: var(--mk-text-3); font: 500 .54em/1 var(--font-mono, monospace); white-space: nowrap; }
+.source { display: grid; gap: .5em; min-width: 0; padding: .6em .7em .65em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .025); border: 1px solid var(--mk-line); transition: border-color .35s; }
+.source[data-state='loading'] { border-color: color-mix(in srgb, var(--mk-lime) 32%, transparent); }
+.source > :not(.sourceHead) { opacity: .3; transition: opacity .5s var(--ease-out, ease); }
+.source[data-state='ready'] > :not(.sourceHead) { opacity: 1; }
+.sourceHead { display: flex; align-items: center; gap: .45em; min-width: 0; color: var(--mk-text-3); }
+.sourceHead > svg { width: .9em; height: .9em; flex-shrink: 0; }
+.sourceHead b { flex: 1; overflow: hidden; color: var(--mk-text-2); font: 600 .56em/1.1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.sourceHead > span { flex-shrink: 0; font: 500 .5em/1 var(--font-mono, monospace); }
+.cite { display: grid; flex-shrink: 0; place-items: center; width: 1.45em; height: 1.45em; border-radius: var(--mk-radius-xs); color: var(--mk-text-3); background: rgba(255, 255, 255, .06); font: 700 .56em/1 var(--font-mono, monospace); font-style: normal; transition: color .35s, background-color .35s; }
+.source[data-state='ready'] .cite { color: var(--mk-on-accent); background: var(--mk-lime); }
+
+/* Manual: the procedure's steps; lockout marked in amber once the agent puts safety first, cited steps in lime. */
+.steps { display: grid; gap: .2em; margin: 0; padding: 0; list-style: none; }
+.steps li {
+  --tone: transparent;
+  display: grid;
+  grid-template-columns: 1.3em minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .45em;
+  padding: .32em .45em;
+  border-radius: var(--mk-radius-sm);
+  background: color-mix(in srgb, var(--tone) 9%, transparent);
+  transition: background-color .4s;
+}
+.steps li[data-mark='safety'] { --tone: var(--mk-amber); }
+.steps li[data-mark='cited'] { --tone: var(--mk-lime); }
+/* The step number carries the mark: tinted in the tone once the agent has used the step. */
+.steps b { display: grid; place-items: center; width: 2.3em; height: 2.3em; border-radius: 50%; color: var(--mk-text-3); background: rgba(255, 255, 255, .05); font: 600 .52em/1 var(--font-mono, monospace); transition: color .4s, background-color .4s; }
+.steps li[data-mark='safety'] b, .steps li[data-mark='cited'] b { color: var(--tone); background: color-mix(in srgb, var(--tone) 18%, transparent); }
+.steps span { overflow: hidden; color: var(--mk-text-2); font: 500 .56em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; transition: color .4s; }
+.steps li[data-mark='safety'] span, .steps li[data-mark='cited'] span { color: var(--mk-text); }
+.steps svg { width: .8em; height: .8em; color: var(--mk-amber); opacity: 0; transition: opacity .4s; }
+.steps li[data-mark='safety'] svg { opacity: 1; }
+
+/* Schematic: line art on the dark card; the bearing and its balloon light up once the drawing is open. */
+.drawing { display: block; width: 100%; height: auto; overflow: visible; }
+.centerline { fill: none; stroke: var(--mk-line-strong); stroke-width: .7; stroke-dasharray: 9 3 2 3; }
+.part rect, .part circle, .part path { fill: color-mix(in srgb, var(--mk-text) 4%, transparent); stroke: var(--mk-text-3); stroke-width: 1; }
+.part path { fill: none; }
+.shaft { fill: color-mix(in srgb, var(--mk-text) 7%, transparent); stroke: var(--mk-text-3); stroke-width: .8; }
+.bearing rect, .bearing circle { fill: color-mix(in srgb, var(--mk-text) 4%, transparent); stroke: var(--mk-text-2); stroke-width: 1.1; transition: fill .45s, stroke .45s; }
+.source[data-state='ready'] .bearing rect, .source[data-state='ready'] .bearing circle { fill: color-mix(in srgb, var(--mk-lime) 16%, transparent); stroke: var(--mk-lime); }
+.callout path { fill: none; stroke: var(--mk-text-3); stroke-width: .6; }
+.callout circle { fill: var(--mk-sunken); stroke: var(--mk-text-3); stroke-width: .8; transition: fill .45s, stroke .45s; }
+.callout text { fill: var(--mk-text-2); font: 700 7px/1 var(--font-mono, monospace); text-anchor: middle; transition: fill .45s; }
+.source[data-state='ready'] .callout[data-item='2'] circle { fill: var(--mk-lime); stroke: var(--mk-lime); }
+.source[data-state='ready'] .callout[data-item='2'] text { fill: var(--mk-on-accent); }
+.itemLabel { fill: var(--mk-lime); font: 600 7px/1 var(--font-mono, monospace); opacity: 0; transition: opacity .45s .2s; }
+.source[data-state='ready'] .itemLabel { opacity: 1; }
+
+/* Repair log: past jobs on the pump, newest first; the note the agent warns about in amber. */
+.jobs { display: grid; gap: .35em; margin: 0 0 0 .3em; padding: 0 0 0 .75em; list-style: none; border-left: 1px solid var(--mk-line-strong); }
+.jobs li { position: relative; display: grid; grid-template-columns: 3.6em 3.9em minmax(0, 1fr); align-items: baseline; gap: .2em .45em; }
+.jobs li::before { content: ""; position: absolute; top: .3em; left: -1.02em; width: .45em; height: .45em; border-radius: 50%; background: var(--mk-text-3); }
+.jobs time { color: var(--mk-text-3); font: 500 .5em/1.2 var(--font-mono, monospace); white-space: nowrap; }
+.jobs b { color: var(--mk-text-2); font: 600 .52em/1.2 var(--font-mono, monospace); white-space: nowrap; }
+.jobs span { overflow: hidden; color: var(--mk-text-2); font: 500 .54em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.jobs em {
+  grid-column: 2 / -1;
+  padding: .35em .5em;
+  border-radius: var(--mk-radius-sm);
+  color: var(--mk-text-3);
+  background: rgba(255, 255, 255, .03);
+  font: 500 .52em/1.3 var(--font-body, sans-serif);
+  font-style: normal;
+  transition: color .4s, background-color .4s;
+}
+.jobs li[data-note='true'] em { color: var(--mk-amber); background: color-mix(in srgb, var(--mk-amber) 10%, transparent); }
+.jobs li[data-note='true']::before { background: var(--mk-amber); }
+
+/* Narrow stages: the conversation, asked and answered aloud, takes the whole window. */
+@container (max-width: 480px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .pane, .grounded { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .source, .source > :not(.sourceHead), .cite, .steps li, .steps b, .steps span, .steps svg, .bearing rect, .bearing circle, .callout circle, .callout text, .itemLabel, .jobs em { transition: none; }
+}

@@ -1,96 +1,14 @@
+/* The stage for the Industries product mockups. Tall enough that each product can take a readable base size (the
+ * base answers to the stage's width and height, see MockupStage); each mockup pauses its own loops when offscreen. */
 .scene {
-  --scene-edge: color-mix(in srgb, var(--color-ink) 22%, transparent);
-  --scene-metal: #202523;
-  --scene-side: #111613;
-  --scene-face: #29302a;
-  --scene-quiet: #a6a6ae;
-  --scene-route: color-mix(in srgb, var(--color-telemetry) 32%, transparent);
-  --scene-glow: color-mix(in srgb, var(--color-accent) 12%, transparent);
   position: relative;
-  height: 540px;
-  perspective: 1100px;
+  height: 560px;
   isolation: isolate;
   overflow: clip;
 }
-.halo { position: absolute; inset: 10% 0 20%; background: radial-gradient(ellipse, var(--scene-glow), transparent 66%); }
-.sculpture {
-  position: absolute;
-  top: 36%; left: 50%;
-  width: 330px; height: 330px;
-  transform-style: preserve-3d;
-  transform: translate(-50%, -50%) rotateX(56deg) rotateZ(-34deg);
-  animation: drift 12s ease-in-out infinite alternate;
-}
-.foundation, .substrate, .circuit { position: absolute; inset: 0; border-radius: var(--radius-lg); transform-style: preserve-3d; }
-.foundation { background: var(--scene-side); border: 1px solid var(--scene-edge); transform: translateZ(-35px); box-shadow: 0 8px 0 var(--color-paper); }
-.foundation span { position: absolute; width: 5px; height: 5px; background: var(--scene-edge); border-radius: 50%; }
-.foundation span:nth-child(1) { left: 12px; top: 12px; }
-.foundation span:nth-child(2) { right: 12px; top: 12px; }
-.foundation span:nth-child(3) { left: 12px; bottom: 12px; }
-.foundation span:nth-child(4) { right: 12px; bottom: 12px; }
-.substrate { inset: 8px; transform: translateZ(-18px); border: 1px solid var(--scene-route); background: color-mix(in srgb, var(--color-paper-2) 80%, transparent); }
-.circuit { inset: 16px; background: linear-gradient(135deg, var(--scene-metal), var(--scene-side)); border: 1px solid var(--scene-edge); box-shadow: 0 3px 0 var(--scene-side); }
-.traces { position: absolute; width: 100%; height: 100%; overflow: visible; }
-.route { stroke: var(--scene-route); stroke-width: 1.5; }
-.signal { stroke: var(--color-telemetry); stroke-width: 2; stroke-dasharray: 12 160; animation: signal 7s linear infinite; }
-.junction { fill: var(--color-telemetry); opacity: .6; }
-.node { position: absolute; left: var(--node-x); top: var(--node-y); width: 68px; height: 68px; transform: translate(-50%, -50%) translateZ(12px); transform-style: preserve-3d; transition: transform .7s var(--ease-out); }
-.nodeBase, .nodeTop { position: absolute; inset: 0; border-radius: var(--radius-md); border: 1px solid var(--scene-edge); background: var(--scene-metal); }
-.nodeBase { transform: translateZ(-7px); background: var(--scene-side); }
-.nodeTop { display: grid; place-items: center; color: var(--scene-quiet); box-shadow: 0 4px 0 var(--scene-side); transition: color .4s, border-color .4s, background .4s; }
-.nodeTop svg { width: 28px; height: 28px; }
-.nodeLines { position: absolute; bottom: 7px; left: 12px; width: 16px; height: 2px; background: currentColor; opacity: .6; }
-.node[data-active='true'] { transform: translate(-50%, -50%) translateZ(38px); }
-.node[data-active='true'] .nodeTop { border-color: var(--color-accent); color: var(--color-accent); background: var(--scene-face); }
-.core { position: absolute; left: 50%; top: 50%; width: 100px; height: 100px; transform: translate(-50%, -50%) translateZ(32px); transform-style: preserve-3d; }
-.coreBase, .coreMiddle, .coreTop { position: absolute; inset: 0; border-radius: var(--radius-md); border: 1px solid var(--color-accent); }
-.coreBase { background: var(--scene-side); transform: translateZ(-16px); }
-.coreMiddle { inset: 5px; transform: translateZ(-8px); background: var(--scene-face); }
-.coreTop { display: grid; place-items: center; background: linear-gradient(135deg, var(--scene-face), var(--scene-side)); box-shadow: inset 0 1px var(--scene-edge); }
-.coreGlyph { font-family: var(--font-display); color: var(--color-accent); font-size: 46px; font-weight: 600; line-height: 1; letter-spacing: -.04em; }
-.coreGlyph span { font-size: 24px; vertical-align: top; }
-.coreLabel { position: absolute; top: 68%; left: 50%; transform: translateX(-50%); color: var(--color-ink); font-size: .875rem; white-space: nowrap; display: flex; align-items: center; gap: .5rem; }
-.coreLabel > span { width: 5px; height: 5px; background: var(--color-accent); border-radius: 50%; }
-.legend { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.legendItem { display: flex; align-items: baseline; gap: .5rem; color: var(--scene-quiet); font-size: .875rem; line-height: 1.6; transition: color .3s; }
-.legendDot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-.legendItem small { display: block; font-size: .875rem; color: var(--scene-quiet); }
-.legendItem[data-active='true'] { color: var(--color-accent); }
-.scene[data-sector='fintech'] .foundation { border-radius: 50%; }
-.scene[data-sector='fintech'] .substrate { border-radius: 50%; }
-.scene[data-sector='manufacturing'] .sculpture { animation-name: driftFactory; }
-.scene[data-sector='retail'] .substrate { transform: translateZ(-18px) rotateZ(7deg); }
-.scene[data-running='false'] *, .scene[data-running='false'] *::after { animation-play-state: paused !important; }
-@keyframes signal { to { stroke-dashoffset: -344; } }
-@keyframes drift {
-  from { transform: translate(-50%, -50%) rotateX(56deg) rotateZ(-34deg); }
-  to { transform: translate(-50%, -53%) rotateX(53deg) rotateZ(-29deg); }
-}
-@keyframes driftFactory {
-  from { transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-39deg); }
-  to { transform: translate(-50%, -53%) rotateX(54deg) rotateZ(-34deg); }
-}
-@media (min-width: 901px) and (max-width: 1100px) {
-  .scene { height: 480px; }
-  .sculpture { width: 260px; height: 260px; top: 37%; }
-  .coreLabel { top: 65%; }
-  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1rem; }
-  .legendItem, .legendItem small { font-size: .875rem; }
-}
 @media (max-width: 760px) {
-  .scene { height: 520px; }
-  .sculpture { width: 68%; max-width: 300px; height: auto; aspect-ratio: 1; top: 34%; }
-  .coreLabel { top: 61%; }
-  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1rem; }
-  .legendItem, .legendItem small { font-size: .875rem; }
-}
-@media (max-width: 380px) {
-  .node { width: 54px; height: 54px; }
-  .core { width: 82px; height: 82px; }
-  .legend { left: 1rem; right: 1rem; }
-  .legendItem { gap: .375rem; }
+  .scene { height: 540px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .scene *, .scene *::after { animation: none !important; transition: none !important; }
 }
-

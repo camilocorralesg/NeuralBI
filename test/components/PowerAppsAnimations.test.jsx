@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PbaThreeParadigmsAnim, PbaProCodeApiEngineAnim, PbaEnterpriseDataverseMeshAnim } from '../../components/graphics/PowerAppsAnimations';
+import { LanguageProvider } from '../../context/LanguageContext';
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
@@ -49,5 +50,18 @@ describe('Power Apps animation lifecycle', () => {
     expect(new Set(ids).size).toBe(ids.length);
     for (const el of container.querySelectorAll('[clip-path]')) expect(ids).toContain(el.getAttribute('clip-path').slice(5, -1));
     for (const figure of screen.getAllByRole('figure')) expect(figure).toHaveAttribute('data-running', 'true');
+  });
+
+  it('translates titles, descriptions and node labels when language is spanish', () => {
+    render(
+      <LanguageProvider defaultLang="es">
+        <PbaThreeParadigmsAnim />
+        <PbaProCodeApiEngineAnim />
+        <PbaEnterpriseDataverseMeshAnim />
+      </LanguageProvider>
+    );
+    expect(screen.getByRole('figure', { name: 'Canvas App → Arquitectura híbrida Pro-Code' })).toHaveAccessibleDescription(/Un componente React se empaqueta como control PCF/);
+    expect(screen.getByRole('figure', { name: 'Fusión de esquema Dataverse y PCF' })).toHaveAccessibleDescription(/Cuentas, Contactos y Roles de seguridad convergen/);
+    expect(screen.getByRole('figure', { name: 'Malla de arquitectura empresarial segura' })).toHaveAccessibleDescription(/Dentro del perímetro del tenant/);
   });
 });

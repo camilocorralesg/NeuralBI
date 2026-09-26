@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import FooterCTA from '../../components/sections/FooterCTA';
 
+
 const mockPush = vi.fn();
 
 vi.mock('next/navigation', () => ({
@@ -146,5 +147,15 @@ describe('Component: FooterCTA Form Integration', () => {
       expect(screen.getByText(/Network error\. Please try again later\./i)).toBeInTheDocument();
       expect(mockPush).not.toHaveBeenCalled();
     });
+  });
+  it('carries the travelling beam on its panel and lights the submit once the form can be sent', () => {
+    const { container } = render(<FooterCTA activeHero="remix" />);
+    expect(container.querySelector('[data-live]')).toHaveAttribute('aria-hidden', 'true');
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    expect(submitBtn).not.toHaveAttribute('data-ready');
+    fireEvent.change(screen.getByLabelText(/^Name$/i), { target: { name: 'name', value: 'Alex Morgan' } });
+    fireEvent.change(screen.getByLabelText(/^Work Email$/i), { target: { name: 'email', value: 'alex@enterprise.com' } });
+    fireEvent.change(screen.getByLabelText(/What do you want to explore\?/i), { target: { name: 'message', value: 'Need data migration' } });
+    expect(submitBtn).toHaveAttribute('data-ready', 'true');
   });
 });

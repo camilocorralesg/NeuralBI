@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-21T15:40:45Z",
+  "generatedAt": "2026-09-26T19:48:27.791Z",
   "title": "Design System: NeuralBI",
   "extensions": {
     "colorMeta": {
@@ -8,61 +8,277 @@
         "role": "neutral",
         "displayName": "Deep Obsidian Ground",
         "canonical": "oklch(0% 0 0)",
-        "tonalRamp": ["#000000", "#0a0a0a", "#121212", "#1a1a1a", "#27272a", "#3f3f46", "#52525b", "#71717a"]
+        "tonalRamp": [
+          "#000000",
+          "#0a0a0a",
+          "#121212",
+          "#1a1a1a",
+          "#27272a",
+          "#3f3f46",
+          "#52525b",
+          "#71717a"
+        ]
       },
       "surface-1": {
         "role": "neutral",
         "displayName": "Surface Elevation 1",
         "canonical": "oklch(18% 0 0)",
-        "tonalRamp": ["#080808", "#0e0e0e", "#121212", "#171717", "#212121", "#2b2b2b", "#3d3d3d", "#525252"]
+        "tonalRamp": [
+          "#080808",
+          "#0e0e0e",
+          "#121212",
+          "#171717",
+          "#212121",
+          "#2b2b2b",
+          "#3d3d3d",
+          "#525252"
+        ]
       },
       "surface-2": {
         "role": "neutral",
         "displayName": "Surface Elevation 2",
         "canonical": "oklch(22% 0 0)",
-        "tonalRamp": ["#0d0d0d", "#141414", "#1a1a1a", "#222222", "#2c2c2c", "#383838", "#494949", "#5e5e5e"]
+        "tonalRamp": [
+          "#0d0d0d",
+          "#141414",
+          "#1a1a1a",
+          "#222222",
+          "#2c2c2c",
+          "#383838",
+          "#494949",
+          "#5e5e5e"
+        ]
       },
       "ink-primary": {
         "role": "neutral",
         "displayName": "Ink Primary (White)",
         "canonical": "oklch(100% 0 0)",
-        "tonalRamp": ["#27272a", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#ffffff"]
+        "tonalRamp": [
+          "#27272a",
+          "#52525b",
+          "#71717a",
+          "#a1a1aa",
+          "#d4d4d8",
+          "#e4e4e7",
+          "#f4f4f5",
+          "#ffffff"
+        ]
       },
       "ink-secondary": {
         "role": "neutral",
         "displayName": "Ink Secondary (Zinc-400)",
         "canonical": "oklch(73% 0.01 250)",
-        "tonalRamp": ["#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8", "#f4f4f5"]
+        "tonalRamp": [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525b",
+          "#71717a",
+          "#a1a1aa",
+          "#d4d4d8",
+          "#f4f4f5"
+        ]
       },
       "ink-tertiary": {
         "role": "neutral",
         "displayName": "Ink Tertiary (Zinc-500)",
         "canonical": "oklch(55% 0.01 250)",
-        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8"]
+        "tonalRamp": [
+          "#09090b",
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#52525b",
+          "#71717a",
+          "#a1a1aa",
+          "#d4d4d8"
+        ]
       },
       "accent": {
         "role": "primary",
         "displayName": "Electric Volt Lime",
         "canonical": "oklch(91% 0.23 126)",
-        "tonalRamp": ["#203300", "#385900", "#558000", "#77a800", "#9dd100", "#c6ff34", "#d4ff66", "#e8ffaa"]
+        "tonalRamp": [
+          "#203300",
+          "#385900",
+          "#558000",
+          "#77a800",
+          "#9dd100",
+          "#c6ff34",
+          "#d4ff66",
+          "#e8ffaa"
+        ]
       },
       "accent-hover": {
         "role": "primary",
         "displayName": "Volt Lime Hover",
         "canonical": "oklch(94% 0.20 125)",
-        "tonalRamp": ["#2a4200", "#456a00", "#689600", "#8ec400", "#b5ea24", "#d4ff66", "#e4ff8f", "#f2ffbb"]
+        "tonalRamp": [
+          "#2a4200",
+          "#456a00",
+          "#689600",
+          "#8ec400",
+          "#b5ea24",
+          "#d4ff66",
+          "#e4ff8f",
+          "#f2ffbb"
+        ]
       },
       "accent-ai": {
         "role": "secondary",
         "displayName": "Neural Indigo",
         "canonical": "oklch(58% 0.21 275)",
-        "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4338ca", "#4f46e5", "#6366f1", "#818cf8", "#a5b4fc"]
+        "tonalRamp": [
+          "#1e1b4b",
+          "#312e81",
+          "#3730a3",
+          "#4338ca",
+          "#4f46e5",
+          "#6366f1",
+          "#818cf8",
+          "#a5b4fc"
+        ]
       },
       "accent-telemetry": {
         "role": "secondary",
         "displayName": "Mesh Cyan",
         "canonical": "oklch(76% 0.15 220)",
-        "tonalRamp": ["#082f49", "#0c4a6e", "#0369a1", "#0284c7", "#0ea5e9", "#38bdf8", "#7dd3fc", "#bae6fd"]
+        "tonalRamp": [
+          "#082f49",
+          "#0c4a6e",
+          "#0369a1",
+          "#0284c7",
+          "#0ea5e9",
+          "#38bdf8",
+          "#7dd3fc",
+          "#bae6fd"
+        ]
+      },
+      "ink-tertiary-lifted": {
+        "role": "neutral",
+        "displayName": "Lifted Quiet Text",
+        "canonical": "#85858e",
+        "purpose": "Small labels on black that must clear AA (The Quiet Text Floor)."
+      },
+      "signal-amber": {
+        "role": "tertiary",
+        "displayName": "Signal Amber",
+        "canonical": "#ffb547",
+        "purpose": "Risk, discrepancies and pending attention in illustrations and mockups."
+      },
+      "signal-red": {
+        "role": "tertiary",
+        "displayName": "Signal Red",
+        "canonical": "#ff6a55",
+        "purpose": "Faults, defects, sanctions and blocked states inside product mockups."
+      },
+      "mockup-text": {
+        "role": "neutral",
+        "displayName": "Mockup Text",
+        "canonical": "#eef2ea",
+        "purpose": "Primary text inside product mockups."
+      },
+      "mockup-text-2": {
+        "role": "neutral",
+        "displayName": "Mockup Text Secondary",
+        "canonical": "#a0a99b",
+        "purpose": "Secondary text inside product mockups."
+      },
+      "mockup-text-3": {
+        "role": "neutral",
+        "displayName": "Mockup Text Tertiary",
+        "canonical": "#8f9889",
+        "purpose": "Meta text inside product mockups (6.1:1 on the window)."
+      },
+      "mockup-olive": {
+        "role": "secondary",
+        "displayName": "Mockup Olive",
+        "canonical": "#8fae63",
+        "purpose": "Second series in mockup charts."
+      },
+      "mockup-moss": {
+        "role": "secondary",
+        "displayName": "Mockup Moss",
+        "canonical": "#4f6641",
+        "purpose": "Third series in mockup charts; avatar gradients."
+      },
+      "mockup-raised": {
+        "role": "neutral",
+        "displayName": "Mockup Raised",
+        "canonical": "#141915",
+        "purpose": "Raised controls: flow nodes, branch labels, map wells."
+      },
+      "mockup-sunken": {
+        "role": "neutral",
+        "displayName": "Mockup Sunken",
+        "canonical": "#0c0f0d",
+        "purpose": "Sunken wells: browsers, maps, device screens."
+      },
+      "mockup-on-accent": {
+        "role": "neutral",
+        "displayName": "Ink on Volt",
+        "canonical": "#0b0e0c",
+        "purpose": "Text and icons set on lime or amber inside mockups."
+      },
+      "mockup-paper": {
+        "role": "neutral",
+        "displayName": "Printed Document",
+        "canonical": "#f2f5ec",
+        "purpose": "Documents and labels depicted inside a product; never a page background."
+      },
+      "mockup-paper-ink": {
+        "role": "neutral",
+        "displayName": "Document Ink",
+        "canonical": "#1c2119",
+        "purpose": "Primary ink on a depicted document."
+      },
+      "mockup-paper-ink-2": {
+        "role": "neutral",
+        "displayName": "Document Ink Secondary",
+        "canonical": "#56604f",
+        "purpose": "Secondary ink on a depicted document."
+      },
+      "mockup-paper-ink-3": {
+        "role": "neutral",
+        "displayName": "Document Ink Tertiary",
+        "canonical": "#7a8473",
+        "purpose": "Captions on a depicted document."
+      },
+      "mockup-paper-rule": {
+        "role": "neutral",
+        "displayName": "Document Rule",
+        "canonical": "#d6ddcb",
+        "purpose": "Hairlines on a depicted document."
+      },
+      "mockup-land": {
+        "role": "neutral",
+        "displayName": "Map Land",
+        "canonical": "#161d17",
+        "purpose": "Land masses on mockup maps."
+      },
+      "mockup-land-edge": {
+        "role": "neutral",
+        "displayName": "Map Coast",
+        "canonical": "#26302a",
+        "purpose": "Coastlines on mockup maps."
+      },
+      "device-graphite-hi": {
+        "role": "neutral",
+        "displayName": "Graphite Highlight",
+        "canonical": "#313931",
+        "purpose": "Lit edge of phone and tablet frames."
+      },
+      "device-graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#1c211d",
+        "purpose": "Phone and tablet frames."
+      },
+      "device-graphite-lo": {
+        "role": "neutral",
+        "displayName": "Graphite Shadow",
+        "canonical": "#0d100e",
+        "purpose": "Shaded side of phone and tablet frames."
       }
     },
     "typographyMeta": {
@@ -77,6 +293,10 @@
       "label": {
         "displayName": "Telemetry & Monospace (JetBrains Mono)",
         "purpose": "Section kickers, live API statuses, latency numbers, and phase markers."
+      },
+      "logotype": {
+        "displayName": "Logotype",
+        "purpose": "Absolut, for the NeuralBI wordmark only."
       }
     },
     "shadows": [
@@ -98,44 +318,87 @@
     ],
     "motion": [
       {
-        "name": "ease-out-snappy",
+        "name": "ease-out",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Deterministic, zero-latency response curve for UI interactions."
+        "purpose": "Entrances, exits and feedback (--ease-out)."
       },
       {
-        "name": "duration-fast",
-        "value": "150ms",
-        "purpose": "Immediate tactile micro-feedback (hover, tap, active states)."
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Movement across the screen: a sliding indicator, the hero scroll exit, the NeuralMark coming apart (--ease-in-out)."
       },
       {
-        "name": "duration-normal",
-        "value": "300ms",
-        "purpose": "Modal transitions, container reveals, and dropdown unfolds."
+        "name": "duration-press",
+        "value": "120ms",
+        "purpose": "Press feedback (--dur-press); every control scales to .96."
+      },
+      {
+        "name": "duration-ui",
+        "value": "200ms",
+        "purpose": "Hover, tabs, accordions and other frequent state changes (--dur-ui)."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "700ms",
+        "purpose": "Section arrivals seen once: 600 ms copy, 720 ms headline words, 900 ms visuals (--dur-reveal)."
+      },
+      {
+        "name": "duration-enter",
+        "value": "900ms",
+        "purpose": "The hero and page titles on screen at load (--dur-enter)."
+      },
+      {
+        "name": "stagger-words",
+        "value": "32ms (24ms at 768px and below)",
+        "purpose": "Between the words of a masked headline (--stagger-words)."
+      },
+      {
+        "name": "stagger-blocks",
+        "value": "80ms (60ms at 768px and below)",
+        "purpose": "Between blocks and cards; groups cap their index (--stagger-blocks)."
+      },
+      {
+        "name": "reveal-rise",
+        "value": "18px, 10px for copy (12px, 6px at 768px and below)",
+        "purpose": "Travel of arriving blocks and supporting copy (--reveal-rise, --reveal-rise-text)."
+      },
+      {
+        "name": "spring-settle",
+        "value": "damping ratio ≥ 0.9",
+        "purpose": "framer-motion springs settle without overshoot."
+      },
+      {
+        "name": "mockup-beat",
+        "value": "1.6–2.8s per beat, 12–16s per loop",
+        "purpose": "Product mockup storylines; they rest on the resolved state when not live."
       }
     ],
     "breakpoints": [
-      { "name": "sm", "value": "640px" },
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" }
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
     ]
   },
   "components": [
     {
-      "name": "Primary Raycast Button",
+      "name": "Shader Button",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "High-impact CTA with top specular highlight, electric volt gradient, and neon bloom.",
-      "html": "<button class=\"ds-btn-raycast\">Book Architecture Audit <span class=\"ds-arrow\">↵</span></button>",
-      "css": ".ds-btn-raycast { position: relative; background: linear-gradient(180deg, rgba(198, 255, 52, 0.95) 0%, rgba(198, 255, 52, 0.75) 100%); color: #000000; padding: 14px 36px; border-radius: 9999px; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(198, 255, 52, 0.15); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease; } .ds-btn-raycast:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(212, 255, 102, 1) 0%, rgba(198, 255, 52, 0.9) 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 4px 8px rgba(0, 0, 0, 0.4), 0 8px 32px rgba(198, 255, 52, 0.35); } .ds-btn-raycast:active { transform: translateY(1px) scale(0.98); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3); } .ds-arrow { font-family: monospace; font-weight: bold; }"
-    },
-    {
-      "name": "Secondary Outlined Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Subtle outlined action button for secondary paths and documentation links.",
-      "html": "<button class=\"ds-btn-secondary\">Explore Arsenal</button>",
-      "css": ".ds-btn-secondary { background: transparent; color: #ffffff; border: 1px solid #27272a; padding: 12px 24px; border-radius: 9999px; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: #121212; border-color: rgba(255, 255, 255, 0.25); color: #ffffff; } .ds-btn-secondary:active { transform: scale(0.98); }"
+      "description": "Every action button: a slow, grainy liquid glow of its tone (Volt, or a product colour in The Arsenal) inside a dark pill: a deep olive body and one soft pool of light, about a third of the pill, drifting along the lower edge; a 2px white edge at 24% and a soft inner glow. The light is capped under the label so white text clears 7:1. Drawn live by one shared WebGL engine; this sample is the still CSS liquid shown before it draws.",
+      "html": "<button class=\"ds-shader\">Book an Architecture Audit</button>",
+      "css": ".ds-shader { --tone: #c6ff34; position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; padding: 14px 34px; border: 0; border-radius: 9999px; color: #ffffff; font-family: var(--font-ui); font-weight: 600; font-size: 15px; letter-spacing: .016em; text-shadow: 0 1px 10px rgba(0, 0, 0, .55); background: radial-gradient(42% 130% at 8% 100%, color-mix(in srgb, var(--tone) 60%, #000000), transparent 70%), radial-gradient(32% 110% at 96% 0%, color-mix(in srgb, var(--tone) 38%, #000000), transparent 72%), radial-gradient(90% 160% at 50% 50%, color-mix(in srgb, var(--tone) 7%, #000000), #070a04); } .ds-shader::before { content: \"\"; position: absolute; inset: 0; border: 2px solid rgba(255, 255, 255, .24); border-radius: inherit; } .ds-shader::after { content: \"\"; position: absolute; inset: 0; z-index: -1; border-radius: inherit; box-shadow: inset 0 0 11px color-mix(in srgb, color-mix(in srgb, var(--tone) 55%, #ffffff) 40%, transparent); mix-blend-mode: hard-light; }"
     },
     {
       "name": "Bento Glass Card",
@@ -168,58 +431,135 @@
       "description": "Terminal status indicator with glowing LED pulse for active runtime states.",
       "html": "<div class=\"ds-badge-status\"><span class=\"ds-badge-dot\"></span><span class=\"ds-badge-text\">AUTONOMOUS IMPACT ACTIVE</span></div>",
       "css": ".ds-badge-status { display: inline-flex; align-items: center; gap: 8px; background: rgba(15, 26, 10, 0.9); border: 1px solid rgba(198, 255, 52, 0.4); border-radius: 9999px; padding: 5px 12px; box-shadow: 0 4px 16px rgba(198, 255, 52, 0.15); } .ds-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #c6ff34; box-shadow: 0 0 6px #c6ff34; } .ds-badge-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #c6ff34; letter-spacing: 0.05em; }"
+    },
+    {
+      "name": "Product Mockup Window",
+      "kind": "custom",
+      "description": "The graphite window a NeuralBI product is shown in, over the Aurora light. Opaque, no backdrop blur.",
+      "html": "<div class=\"ds-mk-window\"><header class=\"ds-mk-bar\"><span class=\"ds-mk-mark\"></span><span class=\"ds-mk-crumb\">Flows <b>Customs document ingestion</b></span><span class=\"ds-mk-pill\">Run #1287 · Succeeded · 42 s</span></header></div>",
+      "css": ".ds-mk-window { width: 420px; border-radius: 15px; background: linear-gradient(180deg, rgba(18, 22, 19, .95), rgba(10, 12, 11, .97)); box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 14px 28px -12px rgba(0, 0, 0, .6); font-family: var(--font-body); color: #eef2ea; } .ds-mk-bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, .075); } .ds-mk-mark { width: 20px; height: 20px; border-radius: 6px; background: #c6ff34; } .ds-mk-crumb { color: #858e80; font-size: 12px; } .ds-mk-crumb b { color: #eef2ea; font-family: var(--font-display); } .ds-mk-pill { margin-left: auto; padding: 6px 10px; border-radius: 8px; color: #c6ff34; background: rgba(198, 255, 52, .08); border: 1px solid rgba(198, 255, 52, .22); font-size: 11px; }"
+    },
+    {
+      "name": "ROI Ledger Row",
+      "kind": "custom",
+      "description": "One row of the ROI instrument: a figure of the shared size beside its minimal line instrument (here the cost falling to what is kept, with a blueprint measure labelled Saved) and a legend of short strokes. Graphite for the old way, Volt for NeuralBI; no fills, glows or stripes.",
+      "html": "<div class=\"ds-roi\"><span class=\"ds-roi-figure\">−65<span class=\"ds-roi-unit\">%</span></span><span class=\"ds-roi-detail\"><span class=\"ds-roi-label\">Operational and manual reporting costs.</span><span class=\"ds-roi-proof\"><svg class=\"ds-roi-curve\" viewBox=\"0 0 360 80\"><path d=\"M2 78H358\" stroke=\"rgba(255,255,255,.14)\"/><path d=\"M128 24H322\" stroke=\"rgba(255,255,255,.22)\" stroke-dasharray=\"2 4\"/><path d=\"M2 24H128\" stroke=\"rgba(255,255,255,.42)\"/><path d=\"M128 24C170 24 186 59.1 228 59.1H322\" stroke=\"#c6ff34\" stroke-width=\"1.5\"/><path d=\"M340 24V59.1M334 24H346M334 59.1H346\" stroke=\"rgba(198,255,52,.8)\"/></svg><span class=\"ds-roi-saved\">Saved</span></span><span class=\"ds-roi-legend\"><span class=\"ds-roi-key\">Before</span><span class=\"ds-roi-key ds-roi-volt\">After</span></span></span></div>",
+      "css": ".ds-roi { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 28px; width: 560px; padding: 24px 0; border-top: 1px solid rgba(255, 255, 255, .08); font-family: var(--font-body); } .ds-roi-figure { color: #ffffff; font-family: var(--font-display); font-size: 60px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: -.02em; } .ds-roi-unit { margin-left: .06em; color: #c6ff34; font-size: .5em; font-weight: 500; letter-spacing: 0; } .ds-roi-detail { display: grid; gap: 11px; } .ds-roi-label { color: rgba(255, 255, 255, .78); font-size: 16px; line-height: 1.45; } .ds-roi-proof { position: relative; display: block; } .ds-roi-curve { display: block; width: 100%; height: auto; fill: none; stroke-width: 1.25; } .ds-roi-saved { position: absolute; top: 52%; right: 9%; color: rgba(255, 255, 255, .7); font-size: 12px; line-height: 1; transform: translateY(-50%); } .ds-roi-legend { display: flex; gap: 18px; color: rgba(255, 255, 255, .62); font-size: 13px; } .ds-roi-key { display: inline-flex; align-items: center; gap: 7px; } .ds-roi-key::before { content: \"\"; width: 14px; height: 2px; background: rgba(255, 255, 255, .42); } .ds-roi-volt::before { background: #c6ff34; }"
     }
   ],
   "narrative": {
     "northStar": "The Autonomous Blueprint",
     "overview": "NeuralBI is an enterprise architecture platform engineered to communicate precision, velocity, and cognitive power. Rejecting the bland conventions of legacy corporate IT consulting and disposable SaaS templates, NeuralBI adopts an obsidian foundation with tactile glassmorphism, physical inset lighting, and high-voltage accents. The interface functions as a precision telemetry instrument, synthesizing schematics, 2D blueprint graphics, and live data telemetry into an environment that feels both industrial and extraordinarily refined.",
-    "keyCharacteristics": [
-      "Obsidian Foundation: Deep true-black backdrops (#000000) with high-contrast, pure-white typographic hierarchy.",
-      "Physical Inset Bevels: Multi-layered box shadows with top-edge specular highlights creating physical depth.",
-      "Electric Volt Accents: Strategic deployment of high-chroma volt lime (#c6ff34) reserved for primary actions and active telemetry states.",
-      "Cognitive Secondary Accents: Neural Indigo (#6366f1) for AI reasoning and Mesh Cyan (#38bdf8) for telemetry.",
-      "Tactile Bento Glassmorphism: Translucent dark container cards with 24px backdrop blur and delicate perimeter glow."
-    ],
+    "keyCharacteristics": [],
     "rules": [
       {
+        "name": "The Token-Only Mockup Rule",
+        "body": "Mockup and illustration CSS reference `--mk-*` / `--sc-*` tokens or `color-mix()` of them with pure black or white; a new literal hex inside a mockup is drift. Add the token first, then use it.",
+        "section": "colors"
+      },
+      {
         "name": "The 10% Volt Rule",
-        "body": "The primary accent (#c6ff34) must never occupy more than 10% of any given viewport. Its power comes directly from its scarcity against the deep obsidian field.",
+        "body": "The primary accent (`#c6ff34`) must never occupy more than 10% of any given viewport. Its power comes directly from its scarcity against the deep obsidian field. If the whole screen glows, nothing is actionable.",
         "section": "colors"
       },
       {
         "name": "The True Black Foundation Rule",
-        "body": "Surfaces must never default to charcoal, slate blue, navy, or desaturated brown as background canvas. The ground is #000000.",
+        "body": "Surfaces must never default to charcoal, slate blue, navy, or desaturated brown as background canvas. The ground is `#000000`. Backgrounds with beige, cream, or sand tones are strictly forbidden.",
         "section": "colors"
       },
       {
-        "name": "The Strict Font Stack Rule",
-        "body": "Only fonts defined in the official stack (Sora, Manrope, Schibsted Grotesk, JetBrains Mono, Absolut) may be rendered. System defaults or unapproved Google Fonts are forbidden.",
+        "name": "The Atmosphere Rule",
+        "body": "The ground stays `#000000` wherever two sections meet. Inside a section, `SectionAtmosphere` may lift the middle band to a tinted obsidian (no lighter than `oklch(0.16 0.02 128)`) with one soft Volt focus and one quieter Mesh Cyan focus, dissolving back to pure black at both edges. It is static by design (one paint, no scroll cost) and never carries content contrast on its own.",
+        "section": "colors"
+      },
+      {
+        "name": "The Aurora Rule",
+        "body": "Motion in a backdrop is reserved for `AuroraField`, the hero's light reprised as a liquid, grained gradient: one Volt streak on the hero's diagonal and two blooms welling up from the lower corners, breathing against each other on an 18 s swell. Most of the band stays black; the light lives at the edges and behind opaque surfaces. At most two Aurora sections per page (Unified Delivery and the ROI instrument), never adjacent to each other or to the hero. It renders in WebGL at half resolution and 30 fps, pauses offscreen and in hidden tabs, ignores the pointer, paints one still frame under reduced motion and falls back to a static CSS gradient without WebGL. Content on top must sit in a clearing (a radial black shade under the copy, a deeper one under any illustration), and text contrast is measured against the brightest moment of the swell, not the average.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Text Floor",
+        "body": "Ink Tertiary (`#71717a`) lands at ~4.4:1 on black, below AA for small text. Labels under 18px that use it must lift to `#85858e` (5.8:1); The Arsenal does this by overriding `--color-ink-3` at section scope, and the product mockups set their tertiary text to `#8f9889` (6.1:1 on the graphite window). Plain Ink Tertiary stays for strokes, dividers and inactive node rings.",
+        "section": "colors"
+      },
+      {
+        "name": "The Functional Chromatic Separation Rule",
+        "body": "Green/Volt represents action and velocity; Indigo represents AI logic; Cyan represents enterprise telemetry and data structure. Accents must never be mixed purely for decorative novelty.",
+        "section": "colors"
+      },
+      {
+        "name": "The NeuralNet Font Stack Rule",
+        "body": "Only fonts defined in the official NeuralNet stack (`DM Sans`, `Inter`, `Montserrat`, `JetBrains Mono`, `Absolut`) may be rendered. System defaults like Arial, Times New Roman, or legacy font pairings are forbidden.",
+        "section": "typography"
+      },
+      {
+        "name": "The Title Italic Lime Accent Rule",
+        "body": "Every title element formatted in italics (`<em>` or `.title-italic`) must render in `#c6ff34` (Volt Lime) with a lightweight weight of `300` and tight tracking (`-0.03em` to `-0.04em`). This creates a dynamic, high-contrast signature between the solid white bold display typeface and the radiant lime editorial emphasis.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light-on-Dark Breathing Rule",
+        "body": "Because light text on pure black visually bleeds slightly, body text (`--color-ink-2`) must always carry a minimum line-height of `1.5` to `1.6` and letter-spacing between `0` and `0.01em` to prevent typographic crowding.",
         "section": "typography"
       },
       {
         "name": "The Inset Edge Rule",
-        "body": "Every elevated or clickable surface must feature an internal 1px specular highlight along its top border (inset 0 1px 0 rgba(255, 255, 255, 0.1..0.8)).",
+        "body": "Every elevated or clickable surface (buttons, cards, floating pills) must feature an internal 1px specular highlight along its top border (`inset 0 1px 0 rgba(255, 255, 255, 0.1..0.8)`). This provides tangible physical clarity against true black without requiring thick borders.",
         "section": "elevation"
       },
       {
         "name": "The State-Driven Glow Rule",
-        "body": "Ambient neon glow effects must never be statically pinned across every card simultaneously; they ignite in response to hover, cursor proximity, or live streaming.",
+        "body": "Ambient neon glow effects must never be statically pinned across every card simultaneously. Glows are reactive: they ignite in response to hover, cursor proximity, or live telemetry streaming. Action buttons are the exception by design: their liquid flows slowly, paused off screen and still under reduced motion (see Shader Button). Two panels may carry a travelling edge light (`EdgeBeam`): the ROI instrument and the closing CTA, a single comet each, resting off screen and under reduced motion.",
         "section": "elevation"
+      },
+      {
+        "name": "The Opaque Window Rule",
+        "body": "A product mockup window over the Aurora is opaque graphite (`rgba(18, 22, 19, .95)` to `rgba(10, 12, 11, .97)`) with no backdrop blur: blurring a WebGL field re-samples it every frame for an effect nobody can see behind a 95% surface.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Signature Rule",
+        "body": "Every section shares the arrival language (masked headline words, copy and blocks one step behind); on top of it a section earns at most one gesture of its own and keeps it. A new section picks from the vocabulary above (a mask, a stagger, a clip, a roll, a draw) or adds to it here.",
+        "section": "motion"
+      },
+      {
+        "name": "The Resolved First Rule",
+        "body": "The server's HTML is always the finished state. Motion only arms what loaded off screen, so a slow script, no script or reduced motion never leaves content hidden.",
+        "section": "motion"
+      },
+      {
+        "name": "The Legibility Rule",
+        "body": "Paragraphs arrive as blocks, never word by word; no scramble, rotation or bounce on text; legal and long-form documents stay still below their heading.",
+        "section": "motion"
       }
     ],
     "dos": [
-      "Do anchor all views in deep obsidian black (#000000) to preserve dramatic contrast.",
-      "Do strictly limit Volt Lime (#c6ff34) to key interactive conversion triggers, active states, and critical ROI metrics.",
+      "Do anchor all views in deep obsidian black (`#000000`) to preserve dramatic contrast.",
+      "Do strictly limit Volt Lime (`#c6ff34`) to key interactive conversion triggers, active states, and critical ROI metrics.",
       "Do use multi-layered inset highlights on buttons and glass cards to maintain a tactile, physical quality.",
-      "Do preserve the exact typography stack: Sora for headings, Manrope for paragraphs, JetBrains Mono for telemetry tags.",
-      "Do write crisp, assertive engineering copy that speaks to enterprise directors and CTOs with concrete technical architectures."
+      "Do preserve the exact typography stack: DM Sans for display, Inter for body, Montserrat for UI and buttons, JetBrains Mono for telemetry tags, Absolut only for the logotype.",
+      "Do ease entrances, exits and feedback on `--ease-out` and on-screen travel on `--ease-in-out`; framer-motion springs keep a damping ratio of at least 0.9 (no overshoot).",
+      "Do animate only `transform`, `opacity`, `clip-path`, SVG strokes and short `filter: blur()` handoffs (4px at most, only while a reveal or a crossfade runs); position moving parts with a transformed layer, never with `top`, `left`, `width` or `height`. The layout transitions allowed are the FAQ answer's `grid-template-rows` (0fr → 1fr), which stays interruptible, and the navbar capsule's morph (see Navigation).",
+      "Do pause every loop offscreen and in hidden tabs, and give every animation a reduced-motion state: CSS rests on the resolved frame, framer-motion follows `MotionConfig reducedMotion=\"user\"`, and WebGL draws one still frame.",
+      "Do write crisp, assertive engineering copy that speaks to enterprise directors and CTOs with concrete technical architectures.",
+      "Do ensure interactive elements provide distinct `:hover`, `:focus-visible`, and `:active` states: hover only inside `@media (hover: hover) and (pointer: fine)` (a tap must not leave it stuck), and a press of `scale(.96)` (full-width rows and tab cells darken instead of scaling).",
+      "Do test all copy and form fields against the mandatory automated test suite before committing code."
     ],
     "donts": [
       "Don't use light, cream, beige, or sand background palettes under any circumstances.",
-      "Don't fall back to corporate IT consulting clichés (stock photos of handshakes, vague arrows, corporate blue swooshes).",
+      "Don't fall back to corporate IT consulting clichés (e.g., stock photos of handshakes, vague arrows, Accenture-style blue-gradient swooshes).",
       "Don't use standard Bootstrap or uncustomized Tailwind defaults.",
       "Don't splash neon colors indiscriminately across borders, backgrounds, and paragraphs.",
-      "Don't introduce fonts outside the documented stack (no Inter, Roboto, Fraunces, or Comic Sans)."
+      "Don't introduce fonts outside the documented stack (no Sora, Manrope, Roboto, Fraunces, or Comic Sans).",
+      "Don't use gradient text (`background-clip: text` over a gradient); headlines are solid white with a Volt italic accent.",
+      "Don't use bounce or elastic easing (`cubic-bezier` with a value above 1, underdamped springs), or ease-in on anything the visitor is waiting for.",
+      "Don't write `transition: all`; name the properties that change.",
+      "Don't give two sections the same entrance: a fade-up everywhere reads as a template.",
+      "Don't add live pulses, blinking indicators or perpetual motion on controls; the one exception is the Shader Button's slow liquid, which pauses off screen and rests under reduced motion.",
+      "Don't float, bob or scale a surface that carries text in a loop; a perpetual transform leaves glyphs at fractional offsets and they read soft.",
+      "Don't create flat, lifeless buttons without hover transitions, inset bevels, or tactile press feedback.",
+      "Don't use monospace fonts for long body paragraphs; restrict monospace strictly to telemetry tags, code blocks, and micro-labels.",
+      "Don't add decorative generic diagrams with fake controls or unstyled placeholders."
     ]
   }
 }

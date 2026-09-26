@@ -1,747 +1,92 @@
 'use client';
 
-import React, { useId, useMemo, memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { memo, useId, useMemo, useRef, useState } from 'react';
 import CharacterReveal from '../CharacterReveal';
+import useReveal from '../useReveal';
+import useEdgeSpotlight from '../useEdgeSpotlight';
 import { useLanguage } from '../../context/LanguageContext';
 import styles from './Faq.module.css';
 
-function RemixFaq({ title, items, activeIdx, onToggle }) {
-  const id = useId();
-  const reduceMotion = useReducedMotion();
+const FALLBACK_ITEMS = [
+  {
+    q: 'What is Microsoft Power Platform?',
+    a: 'A suite of low-code tools (Power Apps, Automate, BI, Copilot Studio) that allows businesses to build apps, automate workflows, analyze data, and build agentic chatbots rapidly.',
+  },
+  {
+    q: 'How does NeuralBI differ from traditional IT consultancies?',
+    a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence'—orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments.",
+  },
+  {
+    q: 'What is the average timeline for the Neural Protocol?',
+    a: 'Our precise three-phase protocol (Audit, Build, Scale) ranges from 2 weeks for targeted automation pilots to 8 weeks for full enterprise cognitive data engines.',
+  },
+  {
+    q: 'Is our enterprise data secure with NeuralBI solutions?',
+    a: 'Absolutely. All workflows are built directly within your tenant boundary, utilizing Microsoft Azure enterprise-grade security protocols, end-to-end data encryption, and strict governance policies.',
+  },
+];
 
+// One question: a glass card whose edge follows a fine pointer; its answer opens on grid rows, so it is interruptible.
+function FaqCard({ item, index, isOpen, onToggle, baseId }) {
+  const card = useRef(null);
+  useEdgeSpotlight(card);
+  const triggerId = `${baseId}-question-${index}`;
+  const panelId = `${baseId}-answer-${index}`;
   return (
-    <section className={styles.section} aria-labelledby={`${id}-heading`}>
-      <div className={styles.inner}>
-        <h2 id={`${id}-heading`} className={styles.title}>
-          {reduceMotion ? title.split(/(\*[^*]+\*)/g).map((part, index) => (
-            part.startsWith('*') ? <em key={index}>{part.slice(1, -1)}</em> : part
-          )) : <CharacterReveal text={title} />}
-        </h2>
-        <motion.div
-          className={styles.items}
-          initial={reduceMotion ? false : 'hidden'}
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: reduceMotion ? 0 : 0.08 } } }}
+    <div ref={card} className={styles.card} data-open={isOpen} style={{ '--i': index }}>
+      <h3 className={styles.question}>
+        <button
+          id={triggerId}
+          className={styles.trigger}
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          onClick={() => onToggle(isOpen ? null : index)}
         >
-          {items.map((item, index) => {
-            const isOpen = activeIdx === index;
-            const triggerId = `${id}-question-${index}`;
-            const panelId = `${id}-answer-${index}`;
-            return (
-              <motion.div
-                key={index}
-                className={styles.card}
-                data-open={isOpen}
-                variants={{
-                  hidden: { opacity: 0, y: 15 },
-                  visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] } },
-                }}
-              >
-                <h3 className={styles.question}>
-                  <button
-                    id={triggerId}
-                    className={styles.trigger}
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                    onClick={() => onToggle(isOpen ? null : index)}
-                  >
-                    <span>{item.q}</span>
-                    <span className={styles.chevron} aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" focusable="false">
-                        <path d="M3 6L8 11L13 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                  </button>
-                </h3>
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={triggerId}
-                  aria-hidden={!isOpen}
-                  inert={!isOpen}
-                  className={styles.answer}
-                  initial={false}
-                  animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div className={styles.answerInner}><p>{item.a}</p></div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+          <span>{item.q}</span>
+          <span className={styles.chevron} aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" focusable="false">
+              <path d="M3 6L8 11L13 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </h3>
+      <div id={panelId} role="region" aria-labelledby={triggerId} aria-hidden={!isOpen} inert={!isOpen} className={styles.answer}>
+        <div className={styles.answerClip}>
+          <div className={styles.answerInner}><p>{item.a}</p></div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-// ─── SECTION 10: PREMIUM STYLE-SPECIFIC FAQ (ACCORDIONS, GRID & COMMAND CONSOLE) ───
-function Faq({ activeHero }) {
+/**
+ * The FAQ: a title that rises into place, then the questions as glass cards that arrive one after another the first
+ * time the list is seen. One answer open at a time; each opens on grid rows (interruptible, 280 ms), the chevron turns,
+ * and the card's edge follows a fine pointer.
+ */
+function Faq() {
   const { t } = useLanguage();
-  const [activeIdx, setActiveIdx] = React.useState(null);
+  const [activeIdx, setActiveIdx] = useState(null);
+  const baseId = useId();
+  const list = useRef(null);
+  const reveal = useReveal(list, { amount: 0.15, settle: 1400 });
 
-  const sectionTitle = t?.faq?.sectionTitle || "Frequently Asked Questions";
-  const sectionSubtitle = t?.faq?.sectionSubtitle || "A curated overview of Power Platform capabilities, NeuralBI orchestrations, data sovereignty, and deployment timelines.";
-  const answerLabel = t?.faq?.answerLabel || "Answer";
-  const selectTopicLabel = t?.faq?.selectTopic || "Select a topic:";
+  const title = t?.faq?.sectionTitle || 'Frequently Asked *Questions.*';
+  const items = useMemo(() => t?.faq?.items || FALLBACK_ITEMS, [t]);
 
-  const faqData = useMemo(() => {
-    return t?.faq?.items || [
-      {
-        q: "What is Microsoft Power Platform?",
-        a: "A suite of low-code tools (Power Apps, Automate, BI, Copilot Studio) that allows businesses to build apps, automate workflows, analyze data, and build agentic chatbots rapidly."
-      },
-      {
-        q: "How does NeuralBI differ from traditional IT consultancies?",
-        a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence'—orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments."
-      },
-      {
-        q: "What is the average timeline for the Neural Protocol?",
-        a: "Our precise three-phase protocol (Audit, Build, Scale) ranges from 2 weeks for targeted automation pilots to 8 weeks for full enterprise cognitive data engines."
-      },
-      {
-        q: "Is our enterprise data secure with NeuralBI solutions?",
-        a: "Absolutely. All workflows are built directly within your tenant boundary, utilizing Microsoft Azure enterprise-grade security protocols, end-to-end data encryption, and strict governance policies."
-      }
-    ];
-  }, [t]);
-
-  if (activeHero === 'remix') {
-    return <RemixFaq title={sectionTitle} items={faqData} activeIdx={activeIdx} onToggle={setActiveIdx} />;
-  }
-
-  // Pick theme fonts and colors
-  const getTheme = () => {
-    switch (activeHero) {
-      case 'spline1':
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #040900)',
-          borderColor: 'rgba(255, 255, 255, 0.05)',
-          glowColor: 'rgba(198, 255, 52, 0.03)'
-        };
-      case 'cinematic':
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #08080c)',
-          borderColor: 'rgba(255, 255, 255, 0.08)',
-          glowColor: 'transparent'
-        };
-      case 'modern_v2':
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #071501)',
-          borderColor: 'rgba(255, 255, 255, 0.06)',
-          glowColor: 'rgba(198, 255, 52, 0.04)'
-        };
-      case 'tech_v4':
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #050505)',
-          borderColor: 'rgba(198, 255, 52, 0.2)',
-          glowColor: 'rgba(198, 255, 52, 0.02)'
-        };
-      case 'remix':
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #050505)',
-          borderColor: 'rgba(198, 255, 52, 0.2)',
-          glowColor: 'rgba(198, 255, 52, 0.02)'
-        };
-      case 'sui_fork':
-      default:
-        return {
-          fontTitle: 'var(--font-display)',
-          fontSans: 'var(--font-body)',
-          colorAccent: '#c6ff34',
-          bgGradient: 'linear-gradient(to bottom, #000000, #000000)',
-          borderColor: 'rgba(255, 255, 255, 0.05)',
-          glowColor: 'rgba(198, 255, 52, 0.04)'
-        };
-    }
-  };
-
-  const theme = getTheme();
-
-  // 1. NEBULA FAQ (Split-Screen Serif Accordion)
-  if (activeHero === 'spline1') {
-    return (
-      <section style={{
-        background: theme.bgGradient,
-        padding: 'clamp(4rem, 7vw, 8rem) 0',
-        position: 'relative',
-        zIndex: 10,
-        borderTop: '1px solid ' + theme.borderColor
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }} className="faq-grid-container">
-          <div className="faq-sticky-header">
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 4rem)', color: '#ffffff', fontWeight: 700, lineHeight: 1.15 }}>
-              {sectionTitle}
-            </h2>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', color: 'rgba(255, 255, 255, 0.45)', marginTop: '1.25rem', lineHeight: 1.6 }}>
-              {sectionSubtitle}
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {faqData.map((item, idx) => {
-              const isOpen = activeIdx === idx;
-              return (
-                <div
-                  key={idx}
-                  style={{
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                    paddingBottom: '1.25rem',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => setActiveIdx(isOpen ? null : idx)}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                    <h3 style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)',
-                      fontWeight: 600,
-                      color: isOpen ? '#c6ff34' : '#ffffff',
-                      transition: 'color 0.3s'
-                    }}>
-                      {item.q}
-                    </h3>
-                    <span style={{
-                      color: '#c6ff34',
-                      fontSize: '1.25rem',
-                      transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.3s'
-                    }}>
-                      +
-                    </span>
-                  </div>
-                  <div style={{
-                    maxHeight: isOpen ? '250px' : '0px',
-                    overflow: 'hidden',
-                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                    opacity: isOpen ? 1 : 0
-                  }}>
-                    <p style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '0.95rem',
-                      color: 'rgba(255, 255, 255, 0.55)',
-                      lineHeight: 1.6,
-                      marginTop: '0.75rem',
-                      maxWidth: '620px'
-                    }}>
-                      {item.a}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 2. CINEMATIC FAQ (2x2 Brutalist Grid Console)
-  if (activeHero === 'cinematic') {
-    return (
-      <section style={{
-        background: theme.bgGradient,
-        padding: 'clamp(4rem, 7vw, 8rem) 0',
-        position: 'relative',
-        zIndex: 10,
-        borderTop: '1px solid ' + theme.borderColor
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(1.85rem, 3.5vw, 3rem)',
-            color: '#ffffff',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '-0.03em',
-            marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
-            textAlign: 'center'
-          }}>
-            {sectionTitle.toUpperCase()} // CONSOLE
-          </h2>
-
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid rgba(255, 255, 255, 0.08)'
-          }} className="faq-brutalist-grid">
-            {faqData.map((item, idx) => {
-              const isOpen = activeIdx === idx;
-              return (
-                <div
-                  key={idx}
-                  className="faq-card"
-                  onClick={() => setActiveIdx(isOpen ? null : idx)}
-                  style={{
-                    background: '#020202',
-                    padding: 'clamp(1.5rem, 3vw, 3rem) clamp(1.25rem, 3vw, 2.5rem)',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    transition: 'all 0.3s',
-                    outline: isOpen ? '1px solid #c6ff34' : '1px solid transparent',
-                    zIndex: isOpen ? 2 : 1
-                  }}
-                >
-                  {isOpen && (
-                    <div style={{ position: 'absolute', top: '8px', left: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: '#c6ff34', letterSpacing: '0.1em' }}>
-                      [ACTIVE_CELL]
-                    </div>
-                  )}
-
-                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: isOpen ? '#c6ff34' : 'rgba(255,255,255,0.35)', marginTop: '3px' }}>
-                      0{idx + 1} //
-                    </span>
-                    <h3 style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
-                      fontWeight: 700,
-                      color: isOpen ? '#ffffff' : 'rgba(255, 255, 255, 0.75)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '-0.01em',
-                      lineHeight: 1.3
-                    }}>
-                      {item.q}
-                    </h3>
-                  </div>
-
-                  <div style={{
-                    maxHeight: isOpen ? '250px' : '0px',
-                    overflow: 'hidden',
-                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                    opacity: isOpen ? 1 : 0
-                  }}>
-                    <p style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '0.9rem',
-                      color: 'rgba(255,255,255,0.5)',
-                      lineHeight: 1.6,
-                      marginTop: '1.25rem',
-                      borderLeft: '2px solid #c6ff34',
-                      paddingLeft: '1rem'
-                    }}>
-                      {item.a}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 3. MODERN V2 FAQ (Stripe-style Interactive Tab Panel)
-  if (activeHero === 'modern_v2') {
-    const selectedIdx = activeIdx !== null ? activeIdx : 0;
-    return (
-      <section style={{
-        background: theme.bgGradient,
-        padding: 'clamp(4rem, 7vw, 8rem) 0',
-        position: 'relative',
-        zIndex: 10,
-        borderTop: '1px solid ' + theme.borderColor
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(1.85rem, 3.5vw, 3rem)',
-            color: '#ffffff',
-            fontWeight: 800,
-            letterSpacing: '-0.03em',
-            marginBottom: 'clamp(2.5rem, 5vw, 4rem)',
-            textAlign: 'center'
-          }}>
-            {sectionTitle}
-          </h2>
-
-          <div style={{
-            alignItems: 'stretch'
-          }} className="faq-grid-container">
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', justifyContent: 'center' }}>
-              {faqData.map((item, idx) => {
-                const isSelected = selectedIdx === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveIdx(idx)}
-                    aria-expanded={isSelected}
-                    aria-controls={`faq-answer-${idx}`}
-                    style={{
-                      background: isSelected ? 'rgba(255, 255, 255, 0.02)' : 'transparent',
-                      border: isSelected ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
-                      borderRadius: '16px',
-                      padding: '1rem 1.25rem',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.85rem',
-                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
-                    }}
-                    onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.01)'; }}
-                    onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.background = 'transparent'; }}
-                  >
-                    <div style={{
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      background: isSelected ? '#c6ff34' : 'rgba(255,255,255,0.15)',
-                      boxShadow: isSelected ? '0 0 8px #c6ff34' : 'none',
-                      transition: 'all 0.3s',
-                      flexShrink: 0
-                    }} />
-                    <span style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: 'clamp(0.92rem, 2vw, 1rem)',
-                      fontWeight: 600,
-                      color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.55)',
-                      transition: 'color 0.3s'
-                    }}>
-                      {item.q}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.01)',
-              backdropFilter: 'blur(30px)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              borderRadius: '24px',
-              padding: 'clamp(2rem, 4vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              position: 'relative',
-              overflow: 'hidden',
-              boxShadow: '0 20px 60px rgba(198, 255, 52, 0.03)'
-            }}>
-              <div style={{
-                position: 'absolute',
-                bottom: '-50px',
-                right: '-50px',
-                width: '250px',
-                height: '250px',
-                background: 'radial-gradient(circle, rgba(198, 255, 52, 0.08) 0%, transparent 70%)',
-                zIndex: 0,
-                pointerEvents: 'none'
-              }} />
-
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
-                  color: '#c6ff34',
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase'
-                }}>
-                  {answerLabel}
-                </span>
-
-                <h3 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
-                  fontWeight: 800,
-                  color: '#ffffff',
-                  marginTop: '0.75rem',
-                  lineHeight: 1.25,
-                  letterSpacing: '-0.02em'
-                }}>
-                  {faqData[selectedIdx].q}
-                </h3>
-
-                <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(0.92rem, 2vw, 1.05rem)',
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  lineHeight: 1.65,
-                  marginTop: '1.25rem'
-                }}>
-                  {faqData[selectedIdx].a}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 4. TECH V4 FAQ (Cyberpunk Command Terminal Console)
-  if (activeHero === 'tech_v4') {
-    const selectedIdx = activeIdx !== null ? activeIdx : 0;
-    return (
-      <section style={{
-        background: theme.bgGradient,
-        padding: 'clamp(4rem, 7vw, 8rem) 0',
-        position: 'relative',
-        zIndex: 10,
-        borderTop: '1px solid ' + theme.borderColor
-      }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
-
-          <div style={{
-            border: '1px solid rgba(198, 255, 52, 0.3)',
-            background: 'rgba(5, 8, 1, 0.9)',
-            padding: '1rem 1.5rem',
-            borderBottom: 'none',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#c6ff34', boxShadow: '0 0 6px #c6ff34' }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#c6ff34', letterSpacing: '0.1em' }}>
-                FAQ
-              </span>
-            </div>
-          </div>
-
-          <div className="faq-terminal-box" style={{
-            border: '1px solid rgba(198, 255, 52, 0.3)',
-            background: '#010200',
-            padding: 'clamp(1.5rem, 4vw, 3rem)',
-            display: 'grid',
-            gridTemplateColumns: '1.1fr 1fr',
-            gap: '2.5rem',
-            position: 'relative'
-          }}>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)', marginBottom: '0.25rem' }}>
-                {selectTopicLabel}
-              </span>
-
-              {faqData.map((item, idx) => {
-                const isSelected = selectedIdx === idx;
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => setActiveIdx(idx)}
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 'clamp(0.78rem, 2vw, 0.85rem)',
-                      color: isSelected ? '#c6ff34' : 'rgba(255, 255, 255, 0.65)',
-                      cursor: 'pointer',
-                      padding: '0.65rem 0.85rem',
-                      border: '1px dashed ' + (isSelected ? 'rgba(198, 255, 52, 0.4)' : 'rgba(255, 255, 255, 0.08)'),
-                      background: isSelected ? 'rgba(198, 255, 52, 0.03)' : 'transparent',
-                      transition: 'all 0.25s'
-                    }}
-                  >
-                    <span>{item.q}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="faq-terminal-answer" style={{
-              borderLeft: '1px solid rgba(198, 255, 52, 0.2)',
-              paddingLeft: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              minHeight: '200px'
-            }}>
-              <div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.65)' }}>
-                  {answerLabel}
-                </span>
-
-                <p style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',
-                  color: '#ffffff',
-                  lineHeight: 1.6,
-                  marginTop: '1rem',
-                  letterSpacing: '-0.02em'
-                }}>
-                  {faqData[selectedIdx].a}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 5. SUI FORK FAQ (Bento glass accordion cards)
   return (
-    <section style={{
-      background: theme.bgGradient,
-      padding: 'clamp(4rem, 7vw, 8rem) 0',
-      position: 'relative',
-      zIndex: 10,
-      borderTop: '1px solid ' + theme.borderColor
-    }}>
-      {/* Impeccable Halftone Texture Overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)',
-        backgroundSize: '16px 16px',
-        opacity: 0.5,
-        pointerEvents: 'none',
-        zIndex: 0
-      }} />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: '850px', margin: '0 auto', padding: '0 1.5rem' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
-          <CharacterReveal
-            text={sectionTitle}
-            className={activeHero === 'remix' ? 'text-gradient-premium' : ''}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.85rem, 3.5vw, 3.5rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
-              ...(activeHero !== 'remix' ? { color: '#ffffff' } : {})
-            }}
-          />
-        </h2>
-
-        <motion.div
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.08
-              }
-            }
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.15rem' }}
-        >
-          {faqData.map((item, idx) => {
-            const isOpen = activeIdx === idx;
-            const itemVariants = {
-              hidden: { opacity: 0, y: 15 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
-              }
-            };
-            return (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                onClick={() => setActiveIdx(isOpen ? null : idx)}
-                className="sui-card-hover faq-card"
-                style={{
-                  background: isOpen ? 'rgba(198, 255, 52, 0.04)' : 'rgba(12, 16, 26, 0.4)',
-                  backdropFilter: 'blur(24px)',
-                  border: '1px solid ' + (isOpen ? 'rgba(198, 255, 52, 0.25)' : 'rgba(255, 255, 255, 0.05)'),
-                  borderRadius: '16px',
-                  padding: 'clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.25rem)',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  boxShadow: isOpen ? '0 15px 35px rgba(198, 255, 52, 0.03)' : 'none',
-                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-                }}
-              >
-                {isOpen && (
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    width: '120px',
-                    height: '120px',
-                    background: 'radial-gradient(circle, rgba(198, 255, 52, 0.06) 0%, transparent 70%)',
-                    pointerEvents: 'none'
-                  }} />
-                )}
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1.25rem' }}>
-                  <h3 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.02rem, 2.5vw, 1.2rem)',
-                    fontWeight: 700,
-                    color: isOpen ? '#c6ff34' : '#ffffff',
-                    transition: 'color 0.3s'
-                  }}>
-                    {item.q}
-                  </h3>
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: isOpen ? 'rgba(198, 255, 52, 0.1)' : 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid ' + (isOpen ? '#c6ff34' : 'rgba(255, 255, 255, 0.08)'),
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: isOpen ? '#c6ff34' : '#ffffff',
-                    transition: 'all 0.3s',
-                    flexShrink: 0
-                  }}>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.4s'
-                      }}
-                    >
-                      <path d="M2 5L8 11L14 5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-
-                <div style={{
-                  maxHeight: isOpen ? '250px' : '0px',
-                  overflow: 'hidden',
-                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                  opacity: isOpen ? 1 : 0
-                }}>
-                  <p style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: 'clamp(0.88rem, 2vw, 0.95rem)',
-                    color: 'rgba(255,255,255,0.65)',
-                    lineHeight: 1.6,
-                    marginTop: '1.25rem'
-                  }}>
-                    {item.a}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
+    <section className={styles.section} aria-labelledby={`${baseId}-heading`}>
+      <div className={styles.inner}>
+        <h2 id={`${baseId}-heading`} className={styles.title}><CharacterReveal text={title} /></h2>
+        <div ref={list} className={styles.items} data-reveal={reveal}>
+          {items.map((item, index) => (
+            <FaqCard key={index} item={item} index={index} baseId={baseId} isOpen={activeIdx === index} onToggle={setActiveIdx} />
+          ))}
+        </div>
       </div>
     </section>
   );
-
 }
 
 export default memo(Faq);

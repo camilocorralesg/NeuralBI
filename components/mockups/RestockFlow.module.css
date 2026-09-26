@@ -1,0 +1,190 @@
+/* NeuralBI Flows · Automated restocking: the store's stock against a safety stock that moves with the forecast, and the
+ * flow that turns the crossing into purchase orders, one per supplier, sent out through each supplier's channel. Sized in
+ * em (see MockupStage); nodes carry data-state 'idle' | 'running' | 'done'. */
+.app { position: relative; }
+.modes { display: inline-flex; padding: .2em; border-radius: var(--mk-radius-md); background: rgba(255, 255, 255, .03); border: 1px solid var(--mk-line); }
+.modes span { padding: .55em .85em; border-radius: var(--mk-radius-sm); color: var(--mk-text-3); font: 500 .7em/1 var(--font-body, sans-serif); }
+.modes span[data-active='true'] { color: var(--mk-text); background: rgba(255, 255, 255, .07); }
+.body { display: grid; gap: .75em; padding: 1em 1.2em 1.1em; }
+
+/* Stock vs dynamic safety stock: each SKU's shelf as a column, its safety stock as a line that moves with the forecast. */
+.chart { padding: .8em .9em .75em; border-radius: var(--mk-radius-lg); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)); border: 1px solid var(--mk-line); }
+.chartHead { display: flex; align-items: center; justify-content: space-between; gap: .6em; margin-bottom: .65em; }
+.chartTitle { display: grid; gap: .25em; min-width: 0; }
+.chartTitle b { overflow: hidden; color: var(--mk-text); font: 600 .72em/1.15 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.chartTitle span { color: var(--mk-text-3); font: 500 .52em/1 var(--font-mono, monospace); }
+.forecast {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: .4em;
+  padding: .45em .65em;
+  border-radius: 99em;
+  color: var(--mk-amber);
+  background: color-mix(in srgb, var(--mk-amber) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mk-amber) 26%, transparent);
+  font: 600 .54em/1 var(--font-body, sans-serif);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-.3em);
+  transition: opacity .4s, transform .4s var(--ease-out, ease);
+}
+.forecast[data-shown='true'] { opacity: 1; transform: none; }
+.forecast svg { width: 1.15em; height: 1.15em; }
+.skus { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .5em; margin: 0; padding: 0; list-style: none; }
+.skus li { display: grid; justify-items: center; gap: .4em; min-width: 0; }
+.column { position: relative; width: 100%; max-width: 2.3em; height: 5.2em; overflow: hidden; border-radius: var(--mk-radius-xs) var(--mk-radius-xs) 0 0; background: rgba(255, 255, 255, .025); border-bottom: 1px solid var(--mk-line-strong); }
+.stock, .incoming, .tick { position: absolute; inset: 0; transform-origin: bottom; }
+.stock { background: color-mix(in srgb, var(--mk-text) 30%, transparent); transition: transform .6s var(--ease-out, ease), background-color .4s; }
+.skus li[data-state='below'] .stock { background: var(--mk-amber); }
+.incoming { background: var(--mk-lime); transition: transform .7s var(--ease-out, ease); }
+.tick { border-top: 2px solid color-mix(in srgb, var(--mk-text) 75%, transparent); transition: transform .9s var(--ease-out, cubic-bezier(.22, 1, .36, 1)), border-color .4s; }
+.skus li[data-dynamic='true'] .tick { border-top-color: var(--mk-amber); }
+.skus li[data-state='ordered'] .tick { border-top-color: var(--mk-text); }
+.skuName { max-width: 100%; overflow: hidden; color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; transition: color .4s; }
+.skus li[data-state='below'] .skuName { color: var(--mk-amber); }
+.skus li[data-state='ordered'] .skuName { color: var(--mk-lime); }
+.legend { display: flex; flex-wrap: wrap; gap: .4em 1em; margin-top: .6em; color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); }
+.legend span { display: inline-flex; align-items: center; gap: .4em; }
+.legend i { width: 1.1em; height: .7em; border-radius: var(--mk-radius-xs); }
+.legend span[data-key='stock'] i { background: color-mix(in srgb, var(--mk-text) 30%, transparent); }
+.legend span[data-key='below'] i { background: var(--mk-amber); }
+.legend span[data-key='incoming'] i { background: var(--mk-lime); }
+.legend span[data-key='tick'] i { height: 0; border-radius: 0; border-top: 2px solid var(--mk-amber); }
+
+/* The flow: a dotted board, left to right, ending outside the company in the suppliers' inboxes. */
+.canvas {
+  padding: .85em 1em .9em;
+  border-radius: var(--mk-radius-lg);
+  border: 1px solid var(--mk-line);
+  background-color: rgba(255, 255, 255, .012);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .07) 1px, transparent 0);
+  background-size: 1.15em 1.15em;
+}
+.pipeline {
+  --head: 1.6em;
+  --lane: 5.2em;
+  --gap: .45em;
+  display: grid;
+  grid-template-columns: minmax(0, 10.5em) 1.3em minmax(0, 1fr) 4.4em minmax(0, 11em);
+  align-items: center;
+}
+.cluster { display: flex; flex-direction: column; min-width: 0; }
+.link { align-self: center; width: 1px; height: .6em; background: var(--mk-line-strong); transition: background-color .35s; }
+.link[data-state='running'], .link[data-state='done'] { background: color-mix(in srgb, var(--mk-lime) 60%, transparent); }
+.link[data-dir='row'] { width: 100%; height: 1px; }
+.join { display: block; width: 100%; height: 1em; overflow: visible; }
+.join path { fill: none; stroke: var(--mk-line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; transition: stroke .35s; }
+.join path[data-state='lit'] { stroke: color-mix(in srgb, var(--mk-lime) 70%, transparent); }
+
+.node {
+  --tone: var(--mk-lime);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .45em;
+  min-width: 0;
+  padding: .42em .5em;
+  border-radius: var(--mk-radius-md);
+  background: var(--mk-raised);
+  border: 1px solid var(--mk-line-strong);
+  box-shadow: 0 .45em .9em -.55em rgba(0, 0, 0, .7);
+  transition: border-color .35s, opacity .35s;
+}
+.node[data-tone='warn'] { --tone: var(--mk-amber); }
+.node[data-state='idle'] { opacity: .5; }
+.node[data-state='running'] { border-color: color-mix(in srgb, var(--mk-lime) 45%, transparent); }
+.node[data-state='done'][data-tone='warn'] { border-color: color-mix(in srgb, var(--mk-amber) 40%, transparent); }
+.nodeIcon { display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .06); transition: color .35s, background-color .35s; }
+.node[data-state='running'] .nodeIcon, .node[data-state='done'] .nodeIcon { color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
+.nodeIcon svg { width: .9em; height: .9em; }
+.nodeText { display: grid; gap: .2em; min-width: 0; }
+.nodeText b { display: -webkit-box; overflow: hidden; color: var(--mk-text); font: 600 .56em/1.15 var(--font-body, sans-serif); -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.nodeText span, .nodeText em { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.nodeText span { color: var(--mk-text-3); font: 500 .5em/1.1 var(--font-body, sans-serif); }
+.nodeText em { min-height: 1.1em; color: var(--tone); font: 600 .5em/1.1 var(--font-mono, monospace); font-style: normal; }
+.nodeMark { display: grid; place-items: center; width: 1.2em; height: 1.2em; border-radius: 50%; color: var(--mk-on-accent); background: var(--tone); opacity: 0; transition: opacity .3s; }
+.node[data-state='done'] .nodeMark { opacity: 1; }
+.nodeMark svg { width: .75em; height: .75em; }
+.nodeBar { position: absolute; right: .5em; bottom: -1px; left: .5em; height: .14em; border-radius: 99em; background: var(--mk-lime); transform-origin: left; animation: run 1.2s var(--ease-out, ease) both; }
+
+/* Apply to each supplier: one lane per iteration; lanes, wires and suppliers share the same rows. */
+.loop, .wires, .suppliers { display: grid; grid-template-rows: var(--head) var(--lane) var(--lane); row-gap: var(--gap); align-self: stretch; }
+.loop { min-width: 0; padding: .45em .5em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .02); border: 1px solid var(--mk-line-strong); transition: border-color .35s; }
+.wires, .suppliers { padding: calc(.45em + 1px) 0; }
+.loop[data-state='running'] { border-color: color-mix(in srgb, var(--mk-lime) 35%, transparent); }
+.loopHead { display: flex; align-items: center; gap: .4em; color: var(--mk-text-2); }
+.loopHead svg { width: .9em; height: .9em; flex-shrink: 0; }
+.loopHead b { overflow: hidden; font: 600 .56em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.loopHead em { margin-left: auto; padding: .3em .5em; border-radius: 99em; color: var(--mk-text-2); background: rgba(255, 255, 255, .06); font: 600 .5em/1 var(--font-mono, monospace); font-style: normal; }
+.lane { display: grid; grid-template-rows: auto minmax(0, 1fr); align-content: center; gap: .3em; min-width: 0; padding: .3em .35em; border-radius: var(--mk-radius-md); transition: background-color .35s; }
+.lane[data-active='true'] { background: color-mix(in srgb, var(--mk-lime) 5%, transparent); }
+.laneName { color: var(--mk-text-3); font: 600 .5em/1 var(--font-body, sans-serif); }
+.laneNodes { display: grid; grid-template-columns: minmax(0, 1fr) .8em minmax(0, 1fr); align-items: center; }
+
+/* Wires out to the suppliers: the purchase order travels out once sent, the confirmation travels back. */
+.wire { position: relative; display: block; align-self: stretch; }
+.wire::before { content: ""; position: absolute; top: 50%; right: 0; left: 0; height: 1px; background: var(--mk-line-strong); transition: background-color .35s; }
+.wire[data-sent='true']::before { background: color-mix(in srgb, var(--mk-lime) 60%, transparent); }
+.wire small { position: absolute; color: var(--mk-text-3); font: 600 .5em/1 var(--font-mono, monospace); opacity: 0; transition: opacity .4s; }
+.wire small[data-end='out'] { top: calc(50% - 2em); left: .4em; }
+.wire small[data-end='back'] { right: .4em; bottom: calc(50% - 2em); }
+.wire[data-sent='true'] small[data-end='out'], .wire[data-acknowledged='true'] small[data-end='back'] { opacity: 1; }
+.wire[data-acknowledged='true'] small[data-end='back'] { color: var(--mk-lime); }
+.doc, .ackDoc { position: absolute; top: 50%; display: grid; place-items: center; width: 1.4em; height: 1.4em; margin-top: -.7em; border-radius: var(--mk-radius-xs); opacity: 0; }
+.doc { left: 0; color: var(--mk-on-accent); background: var(--mk-lime); }
+.ackDoc { right: 0; color: var(--mk-lime); background: var(--mk-raised); border: 1px solid color-mix(in srgb, var(--mk-lime) 45%, transparent); }
+.doc svg, .ackDoc svg { width: .85em; height: .85em; }
+.wire[data-sent='true'] .doc { animation: deliver .9s var(--ease-out, ease) both; }
+.wire[data-acknowledged='true'] .ackDoc { animation: acknowledge .9s var(--ease-out, ease) both; }
+
+/* Suppliers: outside the company (dashed), each receiving its PO through its own channel and confirming it. */
+.suppliersHead { align-self: center; overflow: hidden; color: var(--mk-text-3); font: 600 .52em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.supplier {
+  --tone: var(--mk-text-3);
+  display: grid;
+  align-content: center;
+  gap: .35em;
+  min-width: 0;
+  padding: .45em .6em;
+  border-radius: var(--mk-radius-md);
+  background: rgba(0, 0, 0, .25);
+  border: 1px dashed var(--mk-line-strong);
+  transition: border-color .4s;
+}
+.supplier[data-status='received'] { --tone: var(--mk-text-2); }
+.supplier[data-status='acknowledged'] { --tone: var(--mk-lime); border-style: solid; border-color: color-mix(in srgb, var(--mk-lime) 32%, transparent); }
+.supplierHead { display: flex; align-items: center; justify-content: space-between; gap: .4em; min-width: 0; }
+.supplierHead b { overflow: hidden; color: var(--mk-text); font: 600 .56em/1.1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.supplierHead em { flex-shrink: 0; padding: .3em .45em; border-radius: var(--mk-radius-xs); color: var(--mk-text-2); background: rgba(255, 255, 255, .06); font: 600 .5em/1 var(--font-mono, monospace); font-style: normal; }
+.supplierPo { color: var(--mk-text-2); font: 500 .5em/1.3 var(--font-body, sans-serif); }
+.supplierStatus { display: flex; align-items: flex-start; gap: .35em; color: var(--tone); font: 600 .5em/1.25 var(--font-body, sans-serif); transition: color .4s; }
+.supplierStatus svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
+
+@keyframes run { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes deliver {
+  0% { opacity: 0; transform: translateX(0); }
+  15%, 80% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(3em); }
+}
+@keyframes acknowledge {
+  0% { opacity: 0; transform: translateX(0); }
+  15%, 80% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-3em); }
+}
+
+/* Narrow stages: six SKUs, then the loop and the suppliers stacked; the chart already tells what triggered the run. */
+@container (max-width: 480px) {
+  .modes, .cluster, .join, .wires { display: none; }
+  .skus { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .skus li:nth-child(n + 7) { display: none; }
+  .pipeline { grid-template-columns: minmax(0, 1fr); row-gap: .6em; }
+  .loop { grid-template-rows: auto; }
+  .suppliers { grid-template-rows: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5em; padding: 0; }
+  .suppliersHead { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nodeBar, .wire[data-sent='true'] .doc, .wire[data-acknowledged='true'] .ackDoc { animation: none; }
+  .forecast, .stock, .incoming, .tick, .skuName, .link, .join path, .node, .nodeIcon, .nodeMark, .loop, .lane, .wire::before, .wire small, .supplier, .supplierStatus { transition: none; }
+}

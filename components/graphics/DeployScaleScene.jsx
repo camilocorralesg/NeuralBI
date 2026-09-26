@@ -45,7 +45,11 @@ function TeamMember({ x, y, scale = 1, fill }) {
   </g>;
 }
 
-export const DeployScaleScene = memo(function DeployScaleScene() {
+const DEFAULT_LABEL = 'Deploy & Scale: production, people and copilots';
+const DEFAULT_DESCRIPTION = 'An isometric production platform receives an application deployment, connects the team, and activates a cloud copilot. The scene builds progressively: the production base and server assemble first, connections reveal the dashboard, team members join one by one, and the copilot appears last. An additional server tier adds capacity before the completed system holds and gently resets.';
+
+// `label` and `description` let the host localise what assistive technology announces.
+export const DeployScaleScene = memo(function DeployScaleScene({ label = DEFAULT_LABEL, description = DEFAULT_DESCRIPTION }) {
   const ref = useRef(null);
   const id = useId();
   useEffect(() => {
@@ -61,7 +65,7 @@ export const DeployScaleScene = memo(function DeployScaleScene() {
     return () => { observer?.disconnect(); document.removeEventListener('visibilitychange', visibility); };
   }, []);
 
-  return <figure ref={ref} className={s.scene} data-running="false" aria-label="Deploy & Scale: production, people and copilots" aria-describedby={`${id}-desc`}>
+  return <figure ref={ref} className={s.scene} data-running="false" aria-label={label} aria-describedby={`${id}-desc`}>
     <svg viewBox="38 15 384 251" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-graphite`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#354031" /><stop offset="1" stopColor="#101b15" /></linearGradient>
@@ -129,6 +133,6 @@ export const DeployScaleScene = memo(function DeployScaleScene() {
       </g>
       </g>
     </svg>
-    <span id={`${id}-desc`} className={s.srOnly}>An isometric production platform receives an application deployment, connects the team, and activates a cloud copilot. The scene builds progressively: the production base and server assemble first, connections reveal the dashboard, team members join one by one, and the copilot appears last. An additional server tier adds capacity before the completed system holds and gently resets.</span>
+    <span id={`${id}-desc`} className={s.srOnly}>{description}</span>
   </figure>;
 });

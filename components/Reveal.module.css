@@ -1,0 +1,29 @@
+/* Resolved by default. Armed: waiting at its start, off screen. Run: carried home once, after its delay. The staged
+ * transitions exist only while it runs, so they never delay the element's own hover or state transitions later. */
+.reveal[data-reveal] { will-change: transform, opacity; }
+
+.text[data-reveal='armed'] { opacity: 0; transform: translateY(var(--reveal-rise-text)); }
+.text[data-reveal='run'] {
+  transition: opacity 600ms var(--ease-out) var(--reveal-delay), transform 600ms var(--ease-out) var(--reveal-delay);
+}
+
+.block[data-reveal='armed'] { opacity: 0; transform: translateY(var(--reveal-rise)); }
+.block[data-reveal='run'] {
+  transition: opacity 700ms var(--ease-out) var(--reveal-delay), transform 700ms var(--ease-out) var(--reveal-delay);
+}
+
+/* A visual opens upward from its lower edge as it settles: a wipe, not a zoom. */
+.visual[data-reveal] { will-change: transform, opacity, clip-path; }
+.visual[data-reveal='armed'] { opacity: 0; transform: translateY(var(--reveal-rise)); clip-path: inset(22% 0 0 0); }
+.visual[data-reveal='run'] {
+  clip-path: inset(0);
+  transition:
+    opacity 500ms var(--ease-out) var(--reveal-delay),
+    transform 900ms var(--ease-out) var(--reveal-delay),
+    clip-path 900ms var(--ease-out) var(--reveal-delay);
+}
+
+/* Reduced motion: no travel and no wipe; it appears. */
+@media (prefers-reduced-motion: reduce) {
+  .text[data-reveal='armed'], .block[data-reveal='armed'], .visual[data-reveal='armed'] { transform: none; clip-path: none; }
+}

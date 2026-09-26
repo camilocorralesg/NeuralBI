@@ -1,0 +1,204 @@
+/* NeuralBI Flows · Autonomous maintenance: the flow designer on top, its two parallel branches each above the business
+ * system they change (storeroom, schedule board). Sized in em (see MockupStage); nodes carry data-state
+ * 'idle' | 'running' | 'done' and a tone 'ok' | 'warn'. */
+.app { position: relative; }
+.modes { display: inline-flex; padding: .2em; border-radius: var(--mk-radius-md); background: rgba(255, 255, 255, .03); border: 1px solid var(--mk-line); }
+.modes span { padding: .55em .85em; border-radius: var(--mk-radius-sm); color: var(--mk-text-3); font: 500 .7em/1 var(--font-body, sans-serif); }
+.modes span[data-active='true'] { color: var(--mk-text); background: rgba(255, 255, 255, .07); }
+.body { display: grid; gap: .75em; padding: 1em 1.2em 1.1em; }
+
+/* Designer canvas: a dotted board, the flow top to bottom, the parallel branches side by side. */
+.canvas {
+  padding: .85em 1em .9em;
+  border-radius: var(--mk-radius-lg);
+  border: 1px solid var(--mk-line);
+  background-color: rgba(255, 255, 255, .012);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .07) 1px, transparent 0);
+  background-size: 1.15em 1.15em;
+}
+.flow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.spine { display: flex; grid-column: 1 / -1; flex-direction: column; align-items: center; }
+/* Equal columns with equal padding: the branch centres sit at 25% and 75%, where the fork's paths land. */
+.branch { display: flex; flex-direction: column; align-items: center; min-width: 0; padding: 0 .55em; }
+.branchLabel { margin-bottom: .4em; padding: .35em .65em; border-radius: 99em; color: var(--mk-text-3); background: var(--mk-raised); border: 1px solid var(--mk-line); font: 600 .5em/1 var(--font-body, sans-serif); transition: color .35s, border-color .35s; }
+.branchLabel[data-state='lit'] { color: var(--mk-lime); border-color: color-mix(in srgb, var(--mk-lime) 30%, transparent); }
+
+.link { width: 1px; height: .75em; background: var(--mk-line-strong); transition: background-color .35s; }
+.link[data-state='running'], .link[data-state='done'] { background: color-mix(in srgb, var(--mk-lime) 60%, transparent); }
+.fork { display: block; grid-column: 1 / -1; width: 100%; height: 1.1em; overflow: visible; }
+.fork path { fill: none; stroke: var(--mk-line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; transition: stroke .35s; }
+.fork path[data-state='lit'] { stroke: color-mix(in srgb, var(--mk-lime) 70%, transparent); }
+
+.node {
+  --tone: var(--mk-lime);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: .55em;
+  width: min(100%, 26em);
+  padding: .45em .55em;
+  border-radius: var(--mk-radius-md);
+  background: var(--mk-raised);
+  border: 1px solid var(--mk-line-strong);
+  box-shadow: 0 .45em .9em -.55em rgba(0, 0, 0, .7);
+  transition: border-color .35s, opacity .35s;
+}
+.branch .node { width: 100%; }
+.node[data-node='trigger'] { grid-template-columns: auto minmax(0, 1fr) auto auto auto; width: min(100%, 38em); }
+.node[data-tone='warn'] { --tone: var(--mk-amber); }
+.node[data-state='idle'] { opacity: .5; }
+.node[data-state='running'] { border-color: color-mix(in srgb, var(--mk-lime) 45%, transparent); }
+.node[data-state='done'][data-tone='warn'] { border-color: color-mix(in srgb, var(--mk-amber) 40%, transparent); }
+.nodeIcon { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .06); transition: color .35s, background-color .35s; }
+.node[data-state='running'] .nodeIcon, .node[data-state='done'] .nodeIcon { color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
+.nodeIcon svg { width: .95em; height: .95em; }
+.nodeText { display: grid; gap: .25em; min-width: 0; }
+.nodeText b, .nodeText span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.nodeText b { color: var(--mk-text); font: 600 .6em/1.15 var(--font-body, sans-serif); }
+.nodeText span { color: var(--mk-text-3); font: 500 .5em/1.1 var(--font-body, sans-serif); }
+.nodeResult { color: var(--tone); font: 600 .52em/1 var(--font-mono, monospace); white-space: nowrap; transition: color .35s; }
+.nodeResult[data-waiting='true'] { color: var(--mk-text-3); }
+.nodeMark { display: grid; place-items: center; width: 1.3em; height: 1.3em; border-radius: 50%; color: var(--mk-on-accent); background: var(--tone); opacity: 0; transition: opacity .3s; }
+.node[data-state='done'] .nodeMark { opacity: 1; }
+.nodeMark svg { width: .78em; height: .78em; }
+.nodeBar { position: absolute; right: .5em; bottom: -1px; left: .5em; height: .14em; border-radius: 99em; background: var(--mk-lime); transform-origin: left; animation: run 1.2s var(--ease-out, ease) both; }
+
+/* The trigger's signal: vibration RMS against the dashed wear threshold, drawn in steps, amber above the line. */
+.spark { display: flex; align-items: center; gap: .5em; }
+/* Drawn at the viewBox's own ratio (112 × 36), so the path lengths the steps reveal are exact. */
+.spark svg { display: block; width: 7.5em; height: 2.41em; overflow: visible; }
+.threshold { fill: none; stroke: color-mix(in srgb, var(--mk-amber) 60%, transparent); stroke-width: 1; stroke-dasharray: 3 3; }
+.history { fill: none; stroke: var(--mk-text-3); stroke-width: 1.3; }
+.climb, .over { fill: none; stroke-dasharray: 100; stroke-linecap: round; transition: stroke-dashoffset .6s var(--ease-out, ease); }
+.climb { stroke: var(--mk-text-2); stroke-width: 1.5; }
+.over { stroke: var(--mk-amber); stroke-width: 1.8; }
+.sparkValue { display: grid; gap: .25em; justify-items: end; }
+.sparkValue > span { color: var(--mk-text-2); font: 600 .56em/1 var(--font-mono, monospace); white-space: nowrap; transition: color .35s; }
+.spark[data-over='true'] .sparkValue > span { color: var(--mk-amber); }
+.sparkValue small { color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); white-space: nowrap; }
+
+/* The business systems the branches change, each under its branch. */
+.systems { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .75em; }
+.panel { min-width: 0; padding: .75em .85em .8em; border-radius: var(--mk-radius-lg); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)); border: 1px solid var(--mk-line); }
+.panelHead { display: flex; align-items: center; gap: .45em; margin-bottom: .6em; }
+.panelHead b { flex: 1; overflow: hidden; color: var(--mk-text); font: 600 .66em/1.2 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.panelHead > span:last-child { flex-shrink: 0; color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); }
+.panelIcon { display: grid; place-items: center; width: 1.55em; height: 1.55em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .06); }
+.panelIcon svg { width: .9em; height: .9em; }
+
+/* Storeroom: one slot per unit, the reorder minimum as a tick between slots. */
+.bins { display: grid; gap: .35em; margin: 0; padding: 0; list-style: none; }
+.bins li {
+  --tone: var(--mk-text-2);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 3.6em;
+  align-items: center;
+  gap: .6em;
+  padding: .45em .5em;
+  border-radius: var(--mk-radius-md);
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid transparent;
+  transition: border-color .35s;
+}
+.bins li[data-needed='true'] { border-color: color-mix(in srgb, var(--mk-lime) 18%, transparent); }
+.bins li[data-low='true'] { --tone: var(--mk-amber); }
+.binText { display: grid; gap: .25em; min-width: 0; }
+.binText b, .binText span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.binText b { color: var(--mk-text); font: 600 .56em/1.1 var(--font-body, sans-serif); }
+.binText span { color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); }
+.slots { position: relative; display: flex; gap: .2em; }
+.slots i { width: .8em; height: 1.3em; border-radius: var(--mk-radius-xs); border: 1px solid var(--mk-line); transition: background-color .35s, border-color .35s; }
+.slots i[data-cell='free'] { background: color-mix(in srgb, var(--mk-text) 40%, transparent); border-color: transparent; }
+.slots i[data-cell='reserved'] { background: color-mix(in srgb, var(--mk-lime) 22%, transparent); border-color: var(--mk-lime); }
+.slots i[data-cell='incoming'] { border: 1px dashed color-mix(in srgb, var(--mk-lime) 65%, transparent); }
+/* One slot is .8em plus a .2em gap: the minimum falls in the gap after its slot. */
+.minMark { position: absolute; top: -.3em; bottom: -.3em; left: calc(var(--min) * 1em - .1em); width: 1px; background: var(--tone); transition: background-color .35s; }
+.binCount { color: var(--tone); font: 600 .54em/1 var(--font-mono, monospace); text-align: right; white-space: nowrap; transition: color .35s; }
+.po {
+  display: flex;
+  align-items: center;
+  gap: .45em;
+  margin-top: .5em;
+  padding: .45em .6em;
+  border-radius: var(--mk-radius-md);
+  background: color-mix(in srgb, var(--mk-lime) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mk-lime) 24%, transparent);
+  opacity: 0;
+  transform: translateY(.35em);
+  transition: opacity .45s, transform .45s var(--ease-out, ease);
+}
+.po[data-po='true'] { opacity: 1; transform: none; }
+.po svg { width: .95em; height: .95em; flex-shrink: 0; color: var(--mk-lime); }
+.po b { color: var(--mk-lime); font: 600 .54em/1 var(--font-mono, monospace); white-space: nowrap; }
+.po span { min-width: 0; overflow: hidden; color: var(--mk-text-2); font: 500 .5em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.po em { flex-shrink: 0; margin-left: auto; color: var(--mk-text-3); font: 600 .5em/1 var(--font-mono, monospace); font-style: normal; }
+
+/* Schedule board: each technician's evening, 16:00 to 24:00, the new booking revealed left to right. */
+.board { display: grid; gap: .3em; }
+.axis { position: relative; height: .75em; }
+.axis span { position: absolute; top: 0; color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); transform: translateX(-50%); }
+.axis span:first-child { transform: none; }
+.axis span:last-child { transform: translateX(-100%); }
+.lanes { display: grid; gap: .4em; margin: 0; padding: 0; list-style: none; }
+.lanes li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .25em .5em; transition: opacity .35s; }
+.lanes li[data-status='noSkill'], .lanes li[data-status='off'] { opacity: .45; }
+.tech { display: flex; align-items: baseline; gap: .45em; min-width: 0; }
+.tech b { flex-shrink: 0; color: var(--mk-text); font: 600 .56em/1 var(--font-body, sans-serif); }
+.tech span { overflow: hidden; color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.laneStatus { display: inline-flex; align-items: center; gap: .25em; color: var(--mk-text-3); font: 600 .5em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.laneStatus svg { width: 1.1em; height: 1.1em; }
+.lanes li[data-status='match'] .laneStatus, .lanes li[data-status='accepted'] .laneStatus { color: var(--mk-lime); }
+.track {
+  position: relative;
+  grid-column: 1 / -1;
+  height: 1.45em;
+  overflow: hidden;
+  border-radius: var(--mk-radius-sm);
+  background-color: rgba(255, 255, 255, .025);
+  background-image: linear-gradient(90deg, var(--mk-line) 1px, transparent 1px);
+  background-size: 25% 100%;
+  border: 1px solid var(--mk-line);
+  transition: border-color .35s;
+}
+.lanes li[data-status='match'] .track, .lanes li[data-status='accepted'] .track { border-color: color-mix(in srgb, var(--mk-lime) 30%, transparent); }
+.lanes li[data-off='true'] .track { background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, .06) 0 .2em, transparent .2em .55em); background-size: auto; }
+.booking { position: absolute; top: .22em; bottom: .22em; border-radius: var(--mk-radius-xs); background: rgba(255, 255, 255, .1); border: 1px solid var(--mk-line); }
+.newBooking {
+  position: absolute;
+  top: .22em;
+  bottom: .22em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .25em;
+  border-radius: var(--mk-radius-xs);
+  color: var(--mk-lime);
+  background: color-mix(in srgb, var(--mk-lime) 16%, transparent);
+  border: 1px solid var(--mk-lime);
+  font: 700 .5em/1 var(--font-mono, monospace);
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .55s var(--ease-out, ease), color .35s, background-color .35s;
+}
+.newBooking[data-shown='true'] { clip-path: inset(0 0 0 0); }
+.newBooking[data-accepted='true'] { color: var(--mk-on-accent); background: var(--mk-lime); }
+.newBooking svg { width: 1.1em; height: 1.1em; }
+
+@keyframes run { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Narrow stages: the flow alone; the node results carry the story. */
+@container (max-width: 480px) {
+  .systems, .modes { display: none; }
+  .node[data-node='trigger'] { grid-template-columns: auto minmax(0, 1fr) auto auto; }
+  .spark { grid-column: 1 / -1; grid-row: 2; }
+  /* Branch nodes are half as wide: the result drops under the name so the name keeps its width. */
+  .branch .node { grid-template-columns: auto minmax(0, 1fr) auto; row-gap: .3em; }
+  .branch .nodeIcon { grid-row: 1 / 3; }
+  .branch .nodeResult { grid-column: 2; grid-row: 2; }
+  .branch .nodeMark { grid-column: 3; grid-row: 1 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nodeBar { animation: none; }
+  .node, .nodeIcon, .nodeResult, .nodeMark, .link, .fork path, .branchLabel, .climb, .over, .sparkValue > span, .bins li, .slots i, .minMark, .binCount, .po, .lanes li, .track, .newBooking { transition: none; }
+}

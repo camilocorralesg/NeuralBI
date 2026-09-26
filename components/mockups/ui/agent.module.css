@@ -1,0 +1,158 @@
+/* NeuralBI agent primitives: an agent's conversation, the way Copilot Studio agents work in the product mockups.
+ * An event in the user's place, the agent's turn with its reasoning (thoughts, tool calls, policy), the cited answer and
+ * the composer. Sized in em (see MockupStage); used beside a product's own pane (Logistics, Fraud). */
+/* The conversation: an event in the user's place, then the agent's turn, anchored to the bottom like a thread. */
+.chat { display: flex; flex-direction: column; min-width: 0; padding: 1em 1.1em 1.1em; border-right: 1px solid var(--mk-line); }
+.threadBox { position: relative; flex: 1; min-height: 25em; }
+/* The thread starts at the top; once it outgrows the box, the newest stays in view and the oldest leaves at the top. */
+.thread {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 1.4em);
+  mask-image: linear-gradient(180deg, transparent, #000000 1.4em);
+}
+.threadInner { display: flex; flex-direction: column; flex-shrink: 0; gap: .85em; min-height: 100%; padding-top: .6em; }
+.event {
+  display: grid;
+  flex-shrink: 0;
+  align-self: flex-end;
+  gap: .45em;
+  max-width: 82%;
+  padding: .7em .85em;
+  border-radius: var(--mk-radius-lg) var(--mk-radius-lg) var(--mk-radius-xs) var(--mk-radius-lg);
+  background: color-mix(in srgb, var(--mk-amber) 6%, rgba(255, 255, 255, .02));
+  border: 1px solid color-mix(in srgb, var(--mk-amber) 28%, transparent);
+  animation: arrive .5s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+}
+.eventHead { display: flex; align-items: center; gap: .45em; color: var(--mk-amber); font: 600 .54em/1 var(--font-body, sans-serif); }
+.eventHead svg { width: 1.2em; height: 1.2em; }
+.event p { margin: 0; color: var(--mk-text); font: 500 .7em/1.35 var(--font-body, sans-serif); }
+/* A written request: a person's message, neutral where an event is amber. */
+.message {
+  display: grid;
+  flex-shrink: 0;
+  align-self: flex-end;
+  gap: .5em;
+  max-width: 86%;
+  padding: .7em .85em;
+  border-radius: var(--mk-radius-lg) var(--mk-radius-lg) var(--mk-radius-xs) var(--mk-radius-lg);
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--mk-line-strong);
+  animation: arrive .5s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+}
+.messageHead { display: flex; align-items: center; gap: .5em; color: var(--mk-text-2); font: 600 .54em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.messageHead i { display: grid; place-items: center; width: 2em; height: 2em; flex-shrink: 0; border-radius: 50%; color: var(--mk-text); background: linear-gradient(140deg, var(--mk-moss), color-mix(in srgb, var(--mk-moss) 35%, #000000)); border: 1px solid var(--mk-line-strong); font-style: normal; font-size: .95em; }
+.message p { margin: 0; color: var(--mk-text); font: 500 .7em/1.35 var(--font-body, sans-serif); }
+/* A spoken question: the voice arrives as a waveform, revealed as it is heard, over its transcript. */
+.voice {
+  display: grid;
+  flex-shrink: 0;
+  align-self: flex-end;
+  gap: .5em;
+  max-width: 86%;
+  padding: .7em .85em;
+  border-radius: var(--mk-radius-lg) var(--mk-radius-lg) var(--mk-radius-xs) var(--mk-radius-lg);
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--mk-line-strong);
+  animation: arrive .5s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+}
+.voiceHead { display: flex; align-items: center; gap: .45em; color: var(--mk-text-2); font: 600 .54em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.voiceHead svg { width: 1.2em; height: 1.2em; flex-shrink: 0; color: var(--mk-lime); }
+.voiceHead em { margin-left: auto; padding: .3em .5em; border-radius: var(--mk-radius-sm); color: var(--mk-text-3); background: rgba(255, 255, 255, .05); font: 600 .95em/1 var(--font-mono, monospace); font-style: normal; }
+/* The bars spread across the bubble, so the voice takes the width its transcript will. */
+.wave { display: flex; align-items: center; justify-content: space-between; gap: .12em; height: 1.5em; transition: clip-path .3s linear; }
+.wave i { flex: 0 0 .2em; height: 100%; border-radius: 99em; background: color-mix(in srgb, var(--mk-lime) 70%, transparent); }
+.voice p { margin: 0; color: var(--mk-text); font: 500 .7em/1.35 var(--font-body, sans-serif); }
+.turn { display: grid; flex-shrink: 0; gap: .6em; animation: arrive .5s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both; }
+.agent { display: flex; align-items: center; gap: .55em; }
+.avatar { width: 1.7em; height: 1.7em; }
+.agent b { color: var(--mk-text); font: 600 .68em/1 var(--font-body, sans-serif); }
+
+/* Reasoning: thoughts in plain language, interleaved with the tool calls they lead to. */
+.reasoning { display: grid; gap: .6em; margin-left: .8em; padding-left: 1.1em; border-left: 1px solid var(--mk-line-strong); }
+.reasonHead { display: flex; align-items: center; gap: .35em; color: var(--mk-text-2); font: 600 .6em/1 var(--font-body, sans-serif); }
+.reasonHead svg { width: 1.15em; height: 1.15em; transition: transform .35s; }
+.reasoning[data-open='false'] .reasonHead { color: var(--mk-text-3); }
+.reasoning[data-open='false'] .reasonHead svg { transform: rotate(-90deg); }
+/* Once the agent answers, its reasoning folds away into a trail of what it used. */
+.fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .7s cubic-bezier(.65, 0, .25, 1); }
+.reasoning[data-open='false'] .fold { grid-template-rows: 0fr; }
+.steps { display: grid; gap: .55em; min-height: 0; margin: 0; padding: 0; overflow: hidden; list-style: none; }
+.trail { display: flex; flex-wrap: wrap; gap: .3em; }
+.reasoning[data-open='true'] .trail { display: none; }
+.trail span { display: inline-flex; align-items: center; gap: .35em; padding: .38em .55em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .04); border: 1px solid var(--mk-line); font: 500 .52em/1 var(--font-mono, monospace); animation: arrive .45s var(--ease-out, ease) .35s both; }
+.trail svg { width: 1em; height: 1em; color: var(--mk-lime); }
+.trail span[data-policy='true'] { color: var(--mk-lime); font-family: var(--font-body, sans-serif); font-weight: 600; }
+.thought { display: grid; gap: .45em; animation: arrive .45s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both; }
+.thought p { margin: 0; color: var(--mk-text-2); font: 400 .64em/1.5 var(--font-body, sans-serif); transition: color .4s; }
+.reasoning[data-open='false'] .thought p { color: var(--mk-text-3); }
+.policy { display: inline-flex; align-items: center; justify-self: start; gap: .4em; padding: .45em .65em; border-radius: 99em; color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 9%, transparent); border: 1px solid color-mix(in srgb, var(--mk-lime) 25%, transparent); font: 600 .54em/1 var(--font-body, sans-serif); opacity: 0; transition: opacity .35s; }
+.policy svg { width: 1.15em; height: 1.15em; }
+.policy[data-shown='true'] { opacity: 1; }
+.tool {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .35em .6em;
+  padding: .5em .6em;
+  border-radius: var(--mk-radius-md);
+  background: rgba(0, 0, 0, .28);
+  border: 1px solid var(--mk-line);
+  animation: arrive .45s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+  transition: border-color .35s;
+}
+.tool[data-state='running'] { border-color: color-mix(in srgb, var(--mk-lime) 32%, transparent); }
+.toolIcon { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: var(--mk-radius-md); color: var(--mk-text-2); background: rgba(255, 255, 255, .05); transition: color .35s, background-color .35s; }
+.tool[data-state='done'] .toolIcon { color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 11%, transparent); }
+.toolIcon svg { width: .95em; height: .95em; }
+.toolText { display: grid; gap: .28em; min-width: 0; }
+.toolText b { color: var(--mk-text); font: 600 .6em/1 var(--font-mono, monospace); }
+.toolText code { overflow: hidden; color: var(--mk-text-3); font: 500 .54em/1.1 var(--font-mono, monospace); white-space: nowrap; text-overflow: ellipsis; }
+.toolResult { display: flex; align-items: center; gap: .35em; color: var(--mk-text-3); font: 600 .56em/1 var(--font-mono, monospace); white-space: nowrap; }
+.tool[data-state='done'] .toolResult { color: var(--mk-lime); }
+.toolResult svg { width: 1em; height: 1em; }
+.rows { display: flex; flex-wrap: wrap; grid-column: 2 / -1; gap: .3em; }
+.rows span { padding: .38em .55em; border-radius: var(--mk-radius-sm); color: var(--mk-amber); background: color-mix(in srgb, var(--mk-amber) 9%, transparent); border: 1px solid color-mix(in srgb, var(--mk-amber) 25%, transparent); font: 600 .52em/1 var(--font-mono, monospace); animation: arrive .4s var(--ease-out, ease) both; }
+
+/* The answer, with its numbered sources and what the agent did. */
+.answer { display: grid; gap: .55em; margin-left: .8em; padding-left: 1.1em; }
+.answer p { margin: 0; color: var(--mk-text); font: 400 .7em/1.5 var(--font-body, sans-serif); }
+.sources, .actions { display: flex; flex-wrap: wrap; gap: .35em; opacity: 0; transition: opacity .4s; }
+.answer[data-complete='true'] .sources, .answer[data-complete='true'] .actions { opacity: 1; }
+.sources span { display: inline-flex; align-items: center; gap: .45em; padding: .38em .55em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .04); border: 1px solid var(--mk-line); font: 500 .54em/1 var(--font-mono, monospace); }
+.sources b { color: var(--mk-lime); }
+.actions span { display: inline-flex; align-items: center; gap: .35em; padding: .42em .65em; border-radius: 99em; color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 9%, transparent); font: 600 .54em/1 var(--font-body, sans-serif); }
+.actions svg { width: .95em; height: .95em; }
+
+/* The answer read aloud: the bars fill as the words are spoken. */
+.readAloud { display: flex; align-items: center; gap: .55em; margin-left: .8em; padding-left: 1.1em; color: var(--mk-text-3); }
+.readAloud > svg { width: .95em; height: .95em; flex-shrink: 0; color: var(--mk-lime); }
+.meter { display: flex; align-items: center; gap: .14em; height: 1.1em; }
+.meter i { flex-shrink: 0; width: .18em; height: 100%; border-radius: 99em; background: var(--mk-line-strong); transition: background-color .2s; }
+.meter i[data-lit='true'] { background: var(--mk-lime); }
+.readAloud b { font: 600 .54em/1 var(--font-mono, monospace); white-space: nowrap; transition: color .35s; }
+.readAloud[data-done='true'] b { color: var(--mk-text-2); }
+
+/* Composer: nobody is typing; the agent runs on its own. */
+.composer { display: flex; align-items: center; gap: .7em; margin-top: .85em; padding: .5em .5em .5em .95em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .035); border: 1px solid var(--mk-line-strong); }
+.ask { flex: 1; overflow: hidden; color: var(--mk-text-3); font: 400 .68em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.toggle { display: inline-flex; align-items: center; gap: .5em; color: var(--mk-text-2); font: 600 .58em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.toggle i { position: relative; width: 2.3em; height: 1.3em; border-radius: 99em; background: var(--mk-lime); }
+.toggle i::after { content: ""; position: absolute; top: .15em; right: .15em; width: 1em; height: 1em; border-radius: 50%; background: var(--mk-on-accent); }
+.send { display: grid; place-items: center; width: 2.1em; height: 2.1em; border-radius: var(--mk-radius-md); color: var(--mk-text-3); background: rgba(255, 255, 255, .07); }
+.send svg { width: 1.05em; height: 1.05em; }
+
+@keyframes arrive { from { opacity: 0; transform: translateY(.6em); } }
+
+/* Narrow stages: the conversation takes the whole window. */
+@container (max-width: 480px) {
+  .chat { border-right: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .event, .message, .voice, .turn, .thought, .tool, .rows span, .trail span { animation: none; }
+  .fold, .reasonHead svg, .thought p, .policy, .tool, .toolIcon, .sources, .actions, .wave, .meter i, .readAloud b { transition: none; }
+}

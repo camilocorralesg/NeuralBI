@@ -1,0 +1,44 @@
+/* The beam fills its panel. .edge masks the comet to the 1px ring, above the content; .halo is a 16px band just inside
+ * the glass where a small, soft copy of its head glows, under the content. Both ride one path on one clock. */
+.beam, .edge, .halo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.edge, .halo {
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.edge { z-index: 2; padding: 1px; }
+.halo { padding: 16px; }
+.comet, .glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  offset-path: inset(0 round var(--radius-lg));
+  animation: travel 12s linear infinite;
+}
+.comet {
+  width: 220px;
+  height: 14px;
+  offset-anchor: 100% 50%;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 45%, transparent) 60%, var(--color-accent) 90%, color-mix(in srgb, var(--color-accent) 40%, #ffffff));
+}
+.glow {
+  width: 170px;
+  height: 28px;
+  offset-anchor: 90% 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 34%, transparent), transparent);
+}
+.beam[data-live='false'] :is(.comet, .glow) { animation-play-state: paused; }
+@keyframes travel { to { offset-distance: 100%; } }
+
+@supports not (offset-path: inset(0 round 1px)) {
+  .beam { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beam { display: none; }
+}

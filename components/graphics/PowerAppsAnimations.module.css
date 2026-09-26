@@ -12,9 +12,9 @@
   border-radius: 16px;
   overflow: hidden;
 }
-.title { margin-bottom: 18px; color: var(--ink); font-family: var(--font-sans); font-size: 13px; font-weight: 600; line-height: 1.5; }
-.canvas { display: block; width: 100%; height: auto; overflow: hidden; border-radius: 8px; background: #100d11; }
-.canvas text { font-family: var(--font-sans); }
+.title { margin-bottom: 18px; color: var(--ink); font-family: var(--font-display); font-size: 13px; font-weight: 600; line-height: 1.5; }
+.canvas { display: block; width: 100%; height: auto; overflow: hidden; border-radius: 8px; background: #130e12; }
+.canvas text { font-family: var(--font-body); }
 .label { fill: #d4c7d0; font-size: 11px; }
 .micro { fill: var(--muted); font-size: 8px; }
 .rule { stroke: #332830; stroke-width: .8; }

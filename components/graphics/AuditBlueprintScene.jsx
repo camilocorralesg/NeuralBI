@@ -30,7 +30,11 @@ function SchemaTable({ x, y, w, h }) {
   </g>;
 }
 
-export const AuditBlueprintScene = memo(function AuditBlueprintScene() {
+const DEFAULT_LABEL = 'Audit & Blueprint: isometric architecture';
+const DEFAULT_DESCRIPTION = 'An isometric audit table separates into data, connections, and blueprint layers. A magnifying lens inspects the schema, relationships are traced, and the layers align into a completed engineering blueprint.';
+
+// `label` and `description` let the host localise what assistive technology announces.
+export const AuditBlueprintScene = memo(function AuditBlueprintScene({ label = DEFAULT_LABEL, description = DEFAULT_DESCRIPTION }) {
   const ref = useRef(null);
   const id = useId();
   useEffect(() => {
@@ -46,7 +50,7 @@ export const AuditBlueprintScene = memo(function AuditBlueprintScene() {
     return () => { observer?.disconnect(); document.removeEventListener('visibilitychange', visibility); };
   }, []);
 
-  return <figure ref={ref} className={s.scene} data-running="false" aria-label="Audit & Blueprint: isometric architecture" aria-describedby={`${id}-desc`}>
+  return <figure ref={ref} className={s.scene} data-running="false" aria-label={label} aria-describedby={`${id}-desc`}>
     <svg viewBox="115 -31 365 270" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-paper`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#edf4dd" /><stop offset=".5" stopColor="#c5d6ae" /><stop offset="1" stopColor="#94ad79" /></linearGradient>
@@ -104,6 +108,6 @@ export const AuditBlueprintScene = memo(function AuditBlueprintScene() {
         </g>
       </g>
     </svg>
-    <span id={`${id}-desc`} className={s.srOnly}>An isometric audit table separates into data, connections, and blueprint layers. A magnifying lens inspects the schema, relationships are traced, and the layers align into a completed engineering blueprint.</span>
+    <span id={`${id}-desc`} className={s.srOnly}>{description}</span>
   </figure>;
 });

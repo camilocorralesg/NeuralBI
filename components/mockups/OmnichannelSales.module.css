@@ -1,0 +1,110 @@
+/* NeuralBI · Omnichannel Sales: a Power BI report over Direct Lake. Online and in-store sales by hour, the two channels'
+ * customers merged into one set, and 6-month LTV by cohort with conditional formatting. Selecting the customers who shop
+ * both channels cross-filters the page (data-filtered). Sized in em (see MockupStage). */
+.app { position: relative; }
+.body { display: grid; gap: .7em; padding: 1em 1.2em 1.1em; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6em; }
+.middle, .bottom { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: .7em; }
+
+/* Sales by hour: online and in-store columns side by side; the hour in progress grows as orders land. Once the report
+ * is filtered, each column keeps its full height dimmed and highlights the share from customers who shop both. */
+.legend { display: flex; align-items: center; gap: .45em; margin: -.25em 0 .55em; color: var(--mk-text-3); font: 500 .54em/1 var(--font-body, sans-serif); }
+.legend i { width: .8em; height: .8em; border-radius: var(--mk-radius-xs); }
+.legend i:not(:first-child) { margin-left: .5em; }
+.legend i[data-kind='online'], .bar[data-kind='online'] { --tone: var(--mk-lime); }
+.legend i[data-kind='store'], .bar[data-kind='store'] { --tone: color-mix(in srgb, var(--mk-text) 42%, var(--mk-moss)); }
+.legend i { background: var(--tone); }
+.chart { display: grid; grid-template-columns: 2.4em minmax(0, 1fr); gap: .4em; height: 7.2em; }
+.yAxis { display: flex; flex-direction: column; justify-content: space-between; color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); text-align: right; }
+.hours {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: .3em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--mk-line-strong);
+  background-image: linear-gradient(180deg, var(--mk-line) 1px, transparent 1px);
+  background-size: 100% 50%;
+}
+.hours li { display: flex; align-items: stretch; justify-content: center; gap: .12em; }
+.bar { position: relative; flex: 1; max-width: .7em; }
+.fill, .highlight { position: absolute; inset: 0; border-radius: var(--mk-radius-xs) var(--mk-radius-xs) 0 0; background: var(--tone); transform-origin: bottom; transition: transform .6s var(--ease-out, ease), opacity .4s; }
+.highlight { opacity: 0; }
+.app[data-filtered='true'] .fill { opacity: .22; }
+.app[data-filtered='true'] .highlight { opacity: 1; }
+.xAxis { display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: .3em; margin: .4em 0 0 2.8em; color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); white-space: nowrap; }
+.xAxis span { overflow: visible; text-align: center; }
+
+/* Customers: two silos slide together into one set; the overlap is the customers who shop both channels. */
+.venn { display: block; width: 100%; height: 8.4em; overflow: visible; }
+.circle { transition: transform .9s var(--ease-out, cubic-bezier(.22, 1, .36, 1)), opacity .4s; }
+.circle[data-side='online'] { transform: translateX(-26px); }
+.circle[data-side='store'] { transform: translateX(26px); }
+.venn[data-merged='true'] .circle { transform: none; }
+.circle circle { stroke-width: 1.2; }
+.circle[data-side='online'] circle { fill: color-mix(in srgb, var(--mk-lime) 8%, transparent); stroke: color-mix(in srgb, var(--mk-lime) 70%, transparent); }
+.circle[data-side='store'] circle { fill: rgba(255, 255, 255, .045); stroke: color-mix(in srgb, var(--mk-text) 45%, transparent); }
+.channel { fill: var(--mk-text-2); font: 600 7px/1 var(--font-body, sans-serif); text-anchor: middle; }
+.total, .only, .both { fill: var(--mk-text); font: 600 9px/1 var(--font-mono, monospace); text-anchor: middle; transition: opacity .45s, fill .4s; }
+.bothShare { fill: var(--mk-lime); font: 600 6.5px/1 var(--font-mono, monospace); text-anchor: middle; transition: opacity .45s, fill .4s; }
+.only, .both, .bothShare, .lens { opacity: 0; }
+.venn[data-matched='true'] .total { opacity: 0; }
+.venn[data-matched='true'] .only, .venn[data-matched='true'] .both, .venn[data-matched='true'] .bothShare, .venn[data-matched='true'] .lens { opacity: 1; }
+.lens { fill: color-mix(in srgb, var(--mk-lime) 16%, transparent); stroke: var(--mk-lime); stroke-width: 1.2; transition: opacity .45s, fill .45s; }
+/* Selected: the overlap fills, the rest of the set steps back, as a Power BI selection does. */
+.app[data-filtered='true'] .lens { fill: var(--mk-lime); }
+.app[data-filtered='true'] .both { fill: var(--mk-on-accent); }
+.app[data-filtered='true'] .bothShare { fill: color-mix(in srgb, var(--mk-on-accent) 75%, transparent); }
+.app[data-filtered='true'] .circle, .app[data-filtered='true'] .only { opacity: .45; }
+.match { display: block; margin-top: .45em; overflow: hidden; color: var(--mk-text-3); font: 500 .54em/1.2 var(--font-body, sans-serif); text-align: center; white-space: nowrap; text-overflow: ellipsis; transition: color .4s; }
+.match[data-matched='true'] { color: var(--mk-lime); }
+
+/* Cohort matrix: conditional formatting from graphite to lime; filtered values recolour in a diagonal wave. */
+.matrix { display: grid; gap: .22em; margin: 0; padding: 0; list-style: none; }
+.matrix li { display: grid; grid-template-columns: 2.6em repeat(6, minmax(0, 1fr)); align-items: center; gap: .22em; }
+.matrixHead span { color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); text-align: center; }
+.matrixHead span:first-child, .rowLabel { text-align: left; }
+.rowLabel { color: var(--mk-text-2); font: 600 .54em/1 var(--font-body, sans-serif); transition: color .4s; }
+.matrix li[data-marked='true'] .rowLabel { color: var(--mk-lime); }
+.cell {
+  --level: rgba(255, 255, 255, .04);
+  display: grid;
+  place-items: center;
+  height: 1.55em;
+  border-radius: var(--mk-radius-xs);
+  color: var(--mk-text-3);
+  background: var(--level);
+  transition: background-color .45s var(--ease-out, ease) calc(var(--d) * 45ms), color .45s calc(var(--d) * 45ms);
+}
+.cell[data-level='1'] { --level: color-mix(in srgb, var(--mk-lime) 10%, transparent); color: var(--mk-text-2); }
+.cell[data-level='2'] { --level: color-mix(in srgb, var(--mk-lime) 22%, transparent); color: var(--mk-text); }
+.cell[data-level='3'] { --level: color-mix(in srgb, var(--mk-lime) 38%, transparent); color: var(--mk-text); }
+.cell[data-level='4'] { --level: color-mix(in srgb, var(--mk-lime) 62%, transparent); color: var(--mk-on-accent); }
+.cell[data-level='5'] { --level: var(--mk-lime); color: var(--mk-on-accent); }
+.cellValue { font: 600 .54em/1 var(--font-mono, monospace); }
+.launch { grid-column: span 2; padding-left: .3em; color: var(--mk-lime); font: 600 .5em/1.15 var(--font-body, sans-serif); opacity: 0; transition: opacity .45s; }
+.matrix li[data-marked='true'] .launch { opacity: 1; }
+
+/* Key influencers: each factor lands with its bar and how much it multiplies the chance of a high LTV. */
+.influencersCard { display: flex; flex-direction: column; }
+.question { display: block; margin: -.25em 0 .7em; color: var(--mk-text-3); font: 500 .54em/1.2 var(--font-body, sans-serif); }
+.factors { display: grid; gap: .8em; margin: 0; padding: 0; list-style: none; }
+.factors li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .4em .5em; opacity: .3; transition: opacity .45s; }
+.factors li[data-shown='true'] { opacity: 1; }
+.factors li > span:first-child { overflow: hidden; color: var(--mk-text); font: 500 .6em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.factors b { color: var(--mk-lime); font: 600 .6em/1 var(--font-mono, monospace); }
+.track { display: block; grid-column: 1 / -1; height: .45em; overflow: hidden; border-radius: 99em; background: rgba(255, 255, 255, .06); }
+.track i { display: block; height: 100%; border-radius: inherit; background: var(--mk-lime); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease-out, ease); }
+.factors li[data-shown='true'] .track i { transform: scaleX(var(--w)); }
+.basis { margin-top: auto; padding-top: .7em; border-top: 1px solid var(--mk-line); color: var(--mk-text-3); font: 500 .52em/1 var(--font-mono, monospace); }
+
+/* Narrow stages: the KPIs two by two, the merged customers and the cohorts; the hourly chart and the influencers step out. */
+@container (max-width: 480px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .middle, .bottom { grid-template-columns: minmax(0, 1fr); }
+  .salesCard, .influencersCard, .context { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fill, .highlight, .circle, .total, .only, .both, .bothShare, .lens, .match, .rowLabel, .cell, .launch, .factors li, .track i { transition: none; }
+}

@@ -1,0 +1,74 @@
+/* Fraud Copilot mockup: the agent's conversation (ui/agent) beside the compliance risk digest it writes as it reasons.
+ * Sized in em (see MockupStage); each digest section is readable before its data lands and fills when its tool returns. */
+.app { position: relative; }
+.body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+/* The digest: the agent's own artefact, drafted section by section, then published. */
+.digest { display: grid; align-content: start; gap: .6em; min-width: 0; padding: 1em 1.1em 1.1em; }
+.digestHead { display: flex; align-items: center; gap: .6em; min-width: 0; }
+.digestIcon { display: grid; place-items: center; width: 2em; height: 2em; flex-shrink: 0; border-radius: var(--mk-radius-md); color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 11%, transparent); }
+.digestIcon svg { width: 1em; height: 1em; }
+.digestTitle { display: grid; flex: 1; gap: .2em; min-width: 0; }
+.digestTitle b { overflow: hidden; color: var(--mk-text); font: 600 .74em/1.15 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.digestTitle span { color: var(--mk-text-3); font: 500 .56em/1 var(--font-mono, monospace); }
+.block, .summary { min-width: 0; padding: .6em .7em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .025); border: 1px solid var(--mk-line); }
+.block small, .summary small { display: block; margin-bottom: .5em; color: var(--mk-text-3); font: 600 .54em/1 var(--font-body, sans-serif); }
+.block > :not(small) { opacity: .3; transition: opacity .5s var(--ease-out, ease); }
+.block[data-ready='true'] > :not(small) { opacity: 1; }
+.summary p { margin: 0; color: var(--mk-text); font: 400 .62em/1.5 var(--font-body, sans-serif); }
+.placeholder { display: grid; gap: .45em; padding: .2em 0; }
+.placeholder i { height: .45em; border-radius: 99em; background: rgba(255, 255, 255, .06); }
+.placeholder i:last-child { width: 62%; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: .6em; }
+
+/* Amount vs time: the hour's traffic, and the cluster sitting just under the reporting line. */
+.scatter, .network { display: block; width: 100%; height: auto; overflow: visible; }
+.threshold { stroke: color-mix(in srgb, var(--mk-amber) 55%, transparent); stroke-width: 1; stroke-dasharray: 3 3; }
+.thresholdLabel { fill: color-mix(in srgb, var(--mk-amber) 85%, transparent); font: 500 6.5px/1 var(--font-body, sans-serif); text-anchor: end; }
+.dot { fill: var(--mk-text-3); opacity: .7; }
+.dot[data-cluster='true'] { fill: var(--mk-text-2); transition: fill .4s var(--ease-out, ease) calc(var(--i) * 25ms); }
+.block[data-ready='true'] .dot[data-cluster='true'] { fill: var(--mk-amber); opacity: 1; }
+
+/* Mule network: accounts wire into one beneficiary, edge by edge; a device ties three of them together. */
+.edge, .deviceEdge { fill: none; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .5s var(--ease-out, ease); }
+.edge { stroke: color-mix(in srgb, var(--mk-red) 55%, transparent); stroke-width: 1.4; }
+.deviceEdge { stroke: color-mix(in srgb, var(--mk-amber) 55%, transparent); stroke-width: 1; }
+.edge[data-drawn='true'], .deviceEdge[data-drawn='true'] { stroke-dashoffset: 0; }
+.account circle { fill: var(--mk-raised); stroke: var(--mk-text-2); stroke-width: 1.2; }
+.account text { fill: var(--mk-text-3); font: 500 7px/1 var(--font-mono, monospace); text-anchor: end; }
+.device { opacity: 0; transition: opacity .4s; }
+.device[data-shown='true'] { opacity: 1; }
+.device rect { fill: var(--mk-raised); stroke: var(--mk-amber); stroke-width: 1.2; }
+.device text { fill: var(--mk-amber); font: 600 7px/1 var(--font-body, sans-serif); }
+.beneficiary circle { fill: var(--mk-raised); stroke: var(--mk-text-3); stroke-width: 1.4; transition: fill .45s, stroke .45s; }
+.beneficiary[data-risk='true'] circle { fill: color-mix(in srgb, var(--mk-red) 28%, var(--mk-raised)); stroke: var(--mk-red); }
+.beneficiary text { fill: var(--mk-text-3); font: 500 6.5px/1 var(--font-body, sans-serif); }
+.beneficiaryName { font-weight: 700; }
+.beneficiary[data-risk='true'] .beneficiaryName { fill: var(--mk-red); }
+
+/* Flagged transfers and the actions the digest recommends. */
+.flagged, .recs { display: grid; gap: .3em; margin: 0; padding: 0; list-style: none; }
+.flagged li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: .5em; font: 500 .56em/1 var(--font-mono, monospace); }
+.block[data-ready='true'] .flagged li:not(.total) { animation: arrive .4s var(--ease-out, ease) calc(var(--i) * 90ms) both; }
+.flagged b { color: var(--mk-text); font-weight: 600; }
+.flagged span { color: var(--mk-text-2); }
+.flagged em { padding: .3em .45em; border-radius: var(--mk-radius-sm); color: var(--mk-amber); background: color-mix(in srgb, var(--mk-amber) 12%, transparent); font-style: normal; font-weight: 700; }
+.total { margin-top: .2em; padding-top: .4em; border-top: 1px solid var(--mk-line); }
+.total span { color: var(--mk-text-3); font-family: var(--font-body, sans-serif); }
+.recs li { --tone: var(--mk-lime); display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .45em; row-gap: .15em; align-items: center; }
+.recs li[data-state='approval'] { --tone: var(--mk-amber); }
+.recs li svg { grid-row: span 2; width: 1em; height: 1em; color: var(--tone); }
+.recs span { overflow: hidden; color: var(--mk-text); font: 500 .56em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.recs em { color: var(--tone); font: normal 600 .5em/1 var(--font-body, sans-serif); }
+
+@keyframes arrive { from { opacity: 0; transform: translateY(-.35em); } }
+
+/* Narrow stages: the conversation alone; its answer and action chips carry the story. */
+@container (max-width: 480px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .digest, .grounded { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .block[data-ready='true'] .flagged li:not(.total) { animation: none; }
+  .block > :not(small), .dot, .edge, .deviceEdge, .device, .beneficiary circle { transition: none; }
+}

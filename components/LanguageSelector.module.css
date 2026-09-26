@@ -21,10 +21,11 @@
   outline: none;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color var(--dur-ui) var(--ease-out), background-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), transform var(--dur-press) var(--ease-out);
 }
 
-.trigger:hover,
+.trigger:active { transform: scale(.96); }
+
 .trigger.isOpen {
   border-color: rgba(198, 255, 52, 0.45);
   background: rgba(18, 24, 34, 0.95);
@@ -96,9 +97,6 @@
   transition: background 0.15s ease;
 }
 
-.dropdownItem:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
 
 .dropdownItem.isSelected {
   background: rgba(198, 255, 52, 0.12);
@@ -118,7 +116,7 @@
 }
 
 .itemName {
-  font-family: var(--font-sans, 'Manrope', sans-serif);
+  font-family: var(--font-ui, 'Montserrat', sans-serif);
   font-size: 0.8125rem;
   font-weight: 500;
   color: #ffffff;
@@ -155,16 +153,13 @@
   background: transparent;
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: var(--font-sans, 'Manrope', sans-serif);
+  font-family: var(--font-ui, 'Montserrat', sans-serif);
   font-size: 0.875rem;
   font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color var(--dur-ui) var(--ease-out), background-color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), transform var(--dur-press) var(--ease-out);
 }
 
-.segmentedBtn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-}
+.segmentedBtn:active { transform: scale(.96); }
 
 .segmentedBtn.isActive {
   background: rgba(198, 255, 52, 0.14);
@@ -177,4 +172,15 @@
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+/* Hover belongs to a fine pointer: on touch it would stick after the tap. */
+@media (hover: hover) and (pointer: fine) {
+  .trigger:hover { border-color: rgba(198, 255, 52, 0.45); background: rgba(18, 24, 34, 0.95); box-shadow: 0 0 14px rgba(198, 255, 52, 0.16); }
+  .dropdownItem:hover { background: rgba(255, 255, 255, 0.08); }
+  .segmentedBtn:hover { color: #ffffff; background: rgba(255, 255, 255, 0.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trigger, .segmentedBtn { transition: none; }
+  .trigger:active, .segmentedBtn:active { transform: none; }
 }

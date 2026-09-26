@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ShaderButton from '../../components/ShaderButton';
 
 export const metadata = {
   title: 'Inquiry Received',
@@ -11,7 +12,7 @@ export default function ThankYouPage() {
       minHeight: '100vh',
       backgroundColor: '#030303',
       color: '#ffffff',
-      fontFamily: 'var(--font-sans)',
+      fontFamily: 'var(--font-body)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
@@ -58,7 +59,8 @@ export default function ThankYouPage() {
         zIndex: 10
       }}>
         {/* Animated Checkmark Circle */}
-        <div style={{
+        <div className="enter" style={{
+          '--enter': 0,
           width: '72px',
           height: '72px',
           borderRadius: '50%',
@@ -72,11 +74,12 @@ export default function ThankYouPage() {
           color: '#c6ff34'
         }}>
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
+            <polyline className="check-draw" pathLength="1" points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
 
-        <div style={{
+        <div className="enter" style={{
+          '--enter': 1,
           fontFamily: 'var(--font-mono)',
           fontSize: '0.8rem',
           color: '#c6ff34',
@@ -87,7 +90,8 @@ export default function ThankYouPage() {
           Transmission Verified
         </div>
 
-        <h1 style={{
+        <h1 className="enter-mask" style={{
+          '--enter': 2,
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(2.2rem, 5vw, 3.25rem)',
           fontWeight: 800,
@@ -99,8 +103,9 @@ export default function ThankYouPage() {
           Ball is in our court.
         </h1>
 
-        <p style={{
-          fontFamily: 'var(--font-sans)',
+        <p className="enter" style={{
+          '--enter': 3,
+          fontFamily: 'var(--font-body)',
           color: 'rgba(255, 255, 255, 0.7)',
           fontSize: 'clamp(1rem, 2vw, 1.15rem)',
           lineHeight: 1.6,
@@ -118,40 +123,43 @@ export default function ThankYouPage() {
           textAlign: 'left',
           marginBottom: '3rem'
         }}>
-          <div style={{
+          <div className="enter" style={{
+            '--enter': 4,
             background: 'rgba(255, 255, 255, 0.02)',
             border: '1px solid rgba(255, 255, 255, 0.08)',
             borderRadius: '10px',
             padding: '1.25rem'
           }}>
             <span style={{ fontFamily: 'var(--font-mono)', color: '#c6ff34', fontSize: '0.75rem' }}>STEP 01</span>
-            <h4 style={{ color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Triage</h4>
+            <h4 style={{ fontFamily: 'var(--font-display)', color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Triage</h4>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.82rem', margin: 0, lineHeight: 1.4 }}>
               Our senior architects review your Microsoft stack notes and pain points.
             </p>
           </div>
 
-          <div style={{
+          <div className="enter" style={{
+            '--enter': 5,
             background: 'rgba(255, 255, 255, 0.02)',
             border: '1px solid rgba(255, 255, 255, 0.08)',
             borderRadius: '10px',
             padding: '1.25rem'
           }}>
             <span style={{ fontFamily: 'var(--font-mono)', color: '#c6ff34', fontSize: '0.75rem' }}>STEP 02</span>
-            <h4 style={{ color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Direct Contact</h4>
+            <h4 style={{ fontFamily: 'var(--font-display)', color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Direct Contact</h4>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.82rem', margin: 0, lineHeight: 1.4 }}>
               We email you directly with tailored observations and call availability.
             </p>
           </div>
 
-          <div style={{
+          <div className="enter" style={{
+            '--enter': 6,
             background: 'rgba(255, 255, 255, 0.02)',
             border: '1px solid rgba(255, 255, 255, 0.08)',
             borderRadius: '10px',
             padding: '1.25rem'
           }}>
             <span style={{ fontFamily: 'var(--font-mono)', color: '#c6ff34', fontSize: '0.75rem' }}>STEP 03</span>
-            <h4 style={{ color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Action Plan</h4>
+            <h4 style={{ fontFamily: 'var(--font-display)', color: '#ffffff', margin: '0.4rem 0', fontSize: '0.95rem', fontWeight: 600 }}>Action Plan</h4>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.82rem', margin: 0, lineHeight: 1.4 }}>
               We present an actionable architecture blueprint with clear milestones.
             </p>
@@ -159,14 +167,13 @@ export default function ThankYouPage() {
         </div>
 
         {/* Primary Action Button */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <Link
+        <div className="enter" style={{ '--enter': 7, display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <ShaderButton
             href="/"
-            className="btn-glow-border"
             style={{
               padding: '0.85rem 2rem',
               fontSize: '0.95rem',
-              fontFamily: 'var(--font-display)',
+              fontFamily: 'var(--font-ui)',
               fontWeight: 700,
               textDecoration: 'none',
               color: '#ffffff',
@@ -177,10 +184,11 @@ export default function ThankYouPage() {
             }}
           >
             ← Return to NeuralBI Home
-          </Link>
+          </ShaderButton>
         </div>
 
-        <p style={{
+        <p className="enter" style={{
+          '--enter': 7,
           marginTop: '2rem',
           fontSize: '0.8rem',
           color: 'rgba(255, 255, 255, 0.4)',

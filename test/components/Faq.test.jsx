@@ -1,17 +1,18 @@
 import React from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import Faq from '../../components/sections/Faq';
 import { LanguageProvider, useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../lib/translations';
 
-const motionPreference = vi.hoisted(() => ({ reduced: false }));
-vi.mock('framer-motion', () => ({
-  useReducedMotion: () => motionPreference.reduced,
-  motion: { div: ({ children, initial: _initial, animate: _animate, transition, variants: _variants, whileInView: _whileInView, viewport: _viewport, ...props }) => (
-    <div {...props} data-motion-duration={transition?.duration}>{children}</div>
-  ) },
-}));
+// The test decides what each IntersectionObserver sees.
+let observers = [];
+class Observer {
+  constructor(callback, options = {}) { Object.assign(this, { callback, options, targets: [] }); observers.push(this); }
+  observe(target) { this.targets.push(target); }
+  unobserve() {}
+  disconnect() { this.disconnected = true; }
+}
 vi.mock('../../components/CharacterReveal', () => ({ default: ({ text }) => <span data-testid="title-reveal">{text.replaceAll('*', '')}</span> }));
 
 function LanguageSwitch() {
@@ -20,7 +21,8 @@ function LanguageSwitch() {
 }
 
 describe('FAQ remix', () => {
-  beforeEach(() => { localStorage.clear(); motionPreference.reduced = false; });
+  beforeEach(() => { localStorage.clear(); observers = []; vi.stubGlobal('IntersectionObserver', Observer); });
+  afterEach(() => vi.unstubAllGlobals());
 
   it('starts closed, connects each question to its answer, and opens only one answer', () => {
     render(<LanguageProvider><Faq activeHero="remix" /></LanguageProvider>);
@@ -62,11 +64,23 @@ describe('FAQ remix', () => {
     });
   });
 
-  it('uses static title and instant answer transitions for reduced motion', () => {
-    motionPreference.reduced = true;
-    render(<LanguageProvider><Faq activeHero="remix" /></LanguageProvider>);
-    expect(screen.queryByTestId('title-reveal')).not.toBeInTheDocument();
+  it('opens answers on grid rows, marking the open card, and brings the list in once when it is first seen', () => {
+    const { container } = render(<LanguageProvider><Faq activeHero="remix" /></LanguageProvider>);
+    const list = container.querySelector('[data-reveal], [class*="items"]');
+    const cards = [...list.children];
+    expect(cards).toHaveLength(4);
+    cards.forEach((card, index) => expect(card.style.getPropertyValue('--i')).toBe(String(index)));
+
     fireEvent.click(screen.getByRole('button', { name: translations.en.faq.items[0].q }));
-    expect(screen.getByRole('region', { name: translations.en.faq.items[0].q })).toHaveAttribute('data-motion-duration', '0');
+    expect(cards[0]).toHaveAttribute('data-open', 'true');
+    expect(cards[1]).toHaveAttribute('data-open', 'false');
+
+    // Off screen at load: armed; well in view: it runs, once.
+    const listObserver = observers.find(observer => observer.targets.includes(list));
+    act(() => listObserver.callback([{ target: list, isIntersecting: false, intersectionRatio: 0 }]));
+    expect(list).toHaveAttribute('data-reveal', 'armed');
+    act(() => listObserver.callback([{ target: list, isIntersecting: true, intersectionRatio: 0.5 }]));
+    expect(list).toHaveAttribute('data-reveal', 'run');
+    expect(listObserver.disconnected).toBe(true);
   });
 });

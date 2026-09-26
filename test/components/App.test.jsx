@@ -17,10 +17,6 @@ vi.mock('../../components/FloatingLines', () => ({
   default: () => <div data-testid="mock-floating-lines" />,
 }));
 
-vi.mock('../../components/ColorBends', () => ({
-  default: () => <div data-testid="mock-color-bends" />,
-}));
-
 describe('App component (Home screen)', () => {
   it('renders without throwing and mounts core sections', () => {
     render(<App />);

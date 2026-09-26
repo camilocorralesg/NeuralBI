@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ShaderButton from '../components/ShaderButton';
 
 export default function NotFound() {
   return (
@@ -7,7 +8,7 @@ export default function NotFound() {
       minHeight: '100vh',
       backgroundColor: '#030303',
       color: '#ffffff',
-      fontFamily: 'var(--font-sans)',
+      fontFamily: 'var(--font-body)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
@@ -53,7 +54,8 @@ export default function NotFound() {
         position: 'relative',
         zIndex: 10
       }}>
-        <div style={{
+        <div className="enter" style={{
+          '--enter': 0,
           fontFamily: 'var(--font-mono)',
           fontSize: '0.8rem',
           color: '#c6ff34',
@@ -72,7 +74,8 @@ export default function NotFound() {
           404 // ROUTE_NOT_FOUND
         </div>
 
-        <h1 style={{
+        <h1 className="enter-mask" style={{
+          '--enter': 1,
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(2.5rem, 6vw, 4rem)',
           fontWeight: 800,
@@ -84,8 +87,9 @@ export default function NotFound() {
           Signal Lost In The Void.
         </h1>
 
-        <p style={{
-          fontFamily: 'var(--font-sans)',
+        <p className="enter" style={{
+          '--enter': 2,
+          fontFamily: 'var(--font-body)',
           color: 'rgba(255, 255, 255, 0.65)',
           fontSize: '1.05rem',
           lineHeight: 1.6,
@@ -94,19 +98,19 @@ export default function NotFound() {
           The neural pathway or asset you requested has migrated or never existed. Let&apos;s reroute you to an operational node.
         </p>
 
-        <div style={{
+        <div className="enter" style={{
+          '--enter': 3,
           display: 'flex',
           justifyContent: 'center',
           gap: '1rem',
           flexWrap: 'wrap'
         }}>
-          <Link
+          <ShaderButton
             href="/"
-            className="btn-glow-border"
             style={{
               padding: '0.85rem 1.75rem',
               fontSize: '0.95rem',
-              fontFamily: 'var(--font-display)',
+              fontFamily: 'var(--font-ui)',
               fontWeight: 700,
               textDecoration: 'none',
               color: '#ffffff',
@@ -114,14 +118,15 @@ export default function NotFound() {
             }}
           >
             ← Return to Home
-          </Link>
+          </ShaderButton>
 
           <Link
             href="/#arsenal"
             style={{
               padding: '0.85rem 1.75rem',
               fontSize: '0.95rem',
-              fontFamily: 'var(--font-mono)',
+              fontFamily: 'var(--font-ui)',
+              fontWeight: 600,
               textDecoration: 'none',
               color: 'rgba(255, 255, 255, 0.8)',
               background: 'rgba(255, 255, 255, 0.03)',

@@ -1,0 +1,23 @@
+/* Words rise out of their own masks: resolved by default; armed off screen (each word below its window); run carries
+ * each word up after its own delay. The clip travels with the word, so its window stays put, and it is generous at the
+ * sides and above so the italic overhang is never cut; once the reveal settles there is no clip at all. */
+.reveal { position: relative; max-width: 100%; }
+.word { display: inline-block; white-space: nowrap; }
+.inner {
+  --word-delay: calc(var(--base, 0ms) + var(--n, 0) * var(--word-step, var(--stagger-words)));
+  display: inline-block;
+  transition:
+    transform 720ms var(--ease-out) var(--word-delay),
+    clip-path 720ms var(--ease-out) var(--word-delay);
+}
+.reveal[data-reveal] .inner { will-change: transform, clip-path; }
+.reveal[data-reveal='armed'] .inner { transform: translateY(105%); clip-path: inset(-.3em -.3em 105% -.3em); transition: none; }
+.reveal[data-reveal='run'] .inner { clip-path: inset(-.3em); }
+
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Reduced motion: no travel and no mask; the words appear. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-reveal='armed'] .inner { transform: none; clip-path: none; opacity: 0; }
+  .inner { transition: opacity 400ms ease var(--word-delay); }
+}

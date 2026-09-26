@@ -20,19 +20,19 @@
   margin: 0;
 }
 .visual { position: absolute; inset: 0; overflow: clip; }
-.heading { position: absolute; top: 12px; left: 15px; right: 15px; display: flex; align-items: center; gap: 7px; color: var(--graphic-secondary); font: 500 10px var(--font-sans); white-space: nowrap; }
+.heading { position: absolute; top: 12px; left: 15px; right: 15px; display: flex; align-items: center; gap: 7px; color: var(--graphic-secondary); font: 500 10px var(--font-display); white-space: nowrap; }
 .heading > i { width: 4px; height: 4px; flex-shrink: 0; border-radius: 50%; background: var(--graphic-source); }
 .speed .heading > i { background: var(--graphic-accent); }
 .adoption .heading > i { background: var(--graphic-cyan); }
 .headingRule { height: 1px; flex: 1; background: var(--graphic-grid); }
 .canvas { position: absolute; width: calc(100% - 12px); max-width: 300px; height: 136px; left: 50%; top: 28px; transform: translateX(-50%); overflow: visible; }
-.caption { position: absolute; bottom: 11px; left: 8px; right: 8px; height: 14px; color: var(--graphic-secondary); text-align: center; font: 500 10px/14px var(--font-sans); }
+.caption { position: absolute; bottom: 11px; left: 8px; right: 8px; height: 14px; color: var(--graphic-secondary); text-align: center; font: 500 10px/14px var(--font-body); }
 .caption > span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .before { animation: beforeState var(--graphic-duration) ease infinite; }
 .after { color: var(--graphic-accent); opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
 .after > i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
 .grid { stroke: var(--graphic-grid); stroke-width: 0.7; }
-.microLabel { fill: var(--graphic-soft); font: 500 8px var(--font-mono); letter-spacing: 0.5px; }
+.microLabel { fill: var(--graphic-soft); font: 500 9px var(--font-mono); letter-spacing: 0.35px; }
 
 /* AI: Data ingress → autonomous reasoning → business impact */
 .connection { stroke: #182030; stroke-width: 1; }
@@ -42,11 +42,11 @@
 .shieldLine { stroke: #1f2a3d; stroke-width: 0.7; stroke-dasharray: 2 4; opacity: 0.5; }
 
 
-.sourceCapsule { stroke: #1e273a; stroke-width: 0.8; animation: capsuleBorder var(--graphic-duration) ease infinite; }
+.sourceCapsule { stroke: var(--graphic-line); stroke-width: 0.8; animation: capsuleBorder var(--graphic-duration) ease infinite; }
 .capsuleLed { fill: #3b82f6; opacity: 0.5; animation: ledBlink var(--graphic-duration) ease infinite; }
-.capsuleLines { stroke: #283548; stroke-width: 1; stroke-linecap: round; }
+.capsuleLines { stroke: var(--graphic-line); stroke-width: 1; stroke-linecap: round; }
 .portDot { fill: #4f46e5; stroke: #080c14; stroke-width: 1; }
-.nodeLabel { fill: #4b5872; font: 600 6px var(--font-mono); letter-spacing: 1.2px; }
+.nodeLabel { fill: var(--graphic-secondary); font: 600 8px var(--font-mono); letter-spacing: 0.8px; }
 
 
 .coreHalo { opacity: 0; animation: halo var(--graphic-duration) ease infinite; }
@@ -57,12 +57,12 @@
 .coreDot { fill: #6366f1; opacity: 0.4; animation: photon var(--graphic-duration) ease infinite; }
 
 
-.impactHalo { opacity: 0; animation: impactHalo var(--graphic-duration) ease infinite; }
+.impactHalo { opacity: 0.22; animation: impactHalo var(--graphic-duration) ease infinite; }
 .impactRipple { fill: none; stroke: var(--graphic-accent); stroke-width: 1.2; opacity: 0; animation: ripple var(--graphic-duration) var(--graphic-ease) infinite; }
-.sealOuterRing { fill: #060a12; stroke: #1e283a; stroke-width: 1; animation: sealRing var(--graphic-duration) ease infinite; }
+.sealOuterRing { fill: #060a12; stroke: rgba(198, 255, 52, 0.35); stroke-width: 1; animation: sealRing var(--graphic-duration) ease infinite; }
 .sealBody { stroke: #152030; stroke-width: 0.7; }
 .sealInnerRim { fill: none; stroke: rgba(255, 255, 255, 0.07); stroke-width: 0.6; }
-.impactDollar { fill: #283548; font: 800 20px var(--font-display); letter-spacing: -0.02em; animation: dollar var(--graphic-duration) var(--graphic-ease) infinite; }
+.impactDollar { fill: rgba(198, 255, 52, 0.5); font: 800 20px var(--font-display); letter-spacing: -0.02em; animation: dollar var(--graphic-duration) var(--graphic-ease) infinite; }
 
 .ai .before { animation-name: impactOff; }
 .ai .after { animation-name: impactOn; }
@@ -72,13 +72,13 @@
 .timeColumn { animation: compressTime var(--graphic-duration) var(--graphic-ease) infinite; }
 .quarterLabel { animation: beforeState var(--graphic-duration) ease infinite; }
 .weekLabel { fill: var(--graphic-accent); opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
-.baseline { stroke: var(--graphic-secondary); stroke-width: 1.2; animation: baselineFade var(--graphic-duration) ease infinite; }
-.slowPoint { fill: var(--graphic-secondary); animation: beforeState var(--graphic-duration) ease infinite; }
-.velocityArea { opacity: 0; animation: curveArea var(--graphic-duration) ease infinite; }
-.velocityCurve { stroke: var(--graphic-accent); stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: drawCurve var(--graphic-duration) var(--graphic-ease) infinite; }
-.velocityHighlight { stroke: var(--graphic-ink); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 3 100; stroke-dashoffset: 103; opacity: 0; animation: curveHighlight var(--graphic-duration) linear infinite; }
-.deployPoint { opacity: 0; animation: finishPoint var(--graphic-duration) ease infinite; }
-.finishRing { fill: var(--graphic-surface); stroke: var(--graphic-accent); stroke-opacity: 0.5; stroke-width: 0.8; }
+.baseline { stroke: var(--graphic-secondary); stroke-opacity: 0.4; stroke-width: 1; stroke-dasharray: 3 3; animation: baselineFade var(--graphic-duration) ease infinite; }
+.slowPoint { fill: var(--graphic-secondary); opacity: 0.5; animation: beforeState var(--graphic-duration) ease infinite; }
+.velocityArea { opacity: 0.16; animation: curveArea var(--graphic-duration) ease infinite; }
+.velocityCurve { stroke: var(--graphic-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; opacity: 0.45; animation: drawCurve var(--graphic-duration) var(--graphic-ease) infinite; }
+.velocityHighlight { stroke: var(--graphic-ink); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 5 100; stroke-dashoffset: 105; opacity: 0; animation: curveHighlight var(--graphic-duration) linear infinite; }
+.deployPoint { opacity: 0.45; animation: finishPoint var(--graphic-duration) ease infinite; }
+.finishRing { fill: var(--graphic-surface); stroke: var(--graphic-accent); stroke-opacity: 0.8; stroke-width: 1; }
 .finishDot { fill: var(--graphic-accent); }
 
 /* Adoption: preserve the four original modules and their magnetic alignment. */
@@ -86,7 +86,7 @@
 .assemblyCross { stroke: var(--graphic-cyan); stroke-opacity: 0.12; stroke-width: 0.6; }
 .tile { transform-box: fill-box; transform-origin: center; transform: translate(var(--dx), var(--dy)) rotate(var(--angle)); animation: assemble var(--graphic-duration) var(--graphic-ease) infinite; animation-delay: calc(var(--order) * 80ms); }
 .tileSurface { stroke: var(--graphic-line); stroke-width: 0.9; }
-.tileLabel { fill: var(--graphic-secondary); font: 500 6.5px var(--font-mono); letter-spacing: 0.3px; }
+.tileLabel { fill: var(--graphic-secondary); font: 500 8px var(--font-mono); letter-spacing: 0.2px; }
 .meterTrack { stroke: var(--graphic-line); stroke-width: 3; stroke-linecap: round; }
 .meterFill { stroke: var(--graphic-accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 65; animation: fillMeter var(--graphic-duration) var(--graphic-ease) infinite; }
 .tileIndicator { fill: var(--graphic-accent); opacity: 0.4; }
@@ -95,7 +95,7 @@
 .tableDot { fill: var(--graphic-cyan); opacity: 0.6; }
 .tableLine { stroke: var(--graphic-secondary); stroke-opacity: 0.45; stroke-width: 2; stroke-linecap: round; }
 .syncButton { fill: var(--graphic-surface-light); stroke: var(--graphic-line); stroke-width: 0.6; animation: syncButton var(--graphic-duration) ease infinite; }
-.syncText { fill: var(--graphic-secondary); font: 500 7px var(--font-mono); letter-spacing: 0.3px; }
+.syncText { fill: var(--graphic-secondary); font: 500 8px var(--font-mono); letter-spacing: 0.2px; }
 .unbound { animation: beforeState var(--graphic-duration) ease infinite; }
 .synced { opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
 .synced .syncText { fill: var(--graphic-accent); }
@@ -113,7 +113,7 @@
   40%, 100% { stroke-dashoffset: -100; opacity: 0; }
 }
 @keyframes capsuleBorder {
-  0%, 12%, 42%, 100% { stroke: #1e273a; }
+  0%, 12%, 42%, 100% { stroke: var(--graphic-line); }
   18%, 36% { stroke: #4338ca; }
 }
 @keyframes ledBlink {
@@ -160,33 +160,52 @@
   100% { opacity: 0; transform: scale(1.7); }
 }
 @keyframes impactHalo {
-  0%, 55%, 92%, 100% { opacity: 0; }
-  60%, 86% { opacity: 0.8; }
+  0%, 55%, 92%, 100% { opacity: 0.22; }
+  60%, 86% { opacity: 0.85; }
 }
 @keyframes sealRing {
-  0%, 55%, 92%, 100% { stroke: #1e283a; }
-  60%, 86% { stroke: var(--graphic-accent); filter: drop-shadow(0 0 4px rgba(198, 255, 52, 0.4)); }
+  0%, 55%, 92%, 100% { stroke: rgba(198, 255, 52, 0.35); }
+  60%, 86% { stroke: var(--graphic-accent); filter: drop-shadow(0 0 5px rgba(198, 255, 52, 0.5)); }
 }
 @keyframes dollar {
-  0%, 55% { fill: #283548; transform: scale(1); }
+  0%, 55% { fill: rgba(198, 255, 52, 0.5); transform: scale(1); }
   58% { fill: #ffffff; transform: scale(1.12); }
   62%, 86% { fill: var(--graphic-accent); transform: scale(1); filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.6)); }
-  92%, 100% { fill: #283548; transform: scale(1); filter: none; }
+  92%, 100% { fill: rgba(198, 255, 52, 0.5); transform: scale(1); filter: none; }
 }
 
-@keyframes impactOn { 0%, 56%, 92%, 100% { opacity: 0; } 62%, 86% { opacity: 1; } }
-@keyframes impactOff { 0%, 50%, 98%, 100% { opacity: 1; } 56%, 92% { opacity: 0; } }
+@keyframes impactOn { 0%, 56%, 92%, 100% { opacity: 0.25; } 62%, 86% { opacity: 1; } }
+@keyframes impactOff { 0%, 50%, 98%, 100% { opacity: 1; } 56%, 92% { opacity: 0.2; } }
 
 @keyframes compressTime { 0%, 16%, 100% { transform: translateX(0); } 39%, 82% { transform: translateX(var(--shift)); } }
-@keyframes baselineFade { 0%, 16%, 100% { opacity: 0.65; } 35%, 83% { opacity: 0.16; } }
-@keyframes curveArea { 0%, 32%, 95%, 100% { opacity: 0; } 55%, 80% { opacity: 1; } }
-@keyframes drawCurve { 0%, 24% { stroke-dashoffset: 100; opacity: 0; } 26% { opacity: 1; } 57%, 82% { stroke-dashoffset: 0; opacity: 1; } 94%, 100% { stroke-dashoffset: 0; opacity: 0; } }
-@keyframes curveHighlight { 0%, 32% { stroke-dashoffset: 103; opacity: 0; } 35% { opacity: 0.85; } 58% { stroke-dashoffset: 0; opacity: 0.85; } 61%, 100% { stroke-dashoffset: 0; opacity: 0; } }
-@keyframes finishPoint { 0%, 53%, 94%, 100% { opacity: 0; } 61%, 81% { opacity: 1; } }
-@keyframes assemble { 0%, 14%, 100% { transform: translate(var(--dx), var(--dy)) rotate(var(--angle)); } 37%, 81% { transform: translate(0, 0) rotate(0deg); } }
+@keyframes baselineFade { 0%, 16%, 100% { opacity: 0.45; } 35%, 83% { opacity: 0.15; } }
+@keyframes curveArea { 0%, 28%, 95%, 100% { opacity: 0.16; } 55%, 80% { opacity: 0.85; } }
+@keyframes drawCurve {
+  0%, 24% { stroke-dashoffset: 0; opacity: 0.45; }
+  26% { opacity: 0.8; }
+  52%, 84% { stroke-dashoffset: 0; opacity: 1; filter: drop-shadow(0 0 4px rgba(198, 255, 52, 0.4)); }
+  94%, 100% { stroke-dashoffset: 0; opacity: 0.45; filter: none; }
+}
+@keyframes curveHighlight {
+  0%, 28% { stroke-dashoffset: 105; opacity: 0; }
+  32% { opacity: 1; }
+  58% { stroke-dashoffset: 0; opacity: 1; }
+  62%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes finishPoint {
+  0%, 48%, 94%, 100% { opacity: 0.45; transform: scale(0.92); }
+  58%, 84% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.5)); }
+}
+@keyframes assemble {
+  0%, 14%, 100% { transform: translate(calc(var(--dx) * 0.35), calc(var(--dy) * 0.35)) rotate(calc(var(--angle) * 0.35)); }
+  37%, 81% { transform: translate(0, 0) rotate(0deg); }
+}
 @keyframes fillMeter { 0%, 22%, 100% { stroke-dashoffset: 65; } 48%, 80% { stroke-dashoffset: 10; } }
 @keyframes growBars { 0%, 23%, 100% { transform: scaleY(0.55); } 49%, 81% { transform: scaleY(1); } }
-@keyframes syncButton { 0%, 26%, 95%, 100% { stroke: var(--graphic-line); } 46%, 80% { stroke: var(--graphic-accent); } }
+@keyframes syncButton {
+  0%, 26%, 95%, 100% { stroke: var(--graphic-line); }
+  46%, 80% { stroke: var(--graphic-accent); box-shadow: 0 0 6px rgba(198, 255, 52, 0.35); }
+}
 
 /* Pausing the shared CSS clock preserves progress instead of restarting it. */
 .graphic[data-running='false'] *, .graphic[data-page-visible='false'] * { animation-play-state: paused !important; }

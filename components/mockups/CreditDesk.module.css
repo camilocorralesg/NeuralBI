@@ -1,0 +1,221 @@
+/* Credit Desk mockup: a model-driven Power Apps form on the desktop and the CFO's approval on Power Apps mobile.
+ * Sized in em (see MockupStage, devices frame); the storyline sets data-phase / data-approved on the root. */
+.root { position: relative; height: 100%; }
+.desk { position: absolute; top: 3%; left: 0; width: 72%; }
+.phone { position: absolute; right: 0; bottom: 0; width: 29%; aspect-ratio: 9 / 19; }
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 2.2em;
+  height: 2.2em;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--mk-text);
+  background: linear-gradient(140deg, var(--mk-moss), color-mix(in srgb, var(--mk-moss) 35%, #000000));
+  border: 1px solid var(--mk-line-strong);
+  font: 600 .62em/1 var(--font-body, sans-serif);
+}
+
+/* App bar: the product, where the record lives, and its Microsoft 365 sensitivity label. */
+.bar { display: flex; align-items: center; gap: .7em; padding: .8em 1em; border-bottom: 1px solid var(--mk-line); }
+.logo { width: 1.6em; height: 1.6em; flex-shrink: 0; }
+.crumbs { display: flex; align-items: center; gap: .45em; flex: 1; min-width: 0; overflow: hidden; color: var(--mk-text-3); font: 500 .68em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.crumbs b { color: var(--mk-text); font: 600 1.1em/1 var(--font-display, sans-serif); letter-spacing: -.01em; }
+.record { color: var(--mk-text-2); font-family: var(--font-mono, monospace); }
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  height: 2.1em;
+  padding: 0 .75em;
+  border-radius: var(--mk-radius-md);
+  color: var(--mk-amber);
+  background: color-mix(in srgb, var(--mk-amber) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mk-amber) 28%, transparent);
+  font: 600 .62em/1 var(--font-body, sans-serif);
+  white-space: nowrap;
+}
+.label svg { width: 1.1em; height: 1.1em; }
+
+/* Record header. */
+.head { display: flex; align-items: center; justify-content: space-between; gap: .8em; padding: .85em 1em .7em; }
+.headText { display: grid; gap: .3em; min-width: 0; }
+.headText b { color: var(--mk-text); font: 600 1.05em/1.1 var(--font-display, sans-serif); letter-spacing: -.02em; white-space: nowrap; }
+.headText span { overflow: hidden; color: var(--mk-text-2); font: 500 .64em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.headStatus { display: grid; justify-items: end; gap: .3em; flex-shrink: 0; }
+.headStatus small { color: var(--mk-text-3); font: 500 .56em/1 var(--font-body, sans-serif); opacity: 0; transition: opacity .4s; }
+.headStatus small[data-shown='true'] { opacity: 1; }
+
+/* Business process flow: Power Apps' chevron stages. */
+.bpf { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .2em; margin: 0 1em .8em; padding: 0; list-style: none; }
+.bpf li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35em;
+  height: 2.3em;
+  padding: 0 .6em 0 .9em;
+  color: var(--mk-text-3);
+  background: rgba(255, 255, 255, .04);
+  clip-path: polygon(0 0, calc(100% - .6em) 0, 100% 50%, calc(100% - .6em) 100%, 0 100%, .6em 50%);
+  font: 600 .58em/1 var(--font-body, sans-serif);
+  white-space: nowrap;
+  transition: color .4s, background-color .4s;
+}
+.bpf li:first-child { clip-path: polygon(0 0, calc(100% - .6em) 0, 100% 50%, calc(100% - .6em) 100%, 0 100%); border-radius: var(--mk-radius-sm) 0 0 var(--mk-radius-sm); }
+.bpf li svg { width: 1em; height: 1em; flex-shrink: 0; }
+.bpf li[data-state='done'] { color: var(--mk-text-2); background: color-mix(in srgb, var(--mk-lime) 9%, transparent); }
+.bpf li[data-state='done'] svg { color: var(--mk-lime); }
+.bpf li[data-state='active'] { color: var(--mk-on-accent); background: var(--mk-lime); }
+.bpf li[data-state='done'][data-final='true'] { color: var(--mk-on-accent); background: var(--mk-lime); }
+.bpf li[data-state='done'][data-final='true'] svg { color: var(--mk-on-accent); }
+
+.body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: .65em; padding: 0 1em 1em; }
+.panel { min-width: 0; padding: .75em .8em; border-radius: var(--mk-radius-lg); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)); border: 1px solid var(--mk-line); }
+.panelHead { display: flex; align-items: center; justify-content: space-between; gap: .5em; margin-bottom: .6em; }
+.panelHead b { overflow: hidden; color: var(--mk-text); font: 600 .74em/1.2 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.pcf { flex-shrink: 0; padding: .4em .55em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .05); border: 1px solid var(--mk-line); font: 600 .52em/1 var(--font-mono, monospace); }
+.count { color: var(--mk-lime); font: 600 .72em/1 var(--font-mono, monospace); }
+
+/* Financial spreading. */
+.sheet { display: grid; margin: 0; padding: 0; list-style: none; }
+.sheet li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: .7em; padding: .42em 0; border-bottom: 1px solid var(--mk-line); color: var(--mk-text-2); font: 500 .64em/1.2 var(--font-body, sans-serif); }
+.sheet b { min-width: 4.4em; color: var(--mk-text); font: 600 1em/1 var(--font-mono, monospace); text-align: right; opacity: .15; transition: opacity .35s; }
+.sheet li[data-filled='true'] b { opacity: 1; }
+.fy { color: var(--mk-text-3); font: 500 .85em/1 var(--font-mono, monospace); }
+.ratios { display: grid; grid-template-columns: 1fr 1fr; gap: .45em; margin-top: .6em; opacity: .25; transition: opacity .4s; }
+.ratios[data-shown='true'] { opacity: 1; }
+.ratios span { display: grid; gap: .25em; padding: .45em .55em; border-radius: var(--mk-radius-md); background: color-mix(in srgb, var(--mk-lime) 7%, transparent); border: 1px solid color-mix(in srgb, var(--mk-lime) 18%, transparent); }
+.ratios small { color: var(--mk-text-3); font: 500 .56em/1 var(--font-body, sans-serif); }
+.ratios b { color: var(--mk-lime); font: 600 .9em/1 var(--font-display, sans-serif); letter-spacing: -.01em; }
+
+/* Risk rating: the scale, and a marker that slides to the grade on its own layer (no layout animation). */
+.scale { position: relative; padding-top: 1.6em; }
+.grades { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.grades span { padding: .45em 0; border-radius: var(--mk-radius-xs); text-align: center; font: 600 .5em/1 var(--font-mono, monospace); }
+.grades span[data-band='investment'] { color: var(--mk-text-2); background: color-mix(in srgb, var(--mk-lime) 12%, transparent); }
+.grades span[data-band='speculative'] { color: var(--mk-text-2); background: color-mix(in srgb, var(--mk-amber) 12%, transparent); }
+.markerLayer { position: absolute; inset: 0; pointer-events: none; transform: translateX(var(--at)); transition: transform .9s var(--ease-out, ease), opacity .4s; opacity: 0; }
+.scale[data-rated='true'] .markerLayer { opacity: 1; }
+.marker { position: absolute; top: 0; left: 0; padding: .3em .45em; border-radius: var(--mk-radius-sm); color: var(--mk-on-accent); background: var(--mk-amber); font: 700 .56em/1 var(--font-mono, monospace); transform: translateX(-50%); }
+.marker::after { content: ""; position: absolute; top: 100%; left: 50%; width: 1px; height: 1.6em; background: var(--mk-amber); }
+.pd { display: flex; gap: 1em; margin-top: .6em; color: var(--mk-text-3); font: 500 .6em/1 var(--font-body, sans-serif); opacity: .25; transition: opacity .4s; }
+.pd[data-shown='true'] { opacity: 1; }
+.pd b { color: var(--mk-text); font-family: var(--font-mono, monospace); }
+.checks { display: grid; gap: .4em; margin: .65em 0 0; padding: 0; list-style: none; }
+.checks li { --tone: var(--mk-text-3); display: flex; align-items: center; gap: .5em; color: var(--mk-text-3); font: 500 .6em/1.2 var(--font-body, sans-serif); transition: color .35s; }
+.checks li[data-state='pass'] { --tone: var(--mk-lime); color: var(--mk-text); }
+.checks li[data-state='exception'] { --tone: var(--mk-amber); color: var(--mk-amber); }
+.checkIcon { display: grid; place-items: center; width: 1.45em; height: 1.45em; flex-shrink: 0; border-radius: 50%; color: var(--mk-on-accent); background: var(--tone); opacity: .35; transition: background-color .35s, opacity .35s; }
+.checks li:not([data-state='pending']) .checkIcon { opacity: 1; }
+.checkIcon svg { width: .85em; height: .85em; }
+
+/* Deal committee: members verified by Entra ID, and their votes. */
+.members { display: grid; gap: .1em; margin: 0; padding: 0; list-style: none; }
+.members li { --tone: var(--mk-text-3); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .55em; padding: .3em 0; }
+.members li[data-vote='approved'], .members li[data-vote='condition'] { --tone: var(--mk-lime); }
+.members li[data-vote='pending'] { --tone: var(--mk-amber); }
+.memberText { display: grid; gap: .2em; min-width: 0; }
+.memberText b { display: inline-flex; align-items: center; gap: .3em; color: var(--mk-text); font: 600 .64em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.memberText b svg { width: 1em; height: 1em; color: var(--mk-text-2); }
+.memberText span { overflow: hidden; color: var(--mk-text-3); font: 500 .56em/1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.vote { padding: .4em .6em; border-radius: 99em; color: var(--tone); background: color-mix(in srgb, var(--tone) 11%, transparent); font: 600 .54em/1 var(--font-body, sans-serif); white-space: nowrap; transition: color .35s, background-color .35s; }
+
+/* Audit trail: newest at the bottom; older entries leave through the top. */
+.trailBox { position: relative; height: 6.6em; }
+.trail {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: .42em;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 1.4em);
+  mask-image: linear-gradient(180deg, transparent, #000000 1.4em);
+}
+.trail li { display: grid; flex-shrink: 0; grid-template-columns: auto minmax(0, 1fr); gap: .6em; color: var(--mk-text-3); font: 500 .58em/1.3 var(--font-body, sans-serif); animation: arrive .45s var(--ease-out, ease) both; }
+.trail time { color: var(--mk-text-3); font-family: var(--font-mono, monospace); }
+.trail span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.trail b { color: var(--mk-text-2); font-weight: 600; }
+.trail li[data-last='true'] b { color: var(--mk-lime); }
+
+/* Phone · Power Apps mobile. */
+.pHead { display: flex; align-items: center; gap: .6em; padding: .6em .9em .7em; border-bottom: 1px solid var(--mk-line); }
+.pLogo { width: 1.5em; height: 1.5em; }
+.pTitle { display: grid; gap: .2em; flex: 1; min-width: 0; }
+.pTitle b { color: var(--mk-text); font: 600 .86em/1.1 var(--font-display, sans-serif); }
+.pTitle span { color: var(--mk-text-3); font: 500 .6em/1 var(--font-body, sans-serif); }
+.inbox, .request { display: flex; flex-direction: column; flex: 1; gap: .7em; padding: .8em .9em 1em; animation: arrive .5s var(--ease-out, ease) both; }
+/* Before the deal reaches committee, the CFO already sees it moving through the stages. */
+.upcoming { display: grid; gap: .55em; padding: .8em .85em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .035); border: 1px solid var(--mk-line); }
+.upStage { display: inline-flex; align-items: center; justify-self: start; gap: .4em; padding: .45em .65em; border-radius: 99em; color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 10%, transparent); font: 600 .6em/1 var(--font-body, sans-serif); }
+.upStage svg { width: 1.15em; height: 1.15em; }
+.upRating { display: flex; flex-wrap: wrap; align-items: center; gap: .6em; opacity: 0; transition: opacity .4s; }
+.upRating[data-shown='true'] { opacity: 1; }
+.upRating b { color: var(--mk-text); font: 600 .78em/1 var(--font-mono, monospace); }
+.upRating em { display: inline-flex; align-items: center; gap: .35em; color: var(--mk-amber); font: normal 600 .6em/1.2 var(--font-body, sans-serif); animation: arrive .4s var(--ease-out, ease) both; }
+.upRating em svg { width: 1.15em; height: 1.15em; }
+.recent { margin-top: .3em; color: var(--mk-text-3); font: 600 .56em/1 var(--font-body, sans-serif); }
+.historyItem { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .5em; padding: .5em 0; border-bottom: 1px solid var(--mk-line); font: 500 .6em/1.2 var(--font-body, sans-serif); }
+.historyItem b { color: var(--mk-text); font-family: var(--font-mono, monospace); }
+.historyItem span { overflow: hidden; color: var(--mk-text-3); white-space: nowrap; text-overflow: ellipsis; }
+.historyItem em { color: var(--mk-lime); font-style: normal; font-weight: 600; }
+.reqHead { display: flex; align-items: baseline; justify-content: space-between; gap: .5em; color: var(--mk-text-3); font: 600 .62em/1 var(--font-body, sans-serif); }
+.reqHead b { color: var(--mk-text-2); font-family: var(--font-mono, monospace); }
+.reqName { color: var(--mk-text); font: 600 1.02em/1.15 var(--font-display, sans-serif); letter-spacing: -.01em; }
+.reqFacility { margin-top: -.3em; color: var(--mk-text-2); font: 500 .68em/1 var(--font-mono, monospace); }
+.reqFacts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35em; margin: 0; }
+.reqFacts div { display: grid; gap: .25em; padding: .45em .5em; border-radius: var(--mk-radius-md); background: rgba(255, 255, 255, .035); border: 1px solid var(--mk-line); }
+.reqFacts dt { color: var(--mk-text-3); font: 500 .56em/1 var(--font-body, sans-serif); }
+.reqFacts dd { margin: 0; color: var(--mk-text); font: 600 .82em/1 var(--font-mono, monospace); }
+.reqException { display: flex; align-items: center; gap: .4em; color: var(--mk-amber); font: 600 .68em/1.2 var(--font-body, sans-serif); }
+.reqException svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+.reqCondition { color: var(--mk-text-2); font: 500 .64em/1.35 var(--font-body, sans-serif); }
+/* Attached documents, each carrying the Microsoft 365 sensitivity label. */
+.docs { display: grid; gap: .35em; margin: 0; padding: 0; list-style: none; }
+.docs li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .5em; row-gap: .2em; align-items: center; padding: .5em .55em; border-radius: var(--mk-radius-md); background: rgba(255, 255, 255, .03); border: 1px solid var(--mk-line); }
+.docs li > svg { grid-row: span 2; width: 1.1em; height: 1.1em; color: var(--mk-text-2); }
+.docs span { overflow: hidden; color: var(--mk-text); font: 500 .6em/1.1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.docs small { display: inline-flex; align-items: center; gap: .3em; color: var(--mk-amber); font: 600 .52em/1 var(--font-body, sans-serif); }
+.docs small svg { width: 1em; height: 1em; }
+.reqVotes { display: flex; align-items: center; gap: .6em; color: var(--mk-text-2); font: 500 .66em/1 var(--font-body, sans-serif); }
+.stack { display: flex; }
+.stack span { display: grid; place-items: center; width: 2.6em; height: 2.6em; margin-left: -.5em; border-radius: 50%; color: var(--mk-text-3); background: var(--mk-raised); border: 1px solid var(--mk-line-strong); font: 700 .74em/1 var(--font-body, sans-serif); transition: color .35s, border-color .35s; }
+.stack span:first-child { margin-left: 0; }
+.stack span[data-vote='approved'], .stack span[data-vote='condition'] { color: var(--mk-lime); border-color: color-mix(in srgb, var(--mk-lime) 50%, transparent); }
+.mfa { --tone: var(--mk-text-3); display: flex; align-items: center; gap: .4em; margin-top: auto; color: var(--tone); font: 600 .64em/1.2 var(--font-body, sans-serif); transition: color .35s; }
+.mfa[data-verified='true'] { --tone: var(--mk-lime); }
+.mfa svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45em;
+  height: 3.2em;
+  border-radius: var(--mk-radius-xl);
+  color: var(--mk-on-accent);
+  background: var(--mk-lime);
+  font: 700 .74em/1 var(--font-body, sans-serif);
+  white-space: nowrap;
+  transition: transform .15s, color .4s, background-color .4s;
+}
+.cta svg { width: 1.2em; height: 1.2em; }
+.cta[data-pressed='true'] { transform: scale(.96); }
+.cta[data-done='true'] { color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 13%, transparent); }
+
+@keyframes arrive { from { opacity: 0; transform: translateY(-.4em); } }
+
+/* Narrow stages: the CFO's phone alone, centred; its approval card tells the whole story. */
+@container (max-width: 480px) {
+  .desk { display: none; }
+  .phone { top: 2%; right: auto; bottom: auto; left: 50%; width: 52%; transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trail li, .inbox, .request { animation: none !important; }
+  .upRating em { animation: none !important; }
+  .bpf li, .upRating, .headStatus small, .sheet b, .ratios, .markerLayer, .pd, .checks li, .checkIcon, .vote, .stack span, .mfa, .cta { transition: none; }
+}

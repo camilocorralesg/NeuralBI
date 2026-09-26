@@ -2,6 +2,7 @@
 
 import React, { memo, useEffect, useId, useRef } from 'react';
 import styles from './BlueprintGraphics.module.css';
+import { useLanguage } from '../../context/LanguageContext';
 
 function GraphicFrame({ kind, hovered, title, before, after, description, children }) {
   const ref = useRef(null);
@@ -47,14 +48,21 @@ function Connection({ d, outgoing = false }) {
 
 export const AiNativeGraphic = memo(function AiNativeGraphic({ hovered = false }) {
   const id = useId();
+  const { t } = useLanguage();
+  const g = t.graphics?.ai || {
+    title: 'Autonomous reasoning',
+    before: 'Enterprise data ingress',
+    after: 'Actionable business impact',
+    desc: 'Data from two sources converges in an autonomous AI reasoning node and becomes business impact, represented by a dollar symbol.',
+  };
   return (
     <GraphicFrame
       kind="ai"
       hovered={hovered}
-      title="Autonomous reasoning"
-      before="Enterprise data ingress"
-      after="Actionable business impact"
-      description="Data from two sources converges in an autonomous AI reasoning node and becomes business impact, represented by a dollar symbol."
+      title={g.title}
+      before={g.before}
+      after={g.after}
+      description={g.desc}
     >
       <defs>
         <radialGradient id={`${id}-coreGlow`} cx="50%" cy="50%" r="50%">
@@ -142,9 +150,18 @@ export const AiNativeGraphic = memo(function AiNativeGraphic({ hovered = false }
 
 export const WarpSpeedGraphic = memo(function WarpSpeedGraphic({ hovered = false }) {
   const id = useId();
+  const { t } = useLanguage();
+  const g = t.graphics?.speed || {
+    title: 'Time to value',
+    before: 'Traditional delivery · quarters',
+    after: 'Accelerated delivery · weeks',
+    desc: 'A slow delivery baseline gives way to an accelerating curve. Quarter markers become week markers as the curve reaches deployment.',
+    quarters: ['Q1', 'Q2', 'Q3', 'Q4'],
+    weeks: ['WK 1', 'WK 2', 'WK 3', 'LIVE'],
+  };
   const curve = 'M22 108C100 108 152 80 235 24';
   return (
-    <GraphicFrame kind="speed" hovered={hovered} title="Time to value" before="Traditional delivery · quarters" after="Accelerated delivery · weeks" description="A slow delivery baseline gives way to an accelerating curve. Quarter markers become week markers as the curve reaches deployment.">
+    <GraphicFrame kind="speed" hovered={hovered} title={g.title} before={g.before} after={g.after} description={g.desc}>
       <defs>
         <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1"><stop stopColor="var(--graphic-accent)" stopOpacity="0.19" /><stop offset="1" stopColor="var(--graphic-accent)" stopOpacity="0" /></linearGradient>
         <radialGradient id={`${id}-finish`}><stop stopColor="var(--graphic-accent)" stopOpacity="0.23" /><stop offset="1" stopColor="var(--graphic-accent)" stopOpacity="0" /></radialGradient>
@@ -153,8 +170,8 @@ export const WarpSpeedGraphic = memo(function WarpSpeedGraphic({ hovered = false
       {[55, 110, 165, 235].map((x, index) => (
         <g key={x} className={styles.timeColumn} style={{ '--shift': `${index === 3 ? 0 : -(index + 1) * 5}px` }}>
           <path d={`M${x} 24V110`} className={styles.timeGuide} />
-          <text x={x} y="131" textAnchor="middle" className={`${styles.microLabel} ${styles.quarterLabel}`}>Q{index + 1}</text>
-          <text x={x} y="131" textAnchor="middle" className={`${styles.microLabel} ${styles.weekLabel}`}>{index === 3 ? 'LIVE' : `WK ${index + 1}`}</text>
+          <text x={x} y="131" textAnchor="middle" className={`${styles.microLabel} ${styles.quarterLabel}`}>{g.quarters[index]}</text>
+          <text x={x} y="131" textAnchor="middle" className={`${styles.microLabel} ${styles.weekLabel}`}>{g.weeks[index]}</text>
         </g>
       ))}
       <path d="M22 108L55 101L235 99" className={styles.baseline} />
@@ -173,8 +190,18 @@ export const WarpSpeedGraphic = memo(function WarpSpeedGraphic({ hovered = false
 
 export const ZeroFrictionGraphic = memo(function ZeroFrictionGraphic({ hovered = false }) {
   const id = useId();
+  const { t } = useLanguage();
+  const g = t.graphics?.adoption || {
+    title: 'Designed for adoption',
+    before: 'Scattered components',
+    after: 'One intuitive experience',
+    desc: 'Four scattered interface modules align into a clear dashboard: an efficiency indicator, a chart, a data table, and a synchronized action.',
+    efficiency: 'EFFICIENCY',
+    unbound: 'UNBOUND',
+    synced: 'SYNCED',
+  };
   return (
-    <GraphicFrame kind="adoption" hovered={hovered} title="Designed for adoption" before="Scattered components" after="One intuitive experience" description="Four scattered interface modules align into a clear dashboard: an efficiency indicator, a chart, a data table, and a synchronized action.">
+    <GraphicFrame kind="adoption" hovered={hovered} title={g.title} before={g.before} after={g.after} description={g.desc}>
       <defs>
         <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="0.8" y2="1"><stop stopColor="var(--graphic-surface-light)" /><stop offset="1" stopColor="var(--graphic-surface)" /></linearGradient>
       </defs>
@@ -182,7 +209,7 @@ export const ZeroFrictionGraphic = memo(function ZeroFrictionGraphic({ hovered =
       <path d="M140 23V117M40 70H240" className={styles.assemblyCross} />
       <g className={styles.tile} style={{ '--dx': '-8px', '--dy': '-6px', '--angle': '-3deg', '--order': 0 }}>
         <rect x="39" y="22" width="95" height="43" rx="7" fill={`url(#${id}-tile)`} className={styles.tileSurface} />
-        <text x="49" y="35" className={styles.tileLabel}>EFFICIENCY</text>
+        <text x="49" y="35" className={styles.tileLabel}>{g.efficiency}</text>
         <path d="M49 47h72" className={styles.meterTrack} />
         <path d="M49 47h72" pathLength="100" className={styles.meterFill} />
         <circle cx="120" cy="33" r="2" className={styles.tileIndicator} />
@@ -201,10 +228,10 @@ export const ZeroFrictionGraphic = memo(function ZeroFrictionGraphic({ hovered =
       <g className={styles.tile} style={{ '--dx': '7px', '--dy': '6px', '--angle': '-3deg', '--order': 3 }}>
         <rect x="144" y="75" width="95" height="43" rx="7" fill={`url(#${id}-tile)`} className={styles.tileSurface} />
         <rect x="157" y="86" width="69" height="21" rx="5" className={styles.syncButton} />
-        <text x="191.5" y="99.5" textAnchor="middle" className={`${styles.syncText} ${styles.unbound}`}>UNBOUND</text>
+        <text x="191.5" y="99.5" textAnchor="middle" className={`${styles.syncText} ${styles.unbound}`}>{g.unbound}</text>
         <g className={styles.synced}>
           <path d="m166 96 3 3 5-5" className={styles.syncCheck} />
-          <text x="198" y="99.5" textAnchor="middle" className={styles.syncText}>SYNCED</text>
+          <text x="198" y="99.5" textAnchor="middle" className={styles.syncText}>{g.synced}</text>
         </g>
       </g>
     </GraphicFrame>
