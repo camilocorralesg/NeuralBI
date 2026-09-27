@@ -1,138 +1,77 @@
 'use client';
-import React, { useState, memo } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Lock } from 'lucide-react';
 import CharacterReveal from '../CharacterReveal';
-import Magnetic from '../Magnetic';
+import EdgeBeam from '../EdgeBeam';
+import useEdgeSpotlight from '../useEdgeSpotlight';
+import ShaderButton from '../ShaderButton';
+import SectionAtmosphere from '../SectionAtmosphere';
+import { useLanguage } from '../../context/LanguageContext';
+import s from './FooterCTA.module.css';
+import Reveal from '../Reveal';
+import { wordsIn } from '../revealTiming';
+
+const isEmailValid = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
 function SuccessState({ onReset }) {
+  const { t } = useLanguage();
+  const successData = t?.footerCta?.success || {
+    headline: 'Ball is in our court.',
+    body: 'We got your message and we’re on it. Someone from the team will review the details and reach out shortly to talk next steps.',
+    resetBtn: 'Send another inquiry'
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
+      className={s.success}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      style={{
-        textAlign: 'center',
-        padding: '2.5rem 1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '1.25rem',
-        willChange: 'transform, opacity'
-      }}
     >
-      {/* Precision Checkmark Icon */}
-      <motion.div
-        initial={{ scale: 0, rotate: -25 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: 'spring', stiffness: 280, damping: 20, delay: 0.1 }}
-        style={{
-          width: '58px',
-          height: '58px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(198, 255, 52, 0.18) 0%, rgba(198, 255, 52, 0.04) 70%)',
-          border: '1px solid rgba(198, 255, 52, 0.4)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 0 35px rgba(198, 255, 52, 0.25)',
-          color: '#c6ff34'
-        }}
-      >
+      <span className={s.check} aria-hidden="true">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <motion.path
-            d="M20 6L9 17L4 12"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 0.45, delay: 0.2, ease: 'easeOut' }}
-          />
+          <motion.path d="M20 6L9 17L4 12" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
         </svg>
-      </motion.div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-        <h3 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(1.6rem, 3.5vw, 2.25rem)',
-          fontWeight: 700,
-          color: '#ffffff',
-          letterSpacing: '-0.02em',
-          margin: 0
-        }}>
-          Ball is in our court.
-        </h3>
-
-        <p style={{
-          fontFamily: 'var(--font-sans)',
-          color: 'rgba(255, 255, 255, 0.65)',
-          fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
-          lineHeight: 1.6,
-          maxWidth: '460px',
-          margin: '0 auto'
-        }}>
-          We got your message and we’re on it. Someone from the team will review the details and reach out shortly to talk next steps.
-        </p>
-      </div>
-
-      <button
-        type="button"
-        onClick={onReset}
-        className="btn-glow-border"
-        style={{
-          marginTop: '1rem',
-          padding: '0.85rem 2.25rem',
-          fontSize: '0.95rem',
-          fontFamily: 'var(--font-display)',
-          fontWeight: 700,
-          cursor: 'pointer',
-          borderRadius: '9999px',
-          transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-        }}
-      >
-        Send another inquiry
-        <span
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'var(--span-color, rgba(255, 255, 255, 0.5))',
-            marginLeft: '8px',
-            paddingLeft: '8px',
-            borderLeft: '1px solid var(--span-border, rgba(255, 255, 255, 0.2))',
-            height: '14px',
-            lineHeight: 1,
-            transition: 'all 0.4s ease'
-          }}
-        >
-          ↵
-        </span>
-      </button>
+      </span>
+      <h3 className={s.successTitle}>{successData.headline}</h3>
+      <p className={s.successBody}>{successData.body}</p>
+      <ShaderButton type="button" onClick={onReset}>{successData.resetBtn}</ShaderButton>
     </motion.div>
   );
 }
 
-function FooterCTA({ activeHero }) {
+/**
+ * The closing call to action ("You already have the data. Now, make it think."): one glass panel whose edge carries
+ * the travelling beam, over a still Volt atmosphere. On the left the promise; on the right the lead form, sent to
+ * /api/lead, with its Fluid Glass submit lit once the form can be sent.
+ */
+function FooterCTA() {
   const router = useRouter();
-  const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
-  const [touched, setTouched] = React.useState({ name: false, email: false, message: false });
-  const [submitted, setSubmitted] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(null);
+  const { t } = useLanguage();
+  const cta = t?.footerCta || {};
+  const ctaErrors = cta.errors || {};
+  const panel = useRef(null);
+  useEdgeSpotlight(panel);
 
-  const isEmailValid = (emailStr) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr.trim());
-  };
+  const headlinePart1 = cta.headlinePart1 || 'You already have the data.';
+  const headlinePart2 = cta.headlinePart2 || '*Now, make it think.*';
+  const subtitleText = cta.subtitle || 'Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.';
+
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [touched, setTouched] = useState({ name: false, email: false, message: false });
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const getFieldError = (field, value) => {
-    if (field === 'name') {
-      if (!value.trim()) return 'Please enter your full name.';
-    }
+    if (field === 'name' && !value.trim()) return ctaErrors.nameRequired || 'Please enter your full name.';
     if (field === 'email') {
-      if (!value.trim()) return 'Work email address is required.';
-      if (!isEmailValid(value)) return 'Please enter a valid work email (e.g. name@company.com).';
+      if (!value.trim()) return ctaErrors.emailRequired || 'Work email address is required.';
+      if (!isEmailValid(value)) return ctaErrors.emailInvalid || 'Please enter a valid work email (e.g. name@company.com).';
     }
-    if (field === 'message') {
-      if (!value.trim()) return 'Please tell us what you would like to explore or optimize.';
-    }
+    if (field === 'message' && !value.trim()) return ctaErrors.messageRequired || 'Please tell us what you would like to explore or optimize.';
     return '';
   };
 
@@ -141,39 +80,36 @@ function FooterCTA({ activeHero }) {
     email: touched.email ? getFieldError('email', formData.email) : '',
     message: touched.message ? getFieldError('message', formData.message) : '',
   };
-
   const isFormValid = formData.name.trim() !== '' && isEmailValid(formData.email) && formData.message.trim() !== '';
 
-  const handleBlur = (field) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
+  const handleBlur = field => setTouched(prev => ({ ...prev, [field]: true }));
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
     setTouched({ name: true, email: true, message: true });
     if (!isFormValid || isSubmitting) return;
-
     setIsSubmitting(true);
     setErrorMessage(null);
-
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-
       const data = await res.json();
-
       if (res.ok && data.success) {
         setSubmitted(true);
         router.push('/thank-you');
       } else {
-        setErrorMessage(data.error || 'Failed to submit inquiry. Please try again.');
+        setErrorMessage(data.error || ctaErrors.submitFailed || 'Failed to submit inquiry. Please try again.');
       }
     } catch (err) {
       console.error('Lead submission error:', err);
-      setErrorMessage('Network error. Please try again later.');
+      setErrorMessage(ctaErrors.networkError || 'Network error. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -186,409 +122,83 @@ function FooterCTA({ activeHero }) {
     setErrorMessage(null);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const fields = [
+    { name: 'name', id: 'name-sui', type: 'text', autoComplete: 'name', label: cta.nameLabel || 'Name', placeholder: cta.namePlaceholder || 'e.g. Alex Morgan' },
+    { name: 'email', id: 'email-sui', type: 'email', autoComplete: 'email', label: cta.emailLabel || 'Work Email', placeholder: cta.emailPlaceholder || 'e.g. alex@company.com' },
+    { name: 'message', id: 'msg-sui', label: cta.messageLabel || 'What do you want to explore?', placeholder: cta.messagePlaceholder || 'e.g. Migrating legacy reporting to Power BI Direct Lake or building an autonomous Copilot agent...' },
+  ];
 
-  const isRemix = activeHero === 'remix';
-  const displayHero = isRemix ? 'sui_fork' : activeHero;
-
-  // Render unified Action Button matching Hero aesthetics
-  const renderSubmitButton = () => (
-    <div style={{ width: '100%' }}>
-      {errorMessage && (
-        <div style={{ color: '#ff4d4f', fontSize: '0.85rem', fontFamily: 'var(--font-sans)', marginBottom: '0.75rem', textAlign: 'center' }}>
-          {errorMessage}
-        </div>
-      )}
-      <button
-        type="submit"
-        disabled={!isFormValid || isSubmitting}
-        className={`btn-glow-border ${isFormValid ? 'btn-active-ready' : ''}`}
-        style={{
-          width: '100%',
-          padding: '0.95rem 1.75rem',
-          fontSize: '1rem',
-          fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)',
-          fontWeight: 700,
-          cursor: !isFormValid ? 'not-allowed' : isSubmitting ? 'wait' : 'pointer',
-          opacity: (!isFormValid || isSubmitting) ? 0.7 : 1,
-          transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease'
-        }}
-      >
-        {isSubmitting ? (
-          <span>Transmitting...</span>
-        ) : (
-          <>
-            Book a Technical Audit
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: isFormValid ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.4)',
-                marginLeft: '8px',
-                paddingLeft: '8px',
-                borderLeft: isFormValid ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.15)',
-                height: '14px',
-                lineHeight: 1,
-                transition: 'all 0.4s ease'
-              }}
-            >
-              ↵
-            </span>
-          </>
-        )}
-      </button>
-    </div>
-  );
-
-  // 1. NEBULA (spline1) - Elegant Glass & Organic Curves
-  if (displayHero === 'spline1') {
-    return (
-      <section id="audit" style={{ padding: 'clamp(4rem, 7vw, 9rem) 0', position: 'relative', overflow: 'hidden', zIndex: 10 }}>
-        <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'var(--color-accent)', filter: 'blur(180px)', opacity: 0.08, zIndex: 0, pointerEvents: 'none' }} />
-
-        <div className="footer-cta-container" style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 1 }}>
-          <div className="footer-cta-text-col">
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.15rem, 5vw, 4rem)', fontWeight: 400, color: '#ffffff', lineHeight: 1.15, marginBottom: '1.25rem' }}>
-              You already have the data.<br />
-              <span style={{ color: 'var(--color-accent)' }}>Now, make it think.</span>
-            </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.95rem, 2vw, 1.15rem)', lineHeight: 1.65, maxWidth: '480px' }}>
-              Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
-            </p>
-          </div>
-
-          <div className="footer-cta-form-card" style={{ background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: 'clamp(1.5rem, 4vw, 2.5rem)', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}>
-            {submitted ? (
-              <SuccessState onReset={handleReset} />
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div>
-                  <label htmlFor="name-spline" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Name</label>
-                  <input id="name-spline" type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = 'var(--color-accent)'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-                </div>
-                <div>
-                  <label htmlFor="email-spline" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Email</label>
-                  <input id="email-spline" type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = 'var(--color-accent)'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-                </div>
-                <div>
-                  <label htmlFor="msg-spline" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>What do you want to explore?</label>
-                  <textarea id="msg-spline" name="message" value={formData.message} onChange={handleChange} rows="3" style={{ width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', resize: 'none', transition: 'border-color 0.3s' }} onFocus={(e) => e.target.style.borderColor = 'var(--color-accent)'} onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'} />
-                </div>
-                {renderSubmitButton()}
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 2. CINEMATIC - Brutalist, Raw Contrast, Split Grid
-  if (displayHero === 'cinematic') {
-    return (
-      <section id="audit" style={{ padding: 'clamp(4rem, 7vw, 9rem) 0', position: 'relative', zIndex: 10, background: '#000' }}>
-        <div className="footer-cta-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <div className="footer-cta-text-col">
-            <h2 style={{ fontFamily: 'var(--font-ui)', fontSize: 'clamp(2.15rem, 5vw, 4.5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.04em', lineHeight: 1.05, textTransform: 'uppercase', marginBottom: '1.25rem' }}>
-              You already have the data.<br />
-              <span style={{ color: '#c6ff34' }}>Now, make it think.</span>
-            </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', color: '#71717a', fontSize: 'clamp(0.95rem, 2vw, 1.15rem)', lineHeight: 1.6, maxWidth: '500px' }}>
-              Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
-            </p>
-          </div>
-
-          <div className="footer-cta-form-card" style={{ border: '1px solid rgba(255,255,255,0.1)', padding: 'clamp(1.5rem, 4vw, 3rem)', borderRadius: '0px' }}>
-            {submitted ? (
-              <SuccessState onReset={handleReset} />
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
-                  <label htmlFor="name-cinematic" style={{ display: 'block', fontFamily: 'var(--font-ui)', fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Name</label>
-                  <input id="name-cinematic" type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', background: 'transparent', border: '1px solid #333', borderRadius: '0px', padding: '0.8rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '1rem', outline: 'none' }} onFocus={(e) => e.target.style.borderColor = '#fff'} onBlur={(e) => e.target.style.borderColor = '#333'} />
-                </div>
-                <div>
-                  <label htmlFor="email-cinematic" style={{ display: 'block', fontFamily: 'var(--font-ui)', fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>Email</label>
-                  <input id="email-cinematic" type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', background: 'transparent', border: '1px solid #333', borderRadius: '0px', padding: '0.8rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '1rem', outline: 'none' }} onFocus={(e) => e.target.style.borderColor = '#fff'} onBlur={(e) => e.target.style.borderColor = '#333'} />
-                </div>
-                <div>
-                  <label htmlFor="msg-cinematic" style={{ display: 'block', fontFamily: 'var(--font-ui)', fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>What do you want to explore?</label>
-                  <textarea id="msg-cinematic" name="message" value={formData.message} onChange={handleChange} rows="3" style={{ width: '100%', background: 'transparent', border: '1px solid #333', borderRadius: '0px', padding: '0.8rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '1rem', outline: 'none', resize: 'none' }} onFocus={(e) => e.target.style.borderColor = '#fff'} onBlur={(e) => e.target.style.borderColor = '#333'} />
-                </div>
-                {renderSubmitButton()}
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 3. MODERN V2 - Glassmorphic Card Split Layout
-  if (displayHero === 'modern_v2') {
-    return (
-      <section id="audit" style={{ padding: 'clamp(4rem, 7vw, 9rem) 0', position: 'relative', zIndex: 10 }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <div className="footer-cta-card-box" style={{
-            background: 'rgba(255,255,255,0.01)',
-            backdropFilter: 'blur(45px)',
-            border: '1px solid rgba(255,255,255,0.05)',
-            borderRadius: '24px',
-            position: 'relative',
-            overflow: 'hidden',
-            boxShadow: '0 24px 80px rgba(198, 255, 52, 0.05)'
-          }}>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '350px', height: '350px', background: '#c6ff34', filter: 'blur(140px)', opacity: 0.08, pointerEvents: 'none' }} />
-
-            <div className="footer-cta-text-col" style={{ position: 'relative', zIndex: 1 }}>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.15rem, 5vw, 4rem)', fontWeight: 900, color: '#fff', lineHeight: 1.1, marginBottom: '0.5rem' }}>
-                You already have the data.
-              </h2>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.15rem, 5vw, 4rem)', fontWeight: 900, color: '#c6ff34', lineHeight: 1.1, marginBottom: '1.75rem' }}>
-                Now, make it think.
-              </h2>
-              <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.65)', fontSize: 'clamp(0.95rem, 2vw, 1.15rem)', lineHeight: 1.65, maxWidth: '480px' }}>
-                Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
-              </p>
-            </div>
-
-            <div className="footer-cta-form-card" style={{ position: 'relative', zIndex: 1, background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: '16px', padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-              {submitted ? (
-                <SuccessState onReset={handleReset} />
-              ) : (
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  <div>
-                    <label htmlFor="name-modern" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>Name</label>
-                    <input id="name-modern" type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'all 0.3s' }} onFocus={(e) => { e.target.style.borderColor = 'rgba(198,255,52,0.5)'; e.target.style.boxShadow = '0 0 10px rgba(198,255,52,0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none'; }} />
-                  </div>
-                  <div>
-                    <label htmlFor="email-modern" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>Email</label>
-                    <input id="email-modern" type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', transition: 'all 0.3s' }} onFocus={(e) => { e.target.style.borderColor = 'rgba(198,255,52,0.5)'; e.target.style.boxShadow = '0 0 10px rgba(198,255,52,0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none'; }} />
-                  </div>
-                  <div>
-                    <label htmlFor="msg-modern" style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>What do you want to explore?</label>
-                    <textarea id="msg-modern" name="message" value={formData.message} onChange={handleChange} rows="3" style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '1rem', outline: 'none', resize: 'none', transition: 'all 0.3s' }} onFocus={(e) => { e.target.style.borderColor = 'rgba(198,255,52,0.5)'; e.target.style.boxShadow = '0 0 10px rgba(198,255,52,0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.08)'; e.target.style.boxShadow = 'none'; }} />
-                  </div>
-                  {renderSubmitButton()}
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 4. TECH V4 - Command Terminal Inputs
-  if (displayHero === 'tech_v4') {
-    return (
-      <section id="audit" style={{ padding: 'clamp(4rem, 7vw, 9rem) 0', position: 'relative', zIndex: 10 }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          backgroundPosition: 'center center',
-          maskImage: 'radial-gradient(circle, black 30%, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)',
-          opacity: 0.5, pointerEvents: 'none'
-        }} />
-
-        <div className="footer-cta-container" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 1 }}>
-          <div className="footer-cta-text-col">
-            <h2 style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-tech)', fontSize: 'clamp(2rem, 5vw, 4.5rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '1rem', textTransform: 'uppercase' }}>
-              You already have the data.<br />
-              <span style={{ color: '#c6ff34' }}>Now, make it think.</span>
-            </h2>
-            <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', lineHeight: 1.6, maxWidth: '480px' }}>
-              Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.
-            </p>
-          </div>
-
-          <div className="footer-cta-form-card" style={{ border: '1px solid rgba(198,255,52,0.3)', padding: 'clamp(1.5rem, 4vw, 2.5rem)', background: '#050505', position: 'relative', borderRadius: isRemix ? '12px' : '0px' }}>
-            <div style={{ position: 'absolute', top: '2px', left: '2px', fontSize: '0.5rem', color: '#c6ff34' }}>+</div>
-            <div style={{ position: 'absolute', top: '2px', right: '2px', fontSize: '0.5rem', color: '#c6ff34' }}>+</div>
-            <div style={{ position: 'absolute', bottom: '2px', left: '2px', fontSize: '0.5rem', color: '#c6ff34' }}>+</div>
-            <div style={{ position: 'absolute', bottom: '2px', right: '2px', fontSize: '0.5rem', color: '#c6ff34' }}>+</div>
-
-            {submitted ? (
-              <SuccessState onReset={handleReset} />
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div className="footer-cta-tech-row" style={{ display: 'flex', alignItems: 'center', borderBottom: '1px dashed rgba(198,255,52,0.2)', paddingBottom: '0.5rem' }}>
-                  <label htmlFor="name-tech" style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-mono)', fontSize: '0.8rem', color: '#c6ff34', width: '90px' }}>[NAME]:</label>
-                  <input id="name-tech" type="text" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required style={{ flex: 1, width: '100%', background: 'transparent', border: 'none', color: '#fff', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '1rem', outline: 'none' }} />
-                </div>
-                <div className="footer-cta-tech-row" style={{ display: 'flex', alignItems: 'center', borderBottom: '1px dashed rgba(198,255,52,0.2)', paddingBottom: '0.5rem' }}>
-                  <label htmlFor="email-tech" style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-mono)', fontSize: '0.8rem', color: '#c6ff34', width: '90px' }}>[EMAIL]:</label>
-                  <input id="email-tech" type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required style={{ flex: 1, width: '100%', background: 'transparent', border: 'none', color: '#fff', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', fontSize: '1rem', outline: 'none' }} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <label htmlFor="msg-tech" style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-mono)', fontSize: '0.8rem', color: '#c6ff34' }}>[DISCOVERY_GOAL]:</label>
-                  <textarea id="msg-tech" name="message" value={formData.message} onChange={handleChange} rows="2" style={{ width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(198,255,52,0.2)', color: '#fff', fontFamily: isRemix ? 'var(--font-sans)' : 'var(--font-mono)', padding: '0.5rem', fontSize: '1rem', outline: 'none', resize: 'none', borderRadius: isRemix ? '6px' : '0px' }} />
-                </div>
-                {renderSubmitButton()}
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // 5. SUI FORK (Default / Remix) - Brutalist Premium Dark Split Layout
   return (
-    <section id="audit" style={{ padding: 'clamp(4rem, 7vw, 9rem) 0', position: 'relative', zIndex: 10 }}>
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '80%',
-        maxWidth: '800px',
-        height: '400px',
-        background: 'radial-gradient(circle, rgba(198, 255, 52, 0.12) 0%, transparent 70%)',
-        filter: 'blur(100px)',
-        zIndex: 0,
-        pointerEvents: 'none'
-      }} />
+    <section id="audit" className={s.section} aria-labelledby="audit-heading">
+      <SectionAtmosphere focus="28% 52%" secondaryFocus="84% 72%" />
+      <div className={s.light} aria-hidden="true" />
+      <div className={s.inner}>
+        <div ref={panel} className={s.panel}>
+          <EdgeBeam />
 
-      <div className="footer-cta-container" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem', position: 'relative', zIndex: 1 }}>
-        <div className="footer-cta-text-col">
-          <h2 style={{ fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: 'clamp(2.15rem, 5vw, 4.5rem)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '1.25rem', display: 'flex', flexDirection: 'column' }}>
-            <CharacterReveal text="You already have the data." />
-            <CharacterReveal text="Now, make it think." className="text-accent" style={{ color: '#c6ff34' }} />
-          </h2>
-          <CharacterReveal
-            text="Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today."
-            style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.95rem, 2vw, 1.15rem)', lineHeight: 1.65, maxWidth: '480px' }}
-          />
+          <div className={s.intro}>
+            <h2 id="audit-heading" className={s.title}>
+              <CharacterReveal text={headlinePart1} style={{ display: 'block' }} />
+              <CharacterReveal text={headlinePart2} delay={wordsIn(headlinePart1)} style={{ display: 'block' }} />
+            </h2>
+            <Reveal as="p" className={s.subtitle} delay={280}>{subtitleText}</Reveal>
+          </div>
+
+          <Reveal variant="block" delay={200} amount={0.15} className={s.formSide}>
+            {submitted ? (
+              <SuccessState onReset={handleReset} />
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className={s.form}>
+                {fields.map(field => {
+                  const error = errors[field.name];
+                  const errorId = `${field.id}-error`;
+                  const shared = {
+                    id: field.id,
+                    name: field.name,
+                    value: formData[field.name],
+                    onChange: handleChange,
+                    onBlur: () => handleBlur(field.name),
+                    placeholder: field.placeholder,
+                    required: true,
+                    'aria-invalid': Boolean(error),
+                    'aria-describedby': error ? errorId : undefined,
+                    className: s.input,
+                  };
+                  return (
+                    <div key={field.name} className={s.field}>
+                      <label htmlFor={field.id} className={s.label}>{field.label}</label>
+                      {field.name === 'message'
+                        ? <textarea {...shared} rows={3} />
+                        : <input {...shared} type={field.type} autoComplete={field.autoComplete} />}
+                      {error && <span id={errorId} className={s.error}>{error}</span>}
+                    </div>
+                  );
+                })}
+
+                {errorMessage && <div className={s.formError} role="alert">{errorMessage}</div>}
+                <ShaderButton
+                  type="submit"
+                  disabled={!isFormValid || isSubmitting}
+                  ready={isFormValid && !isSubmitting}
+                  className={s.submit}
+                >
+                  {isSubmitting ? (cta.submittingBtn || 'Transmitting...') : (
+                    <>
+                      {cta.submitBtn || 'Book an Architecture Audit'}
+                      <span className={s.enter} aria-hidden="true">↵</span>
+                    </>
+                  )}
+                </ShaderButton>
+                {cta.confidentialNote && (
+                  <p className={s.note}><Lock size={13} strokeWidth={2} aria-hidden="true" />{cta.confidentialNote}</p>
+                )}
+              </form>
+            )}
+          </Reveal>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.96 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="footer-cta-form-card"
-          style={{ willChange: 'transform, opacity', background: 'rgba(255, 255, 255, 0.01)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: isRemix ? '12px' : '16px', padding: 'clamp(1.5rem, 4vw, 2.5rem)', boxShadow: '0 30px 60px rgba(0,0,0,0.4)' }}
-        >
-          {submitted ? (
-            <SuccessState onReset={handleReset} />
-          ) : (
-            <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div>
-                <label htmlFor="name-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Name</label>
-                <input
-                  id="name-sui"
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur('name')}
-                  aria-invalid={!!errors.name}
-                  required
-                  placeholder="e.g. Alex Morgan"
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255,255,255,0.02)',
-                    border: `1px solid ${errors.name ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
-                    borderRadius: isRemix ? '6px' : '8px',
-                    padding: '0.75rem 1rem',
-                    color: '#fff',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = errors.name ? '#ff5252' : '#c6ff34'}
-                />
-                {errors.name && (
-                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
-                    {errors.name}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="email-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>Work Email</label>
-                <input
-                  id="email-sui"
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur('email')}
-                  aria-invalid={!!errors.email}
-                  required
-                  placeholder="e.g. alex@company.com"
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: `1px solid ${errors.email ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
-                    borderRadius: isRemix ? '6px' : '8px',
-                    padding: '0.75rem 1rem',
-                    color: '#fff',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = errors.email ? '#ff5252' : '#c6ff34'}
-                />
-                {errors.email && (
-                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
-                    {errors.email}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="msg-sui" style={{ display: 'block', fontFamily: isRemix ? 'var(--font-display)' : 'var(--font-ui)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem' }}>What do you want to explore?</label>
-                <textarea
-                  id="msg-sui"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur('message')}
-                  aria-invalid={!!errors.message}
-                  required
-                  placeholder="e.g. Migrating legacy reporting to Power BI Direct Lake or building an autonomous Copilot agent..."
-                  rows={3}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: `1px solid ${errors.message ? '#ff5252' : 'rgba(255,255,255,0.08)'}`,
-                    borderRadius: isRemix ? '6px' : '8px',
-                    padding: '0.75rem 1rem',
-                    color: '#fff',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    resize: 'none',
-                    transition: 'border-color 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = errors.message ? '#ff5252' : '#c6ff34'}
-                />
-                {errors.message && (
-                  <span style={{ color: '#ff5252', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginTop: '0.35rem', display: 'block' }}>
-                    {errors.message}
-                  </span>
-                )}
-              </div>
-              <Magnetic range={120} actionScale={0.08}>
-                {renderSubmitButton()}
-              </Magnetic>
-            </form>
-          )}
-        </motion.div>
       </div>
     </section>
   );
 }
 
 export default memo(FooterCTA);
-

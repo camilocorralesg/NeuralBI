@@ -1,0 +1,21 @@
+.atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Dissolve into the page black at both ends so neighbouring sections join without a seam. */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  opacity: var(--atmo-strength);
+  background:
+    radial-gradient(ellipse 44% 34% at var(--atmo-focus), color-mix(in oklab, var(--atmo-accent) 11%, transparent), transparent 72%),
+    radial-gradient(ellipse 30% 26% at var(--atmo-secondary-focus), color-mix(in oklab, var(--atmo-secondary) 7%, transparent), transparent 70%),
+    /* The band itself: obsidian pulled a few steps toward the accent hue, then back to black. */
+    linear-gradient(180deg, transparent 0%, oklch(0.155 0.018 128 / .92) 38%, oklch(0.13 0.012 190 / .78) 68%, transparent 100%);
+}

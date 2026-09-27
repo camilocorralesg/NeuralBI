@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import FooterCTA from '../../components/sections/FooterCTA';
 
+
 const mockPush = vi.fn();
 
 vi.mock('next/navigation', () => ({
@@ -25,7 +26,7 @@ describe('Component: FooterCTA Form Integration', () => {
     expect(screen.getByLabelText(/^Work Email$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/What do you want to explore\?/i)).toBeInTheDocument();
 
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
     expect(submitBtn).toBeInTheDocument();
     expect(submitBtn).toBeDisabled();
   });
@@ -57,7 +58,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     expect(submitBtn).toBeDisabled();
 
@@ -79,7 +80,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -112,7 +113,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -134,7 +135,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book a Technical Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -146,5 +147,15 @@ describe('Component: FooterCTA Form Integration', () => {
       expect(screen.getByText(/Network error\. Please try again later\./i)).toBeInTheDocument();
       expect(mockPush).not.toHaveBeenCalled();
     });
+  });
+  it('carries the travelling beam on its panel and lights the submit once the form can be sent', () => {
+    const { container } = render(<FooterCTA activeHero="remix" />);
+    expect(container.querySelector('[data-live]')).toHaveAttribute('aria-hidden', 'true');
+    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    expect(submitBtn).not.toHaveAttribute('data-ready');
+    fireEvent.change(screen.getByLabelText(/^Name$/i), { target: { name: 'name', value: 'Alex Morgan' } });
+    fireEvent.change(screen.getByLabelText(/^Work Email$/i), { target: { name: 'email', value: 'alex@enterprise.com' } });
+    fireEvent.change(screen.getByLabelText(/What do you want to explore\?/i), { target: { name: 'message', value: 'Need data migration' } });
+    expect(submitBtn).toHaveAttribute('data-ready', 'true');
   });
 });

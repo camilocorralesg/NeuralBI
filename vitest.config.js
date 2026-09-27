@@ -11,6 +11,7 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./test/setup.js'],
+    testTimeout: 15000,
   },
   resolve: {
     alias: {

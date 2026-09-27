@@ -42,6 +42,7 @@ describe('Component: StickyMobileCTA', () => {
 
     expect(screen.getByText(/Book Audit/i)).toBeInTheDocument();
     expect(screen.getByText(/Ready to transform data\?/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Live Engineering/i)).not.toBeInTheDocument();
   });
 
   it('hides when the contact/audit section comes into view to prevent visual blocking', () => {
@@ -72,7 +73,7 @@ describe('Component: StickyMobileCTA', () => {
   it('triggers smooth scroll and focuses form input when Book Audit is clicked', () => {
     const contactSection = document.createElement('div');
     contactSection.id = 'audit';
-    contactSection.scrollIntoView = vi.fn();
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
     contactSection.getBoundingClientRect = () => ({
       top: 2500,
       bottom: 3000,
@@ -98,7 +99,8 @@ describe('Component: StickyMobileCTA', () => {
     const button = screen.getByRole('button', { name: /Book Audit/i });
     fireEvent.click(button);
 
-    expect(contactSection.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' });
+    // Through the shared smooth-scroll helper: natively here (Lenis runs only for a fine pointer), to the section's top.
+    expect(scrollTo).toHaveBeenCalledWith({ top: 2500 + window.scrollY, behavior: 'smooth' });
 
     // After the 600ms focus delay
     act(() => {

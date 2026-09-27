@@ -1,0 +1,199 @@
+/* Liquidity Monitor mockup: a Power BI report page (slicers, visuals, page tabs) over Direct Lake. Sized in em (see
+ * MockupStage); the storyline sets data-state ('steady' | 'risk' | 'swept') and data-filtered on the app. */
+.app { position: relative; }
+.clock { display: contents; }
+.body { display: grid; gap: .75em; padding: .95em 1.3em 0; }
+
+/* Slicers: the report's filter row. The currency slicer carries the cross-filter once a visual sets it. */
+.slicers { display: flex; flex-wrap: wrap; gap: .5em; }
+.slicer {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  height: 2.15em;
+  padding: 0 .8em;
+  border-radius: var(--mk-radius-md);
+  color: var(--mk-text-2);
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid var(--mk-line);
+  font: 500 .7em/1 var(--font-body, sans-serif);
+  white-space: nowrap;
+  transition: color .3s, background-color .3s, border-color .3s;
+}
+.slicer svg { width: 1.1em; height: 1.1em; color: var(--mk-text-3); }
+.slicer small { color: var(--mk-text-3); font-size: 1em; }
+.slicer b { color: var(--mk-text); font-weight: 600; }
+.slicer[data-active='true'] { color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 8%, transparent); border-color: color-mix(in srgb, var(--mk-lime) 30%, transparent); }
+.slicer[data-active='true'] b, .slicer[data-active='true'] svg { color: var(--mk-lime); }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .85em; }
+.middle { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: .85em; }
+.bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr) minmax(0, 1.25fr); gap: .85em; }
+
+/* Intraday liquidity. */
+.plot { display: grid; grid-template-columns: 2.4em minmax(0, 1fr); gap: .45em; }
+.yAxis { position: relative; color: var(--mk-text-3); font: 500 .62em/1 var(--font-mono, monospace); }
+.yAxis span { position: absolute; left: 0; transform: translateY(-50%); }
+.yAxis span:nth-child(1) { top: 9%; }
+.yAxis span:nth-child(2) { top: 43.6%; }
+.yAxis span:nth-child(3) { top: 78.2%; }
+/* Clipped at the baseline only, so the probe's guide ends there while its readout can rise above the chart. */
+.chart { position: relative; height: 8.6em; clip-path: inset(-10em -10em 0 -10em); }
+.chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.grid { stroke: rgba(255, 255, 255, .05); stroke-width: 1; }
+.limitBand { fill: color-mix(in srgb, var(--mk-amber) 6%, transparent); }
+.limitLine { stroke: color-mix(in srgb, var(--mk-amber) 50%, transparent); stroke-width: 1; stroke-dasharray: 3 3; }
+.nowLine { stroke: var(--mk-line-strong); stroke-width: 1; }
+.line { fill: none; stroke: var(--mk-lime); stroke-width: 2; stroke-linecap: round; }
+.future { opacity: 0; transition: opacity .6s var(--ease-out, ease); }
+.future[data-on='true'] { opacity: 1; }
+.tail, .projection { fill: none; stroke: var(--mk-lime); stroke-linecap: round; }
+.tail { stroke-width: 2; }
+.projection { stroke-width: 1.6; stroke-dasharray: 4 4; opacity: .55; }
+.future[data-kind='risk'] .tail, .future[data-kind='risk'] .projection { stroke: var(--mk-amber); }
+.future[data-kind='risk'] .projection { opacity: .9; }
+.limitLabel { position: absolute; top: calc(78.2% + .5em); left: .4em; color: color-mix(in srgb, var(--mk-amber) 85%, transparent); font: 500 .6em/1 var(--font-body, sans-serif); }
+/* Low on the "now" line, clear of the readout, which always rides above the current value. */
+.nowLabel { position: absolute; bottom: .45em; left: calc(68.75% + .45em); color: var(--mk-text-3); font: 500 .58em/1 var(--font-mono, monospace); }
+.probe { position: absolute; inset: 0; pointer-events: none; transform: translate(var(--x), var(--y)); transition: transform .65s var(--ease-out, ease); }
+.guide { position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: linear-gradient(180deg, rgba(255, 255, 255, .28), transparent 70%); }
+.point {
+  --tone: var(--mk-lime);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: .85em;
+  height: .85em;
+  border-radius: 50%;
+  background: var(--mk-on-accent);
+  border: .2em solid var(--tone);
+  transform: translate(-50%, -50%);
+  transition: border-color .4s;
+}
+.point[data-tone='risk'] { --tone: var(--mk-amber); }
+.readout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  gap: .2em;
+  padding: .5em .7em;
+  border-radius: var(--mk-radius-md);
+  color: var(--mk-paper-ink);
+  background: var(--mk-paper);
+  box-shadow: 0 .6em 1.4em -.5em rgba(0, 0, 0, .75);
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - .95em));
+}
+.readout span { color: var(--mk-paper-ink-2); font: 500 .6em/1 var(--font-body, sans-serif); }
+.readout b { font: 700 .8em/1 var(--font-display, sans-serif); letter-spacing: -.01em; }
+.readout[data-tone='risk'] b { color: color-mix(in srgb, var(--mk-amber) 62%, var(--mk-paper-ink)); }
+.xAxis { display: flex; justify-content: space-between; margin: .6em 0 0 2.85em; color: var(--mk-text-3); font: 500 .6em/1 var(--font-mono, monospace); }
+
+/* Cross-border flows: a Sankey of today's corridors. Cross-filtering dims every corridor that doesn't reach MXN. */
+.sankey svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ribbon { fill: none; stroke: var(--mk-lime); opacity: .38; transition: stroke .45s, opacity .45s; }
+.ribbon[data-from='EUR'] { stroke: var(--mk-olive); }
+.ribbon[data-from='GBP'] { stroke: var(--mk-moss); opacity: .55; }
+.ribbon[data-state='risk'] { stroke: var(--mk-amber); opacity: .78; }
+.ribbon[data-state='swept'] { stroke: var(--mk-lime); opacity: .75; }
+.ribbon[data-dim='true'] { opacity: .09; }
+.node rect { fill: var(--mk-lime); transition: fill .45s, opacity .45s; }
+.node rect[data-from='EUR'] { fill: var(--mk-olive); }
+.node rect[data-from='GBP'] { fill: var(--mk-moss); }
+.node[data-target='true'] rect { fill: var(--mk-text-3); }
+.node[data-state='risk'] rect { fill: var(--mk-amber); }
+.node[data-state='swept'] rect { fill: var(--mk-lime); }
+.node text { fill: var(--mk-text-2); font: 500 8.5px/1 var(--font-mono, monospace); dominant-baseline: central; paint-order: stroke; stroke: var(--mk-sunken); stroke-width: 3px; stroke-linejoin: round; transition: opacity .45s; }
+.nodeCode { fill: var(--mk-text); font-weight: 700; }
+.node[data-state='risk'] .nodeCode { fill: var(--mk-amber); }
+.node[data-dim='true'] rect, .node[data-dim='true'] text { opacity: .3; }
+.tag { font: 700 8.5px/1 var(--font-mono, monospace); text-anchor: middle; paint-order: stroke; stroke: var(--mk-sunken); stroke-width: 3px; stroke-linejoin: round; opacity: 0; transition: opacity .4s; }
+.tag[data-tone='risk'] { fill: var(--mk-amber); }
+.tag[data-tone='good'] { fill: var(--mk-lime); }
+.tag[data-shown='true'] { opacity: 1; }
+
+/* Treasury reserves by currency, each against its target. */
+.pools { display: grid; gap: .5em; margin: 0; padding: 0; list-style: none; }
+.pools li { --tone: var(--mk-olive); display: grid; grid-template-columns: 2.4em minmax(0, 1fr) 3.9em; align-items: center; gap: .6em; transition: opacity .45s; }
+.pools li[data-under='true'] { --tone: var(--mk-amber); }
+.pools li[data-dim='true'] { opacity: .32; }
+.pools b { color: var(--mk-text); font: 600 .66em/1 var(--font-mono, monospace); }
+.track { position: relative; height: .55em; border-radius: 99em; background: rgba(255, 255, 255, .05); }
+.fill { position: absolute; inset: 0; border-radius: inherit; background: var(--tone); transform-origin: left; transition: transform .8s var(--ease-out, ease), background-color .45s; }
+.target { position: absolute; top: -.25em; bottom: -.25em; width: 2px; margin-left: -1px; border-radius: var(--mk-radius-xs); background: var(--mk-text); }
+.poolValue { color: var(--mk-text-2); font: 600 .64em/1 var(--font-mono, monospace); text-align: right; }
+
+/* Intraday risk: FX exposure against its limit, VaR and the settlement queue. */
+.risk { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: .8em; }
+.gauge { --tone: var(--mk-lime); display: grid; justify-items: center; gap: .35em; }
+.dial { position: relative; display: block; width: 100%; }
+.gauge[data-tone='risk'] { --tone: var(--mk-amber); }
+.gauge svg { display: block; width: 100%; height: auto; }
+.gaugeTrack, .gaugeValue { fill: none; stroke-width: 9; stroke-linecap: round; }
+.gaugeTrack { stroke: rgba(255, 255, 255, .06); }
+.gaugeValue { stroke: var(--tone); stroke-dasharray: 100; transition: stroke-dashoffset .9s var(--ease-out, ease), stroke .45s; }
+.gaugeText { position: absolute; right: 0; bottom: 0; left: 0; color: var(--mk-text); font: 600 1.05em/1 var(--font-display, sans-serif); letter-spacing: -.02em; text-align: center; }
+.gaugeLabel { color: var(--mk-text-3); font: 500 .56em/1.25 var(--font-body, sans-serif); text-align: center; }
+.riskStats { display: grid; gap: .7em; margin: 0; }
+.riskStats div { --tone: var(--mk-text); display: grid; gap: .3em; }
+.riskStats div[data-tone='risk'] { --tone: var(--mk-amber); }
+.riskStats dt { color: var(--mk-text-3); font: 500 .6em/1 var(--font-body, sans-serif); }
+.riskStats dd { margin: 0; color: var(--tone); font: 600 1em/1 var(--font-display, sans-serif); letter-spacing: -.02em; transition: color .45s; }
+.riskStats small { color: var(--mk-text-3); font: 500 .58em/1 var(--font-body, sans-serif); letter-spacing: 0; }
+
+/* Alerts, with the Power Automate button that runs the sweep from inside the report. */
+.feed { display: grid; margin: 0; padding: 0; list-style: none; }
+.alert {
+  --tone: var(--mk-lime);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .6em;
+  padding: .36em .1em;
+  border-bottom: 1px solid var(--mk-line);
+  animation: arrive .5s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+}
+.alert:last-child { border-bottom: 0; }
+.alert[data-tone='risk'] { --tone: var(--mk-amber); }
+.alert[data-tone='quiet'] { --tone: var(--mk-text-2); }
+.alertIcon { display: grid; place-items: center; width: 1.85em; height: 1.85em; border-radius: var(--mk-radius-md); color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
+.alertIcon svg { width: 1em; height: 1em; }
+.alertText { display: grid; gap: .25em; min-width: 0; }
+.alertTitle, .alertSub { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.alertTitle { color: var(--mk-text); font: 600 .7em/1.2 var(--font-body, sans-serif); }
+.alertSub { color: var(--mk-text-3); font: 500 .6em/1.2 var(--font-body, sans-serif); }
+.alertValue { color: var(--mk-text); font: 600 .66em/1 var(--font-mono, monospace); white-space: nowrap; }
+.alert[data-tone='risk'] .alertValue { color: var(--mk-amber); }
+.action {
+  padding: .6em .95em;
+  border-radius: var(--mk-radius-md);
+  color: var(--mk-on-accent);
+  background: var(--mk-lime);
+  border: 1px solid transparent;
+  font: 700 .66em/1 var(--font-body, sans-serif);
+  transition: transform .15s, background-color .35s, color .35s;
+}
+.action[data-pressed='true'] { transform: scale(.93); }
+.action[data-applied='true'] { color: var(--mk-lime); background: transparent; border-color: color-mix(in srgb, var(--mk-lime) 30%, transparent); }
+
+/* Report page tabs. */
+.pages { display: flex; gap: 1.6em; margin-top: .8em; padding: 0 1.3em; border-top: 1px solid var(--mk-line); }
+.pages span { position: relative; padding: .75em 0 .85em; color: var(--mk-text-3); font: 500 .68em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.pages span[data-active='true'] { color: var(--mk-text); }
+.pages span[data-active='true']::before { content: ""; position: absolute; top: -1px; right: 0; left: 0; height: 2px; border-radius: 0 0 var(--mk-radius-xs) var(--mk-radius-xs); background: var(--mk-lime); }
+
+@keyframes arrive { from { opacity: 0; transform: translateY(-.5em); } }
+
+/* Narrow stages: KPIs in two rows and the flows, which carry the whole story (the spike, the MXN cross-filter, the
+ * sweep); the intraday line, reserves, risk and alerts step aside. */
+@container (max-width: 480px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .middle { grid-template-columns: minmax(0, 1fr); }
+  .chartCard, .bottom, .clock, .slicer:first-child, .slicer:last-child, .pages span:nth-child(n+3) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .alert { animation: none !important; }
+  .slicer, .future, .probe, .point, .ribbon, .node rect, .node text, .tag, .pools li, .fill, .gaugeValue, .riskStats dd, .action { transition: none; }
+}

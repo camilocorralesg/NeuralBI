@@ -1,0 +1,67 @@
+.scene { width: 100%; height: 100%; margin: 0; position: relative; }
+.scene svg { display: block; width: 100%; height: 100%; overflow: visible; }
+@media (min-width: 769px) { .scene svg { transform: scale(1.35); transform-origin: center; } }
+.survey { stroke: #879773; stroke-width: .6; opacity: .28; }
+.leftFace { fill: #263026; stroke: #6a7a5e; stroke-width: .7; }
+.rightFace { fill: #101b15; stroke: #4c603e; stroke-width: .7; }
+.platformEdge { stroke: #8a9d73; stroke-width: .8; }
+.platformInset { stroke: #667e48; stroke-width: .65; }
+.seam { stroke: #8ca95d; stroke-width: .6; opacity: .6; }
+.lane { stroke: #536743; stroke-width: 2; }
+.sourceFlow, .buildFlow { stroke: #c6ff34; stroke-width: 1.4; stroke-dasharray: 25 100; opacity: 0; }
+.sourceFlow { animation: source 11s linear infinite; }
+.buildFlow { animation: power 11s linear infinite; }
+.dbEdge { stroke: #95ac7c; stroke-width: .7; }
+.dbTop { fill: #b4c99a; stroke: #dcecc4; stroke-width: .8; }
+.dbCap { fill: #d4e4bd; stroke: #617b48; stroke-width: .6; }
+.dbGlyph { stroke: #496333; stroke-width: .7; }
+.dbSeam { stroke: #b0ca8b; stroke-width: .7; opacity: .6; }
+.dbLed { stroke: #c6ff34; stroke-width: 1.6; }
+.dbUpper { animation: upper 11s cubic-bezier(.65, 0, .25, 1) infinite; }
+.dbMiddle { animation: middle 11s cubic-bezier(.65, 0, .25, 1) infinite; }
+.filterEdge { stroke: #9bb580; stroke-width: .8; stroke-linejoin: round; }
+.filterShade { fill: #1c3425; opacity: .6; }
+.filterLip { stroke: #d8eac0; stroke-width: .8; }
+.filterWell { fill: #13241a; stroke: #819f58; stroke-width: .8; }
+.filterMesh { stroke: #8bb65b; stroke-width: .8; }
+.filterExit { stroke: #c6ff34; stroke-width: 1.5; }
+.rawInput { opacity: 0; animation: refine 11s ease-in infinite; animation-delay: var(--delay); }
+.rawChip { fill: #6e815a; stroke: #c0d29d; stroke-width: .7; stroke-linejoin: round; }
+.standFoot { fill: #2c3b2b; stroke: #91a574; stroke-width: .8; }
+.standStem { fill: #71855f; stroke: #a5bb8a; stroke-width: .7; }
+.screenBack { fill: #32492d; stroke: #b2c991; stroke-width: .8; stroke-linejoin: round; }
+.screenEdge { stroke: #dfedc9; stroke-width: 1; }
+.uiRule { stroke: #71865d; stroke-width: .6; }
+.uiLogo { fill: #3b572e; }
+.uiTitle { stroke: #344d2b; stroke-width: 1.6; }
+.wireframe { stroke: #587444; stroke-width: .6; stroke-dasharray: 2 2; opacity: .45; }
+.appPiece { animation: assemble 11s cubic-bezier(.22, 1, .36, 1) infinite; animation-delay: var(--delay); }
+.navigation { fill: #263f29; }
+.selectedNav { fill: #c6ff34; }
+.navLines { stroke: #a9c88a; stroke-width: 1; }
+.uiPanel { fill: #e0eccd; stroke: #6e8657; stroke-width: .6; }
+.inputField { fill: #bccfa6; stroke: #7b9561; stroke-width: .5; }
+.action { fill: #4a6d34; }
+.tableHeader { stroke: #4b653c; stroke-width: 1; }
+.tableRow { stroke: #70865b; stroke-width: .8; }
+.status { fill: #7f9f57; }
+.live { animation: live 11s ease infinite; }
+.liveDot { fill: #3b612a; }
+.liveMark { stroke: #3b612a; stroke-width: 1; }
+.application { animation: activate 11s cubic-bezier(.65, 0, .25, 1) infinite; }
+.transfer { opacity: 0; animation: transfer 11s cubic-bezier(.45, 0, .25, 1) infinite; animation-delay: var(--delay); }
+.cleanSide { fill: #526d35; stroke: #b8df7a; stroke-width: .7; stroke-linejoin: round; }
+.cleanTop { fill: #c6ff34; stroke: #e6ffb3; stroke-width: .7; }
+.cleanMark { stroke: #35501e; stroke-width: .8; }
+.scene[data-running='false'] *, .scene[data-visible='false'] * { animation-play-state: paused !important; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@keyframes upper { 0%, 4%, 100% { transform: translateY(-13px); } 16%, 88% { transform: translateY(0); } }
+@keyframes middle { 0%, 4%, 100% { transform: translateY(-6px); } 16%, 88% { transform: translateY(0); } }
+@keyframes source { 0%, 15% { opacity: 0; stroke-dashoffset: 25; } 17% { opacity: 1; } 26% { opacity: 1; stroke-dashoffset: -100; } 28%, 100% { opacity: 0; stroke-dashoffset: -100; } }
+@keyframes refine { 0%, 23% { opacity: 0; transform: translate(0, -8px); } 27% { opacity: 1; transform: translate(0, 0); } 35% { opacity: 0; transform: translate(var(--dx), var(--dy)); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)); } }
+@keyframes transfer { 0%, 35% { opacity: 0; transform: translate(0, 0); } 38% { opacity: 1; transform: translate(0, 0); } 43% { opacity: 1; transform: translate(40px, 23px); } 48% { opacity: 1; transform: translate(66px, 8px); } 53% { opacity: 1; transform: translate(var(--end-x), var(--end-y)); } 55%, 100% { opacity: 0; transform: translate(var(--end-x), var(--end-y)); } }
+@keyframes assemble { 0%, 53% { opacity: 0; transform: translate(-6px, 4px); } 60%, 88% { opacity: 1; transform: translate(0, 0); } 97%, 100% { opacity: 0; transform: translate(0, 0); } }
+@keyframes live { 0%, 65% { opacity: 0; } 72%, 88% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes power { 0%, 64% { opacity: 0; stroke-dashoffset: 25; } 66% { opacity: 1; } 73% { opacity: 1; stroke-dashoffset: -100; } 76%, 100% { opacity: 0; stroke-dashoffset: -100; } }
+@keyframes activate { 0%, 65%, 100% { transform: translateY(0); } 76%, 89% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } .rawInput, .transfer, .sourceFlow, .buildFlow, .wireframe { display: none; } }

@@ -1,0 +1,129 @@
+/* NeuralBI Inspect mockup: a Power Apps canvas app on a rugged tablet at the line. Glove-sized rows and buttons, a
+ * React/PCF camera control with AI boxes, Bluetooth instruments, and a work order sheet. Sized in em (devices frame). */
+.root { position: relative; display: grid; place-items: center; height: 100%; }
+.device { width: 97%; aspect-ratio: 16 / 10.6; }
+
+.bar { display: flex; align-items: center; gap: .65em; padding: .75em .9em; border-bottom: 1px solid var(--mk-line); }
+.logo { width: 1.6em; height: 1.6em; flex-shrink: 0; }
+.title { display: grid; flex: 1; gap: .2em; min-width: 0; }
+.title b { color: var(--mk-text); font: 600 .82em/1.1 var(--font-display, sans-serif); letter-spacing: -.01em; white-space: nowrap; }
+.title span { color: var(--mk-text-3); font: 500 .56em/1 var(--font-body, sans-serif); }
+.pills { display: flex; align-items: center; gap: .4em; flex-shrink: 0; }
+.synced { display: contents; }
+
+.body { display: grid; flex: 1; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: .7em; min-height: 0; padding: .75em .9em; }
+
+/* Camera: the part under inspection, with the AI control's boxes and the measurement. */
+.camera { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: .5em; border-radius: var(--mk-radius-md); background: rgba(0, 0, 0, .35); border: 1px solid var(--mk-line); }
+.cameraHead { display: flex; align-items: center; justify-content: space-between; gap: .4em; color: var(--mk-text-3); font: 500 .54em/1 var(--font-body, sans-serif); }
+.pcf { padding: .35em .5em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .05); border: 1px solid var(--mk-line); font: 600 .9em/1 var(--font-mono, monospace); }
+.view { display: block; flex: 1; width: 100%; min-height: 0; overflow: visible; }
+.preform rect, .preform path { stroke: var(--mk-text-2); stroke-width: .6; }
+.thread { fill: none; stroke: var(--mk-text-3); stroke-width: .5; }
+.brackets path { fill: none; stroke: var(--mk-lime); stroke-width: 1.3; stroke-linecap: round; }
+.brackets { opacity: .25; transform: scale(1.12); transform-box: fill-box; transform-origin: center; transition: opacity .45s, transform .5s var(--ease-out, ease); }
+.camera[data-locked='true'] .brackets { opacity: 1; transform: none; }
+.dimension, .boxes, .defect { opacity: 0; transition: opacity .4s var(--ease-out, ease); }
+.dimension[data-shown='true'], .boxes[data-shown='true'], .defect[data-shown='true'] { opacity: 1; }
+.dimension path { fill: none; stroke: var(--mk-text-2); stroke-width: .6; }
+.dimension text { fill: var(--mk-lime); font: 600 5.5px/1 var(--font-mono, monospace); text-anchor: middle; }
+.boxes rect { fill: color-mix(in srgb, var(--mk-lime) 5%, transparent); stroke: var(--mk-lime); stroke-width: .8; stroke-dasharray: 3 2; }
+.boxLabel { fill: var(--mk-lime); font: 600 5.5px/1 var(--font-body, sans-serif); }
+.defect rect { fill: color-mix(in srgb, var(--mk-red) 18%, transparent); stroke: var(--mk-red); stroke-width: 1.2; }
+.defect path { fill: none; stroke: var(--mk-red); stroke-width: .8; }
+.defect text { fill: var(--mk-red); font: 700 5.5px/1 var(--font-body, sans-serif); }
+
+/* Checklist: tall rows a gloved finger can hit, each with its instrument and tolerance. */
+.checklist { display: flex; flex-direction: column; gap: .45em; min-width: 0; min-height: 0; }
+.listHead { display: flex; align-items: baseline; justify-content: space-between; gap: .5em; }
+.listHead b { color: var(--mk-text); font: 600 .72em/1.1 var(--font-display, sans-serif); white-space: nowrap; }
+.listHead span { color: var(--mk-text-3); font: 500 .56em/1 var(--font-mono, monospace); }
+/* The rows share the column's height: the taller the device, the bigger the targets. */
+.rows { display: grid; flex: 1; grid-auto-rows: minmax(3em, 1fr); gap: .35em; min-height: 0; margin: 0; padding: 0; list-style: none; }
+.rows li {
+  --tone: var(--mk-text-3);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: .55em;
+  min-height: 3em;
+  padding: .45em .6em;
+  border-radius: var(--mk-radius-md);
+  background: var(--mk-raised);
+  border: 1px solid var(--mk-line);
+  transition: border-color .35s, background-color .35s, opacity .35s;
+}
+.rows li[data-state='pending'] { opacity: .55; }
+.rows li[data-state='reading'] { --tone: var(--mk-lime); border-color: color-mix(in srgb, var(--mk-lime) 35%, transparent); }
+.rows li[data-state='pass'] { --tone: var(--mk-lime); }
+.rows li[data-state='fail'] { --tone: var(--mk-red); border-color: color-mix(in srgb, var(--mk-red) 45%, transparent); background: color-mix(in srgb, var(--mk-red) 7%, var(--mk-raised)); }
+.rowIcon { display: grid; place-items: center; width: 1.9em; height: 1.9em; border-radius: var(--mk-radius-sm); color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); transition: color .35s, background-color .35s; }
+.rowIcon svg { width: 1em; height: 1em; }
+.rowText { display: grid; gap: .25em; min-width: 0; }
+.rowText b { overflow: hidden; color: var(--mk-text); font: 600 .62em/1.1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.rowText span { display: inline-flex; align-items: center; gap: .3em; overflow: hidden; color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.rowText span svg { width: 1.05em; height: 1.05em; flex-shrink: 0; color: var(--mk-text-2); }
+.rowValue { color: var(--mk-text); font: 600 .62em/1 var(--font-mono, monospace); white-space: nowrap; }
+.rows li[data-state='fail'] .rowValue { color: var(--mk-red); }
+.mark { display: grid; place-items: center; width: 1.35em; height: 1.35em; border-radius: 50%; color: var(--mk-on-accent); background: var(--tone); opacity: 0; transition: opacity .3s, background-color .35s; }
+.rows li[data-state='pass'] .mark, .rows li[data-state='fail'] .mark { opacity: 1; }
+.mark svg { width: .8em; height: .8em; }
+.verdict { --tone: var(--mk-lime); display: inline-flex; align-items: center; align-self: flex-start; gap: .4em; padding: .45em .7em; border-radius: 99em; color: var(--tone); background: color-mix(in srgb, var(--tone) 11%, transparent); font: 600 .58em/1 var(--font-body, sans-serif); transition: color .35s, background-color .35s; }
+.verdict[data-rejected='true'] { --tone: var(--mk-red); }
+.verdict svg { width: 1.15em; height: 1.15em; }
+
+/* Glove-sized actions. */
+.actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: .6em; padding: 0 .9em .85em; }
+.secondary, .primary { display: flex; align-items: center; justify-content: center; gap: .5em; height: 3.2em; border-radius: var(--mk-radius-lg); font: 700 .72em/1 var(--font-body, sans-serif); white-space: nowrap; }
+.secondary svg, .primary svg { width: 1.2em; height: 1.2em; }
+.secondary { color: var(--mk-text-2); border: 1px solid var(--mk-line-strong); }
+.primary { color: var(--mk-on-accent); background: var(--mk-lime); transition: transform .15s, color .4s, background-color .4s; }
+.primary[data-pressed='true'] { transform: scale(.96); }
+.primary[data-done='true'] { color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 13%, transparent); }
+
+/* The work order sheet: a bottom sheet flush with the screen, just tall enough to cover the actions it came from. */
+.sheet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  display: grid;
+  gap: .5em;
+  padding: .45em .9em .8em;
+  border-radius: var(--mk-radius-lg) var(--mk-radius-lg) 0 0;
+  background: var(--mk-raised);
+  border-top: 1px solid var(--mk-line-strong);
+  box-shadow: 0 -.6em 1.4em -.6em rgba(0, 0, 0, .8);
+  transform: translateY(104%);
+  transition: transform .6s var(--ease-out, ease);
+}
+.sheet[data-open='true'] { transform: none; }
+.grabber { justify-self: center; width: 2.6em; height: .22em; border-radius: 99em; background: var(--mk-line-strong); }
+.sheetHead { display: flex; flex-wrap: wrap; align-items: center; gap: .45em; }
+.sheetHead b { color: var(--mk-text); font: 600 .72em/1.1 var(--font-display, sans-serif); }
+.priority { padding: .35em .55em; border-radius: 99em; color: var(--mk-red); background: color-mix(in srgb, var(--mk-red) 12%, transparent); font: 700 .52em/1 var(--font-body, sans-serif); }
+.fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5em; margin: 0; }
+.fields div { display: grid; align-content: start; gap: .3em; min-width: 0; }
+.fields dt { color: var(--mk-text-3); font: 500 .5em/1 var(--font-body, sans-serif); }
+.fields dd { margin: 0; overflow: hidden; color: var(--mk-text); font: 600 .56em/1.25 var(--font-body, sans-serif); }
+.fields .thumb { display: flex; align-items: center; gap: .45em; color: var(--mk-text-2); font-family: var(--font-mono, monospace); }
+.thumb svg { flex-shrink: 0; width: 2.2em; height: 2.2em; padding: .25em; border-radius: var(--mk-radius-sm); background: var(--mk-sunken); border: 1px solid var(--mk-line); }
+.thumb path { fill: none; stroke: var(--mk-text-2); stroke-width: 1; }
+.thumb circle { fill: none; stroke: var(--mk-red); stroke-width: 1.2; }
+.hold { display: inline-flex; align-items: center; gap: .4em; margin-left: auto; padding: .45em .65em; border-radius: 99em; color: var(--mk-amber); background: color-mix(in srgb, var(--mk-amber) 12%, transparent); font: 600 .56em/1 var(--font-body, sans-serif); }
+.hold svg { width: 1.1em; height: 1.1em; }
+
+/* Narrow stages: the tablet turns portrait; camera above, checklist below. */
+@container (max-width: 480px) {
+  .device { width: 88%; aspect-ratio: 3 / 4.3; }
+  .body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, .8fr) auto; }
+  .synced { display: none; }
+  .rows li { min-height: 2.6em; }
+  /* Room for two fields: the asset and the defect; the photo and the team stay on the full record. */
+  .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fields div:nth-child(n + 3) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brackets, .dimension, .boxes, .defect, .rows li, .rowIcon, .mark, .verdict, .primary, .sheet { transition: none; }
+}

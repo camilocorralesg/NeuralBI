@@ -1,0 +1,89 @@
+/* Merchandising Copilot mockup: the agent's conversation (ui/agent), started by a planner's message, beside the season
+ * plan it writes: affinity clusters, a markdown schedule and a redlined draft of supplier terms. Sized in em (see
+ * MockupStage); each section is readable as a skeleton and fills when its tool returns (data-ready). */
+.app { position: relative; }
+.body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+
+/* The season plan: the agent's own artefact, drafted section by section, then ready for review. */
+.plan { display: grid; align-content: start; gap: .6em; min-width: 0; padding: 1em 1.1em 1.1em; }
+.planHead { display: flex; align-items: center; gap: .6em; min-width: 0; }
+.planIcon { display: grid; flex-shrink: 0; place-items: center; width: 2em; height: 2em; border-radius: var(--mk-radius-md); color: var(--mk-lime); background: color-mix(in srgb, var(--mk-lime) 11%, transparent); }
+.planIcon svg { width: 1em; height: 1em; }
+.planTitle { display: grid; flex: 1; gap: .2em; min-width: 0; }
+.planTitle b { overflow: hidden; color: var(--mk-text); font: 600 .74em/1.15 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.planTitle span { color: var(--mk-text-3); font: 500 .54em/1 var(--font-body, sans-serif); }
+.block { min-width: 0; padding: .6em .7em .65em; border-radius: var(--mk-radius-lg); background: rgba(255, 255, 255, .025); border: 1px solid var(--mk-line); }
+.block small { display: flex; justify-content: space-between; gap: .6em; margin-bottom: .5em; color: var(--mk-text-3); font: 600 .54em/1 var(--font-body, sans-serif); }
+.block small span { font-family: var(--font-mono, monospace); font-weight: 500; }
+.block > :not(small) { opacity: .3; transition: opacity .5s var(--ease-out, ease); }
+.block[data-ready='true'] > :not(small) { opacity: 1; }
+
+/* Affinity clusters: products sized by sales inside their cluster; the rain kit in lime, summer (to mark down) in amber. */
+.bubbles { display: block; width: 100%; height: auto; overflow: visible; }
+.cluster { transition: opacity .5s; }
+g[data-tone='rain'] .cluster { fill: color-mix(in srgb, var(--mk-lime) 7%, transparent); stroke: color-mix(in srgb, var(--mk-lime) 40%, transparent); stroke-width: .8; stroke-dasharray: 3 2; }
+g[data-tone='summer'] .cluster { fill: color-mix(in srgb, var(--mk-amber) 6%, transparent); stroke: color-mix(in srgb, var(--mk-amber) 38%, transparent); stroke-width: .8; stroke-dasharray: 3 2; }
+g[data-tone='quiet'] .cluster { fill: rgba(255, 255, 255, .025); stroke: var(--mk-line-strong); stroke-width: .7; }
+.item { transform: scale(.2); transform-box: fill-box; transform-origin: center; opacity: 0; transition: transform .55s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) calc(var(--i) * 50ms), opacity .4s calc(var(--i) * 50ms); }
+.block[data-ready='true'] .item { transform: none; opacity: 1; }
+g[data-tone='rain'] .item circle { fill: color-mix(in srgb, var(--mk-lime) 72%, transparent); }
+g[data-tone='summer'] .item circle { fill: color-mix(in srgb, var(--mk-amber) 55%, transparent); }
+g[data-tone='quiet'] .item circle { fill: color-mix(in srgb, var(--mk-text) 22%, transparent); }
+.item text { fill: var(--mk-on-accent); font: 700 6px/1 var(--font-body, sans-serif); text-anchor: middle; }
+g[data-tone='quiet'] .item text { fill: var(--mk-text); }
+.lift { fill: var(--mk-lime); font: 700 8px/1 var(--font-mono, monospace); }
+.clusterKey { display: flex; flex-wrap: wrap; gap: .35em .9em; margin-top: .45em; }
+.clusterKey span { --tone: var(--mk-text-3); display: inline-flex; align-items: center; gap: .4em; color: var(--mk-text-2); font: 500 .5em/1 var(--font-body, sans-serif); }
+.clusterKey span[data-tone='rain'] { --tone: var(--mk-lime); color: var(--mk-text); }
+.clusterKey span[data-tone='summer'] { --tone: var(--mk-amber); }
+.clusterKey i { width: .8em; height: .8em; border-radius: 50%; background: var(--tone); }
+
+/* Markdown schedule: each line's cuts across the weeks, revealed left to right, deeper cuts in stronger amber. */
+.schedule { display: grid; gap: .3em; }
+.weeks, .line { display: grid; grid-template-columns: 6.4em minmax(0, 1fr); align-items: center; gap: .5em; }
+/* Week labels share the steps' seven columns and gap, so each label sits over its week. */
+.weekCols { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .15em; }
+.weekCols span { color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); text-align: center; }
+.lineName { display: grid; gap: .2em; min-width: 0; }
+.lineName b { overflow: hidden; color: var(--mk-text); font: 600 .54em/1.1 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.lineName span { color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); }
+.steps { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .15em; height: 1.6em; }
+.steps i {
+  --tone: color-mix(in srgb, var(--mk-amber) 24%, transparent);
+  display: grid;
+  place-items: center;
+  border-radius: var(--mk-radius-xs);
+  color: var(--mk-text);
+  background: var(--tone);
+  font: 700 .5em/1 var(--font-mono, monospace);
+  font-style: normal;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .5s var(--ease-out, ease) calc(var(--j) * 140ms);
+}
+.steps i[data-cut='35'], .steps i[data-cut='40'] { --tone: color-mix(in srgb, var(--mk-amber) 45%, transparent); }
+.steps i[data-cut='50'] { --tone: color-mix(in srgb, var(--mk-amber) 72%, transparent); color: var(--mk-on-accent); }
+.block[data-ready='true'] .steps i { clip-path: inset(0 0 0 0); }
+.outcome { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3em .8em; margin-top: .55em; color: var(--mk-text-3); font: 500 .5em/1.2 var(--font-body, sans-serif); }
+.outcome b { color: var(--mk-lime); font-family: var(--font-mono, monospace); }
+
+/* Supply terms: a printed amendment, redlined; each clause lands in turn once the draft returns. */
+.paper { display: grid; gap: .5em; padding: .7em .8em .65em; border-radius: var(--mk-radius-sm); color: var(--mk-paper-ink); background: var(--mk-paper); }
+.paperHead { display: flex; align-items: center; justify-content: space-between; gap: .5em; }
+.paperHead b { overflow: hidden; font: 700 .58em/1.1 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.paperHead em { flex-shrink: 0; padding: .3em .5em; border-radius: 99em; color: var(--mk-paper-ink-2); border: 1px solid var(--mk-paper-rule); font: 600 .5em/1 var(--font-body, sans-serif); font-style: normal; }
+.clauses { display: grid; gap: .4em; margin: 0; padding: 0; list-style: none; }
+.clauses li { padding-bottom: .4em; border-bottom: 1px solid var(--mk-paper-rule); color: var(--mk-paper-ink-2); font: 500 .54em/1.3 var(--font-body, sans-serif); opacity: 0; transform: translateY(.3em); transition: opacity .4s calc(var(--i) * 180ms), transform .4s var(--ease-out, ease) calc(var(--i) * 180ms); }
+.block[data-ready='true'] .clauses li { opacity: 1; transform: none; }
+.clauses b { color: var(--mk-paper-ink); font-weight: 700; }
+.clauses del { margin-right: .35em; color: var(--mk-paper-ink-3); text-decoration-thickness: 1px; }
+.clauses ins { padding: 0 .2em; border-radius: var(--mk-radius-xs); color: var(--mk-paper-ink); background: color-mix(in srgb, var(--mk-lime) 55%, transparent); text-decoration: none; }
+.sign { justify-self: end; width: 55%; padding-top: .35em; border-top: 1px solid var(--mk-paper-ink-3); color: var(--mk-paper-ink-3); font: 500 .5em/1 var(--font-body, sans-serif); }
+
+/* Narrow stages: the conversation takes the whole window, as in the other agents. */
+@container (max-width: 480px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .plan, .grounded { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .block > :not(small), .cluster, .item, .steps i, .clauses li { transition: none; }
+}

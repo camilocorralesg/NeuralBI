@@ -1,0 +1,183 @@
+.section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(4rem, 7vw, 8rem) 0;
+  background: linear-gradient(180deg, #000 0%, #050605 60%, #000 100%);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 16px 16px;
+  /* The texture fades in below the seam, so the ROI's light hands over to the FAQ without an edge. */
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 22%);
+  mask-image: linear-gradient(180deg, transparent, #000000 22%);
+}
+
+.inner {
+  position: relative;
+  max-width: 920px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.title {
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--color-ink, #fff);
+  text-wrap: balance;
+}
+
+.title em {
+  font-weight: 300;
+  color: var(--color-accent);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  --faq-padding: clamp(20px, 3vw, 32px);
+  --mx: -999px;
+  --my: -999px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  background: rgba(16, 18, 15, 0.62);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+/* The edge lights where a fine pointer is. */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx) var(--my), rgba(198, 255, 52, 0.5), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+/* The list arrives once: each card rises one block step after the one above (--stagger-blocks), the step capped at
+ * the sixth card so a long list lands as one composition. The staged transitions exist only while it runs. */
+.items[data-reveal='armed'] .card { opacity: 0; transform: translateY(var(--reveal-rise)); transition: none; }
+.items[data-reveal='run'] .card {
+  --at: calc(min(var(--i), 5) * var(--stagger-blocks));
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    opacity 600ms var(--ease-out) var(--at),
+    transform 700ms var(--ease-out) var(--at);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 100% 0%, rgba(198, 255, 52, 0.075), transparent 65%);
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.card[data-open='true'] {
+  border-color: rgba(198, 255, 52, 0.32);
+  background-color: rgba(19, 24, 13, 0.76);
+}
+
+.card[data-open='true']::before { opacity: 1; }
+.question { position: relative; margin: 0; }
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: var(--faq-padding);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--color-ink, #fff);
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms ease, background-color 120ms ease;
+}
+/* A full-width row answers a press with its background, not a scale. */
+.trigger:active { background-color: rgba(255, 255, 255, 0.03); }
+
+.trigger > span:first-child { min-width: 0; text-wrap: pretty; }
+.trigger:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+.card[data-open='true'] .trigger { color: var(--color-accent); }
+
+.chevron {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-2);
+  background: rgba(255, 255, 255, 0.025);
+  transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease;
+}
+
+.chevron svg { transition: transform 280ms var(--ease-in-out); }
+.card[data-open='true'] .chevron { color: var(--color-accent); border-color: rgba(198, 255, 52, 0.4); background: rgba(198, 255, 52, 0.08); }
+.card[data-open='true'] .chevron svg { transform: rotate(180deg); }
+
+/* The answer opens on grid rows (0fr → 1fr): interruptible, and the text never reflows mid-way. */
+.answer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 280ms var(--ease-out), opacity 200ms ease; }
+.card[data-open='true'] .answer { grid-template-rows: 1fr; opacity: 1; }
+.answerClip { min-height: 0; overflow: hidden; }
+.answerInner { padding: 0 var(--faq-padding) var(--faq-padding); }
+.answer p {
+  max-width: 65ch;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(198, 255, 52, 0.12);
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.3vw, 17px);
+  line-height: 1.75;
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { border-color: rgba(198, 255, 52, 0.25); background-color: rgba(23, 27, 20, 0.8); }
+  .card[data-open='true']:hover { border-color: rgba(198, 255, 52, 0.42); }
+  .trigger:hover .chevron { color: var(--color-accent); border-color: rgba(198, 255, 52, 0.4); }
+}
+
+@media (max-width: 480px) {
+  .inner { padding-inline: 16px; }
+  .trigger { gap: 16px; }
+  .chevron { flex-basis: 32px; height: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card::before, .trigger, .chevron, .chevron svg, .answer { transition: none; }
+  .items[data-reveal='armed'] .card { transform: none; }
+  .card { transition: opacity 400ms ease; }
+}

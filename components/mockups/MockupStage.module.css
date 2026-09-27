@@ -1,0 +1,106 @@
+/* Product mockup stage: aurora light field, the mockup design tokens, and either a floating graphite window or a bare composition. */
+.stage {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: clamp(.75rem, 3cqw, 1.5rem);
+  /* A size container: the product's base size answers to the stage's width and height (see .window). */
+  container-type: size;
+  --mk-panel: rgba(255, 255, 255, .028);
+  --mk-line: rgba(255, 255, 255, .075);
+  --mk-line-strong: rgba(255, 255, 255, .13);
+  --mk-text: #eef2ea;
+  --mk-text-2: #a0a99b;
+  --mk-text-3: #8f9889; /* 6.1:1 on the window: small labels stay well above AA (The Quiet Text Floor) */
+  --mk-lime: var(--color-accent, #c6ff34);
+  --mk-amber: #ffb547;
+  --mk-red: #ff6a55; /* signal red: sanctions hits and blocked states only */
+  --mk-olive: #8fae63;
+  --mk-moss: #4f6641;
+  /* Surfaces inside a product: raised controls, sunken wells, the dark ink that sits on lime or amber. */
+  --mk-raised: #141915;
+  --mk-sunken: #0c0f0d;
+  --mk-on-accent: #0b0e0c;
+  /* Printed documents and labels shown inside a product. */
+  --mk-paper: #f2f5ec;
+  --mk-paper-ink: #1c2119;
+  --mk-paper-ink-2: #56604f;
+  --mk-paper-ink-3: #7a8473;
+  --mk-paper-rule: #d6ddcb;
+  /* Map land, and the graphite device hardware. */
+  --mk-land: #161d17;
+  --mk-land-edge: #26302a;
+  --mk-device-hi: #313931;
+  --mk-device: #1c211d;
+  --mk-device-lo: #0d100e;
+  /* Radii: five steps for everything inside a product, and the device geometry (screen = frame minus bezel). */
+  --mk-radius-xs: .2em;
+  --mk-radius-sm: .4em;
+  --mk-radius-md: .6em;
+  --mk-radius-lg: .85em;
+  --mk-radius-xl: 1em;
+  --mk-radius-window: 1.3em;
+  --mk-radius-phone: 2.5em;
+  --mk-radius-phone-screen: 2.05em;
+  --mk-radius-tablet: 1.7em;
+  --mk-radius-tablet-screen: 1.1em;
+  --mk-radius-rugged: 1.5em;
+}
+/* The product holds still: a perpetual drift would keep it on a composited layer at fractional offsets, and soften
+ * every glyph. It only moves to enter, and the entrance leaves nothing behind once it ends. */
+.float { width: 100%; }
+.stage[data-frame='devices'] .float { height: 100%; }
+/* Base size: as large as the stage allows on both axes. Width sets it (every layout is ~57em wide); height caps it so
+ * the tallest product (~46em) always fits, instead of being clipped on short stages. */
+.bare, .window { font-size: clamp(6px, min(1.8cqw, 2.15cqh), 12.5px); color: var(--mk-text); }
+/* A composition without a window (devices on the light): it only carries the entrance and the base size. */
+.bare { position: relative; height: 100%; animation: enter .9s var(--ease-out, cubic-bezier(.22, 1, .36, 1)); }
+.window {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--mk-radius-window);
+  background: linear-gradient(180deg, rgba(18, 22, 19, .95), rgba(10, 12, 11, .97));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, .55),
+    0 1.2em 2.4em -1em rgba(0, 0, 0, .6),
+    0 3.2em 6em -2em rgba(0, 0, 0, .85);
+  animation: enter .9s var(--ease-out, cubic-bezier(.22, 1, .36, 1));
+}
+/* Light edge: a 1px border, brighter along the top where the light falls. */
+.window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .06) 30%, rgba(255, 255, 255, .04));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+/* Top sheen, like light across glass. */
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 38%;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .045), transparent);
+  pointer-events: none;
+}
+/* Narrow stages: the mockup drops its secondary panels (~37em wide, up to ~50em tall), so it takes a larger base. */
+@container (max-width: 480px) {
+  .window, .bare { font-size: clamp(6px, min(2.7cqw, 1.95cqh), 12px); }
+}
+
+/* No scale in the entrance: text is never resampled, only lifted into place. */
+@keyframes enter { from { opacity: 0; transform: translateY(1.2em); } }
+@media (prefers-reduced-motion: reduce) {
+  .window, .bare { animation: none; }
+}

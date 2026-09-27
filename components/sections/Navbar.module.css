@@ -1,0 +1,192 @@
+/* Links. The label rolls: on hover each letter lifts out of its line, 12 ms after the one before it, while a white copy
+ * rises in from below; the other links step back. The label is read once (srOnly); the two faces are decorative. */
+.link {
+  position: relative;
+  display: inline-block;
+  padding: .25rem 0;
+  font-family: var(--font-ui);
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: rgba(255, 255, 255, .7);
+  text-decoration: none;
+  transition: opacity 200ms ease, transform var(--dur-press) var(--ease-out);
+}
+.roll { position: relative; display: inline-flex; overflow: hidden; vertical-align: top; }
+.face { display: inline-flex; }
+.face + .face { position: absolute; inset: 0; color: #ffffff; }
+.char { display: inline-block; transition: transform 280ms var(--ease-out) calc(var(--i) * 12ms); }
+.face + .face .char { transform: translateY(100%); }
+
+.link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; border-radius: 4px; }
+.link:focus-visible .char { transform: translateY(-100%); }
+.link:focus-visible .face + .face .char { transform: translateY(0); }
+.link:active { transform: scale(.96); }
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover .char { transform: translateY(-100%); }
+  .link:hover .face + .face .char { transform: translateY(0); }
+  .links:has(.link:hover) .link:not(:hover) { opacity: .45; }
+}
+
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Reading progress on the capsule's outline (CapsuleOutline): the white border is the track, the Volt stroke the part
+ * read. It fades in once the capsule has settled into its pill. */
+.outline {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--color-accent) 55%, transparent));
+  animation: outlineIn 400ms var(--ease-out) 250ms both;
+}
+.outline path {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+@supports (animation-timeline: scroll()) {
+  .outline path { animation: readOutline linear both; animation-timeline: scroll(root block); }
+}
+@keyframes readOutline { to { stroke-dashoffset: 0; } }
+@keyframes outlineIn { from { opacity: 0; } }
+
+/* ── Mobile ─────────────────────────────────────────────────────────────────────────────────────────────────── */
+
+/* The menu button: a 44px target with two lines, the lower one shorter. */
+.menuButton {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) var(--ease-out);
+}
+.menuButton span { display: block; width: 22px; height: 1.5px; border-radius: var(--radius-pill); background: currentColor; }
+.menuButton span + span { width: 14px; }
+.menuButton:active { transform: scale(.96); }
+.menuButton:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-md); }
+
+/* The menu: true black with a faint Volt light rising from the lower corner, the page's index in the middle and the
+ * language and the call at the bottom, within reach of the thumb. */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: max(1rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(120% 50% at 0% 100%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 70%),
+    rgba(2, 3, 2, .97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.menuHead { display: flex; align-items: center; justify-content: space-between; min-height: 54px; }
+.menuLogo { display: block; height: 24px; }
+.menuClose {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .03);
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) var(--ease-out), border-color var(--dur-ui) ease;
+}
+.menuClose svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; animation: closeTurn 420ms var(--ease-out) 60ms backwards; }
+.menuClose:active { transform: scale(.96); }
+.menuClose:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+
+.menuNav { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 1.75rem 0; }
+.menuList { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .08); }
+.menuItem { border-bottom: 1px solid rgba(255, 255, 255, .08); }
+/* A full-width row: a press darkens it rather than scaling it. */
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 10px 4px;
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+.menuLink:active { background-color: rgba(255, 255, 255, .05); }
+.menuLink:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; border-radius: var(--radius-sm); }
+.menuIndex {
+  flex: 0 0 1.75rem;
+  color: var(--color-accent);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: .08em;
+  animation: menuFade 420ms var(--ease-out) backwards;
+  animation-delay: calc(120ms + var(--i) * 45ms);
+}
+/* Each label rises out of its own mask (the clip travels with it), like the site's headlines. */
+.menuLabel {
+  flex: 1;
+  min-width: 0;
+  font: 700 clamp(1.65rem, 8vw, 2.2rem)/1.15 var(--font-display);
+  letter-spacing: -.03em;
+  animation: menuRise 560ms var(--ease-out) backwards;
+  animation-delay: calc(60ms + var(--i) * 45ms);
+}
+.menuArrow {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: rgba(255, 255, 255, .38);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: menuFade 420ms var(--ease-out) backwards;
+  animation-delay: calc(160ms + var(--i) * 45ms);
+}
+.menuFoot { display: grid; gap: 12px; animation: menuFootIn 520ms var(--ease-out) backwards; animation-delay: calc(60ms + var(--i) * 45ms); }
+/* The language control spans the column, on the site's neutral glass. */
+.menuFoot .menuLanguage { max-width: none; margin: 0; background: rgba(255, 255, 255, .03); }
+.menuCta { width: 100%; justify-content: center; gap: 12px; padding: 1rem 1.5rem; font-size: 1.05rem; font-weight: 700; }
+.menuCta svg { width: 18px; height: 18px; }
+
+@keyframes menuRise {
+  from { transform: translateY(105%); clip-path: inset(-.3em -.3em 105% -.3em); }
+  to { transform: none; clip-path: inset(-.3em); }
+}
+@keyframes menuFade { from { opacity: 0; } }
+@keyframes menuFootIn { from { opacity: 0; transform: translateY(var(--reveal-rise)); } }
+@keyframes closeTurn { from { opacity: 0; transform: rotate(-90deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .char { transition: none; }
+  .link:focus-visible .char, .link:hover .char { transform: none; }
+  .link:focus-visible .face + .face .char, .link:hover .face + .face .char { transform: translateY(100%); }
+  .link:hover, .link:focus-visible { color: #ffffff; }
+  .link:active { transform: none; }
+  .outline { animation: none; }
+  .menuIndex, .menuLabel, .menuArrow, .menuFoot, .menuClose svg { animation: none; }
+  .menuButton:active, .menuClose:active { transform: none; }
+}

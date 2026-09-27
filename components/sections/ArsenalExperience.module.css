@@ -1,0 +1,679 @@
+.section {
+  /* The global ink-3 (#71717a) lands at ~4.4:1 on black; small labels here need AA, so this section lifts it. */
+  --color-ink-3: #85858e;
+  --arsenal-line: var(--color-border);
+  --arsenal-muted: var(--color-ink-2);
+  --arsenal-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  position: relative;
+  isolation: isolate;
+  padding: clamp(88px, 10vw, 152px) 0 clamp(96px, 12vw, 176px);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.container { width: min(100% - 80px, 1440px); margin-inline: auto; }
+.sectionHeader { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); align-items: end; gap: 48px; margin-bottom: clamp(52px, 6vw, 88px); }
+.sectionHeader h2 { font: 700 clamp(3.2rem, 6.6vw, 6rem)/.98 var(--font-display); letter-spacing: -.04em; text-wrap: balance; }
+.sectionHeader h2 em { color: var(--color-accent); font-weight: 300; }
+.sectionHeader > p { max-width: 610px; color: var(--arsenal-muted); font: 400 clamp(1.05rem, 1.45vw, 1.28rem)/1.6 var(--font-body); text-wrap: pretty; }
+.layout { display: grid; grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr); align-items: start; gap: clamp(32px, 4.2vw, 68px); }
+.accordion { min-width: 0; border-top: 1px solid var(--arsenal-line); }
+.product { border-bottom: 1px solid var(--arsenal-line); }
+.productActive { background: linear-gradient(115deg, color-mix(in srgb, var(--color-accent) 2%, transparent), transparent 72%); }
+.productHeading { margin: 0; }
+.productToggle { display: flex; align-items: center; gap: 17px; width: 100%; min-height: 88px; padding: 17px 6px 17px 0; text-align: left; }
+.productLogo { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; padding: 10px; background: var(--color-paper-3); border: 1px solid var(--arsenal-line); border-radius: var(--radius-md); }
+.productLogo img, .modalLogo img { width: 100%; height: 100%; object-fit: contain; }
+.productIdentity { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 3px; }
+.productIdentity strong { font: 600 clamp(1.16rem, 1.6vw, 1.5rem)/1.15 var(--font-display); letter-spacing: -.02em; }
+.productIdentity small { overflow: hidden; color: var(--arsenal-muted); font: 500 14px/1.35 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.productChevron { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; color: var(--arsenal-muted); border: 1px solid var(--arsenal-line); border-radius: 50%; transition: transform .3s var(--ease-out), color .2s, border-color .2s; }
+.productChevron svg { width: 19px; height: 19px; }
+.productActive .productChevron { transform: rotate(180deg); color: var(--color-accent); border-color: var(--color-accent); }
+.productReveal { overflow: hidden; }
+.productContent { padding: 4px 12px 30px 65px; }
+.productContent > .stage { margin: 24px 0; }
+.productStatement { max-width: 550px; margin-bottom: 26px; }
+.productStatement h4 { font: 650 clamp(1.5rem, 2vw, 2rem)/1.16 var(--font-display); letter-spacing: -.035em; text-wrap: balance; margin-bottom: 12px; }
+.productStatement p { color: var(--arsenal-muted); font: 400 15px/1.62 var(--font-body); text-wrap: pretty; }
+.chapterControls { display: flex; flex-direction: column; gap: 3px; border-top: 1px solid var(--arsenal-line); }
+.chapterNav { display: flex; gap: 12px; border-bottom: 1px solid var(--arsenal-line); }
+.chapterNav button { flex: 1; min-width: 0; min-height: 50px; padding: 12px 2px; color: var(--arsenal-muted); border-bottom: 2px solid transparent; text-align: left; font: 600 14px/1.3 var(--font-ui); transition: color .2s, border-color .2s; }
+.chapterNav .chapterNavActive { color: var(--color-ink); }
+.chapterNav .chapterNavActive { border-bottom-color: var(--color-accent); }
+.playButton { align-self: flex-end; min-height: 44px; padding: 8px 0 8px 16px; color: var(--arsenal-muted); font: 600 14px/1.3 var(--font-ui); text-decoration: underline; text-decoration-color: var(--arsenal-line); text-underline-offset: 4px; }
+
+.chapterPanels { display: grid; margin-top: 5px; }
+.chapterPanel { grid-area: 1 / 1; min-width: 0; visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .24s ease-out; }
+.chapterPanelActive { visibility: visible; opacity: 1; pointer-events: auto; }
+.focusLine { color: var(--arsenal-muted); font: 500 14px/1.5 var(--font-body); margin-bottom: 9px; }
+.chapterPanel h5 { font: 600 18px/1.35 var(--font-display); letter-spacing: -.02em; margin-bottom: 9px; }
+.visionText { color: var(--arsenal-muted); font: 400 14px/1.6 var(--font-body); }
+.outcome { margin: 18px 0 24px; padding: 14px 0; border-top: 1px solid var(--arsenal-line); border-bottom: 1px solid var(--arsenal-line); color: var(--color-ink); font: 500 14px/1.5 var(--font-ui); }
+.outcome span { color: var(--color-accent); font-weight: 700; font-size: 18px; }
+.foundationTitle { font: 600 14px/1.4 var(--font-ui); margin-bottom: 6px; }
+.specsLine { color: var(--arsenal-muted); font: 400 13px/1.5 var(--font-body); margin-bottom: 15px; }
+.pillList, .entryList { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--arsenal-line); }
+.pillList li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-height: 43px; padding: 10px 0; border-bottom: 1px solid var(--arsenal-line); }
+.pillList span { color: var(--color-ink); font: 500 13px/1.45 var(--font-ui); }
+.pillList small { flex: 0 0 auto; color: var(--arsenal-muted); font: 500 12px/1.4 var(--font-ui); }
+.entryList li { border-bottom: 1px solid var(--arsenal-line); }
+.entry { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 100%; min-height: 66px; padding: 13px 12px; text-align: left; transition: background .2s; }
+.entryActive { background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+.entry strong { color: var(--color-ink); font: 600 14px/1.4 var(--font-ui); }
+.entryActive strong { color: var(--color-accent); }
+.entry span { color: var(--arsenal-muted); font: 400 13px/1.5 var(--font-body); }
+/* Action links are Shader Buttons tinted with the product (tone="var(--tool-accent)"); this sets their size. */
+.detailLink { justify-content: space-between; gap: 25px; width: 100%; min-height: 54px; margin-top: 22px; padding: 0 18px; font: 700 14px/1.3 var(--font-ui); }
+.detailLink svg { width: 18px; height: 18px; }
+.productToggle:focus-visible, .chapterNav button:focus-visible, .playButton:focus-visible, .entry:focus-visible, .detailLink:focus-visible, .modalClose:focus-visible, .modalNav button:focus-visible, .modalEnd a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+
+.stageColumn { min-width: 0; height: 100%; }
+.stage { --tool-accent: var(--color-ink-2); position: sticky; top: 105px; display: flex; flex-direction: column; min-height: min(680px, calc(100vh - 140px)); background: transparent; }
+.stageWell { display: grid; flex: 1; align-items: center; min-height: 340px; }
+.graphic { width: 100%; min-width: 0; display: grid; place-items: center; }
+.graphic > figure, .modalGraphic > figure { width: 100%; max-width: 100%; }
+.stageCaption { min-height: 105px; padding: 18px 0 0; border-top: 1px solid var(--arsenal-line); }
+.sceneLabel { color: var(--tool-accent); font: 600 14px/1.4 var(--font-ui); }
+.sceneMeta { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
+/* Masks for text that rolls or rises into place: clipped vertically only, with room for descenders. */
+.rollMask { position: relative; display: block; overflow-x: visible; overflow-y: clip; padding-block: .08em; margin-block: -.08em; }
+.rollLine { display: block; white-space: nowrap; }
+.modalMask { overflow: hidden; padding-block: .08em; margin-block: -.08em; }
+.sceneMeta small { color: var(--color-ink-3); font: 500 12px/1.4 var(--font-mono); letter-spacing: .14em; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.stageCaption p { max-width: 660px; color: var(--color-ink); font: 500 clamp(15px, 1.35vw, 18px)/1.45 var(--font-display); text-wrap: pretty; }
+
+.modalBackdrop { position: fixed; z-index: 2000; inset: 0; display: grid; place-items: center; padding: 24px; background: color-mix(in srgb, var(--color-paper) 88%, transparent); backdrop-filter: blur(10px); }
+.modal { display: flex; flex-direction: column; width: min(100%, 1380px); max-height: min(92vh, 1050px); overflow: hidden; background: var(--color-paper-2); border: 1px solid var(--arsenal-line, var(--color-border)); border-radius: var(--radius-lg); }
+.modalHeader { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 84px; padding: 15px clamp(20px, 4vw, 48px); border-bottom: 1px solid var(--color-border); background: var(--color-paper-2); }
+.modalBrand { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.modalLogo { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; padding: 9px; background: var(--color-paper-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.modalBrand strong { font: 650 17px/1.2 var(--font-display); }
+.modalClose { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; color: var(--color-ink); border: 1px solid var(--color-border); border-radius: 50%; font: 400 27px/1 var(--font-body); }
+
+.modalClose span { transform: translateY(-1px); }
+.modalScroll { overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth; }
+.modalIntro { padding: clamp(40px, 6vw, 82px) clamp(24px, 5vw, 72px) clamp(45px, 6vw, 70px); border-bottom: 1px solid var(--color-border); }
+.modalIntro h2 { max-width: 850px; font: 700 clamp(2.4rem, 4.3vw, 4.4rem)/1.07 var(--font-display); letter-spacing: -.04em; text-wrap: balance; }
+.modalLead { max-width: 790px; color: var(--color-ink-2); font: 400 clamp(1rem, 1.4vw, 1.2rem)/1.65 var(--font-body); margin-top: 21px; text-wrap: pretty; }
+.modalArchitecture { color: var(--color-ink-2); font: 500 14px/1.5 var(--font-ui); margin-top: 20px; }
+.modalOutcome { display: inline-flex; align-items: baseline; gap: 8px; max-width: 100%; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-border); color: var(--color-ink); font: 500 14px/1.5 var(--font-ui); }
+.modalOutcome span { color: var(--color-accent); font: 700 18px/1.3 var(--font-display); }
+.modalBody { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: clamp(30px, 5vw, 72px); padding: 0 clamp(24px, 5vw, 72px); }
+.modalNav { position: sticky; top: 0; align-self: start; display: flex; flex-direction: column; padding: 40px 0; }
+.modalNav button { min-height: 48px; padding: 12px 7px; color: var(--color-ink-2); border-bottom: 1px solid var(--color-border); text-align: left; font: 600 14px/1.4 var(--font-ui); }
+.modalNav .modalNavActive { color: var(--color-ink); }
+.modalNav .modalNavActive { border-bottom-color: var(--color-accent); }
+.modalChapters { min-width: 0; }
+.modalChapter { padding: clamp(45px, 6vw, 86px) 0; border-bottom: 1px solid var(--color-border); }
+.modalChapterHeading { margin-bottom: 24px; }
+.modalChapterHeading h3 { font: 650 clamp(1.85rem, 2.8vw, 3rem)/1.12 var(--font-display); letter-spacing: -.03em; text-wrap: balance; }
+.modalChapterHeading p, .modalChapterText { color: var(--color-ink-2); font: 400 16px/1.6 var(--font-body); margin-top: 11px; }
+.modalGraphic { display: grid; place-items: center; min-height: 330px; margin: 30px 0; }
+.modalGraphic > figure { max-width: 620px; }
+.modalPills { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; border-top: 1px solid var(--color-border); }
+.modalPills > div { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--color-border); }
+.modalPills span { color: var(--color-ink); font: 500 14px/1.45 var(--font-ui); }
+.modalPills small { color: var(--color-ink-2); font: 500 12px/1.4 var(--font-ui); white-space: nowrap; }
+.modalFeatureList { border-top: 1px solid var(--color-border); }
+.modalFeatureList > div { padding: 21px 0; border-bottom: 1px solid var(--color-border); }
+.modalFeatureList h4 { color: var(--color-ink); font: 600 17px/1.4 var(--font-display); letter-spacing: -.015em; }
+.modalFeatureList p { color: var(--color-ink-2); font: 400 14px/1.6 var(--font-body); margin-top: 5px; }
+.modalEnd { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 55px 0 75px; }
+.modalEnd p { color: var(--color-ink); font: 600 clamp(1.4rem, 2.5vw, 2.3rem)/1.2 var(--font-display); letter-spacing: -.03em; }
+.modalEnd a { gap: 20px; flex: 0 0 auto; min-height: 50px; padding: 13px 20px; font: 700 14px/1.3 var(--font-ui); }
+.modalEnd svg { width: 18px; height: 18px; }
+
+@media (max-width: 1150px) {
+  .layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 30px; }
+  .container { width: min(100% - 56px, 1440px); }
+  .productContent { padding-left: 12px; }
+}
+
+@media (max-width: 900px) {
+  .sectionHeader { grid-template-columns: 1fr; gap: 20px; }
+  .layout { grid-template-columns: 1fr; }
+  .stageColumn { display: none; }
+  .stage { position: relative; top: auto; min-height: 0; }
+  .stageWell { min-height: 270px; }
+  .productContent { padding-left: 0; }
+  .modalBody { grid-template-columns: 1fr; gap: 0; }
+  .modalNav { z-index: 4; flex-direction: row; gap: 12px; overflow-x: auto; padding: 8px 0; background: var(--color-paper-2); border-bottom: 1px solid var(--color-border); scrollbar-width: none; }
+  .modalNav::-webkit-scrollbar { display: none; }
+  .modalNav button { flex: 0 0 auto; border-bottom: 2px solid transparent; }
+}
+
+@media (max-width: 600px) {
+  .section { padding: 80px 0 100px; }
+  .container { width: min(100% - 36px, 1440px); }
+  .sectionHeader { margin-bottom: 37px; }
+  .sectionHeader h2 { font-size: clamp(3.15rem, 13vw, 4.7rem); }
+  .sectionHeader > p { font-size: 15px; }
+  .layout { gap: 20px; }
+  .productToggle { min-height: 76px; }
+  .productContent { padding: 3px 1px 26px; }
+  .productIdentity small { font-size: 13px; }
+  .stageWell { min-height: 235px; }
+  .stageCaption { min-height: 100px; }
+  .chapterNav { gap: 7px; }
+  .chapterNav button { font-size: 14px; }
+  .pillList li { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .modalBackdrop { padding: 0; }
+  .modal { width: 100%; max-height: 100dvh; height: 100dvh; border: 0; border-radius: 0; }
+  .modalHeader { min-height: 72px; padding: 12px 18px; }
+  .modalIntro { padding: 38px 20px 42px; }
+  .modalIntro h2 { font-size: clamp(2.3rem, 10vw, 3.3rem); }
+  .modalLead { font-size: 15px; }
+  .modalBody { padding: 0 20px; }
+  .modalNav { gap: 6px; overflow-x: visible; }
+  .modalNav button { flex: 1 1 0; min-width: 0; padding-inline: 2px; text-align: center; font-size: 14px; }
+  .modalChapter { padding: 48px 0; }
+  .modalChapterHeading h3 { font-size: 2rem; }
+  .modalGraphic { min-height: 230px; margin: 22px 0; }
+  .modalPills { grid-template-columns: 1fr; }
+  .modalEnd { flex-direction: column; align-items: stretch; padding: 42px 0 65px; }
+  .modalEnd a { justify-content: space-between; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .productChevron, .detailLink, .chapterPanel, .entry { transition: none; }
+  .modalScroll { scroll-behavior: auto; }
+}
+
+/* Scroll-led Arsenal. The header stays in document flow; only the editorial spread pins. */
+.scrollStory { display: none; }
+.naturalExperience { display: block; }
+.glowControl {
+  --arsenal-ring-angle: 45deg;
+  position: relative;
+  isolation: isolate;
+  min-height: 44px;
+  color: var(--color-ink);
+  background: linear-gradient(var(--color-paper-2), var(--color-paper-2)) padding-box,
+    linear-gradient(130deg, color-mix(in srgb, var(--tool-accent) 38%, var(--color-border)), var(--color-border)) border-box;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent);
+  font: 600 14px/1.3 var(--font-ui);
+  transition: transform .24s var(--ease-out), color .24s, background .24s;
+}
+/* Active states hold a still accent ring; the rotating ring is reserved for the control under the pointer. */
+.glowControl[data-active="true"], .glowControl[data-state="active"] {
+  background: linear-gradient(var(--color-paper-2), var(--color-paper-2)) padding-box,
+    linear-gradient(130deg, var(--tool-accent), color-mix(in srgb, var(--tool-accent) 18%, var(--color-border))) border-box;
+  color: var(--tool-accent);
+}
+.glowControl:focus-visible {
+  background: linear-gradient(var(--color-paper-2), var(--color-paper-2)) padding-box,
+    conic-gradient(from var(--arsenal-ring-angle), var(--tool-accent), color-mix(in srgb, var(--tool-accent) 12%, transparent), var(--tool-accent)) border-box;
+  color: var(--tool-accent);
+  animation: arsenalRing 5s linear infinite;
+}
+@property --arsenal-ring-angle { syntax: '<angle>'; initial-value: 45deg; inherits: false; }
+/* Registered so accents morph between tools instead of snapping. */
+@property --tool-accent { syntax: '<color>'; initial-value: #a1a1aa; inherits: true; }
+@keyframes arsenalRing { to { --arsenal-ring-angle: 405deg; } }
+
+.glowControl:focus-visible, .modalClose:focus-visible, .modalNav button:focus-visible, .modalEnd a:focus-visible {
+  outline: 2px solid var(--tool-accent); outline-offset: 3px;
+}
+.glowControl:active { transform: translateY(0); }
+.naturalToolNav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
+.naturalToolButton { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 18px; }
+.naturalToolButton svg { width: 17px; height: 17px; }
+.naturalTool { position: relative; padding: 45px 0 78px; border-top: 1px solid var(--color-border); }
+.naturalToolRule { position: absolute; top: -1px; right: 0; left: 0; height: 1px; background: linear-gradient(90deg, var(--tool-accent), transparent 70%); transform-origin: left; }
+.naturalToolHeader { display: flex; align-items: flex-start; gap: 18px; max-width: 840px; margin-bottom: 34px; }
+.naturalToolHeader > div > p { color: var(--tool-accent); font: 600 15px/1.4 var(--font-ui); margin-bottom: 8px; }
+.naturalToolHeader h3 { font: 650 clamp(2rem, 4vw, 3.4rem)/1.08 var(--font-display); letter-spacing: -.035em; text-wrap: balance; }
+.naturalChapter { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 18px 40px; padding: 40px 0; border-top: 1px solid var(--color-border); scroll-margin-top: 100px; }
+.naturalCopy h4 { font: 600 clamp(1.35rem, 2vw, 1.8rem)/1.2 var(--font-display); margin-bottom: 15px; }
+.naturalCopy > p { color: var(--color-ink-2); font: 400 15px/1.58 var(--font-body); margin-bottom: 14px; }
+.naturalCopy .outcome { color: var(--color-ink); }
+.naturalCopy .outcome strong, .proposition .outcome strong { color: var(--tool-accent); }
+.naturalCopy .pillList { margin-top: 16px; }
+.pillList { list-style: none; padding: 0; border-top: 1px solid var(--color-border); }
+.pillList li { display: block; min-height: 0; padding: 8px 0; color: var(--color-ink-2); font: 500 13px/1.4 var(--font-ui); border-bottom: 1px solid var(--color-border); }
+.naturalGraphic { display: grid; align-items: center; min-height: 300px; }
+.naturalGraphic > figure { width: 100%; max-width: 100%; }
+.naturalEntries { list-style: none; margin: 0; padding: 0; }
+.naturalEntries li { padding: 17px 0; border-bottom: 1px solid var(--color-border); scroll-margin-top: 100px; }
+.naturalEntries strong { font: 600 16px/1.4 var(--font-display); }
+.naturalEntries p { margin-top: 6px; color: var(--color-ink-2); font: 400 14px/1.55 var(--font-body); }
+.naturalChapter > .detailLink { grid-column: 1 / -1; width: fit-content; margin-top: 4px; }
+.detailLink { width: fit-content; min-height: 46px; justify-content: center; gap: 28px; margin: 0; padding: 10px 18px; }
+
+/* Shared by the pinned story and the natural (tablet/mobile) flow; the pinned story refines them below. */
+.propositionOutcome { display: flex; align-items: baseline; gap: 12px; margin: 18px 0 14px; padding: 14px 0; border-block: 1px solid var(--color-border); }
+.propositionOutcome strong { flex: 0 0 auto; color: var(--tool-accent); font: 700 clamp(1.9rem, 7vw, 2.4rem)/1 var(--font-display); letter-spacing: -.035em; }
+.propositionOutcome span { color: var(--color-ink); font: 500 14px/1.4 var(--font-ui); }
+.chipGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chipGrid li {
+  display: flex; align-items: flex-start; gap: 9px; padding: 11px 12px;
+  color: var(--color-ink); background: color-mix(in srgb, var(--color-paper-2) 80%, transparent);
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 5%, transparent);
+  font: 500 13px/1.4 var(--font-ui); transition: border-color .24s;
+}
+.chipGrid li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--tool-accent); box-shadow: 0 0 10px var(--tool-accent); }
+.entryIndex { color: var(--color-ink-3); font: 500 11px/1.3 var(--font-mono); letter-spacing: .06em; }
+
+/* Natural flow: the same editorial language as the pinned story, laid out for touch and narrow screens. */
+.naturalToolHeader .naturalMeta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-bottom: 10px; color: var(--color-ink-3); font: 500 11px/1.4 var(--font-mono); letter-spacing: .12em; }
+.naturalMeta strong { color: var(--tool-accent); font: 600 15px/1.3 var(--font-ui); letter-spacing: 0; }
+.naturalMeta small { flex-basis: 100%; color: var(--color-ink-3); font: 500 11px/1.4 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.naturalIndex { display: block; margin-bottom: 10px; color: var(--tool-accent); font: 500 12px/1 var(--font-mono); letter-spacing: .14em; }
+.naturalCopy .specsLine { margin-bottom: 14px; color: var(--color-ink-3); font: 500 11px/1.6 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+.naturalEntries li { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: start; }
+.naturalEntries .entryIndex { padding-top: 4px; color: color-mix(in srgb, var(--tool-accent) 70%, var(--color-ink-3)); }
+.naturalCta { margin-top: 36px; }
+/* On a phone the story already reads in full here; the detailed architecture stays a desktop and tablet affordance. */
+@media (max-width: 767px) { .naturalCta { display: none; } }
+.naturalNavLogo { display: grid; flex: 0 0 26px; width: 26px; height: 26px; place-items: center; padding: 5px; background: color-mix(in srgb, var(--tool-accent) 10%, var(--color-paper-3)); border-radius: 50%; }
+.naturalNavLogo img { width: 100%; height: 100%; object-fit: contain; }
+.naturalToolButton { justify-content: flex-start; gap: 10px; padding: 8px 14px 8px 8px; }
+.naturalToolButton svg { margin-left: auto; }
+@media (max-width: 480px) { .chipGrid { grid-template-columns: 1fr; } }
+
+/* Pinned story. Keep the query in sync with STORY_QUERY in ArsenalExperience.jsx. */
+@media (min-width: 1024px) and (min-height: 540px) and (prefers-reduced-motion: no-preference) {
+  .section { padding-bottom: 0; }
+  .sectionHeader { margin-bottom: 48px; }
+  .scrollStory { --story-top: 88px; --story-height: calc(100svh - 104px); display: block; position: relative; }
+  .naturalExperience { display: none; }
+  .stickyScreen {
+    --rail-width: 180px;
+    --rail-gap: clamp(16px, 1.8vw, 32px);
+    position: sticky; top: var(--story-top); z-index: 2;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    gap: clamp(24px, 3.5vw, 64px);
+    width: min(100% - 64px, 1440px); height: var(--story-height);
+    margin-inline: auto; padding: clamp(10px, 2.2svh, 24px) 0 0;
+    background: var(--color-paper);
+  }
+  .stickyScreen, .narrative, .stage { transition: --tool-accent .6s var(--ease-out); }
+  .stickyScreen::before { content: ""; position: absolute; z-index: -1; inset: 0; background-image: var(--arsenal-grain); opacity: .5; pointer-events: none; }
+  .scrollMarkers { position: relative; margin-top: calc(-1 * var(--story-height)); padding-bottom: var(--story-height); pointer-events: none; }
+  .scrollMarker { width: 1px; }
+
+  /* Tool rail */
+  .storyLeft { display: grid; grid-template-columns: var(--rail-width) minmax(0, 1fr); gap: var(--rail-gap); min-height: 0; }
+  .toolNav { position: relative; z-index: 4; display: flex; flex-direction: column; align-self: start; gap: 8px; padding-top: 4px; }
+  .toolButton { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 50px; padding: 6px 14px 6px 7px; text-align: left; white-space: nowrap; font-size: 12px; }
+  .toolButton:not([data-active="true"]) { color: var(--color-ink-2); }
+  .toolButton:not([data-active="true"]):hover { color: var(--tool-accent); }
+  .toolButton .productLogo { flex: 0 0 34px; width: 34px; height: 34px; padding: 7px; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--tool-accent) 9%, var(--color-paper-3)); }
+  .toolLabel { overflow: hidden; text-overflow: ellipsis; }
+  .stickyScreen[data-curtain="true"] .toolNav { pointer-events: none; }
+  .railIndicator {
+    position: absolute; z-index: -1; inset: -1px; border: 1px solid var(--tool-accent); border-radius: inherit; pointer-events: none;
+    background: color-mix(in srgb, var(--tool-accent) 8%, transparent);
+    box-shadow: 0 0 8px -2px color-mix(in srgb, var(--tool-accent) 45%, transparent);
+  }
+
+  /* Narrative column */
+  .narrative { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; container-type: inline-size; }
+  .narrativeIntro { min-height: 0; }
+  .narrativeIntro h3 { font: 650 clamp(1.4rem, min(2.5vw, 5svh), 3rem)/1.08 var(--font-display); letter-spacing: -.035em; text-wrap: balance; }
+  .narrativeBody { max-width: 60ch; margin-top: 10px; color: var(--color-ink-2); font: 400 clamp(13px, min(1.05vw, 2svh), 15px)/1.55 var(--font-body); text-wrap: pretty; }
+
+  /* Chapters: a single segmented track with a sliding thumb. */
+  .chapterNav {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; flex: 0 0 auto;
+    margin: clamp(12px, 2.4svh, 22px) 0 clamp(10px, 2svh, 18px); padding: 4px;
+    background: color-mix(in srgb, var(--color-paper-2) 72%, transparent);
+    border: 1px solid var(--color-border); border-radius: var(--radius-pill);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 6%, transparent);
+  }
+  .chapterNav .chapterTab {
+    position: relative; isolation: isolate; display: flex; align-items: center; justify-content: center; gap: 8px;
+    min-width: 0; min-height: 38px; padding: 6px 10px; color: var(--color-ink-2); border: 0; border-radius: var(--radius-pill);
+    font: 600 12.5px/1.2 var(--font-ui); white-space: nowrap; transition: color .24s;
+  }
+  .chapterNav .chapterTab:hover, .chapterNav .chapterTab[data-active="true"] { color: var(--color-ink); }
+  .chapterNav .chapterTab:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: 2px; }
+  .chapterIndex { color: var(--color-ink-3); font: 500 10.5px/1 var(--font-mono); letter-spacing: .06em; transition: color .24s; }
+  .chapterTab[data-active="true"] .chapterIndex { color: var(--tool-accent); }
+  .chapterThumb {
+    position: absolute; z-index: -1; inset: 0; border-radius: inherit;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent) 15%, var(--color-paper-3)), color-mix(in srgb, var(--tool-accent) 6%, var(--color-paper-2)));
+    border: 1px solid color-mix(in srgb, var(--tool-accent) 45%, transparent);
+    box-shadow: 0 2px 6px -2px color-mix(in srgb, var(--tool-accent) 40%, transparent), inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent);
+  }
+  @container (max-width: 470px) { .chapterIndex { display: none; } }
+
+  .narrativeFrame { flex: 0 1 auto; min-height: 0; }
+
+  /* Proposition */
+  .propositionLead { margin-bottom: 14px; color: var(--color-ink-2); font: 400 14px/1.55 var(--font-body); text-wrap: pretty; }
+  .propositionOutcome { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; padding: clamp(8px, 1.6svh, 12px) 0; border-block: 1px solid var(--color-border); }
+  .propositionOutcome strong { flex: 0 0 auto; color: var(--tool-accent); font: 700 clamp(1.45rem, min(2.2vw, 4.4svh), 2.1rem)/1 var(--font-display); letter-spacing: -.035em; }
+  .propositionOutcome span { color: var(--color-ink); font: 500 13px/1.4 var(--font-ui); }
+  .proposition .specsLine { margin-bottom: 12px; color: var(--color-ink-3); font: 500 11px/1.5 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .chipGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .chipGrid li {
+    display: flex; align-items: flex-start; gap: 9px; padding: clamp(8px, 1.5svh, 11px) 12px;
+    color: var(--color-ink); background: color-mix(in srgb, var(--color-paper-2) 80%, transparent);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 5%, transparent);
+    font: 500 clamp(12px, 1.4svh, 14px)/1.4 var(--font-ui); transition: border-color .24s;
+  }
+  .chipGrid li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 5px; border-radius: 50%; background: var(--tool-accent); box-shadow: 0 0 10px var(--tool-accent); }
+  .chipGrid li:hover { border-color: color-mix(in srgb, var(--tool-accent) 40%, var(--color-border)); }
+
+  /* Capabilities and differentiators: an editorial index rather than boxed inputs. */
+  .storyEntries { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); }
+  .storyEntry {
+    position: relative; isolation: isolate; display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; width: 100%;
+    padding: clamp(9px, 1.8svh, 18px) 12px clamp(9px, 1.8svh, 18px) 14px; color: var(--color-ink-2); text-align: left;
+    border-bottom: 1px solid var(--color-border); transition: background .3s, color .3s;
+  }
+  .storyEntry:hover { color: var(--color-ink); background: color-mix(in srgb, var(--color-ink) 3%, transparent); }
+  .storyEntry:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: -2px; }
+  .storyEntry[data-state="active"] { color: var(--color-ink); }
+  /* One indicator travels between entries (layoutId), so the active wash slides instead of snapping. */
+  .entryIndicator {
+    position: absolute; z-index: -1; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--tool-accent) 11%, transparent), transparent 78%);
+    box-shadow: inset 2px 0 0 var(--tool-accent);
+  }
+  .entryIndex { padding-top: 3px; color: var(--color-ink-3); font: 500 11px/1.3 var(--font-mono); letter-spacing: .06em; transition: color .3s; }
+  .storyEntry[data-state="active"] .entryIndex, .storyEntry[data-state="active"] strong { color: var(--tool-accent); }
+  .entryText { display: flex; flex-direction: column; min-width: 0; }
+  .entryText strong { font: 600 clamp(13.5px, 1.6svh, 16px)/1.4 var(--font-display); letter-spacing: -.005em; }
+  .entryDetail { display: block; padding-top: 5px; color: var(--color-ink-2); font: 400 clamp(12.5px, 1.45svh, 14.5px)/1.5 var(--font-body); }
+
+  /* Actions */
+  .narrativeActions { display: flex; align-items: center; gap: 22px; margin-top: clamp(14px, 2.6svh, 26px); }
+  .narrativeActions .detailLink { flex: 0 0 auto; margin: 0; }
+  /* The cue stays for the whole story; in a narrow column its label wraps beside the line instead of dropping out. */
+  .scrollCue { display: inline-flex; align-items: center; gap: 10px; min-width: 0; color: var(--color-ink-3); font: 500 11px/1.35 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .cueLabel { min-width: 0; text-wrap: balance; }
+  @container (max-width: 520px) { .narrativeActions { gap: 14px; } .scrollCue { letter-spacing: .08em; } }
+  /* A still track whose fill is driven by scroll: no perpetual loop, only feedback while the reader moves. */
+  .cueTrack { position: relative; flex: 0 0 2px; width: 2px; height: 26px; overflow: hidden; background: var(--color-border); }
+  .cueFill { position: absolute; inset: 0; background: var(--tool-accent); transform-origin: top; }
+
+  /* Stage: the scene scales to the height it is given. */
+  .storyRight { position: relative; min-width: 0; min-height: 0; }
+  .storyRight .stage { position: relative; top: auto; height: 100%; min-height: 0; }
+  .storyRight .stageWell { position: relative; isolation: isolate; min-height: 0; container-type: size; }
+  .stickyScreen[data-running="false"] .stageWell::before { animation-play-state: paused; }
+  .storyRight .stageWell::before {
+    content: ""; position: absolute; z-index: -1; inset: 8% 6%; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--tool-accent) 16%, transparent), transparent);
+    animation: arsenalBreathe 7s ease-in-out infinite;
+  }
+  .storyRight .graphic { grid-area: 1 / 1; height: 100%; }
+  .storyRight .graphic > figure { width: min(100%, 620px, 100cqh * .98); max-width: none; }
+  .storyRight .stageCaption { position: relative; min-height: 0; padding: clamp(10px, 2svh, 18px) 0 clamp(16px, 3svh, 26px); }
+  .storyRight .stageCaption p { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: clamp(14px, min(1.3vw, 2.4svh), 18px); }
+  .scrollProgress { position: absolute; right: 0; bottom: 0; left: 0; display: flex; gap: 6px; height: 2px; transform-origin: left; }
+  .progressSegment { flex: 1; overflow: hidden; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--segment-accent) 16%, var(--color-border)); }
+  .progressSegment i { display: block; height: 100%; background: var(--segment-accent); transform-origin: left; }
+
+  /* Tool-to-tool curtain. Scroll drives it through a single motion value; only clip-path, transform and opacity animate. */
+  .curtain { position: absolute; z-index: 3; inset: 6px 0 8px; overflow: clip; pointer-events: none; }
+  .curtain[data-visible="false"] { visibility: hidden; }
+  .curtainLead {
+    position: absolute; inset: 0; border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--curtain-accent), color-mix(in srgb, var(--curtain-accent) 55%, var(--color-paper-2)));
+    box-shadow: 0 0 60px color-mix(in srgb, var(--curtain-accent) 35%, transparent);
+    will-change: clip-path;
+  }
+  .curtainPanel {
+    position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-lg);
+    background: var(--arsenal-grain),
+      radial-gradient(circle at 80% 48%, color-mix(in srgb, var(--curtain-accent) 26%, transparent), transparent 52%),
+      linear-gradient(160deg, color-mix(in srgb, var(--curtain-accent) 12%, var(--color-paper-2)), color-mix(in srgb, var(--curtain-accent) 4%, var(--color-paper)));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 10%, transparent);
+    will-change: clip-path;
+  }
+  .curtainMark { position: absolute; top: 50%; right: clamp(40px, 7vw, 120px); width: clamp(140px, min(19vw, 38svh), 300px); height: auto; opacity: .92; }
+  .curtainContent {
+    position: absolute; right: clamp(24px, 4vw, 64px); bottom: clamp(28px, 7svh, 72px);
+    left: clamp(28px, 5vw, 88px);
+    display: flex; flex-direction: column; gap: 12px; transform-origin: left bottom;
+  }
+  .curtainMask { display: block; overflow: hidden; padding-block: .08em; margin-block: -.08em; }
+  .curtainMask > span { display: block; }
+  .curtainCount { color: var(--curtain-accent); font: 500 13px/1.2 var(--font-mono); letter-spacing: .2em; }
+  .curtainTitle { color: var(--color-ink); font: 700 clamp(3rem, min(7vw, 15svh), 8rem)/.92 var(--font-display); letter-spacing: -.05em; white-space: nowrap; }
+  .curtainMeta { color: var(--color-ink-2); font: 600 clamp(12px, .95vw, 14px)/1.4 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; }
+}
+
+/* Narrower desktops: the rail collapses to logos; names stay available to assistive tech. */
+@media (min-width: 1024px) and (max-width: 1279px) and (min-height: 540px) and (prefers-reduced-motion: no-preference) {
+  .stickyScreen { --rail-width: 50px; }
+  .toolButton { justify-content: center; padding: 6px; }
+  .toolLabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .toolButton::after {
+    content: attr(data-label); position: absolute; top: 50%; left: calc(100% + 10px); z-index: 1;
+    padding: 7px 11px; color: var(--color-ink); background: var(--color-paper-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    font: 600 12px/1 var(--font-ui); white-space: nowrap;
+    opacity: 0; pointer-events: none; transform: translate(-4px, -50%); transition: opacity .2s, transform .2s var(--ease-out);
+  }
+  .toolButton:hover::after, .toolButton:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* Shorter screens (laptops, scaled 1080p): tighten rhythm and drop the lowest-priority lines. */
+@media (min-width: 1024px) and (min-height: 540px) and (max-height: 800px) and (prefers-reduced-motion: no-preference) {
+  .narrativeBody { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .proposition .specsLine { display: none; }
+  .toolButton { min-height: 44px; }
+  .toolButton .productLogo { flex-basis: 30px; width: 30px; height: 30px; padding: 6px; }
+  .chapterNav .chapterTab { min-height: 34px; }
+}
+@media (min-width: 1024px) and (min-height: 540px) and (max-height: 680px) and (prefers-reduced-motion: no-preference) {
+  .scrollStory { --story-top: 80px; --story-height: calc(100svh - 88px); }
+  .narrativeBody { -webkit-line-clamp: 2; }
+  .propositionLead { display: none; }
+  .toolNav { gap: 6px; }
+  .toolButton { min-height: 40px; }
+  .entryDetail { font-size: 12px; }
+  .storyRight .stageCaption p { -webkit-line-clamp: 2; }
+}
+@keyframes arsenalBreathe { 50% { opacity: .55; transform: scale(.94); } }
+
+@media (max-width: 800px) {
+  .naturalChapter { grid-template-columns: 1fr; }
+  .naturalGraphic { min-height: 240px; }
+  .naturalToolNav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 801px) and (max-width: 1023px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+  .naturalChapter .naturalGraphic { position: sticky; top: 108px; align-self: start; max-height: calc(100svh - 130px); }
+}
+@media (max-width: 600px) {
+  .naturalToolNav { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .naturalToolButton { padding: 7px 10px 7px 7px; font-size: 12px; }
+  .naturalTool { padding: 30px 0 56px; }
+  .naturalToolHeader { gap: 12px; }
+  .naturalToolHeader h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+  .naturalChapter { padding: 30px 0; }
+  .naturalGraphic { min-height: 210px; }
+}
+
+/* The natural flow's parts that only the accordion uses; on desktop (reduced motion) the article stays as it was. */
+.rowText { flex: 1; min-width: 0; }
+.rowToggle, .rowClose { display: none; }
+.rowFoot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+
+/* ── Accordion (below 1024px): the four products as premium rows; one opens to unfold the whole product. ──────────
+ * Set from the server's HTML (closed rows), so nothing jumps when the script arrives. Keep the query in sync with
+ * ACCORDION_QUERY in ArsenalExperience.jsx. */
+@media (max-width: 1023px) {
+  .naturalToolNav { display: none; }
+  .naturalList { display: grid; gap: 12px; overflow-anchor: none; }
+
+  /* The row: dark glass in the product's colour, a light rising behind its logo, the system's 1px top highlight. */
+  .naturalTool {
+    padding: 0;
+    overflow: clip;
+    border: 1px solid color-mix(in srgb, var(--tool-accent) 22%, var(--color-border));
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--tool-accent) 11%, transparent), transparent 60%),
+      linear-gradient(160deg, var(--color-paper-2), var(--color-paper) 72%);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 7%, transparent);
+    transition: border-color 280ms var(--ease-out), box-shadow 280ms var(--ease-out);
+  }
+  .naturalTool[data-open='true'] {
+    border-color: color-mix(in srgb, var(--tool-accent) 45%, var(--color-border));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-ink) 9%, transparent),
+      0 22px 48px -26px color-mix(in srgb, var(--tool-accent) 40%, transparent);
+  }
+  /* A rule in the product's colour runs across the top edge as the row opens. */
+  .naturalToolRule { top: 0; transform: scaleX(0); transition: transform 600ms var(--ease-out); }
+  .naturalTool[data-open='true'] .naturalToolRule { transform: scaleX(1); }
+
+  /* The face: logo, number and architecture, the product's name, its promise, and the toggle. */
+  .rowHeading { margin: 0; }
+  .naturalToolHeader {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: none;
+    min-height: 88px;
+    margin: 0;
+    padding: 18px 16px 18px 18px;
+    color: var(--color-ink);
+    text-align: left;
+  }
+  .rowTrigger {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 120ms ease;
+  }
+  /* A full-width row answers a press with its background, not a scale. */
+  .rowTrigger:active { background-color: color-mix(in srgb, var(--color-ink) 4%, transparent); }
+  .rowTrigger:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: -3px; border-radius: var(--radius-lg); }
+  .naturalToolHeader .productLogo {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 9px;
+    border-color: color-mix(in srgb, var(--tool-accent) 24%, var(--color-border));
+    background: color-mix(in srgb, var(--tool-accent) 12%, var(--color-paper-3));
+  }
+  /* One shrinkable column: a long architecture label (Spanish runs longer) wraps instead of widening the row. */
+  .rowText { display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .naturalToolHeader .naturalMeta { align-items: baseline; gap: 2px 8px; margin: 0; color: var(--tool-accent); font: 500 10.5px/1.4 var(--font-mono); letter-spacing: .12em; }
+  .naturalToolHeader .naturalMeta small { order: 1; flex: 1 1 0; flex-basis: auto; min-width: 0; color: color-mix(in srgb, var(--tool-accent) 62%, var(--color-ink-3)); white-space: normal; font-size: 10.5px; }
+  .naturalToolHeader .naturalMeta strong { order: 2; flex-basis: 100%; margin-top: 2px; color: var(--color-ink); font: 600 1.3rem/1.2 var(--font-display); letter-spacing: -.02em; }
+  .naturalToolHeader .rowTitle {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--color-ink-2);
+    font: 400 14px/1.45 var(--font-body);
+    letter-spacing: 0;
+    text-wrap: pretty;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .rowToggle {
+    display: grid;
+    flex: 0 0 36px;
+    place-items: center;
+    height: 36px;
+    color: var(--tool-accent);
+    border: 1px solid color-mix(in srgb, var(--tool-accent) 35%, var(--color-border));
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--tool-accent) 6%, transparent);
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+  .rowToggle svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; transition: transform 320ms var(--ease-in-out); }
+  .naturalTool[data-open='true'] .rowToggle { border-color: color-mix(in srgb, var(--tool-accent) 60%, var(--color-border)); background: color-mix(in srgb, var(--tool-accent) 14%, transparent); }
+  .naturalTool[data-open='true'] .rowToggle svg { transform: rotate(45deg); }
+
+  /* The product unfolds on grid rows (interruptible, and the text never reflows mid-way). It folds away at once: a
+   * closing product above the row just tapped then shifts the page in one step, which the anchoring corrects before
+   * the frame is painted, so the tapped row never drifts. */
+  .rowPanel { display: grid; grid-template-rows: 0fr; }
+  .naturalTool[data-open='true'] .rowPanel { grid-template-rows: 1fr; transition: grid-template-rows 420ms var(--ease-out); }
+  .rowClip { min-height: 0; overflow: clip; }
+  .rowInner { padding: 0 18px 20px; }
+  .rowInner .naturalChapter { padding: 26px 0; }
+  /* Opening: the product's parts arrive one block step apart. Closing: everything leaves at once. */
+  .naturalTool[data-open='true'] .rowInner > * { animation: rowPartIn 560ms var(--ease-out) backwards; }
+  .naturalTool[data-open='true'] .rowInner > :nth-child(2) { animation-delay: var(--stagger-blocks); }
+  .naturalTool[data-open='true'] .rowInner > :nth-child(3) { animation-delay: calc(var(--stagger-blocks) * 2); }
+  .naturalTool[data-open='true'] .rowInner > :nth-child(4) { animation-delay: calc(var(--stagger-blocks) * 3); }
+
+  /* The end of a product: close it (back to its row), or open its full architecture on a tablet. */
+  .rowFoot { padding-top: 20px; border-top: 1px solid var(--color-border); }
+  .rowFoot .naturalCta { margin-top: 0; }
+  .rowClose {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    color: var(--color-ink-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-paper-2) 70%, transparent);
+    font: 600 13px/1 var(--font-ui);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--dur-press) var(--ease-out), color var(--dur-ui) ease, border-color var(--dur-ui) ease;
+  }
+  .rowClose svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .rowClose:active { transform: scale(.96); }
+  .rowClose:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: 3px; }
+}
+@media (max-width: 1023px) and (hover: hover) and (pointer: fine) {
+  .rowTrigger:hover .rowToggle { border-color: color-mix(in srgb, var(--tool-accent) 60%, var(--color-border)); }
+  .rowClose:hover { color: var(--color-ink); border-color: color-mix(in srgb, var(--tool-accent) 40%, var(--color-border)); }
+}
+@keyframes rowPartIn { from { opacity: 0; transform: translateY(var(--reveal-rise-text)); } }
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .naturalTool, .naturalToolRule, .rowTrigger, .rowToggle, .rowToggle svg, .rowPanel, .rowClose { transition: none; }
+  .naturalTool[data-open='true'] .rowInner > * { animation: none; }
+}
+
+/* Modal controls share the same dark-core, product-accent treatment; the closing action is Fluid Glass. */
+.modalClose, .modalNav button {
+  --control-border: color-mix(in srgb, var(--tool-accent) 45%, var(--color-border));
+  color: var(--color-ink); background: var(--color-paper-2); border: 1px solid var(--control-border);
+  border-radius: var(--radius-pill); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent);
+  transition: color .24s, border-color .24s, transform .24s var(--ease-out);
+}
+.modalNav .modalNavActive {
+  color: var(--tool-accent); border-color: var(--tool-accent); background: var(--color-paper-2); transform: translateY(-2px);
+}
+.modalNav { gap: 8px; }
+.modalNav button { min-height: 46px; padding: 10px 14px; }
+.modalNav .modalNavActive { transform: none; }
+.modalEnd a { justify-content: space-between; }
+.modalOutcome span { color: var(--tool-accent); }
+.modalPills > div { display: block; }
+.modalPills small { display: none; }
+@media (max-width: 900px) { .modalNav { gap: 8px; } .modalNav button { flex: 0 0 auto; padding: 10px 14px; } }
+/* Phones: the modal chapters become one segmented row instead of a clipped horizontal scroller. */
+@media (max-width: 600px) {
+  .modalNav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; overflow: visible; padding: 10px 0; }
+  .modalNav button { min-width: 0; padding: 10px 4px; font-size: 12px; line-height: 1.2; text-align: center; white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glowControl, .modalClose, .modalNav button, .modalEnd a { transition: none; animation: none; }
+}
+
+/* Hover belongs to a fine pointer: on touch it would stick after the tap. */
+@media (hover: hover) and (pointer: fine) {
+  .chapterNav button:hover {color: var(--color-ink); }
+  .playButton:hover {color: var(--color-ink); text-decoration-color: var(--color-accent); }
+  .entry:hover {background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .modalClose:hover {color: var(--color-accent); border-color: var(--color-accent); }
+  .modalNav button:hover {color: var(--color-ink); }
+  .glowControl:hover {background: linear-gradient(var(--color-paper-2), var(--color-paper-2)) padding-box,
+      conic-gradient(from var(--arsenal-ring-angle), var(--tool-accent), color-mix(in srgb, var(--tool-accent) 12%, transparent), var(--tool-accent)) border-box;
+    color: var(--tool-accent);
+    animation: arsenalRing 5s linear infinite; }
+  .glowControl:hover {transform: translateY(-2px); }
+  .modalClose:hover, .modalNav button:hover {color: var(--tool-accent); border-color: var(--tool-accent); background: var(--color-paper-2); transform: translateY(-2px); }
+}

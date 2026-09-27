@@ -3,8 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+import ShaderButton from './ShaderButton';
 
 export default function CookieBanner() {
+  const { t } = useLanguage();
+  const cb = t?.cookieBanner || {};
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,7 +59,7 @@ export default function CookieBanner() {
             borderRadius: '16px',
             padding: '1.25rem 1.35rem',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(198, 255, 52, 0.08)',
-            fontFamily: 'var(--font-sans)',
+            fontFamily: 'var(--font-body)',
             color: '#ffffff'
           }}
         >
@@ -78,12 +82,12 @@ export default function CookieBanner() {
                 background: '#c6ff34',
                 boxShadow: '0 0 8px #c6ff34'
               }} />
-              Privacy & Telemetry
+              {cb.badge || 'Privacy & Telemetry'}
             </div>
 
             <button
               onClick={() => handleConsent('essential')}
-              aria-label="Close cookie banner"
+              aria-label={cb.closeAria || 'Close cookie banner'}
               style={{
                 background: 'transparent',
                 border: 'none',
@@ -106,7 +110,7 @@ export default function CookieBanner() {
             color: 'rgba(255, 255, 255, 0.7)',
             margin: '0 0 1.15rem 0'
           }}>
-            We deploy privacy-preserving telemetry to optimize our enterprise architecture services. No cross-site ad tracking. Review our{' '}
+            {cb.text || 'We deploy privacy-preserving telemetry to optimize our enterprise architecture services. No cross-site ad tracking. Review our'}{' '}
             <Link
               href="/privacy"
               style={{
@@ -115,20 +119,19 @@ export default function CookieBanner() {
                 textUnderlineOffset: '3px'
               }}
             >
-              Privacy Policy
+              {cb.privacyLink || 'Privacy Policy'}
             </Link>.
           </p>
 
           {/* Action buttons */}
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <button
+            <ShaderButton
               onClick={() => handleConsent('accepted')}
-              className="btn-glow-border"
               style={{
                 flex: 1,
                 padding: '0.6rem 1rem',
                 fontSize: '0.82rem',
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-ui)',
                 fontWeight: 700,
                 cursor: 'pointer',
                 borderRadius: '9999px',
@@ -136,8 +139,8 @@ export default function CookieBanner() {
                 whiteSpace: 'nowrap'
               }}
             >
-              Accept All
-            </button>
+              {cb.acceptAll || 'Accept All'}
+            </ShaderButton>
 
             <button
               onClick={() => handleConsent('essential')}
@@ -145,7 +148,8 @@ export default function CookieBanner() {
                 flex: 1,
                 padding: '0.6rem 1rem',
                 fontSize: '0.82rem',
-                fontFamily: 'var(--font-mono)',
+                fontFamily: 'var(--font-ui)',
+                fontWeight: 600,
                 color: 'rgba(255, 255, 255, 0.7)',
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -164,7 +168,7 @@ export default function CookieBanner() {
                 e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
               }}
             >
-              Essential Only
+              {cb.essentialOnly || 'Essential Only'}
             </button>
           </div>
         </motion.div>

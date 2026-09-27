@@ -10,6 +10,7 @@
     "lint": "oxlint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "clean": "node -e \"fs.rmSync('.next/cache', {recursive: true, force: true})\"",
     "checklist": "npm run lint && npm run test && npm run build"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "@splinetool/runtime": "^1.12.98",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.42.0",
+    "lenis": "^1.3.26",
     "lucide-react": "^1.21.0",
     "next": "^15.1.0",
     "ogl": "^1.0.11",

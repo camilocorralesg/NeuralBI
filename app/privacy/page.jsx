@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ShaderButton from '../../components/ShaderButton';
 
 export const metadata = {
   title: 'Privacy Policy',
@@ -11,7 +12,7 @@ export default function PrivacyPolicyPage() {
       minHeight: '100vh',
       backgroundColor: '#030303',
       color: '#ffffff',
-      fontFamily: 'var(--font-sans)',
+      fontFamily: 'var(--font-body)',
       padding: '2rem 1.5rem 6rem',
       position: 'relative',
       overflowX: 'hidden'
@@ -52,23 +53,23 @@ export default function PrivacyPolicyPage() {
           <img src="/NeuralBI/assets/Neuralbi%20logo.svg" alt="NeuralBI Logo" style={{ height: '22px' }} />
         </Link>
 
-        <Link
+        <ShaderButton
           href="/"
-          className="btn-glow-border"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.5rem 1.15rem',
             fontSize: '0.85rem',
-            fontFamily: 'var(--font-mono)',
+            fontFamily: 'var(--font-ui)',
+            fontWeight: 600,
             textDecoration: 'none',
             color: '#ffffff',
             borderRadius: '9999px'
           }}
         >
           ← Return to Home
-        </Link>
+        </ShaderButton>
       </header>
 
       {/* Main Content Container */}
@@ -79,7 +80,8 @@ export default function PrivacyPolicyPage() {
         zIndex: 10
       }}>
         <div style={{ marginBottom: '3rem' }}>
-          <div style={{
+          <div className="enter" style={{
+            '--enter': 0,
             display: 'inline-block',
             fontFamily: 'var(--font-mono)',
             fontSize: '0.75rem',
@@ -90,7 +92,8 @@ export default function PrivacyPolicyPage() {
           }}>
             Legal & Compliance
           </div>
-          <h1 style={{
+          <h1 className="enter-mask" style={{
+            '--enter': 1,
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
             fontWeight: 800,
@@ -100,7 +103,8 @@ export default function PrivacyPolicyPage() {
           }}>
             Privacy Policy
           </h1>
-          <p style={{
+          <p className="enter" style={{
+            '--enter': 2,
             fontFamily: 'var(--font-mono)',
             fontSize: '0.85rem',
             color: 'rgba(255, 255, 255, 0.45)'
@@ -109,7 +113,8 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
 
-        <article style={{
+        <article className="enter" style={{
+          '--enter': 3,
           display: 'flex',
           flexDirection: 'column',
           gap: '2.5rem',

@@ -13,6 +13,9 @@ import {
   WebGLRenderer
 } from 'three';
 
+// Shader time of the still frame drawn under reduced motion.
+const STILL_TIME = 6;
+
 const vertexShader = `
 precision highp float;
 
@@ -308,10 +311,27 @@ export default function FloatingLines({
 
     let active = true;
     let isIntersecting = true;
+    // Reduced motion: one still frame of the lines, redrawn only when the canvas resizes; the pointer moves nothing.
+    const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    // Without WebGL (disabled, blocked or lost) the lines give way to a still CSS light instead of taking the page down.
+    let renderer;
+    try {
+      // Probe first, so a browser without WebGL does not even log three.js's context errors.
+      const probe = document.createElement('canvas');
+      if (!probe.getContext('webgl2') && !probe.getContext('webgl')) throw new Error('FloatingLines: WebGL unavailable');
+      renderer = new WebGLRenderer({ antialias: true, alpha: false });
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') console.warn(error);
+      container.dataset.webgl = 'false';
+      return undefined;
+    }
+    container.dataset.webgl = 'true';
 
     const observer = typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver(([entry]) => {
-          isIntersecting = entry.isIntersecting;
+      ? new IntersectionObserver(records => {
+          // The last record of a batch is the current state (a fast scroll delivers several).
+          isIntersecting = records[records.length - 1].isIntersecting;
         }, { threshold: 0 })
       : null;
 
@@ -324,7 +344,6 @@ export default function FloatingLines({
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: false });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
@@ -424,6 +443,7 @@ export default function FloatingLines({
       const canvasWidth = renderer.domElement.width;
       const canvasHeight = renderer.domElement.height;
       uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
+      if (still) renderer.render(scene, camera);
     };
 
     setSize();
@@ -485,7 +505,7 @@ export default function FloatingLines({
         return;
       }
 
-      uniforms.iTime.value = clock.getElapsedTime();
+      uniforms.iTime.value = still ? STILL_TIME : clock.getElapsedTime();
 
       if (interactive) {
         currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
@@ -510,6 +530,7 @@ export default function FloatingLines({
       }
 
       renderer.render(scene, camera);
+      if (still) return;
       raf = requestAnimationFrame(renderLoop);
     };
     renderLoop();

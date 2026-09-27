@@ -1,0 +1,14 @@
+/* The stage for the Industries product mockups. Tall enough that each product can take a readable base size (the
+ * base answers to the stage's width and height, see MockupStage); each mockup pauses its own loops when offscreen. */
+.scene {
+  position: relative;
+  height: 560px;
+  isolation: isolate;
+  overflow: clip;
+}
+@media (max-width: 760px) {
+  .scene { height: 540px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene *, .scene *::after { animation: none !important; transition: none !important; }
+}

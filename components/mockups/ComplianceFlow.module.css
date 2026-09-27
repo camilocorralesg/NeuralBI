@@ -1,0 +1,193 @@
+/* NeuralBI Flows · AML & KYC screening: an event-driven flow, left to right, with parallel branches, the event stream
+ * beside it and the hash-chained audit ledger below. Sized in em (see MockupStage); nodes carry data-state
+ * 'idle' | 'running' | 'done' | 'skipped' and a result tone 'ok' | 'warn' | 'red'. */
+.app { position: relative; }
+.modes { display: inline-flex; padding: .2em; border-radius: var(--mk-radius-md); background: rgba(255, 255, 255, .03); border: 1px solid var(--mk-line); }
+.modes span { padding: .55em .85em; border-radius: var(--mk-radius-sm); color: var(--mk-text-3); font: 500 .7em/1 var(--font-body, sans-serif); }
+.modes span[data-active='true'] { color: var(--mk-text); background: rgba(255, 255, 255, .07); }
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 11em) minmax(0, 1fr);
+  grid-template-areas: "stream canvas" "ledger ledger";
+  gap: .8em;
+  padding: 1em 1.2em 1.1em;
+}
+.sectionHead { display: flex; align-items: baseline; justify-content: space-between; gap: .6em; margin-bottom: .6em; }
+.sectionHead b { overflow: hidden; color: var(--mk-text); font: 600 .74em/1.2 var(--font-display, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.sectionHead span { flex-shrink: 0; color: var(--mk-text-3); font: 500 .58em/1 var(--font-body, sans-serif); transition: color .35s; }
+.sectionHead span[data-logged='true'] { color: var(--mk-lime); font-family: var(--font-mono, monospace); }
+
+/* Event stream: transfers arrive at the top, each with the flow's verdict. */
+.stream { grid-area: stream; display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: .8em .8em .4em; border-radius: var(--mk-radius-lg); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)); border: 1px solid var(--mk-line); }
+.events { display: grid; align-content: start; flex: 1; min-height: 0; margin: 0; padding: 0; overflow: hidden; list-style: none; }
+.events li { --tone: var(--mk-lime); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .5em; padding: .42em 0; border-bottom: 1px solid var(--mk-line); animation: arrive .45s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both; }
+.events li[data-status='running'] { --tone: var(--mk-text-2); }
+.events li[data-status='held'] { --tone: var(--mk-amber); }
+.eventIcon { display: grid; place-items: center; width: 1.75em; height: 1.75em; border-radius: var(--mk-radius-sm); color: var(--tone); background: color-mix(in srgb, var(--tone) 11%, transparent); transition: color .35s, background-color .35s; }
+.eventIcon svg { width: .95em; height: .95em; }
+.eventText { display: grid; gap: .2em; min-width: 0; }
+.eventText b { color: var(--mk-text); font: 600 .6em/1 var(--font-mono, monospace); }
+.eventText span { overflow: hidden; color: var(--mk-text-3); font: 500 .52em/1.2 var(--font-body, sans-serif); white-space: nowrap; text-overflow: ellipsis; }
+.eventStatus { color: var(--tone); font: 600 .52em/1 var(--font-body, sans-serif); white-space: nowrap; transition: color .35s; }
+
+/* Canvas: the flow left to right on a dotted board, with the Teams case it opens. */
+.canvas {
+  position: relative;
+  grid-area: canvas;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: .75em;
+  min-width: 0;
+  padding: .8em .8em .8em;
+  border-radius: var(--mk-radius-lg);
+  border: 1px solid var(--mk-line);
+  background-color: rgba(255, 255, 255, .012);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .07) 1px, transparent 0);
+  background-size: 1.15em 1.15em;
+}
+.runLabel { color: var(--mk-text-3); font: 500 .56em/1 var(--font-mono, monospace); white-space: nowrap; }
+.runLabel b { color: var(--mk-text-2); font-weight: 600; }
+.flow {
+  display: grid;
+  grid-template-columns: minmax(0, 6.1fr) 1em minmax(0, 7.3fr) 1em minmax(0, 6.4fr) 1em minmax(0, 7.3fr) 1em minmax(0, 6.1fr);
+  grid-template-rows: 5.2em 5.2em;
+  grid-template-areas:
+    "trigger f1 aml j1 condition f2 release j2 audit"
+    "trigger f1 kyc j1 condition f2 hold j2 audit";
+  row-gap: .8em;
+  justify-content: center;
+}
+.node {
+  --tone: var(--mk-lime);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center;
+  align-self: center;
+  column-gap: .45em;
+  row-gap: .35em;
+  height: 5.2em;
+  min-width: 0;
+  padding: .4em .5em;
+  border-radius: var(--mk-radius-md);
+  background: var(--mk-raised);
+  border: 1px solid var(--mk-line-strong);
+  box-shadow: 0 .4em .8em -.5em rgba(0, 0, 0, .7);
+  transition: border-color .35s, opacity .35s;
+}
+.node[data-tone='warn'] { --tone: var(--mk-amber); }
+.node[data-tone='red'] { --tone: var(--mk-red); }
+.node[data-state='idle'] { opacity: .5; }
+.node[data-state='running'] { border-color: color-mix(in srgb, var(--mk-lime) 45%, transparent); }
+.node[data-state='done'][data-tone='warn'], .node[data-state='done'][data-tone='red'] { border-color: color-mix(in srgb, var(--tone) 45%, transparent); }
+.node[data-state='skipped'] { opacity: .38; border-style: dashed; box-shadow: none; }
+.nodeIcon { display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: var(--mk-radius-sm); color: var(--mk-text-2); background: rgba(255, 255, 255, .06); transition: color .35s, background-color .35s; }
+.node[data-state='running'] .nodeIcon, .node[data-state='done'] .nodeIcon { color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, transparent); }
+.nodeIcon svg { width: .9em; height: .9em; }
+.nodeText { display: grid; gap: .2em; min-width: 0; }
+.nodeText span { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+/* Names wrap to two lines: the canvas is narrow, the nodes have height to spare. */
+.nodeText b { display: -webkit-box; overflow: hidden; color: var(--mk-text); font: 600 .58em/1.15 var(--font-body, sans-serif); -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.nodeText span { color: var(--mk-text-3); font: 500 .5em/1.1 var(--font-body, sans-serif); }
+.nodeFoot { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; gap: .4em; min-width: 0; min-height: 1em; }
+.nodeResult { display: inline-flex; align-items: center; gap: .3em; overflow: hidden; color: var(--tone); font: 600 .5em/1 var(--font-mono, monospace); white-space: nowrap; }
+.node[data-state='skipped'] .nodeResult { color: var(--mk-text-3); }
+.nodeResult svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+.count { flex-shrink: 0; color: var(--mk-text-3); font: 500 .5em/1 var(--font-mono, monospace); white-space: nowrap; }
+.nodeBar { position: absolute; right: .5em; bottom: -1px; left: .5em; height: .14em; border-radius: 99em; background: var(--mk-lime); transform-origin: left; animation: run 1.2s var(--ease-out, ease) both; }
+
+/* Connectors: a line that draws itself in the flow's direction once its branch runs. */
+.connector { display: block; width: 100%; height: 100%; overflow: visible; }
+.connector path { fill: none; stroke: var(--mk-line-strong); stroke-width: 1.2; vector-effect: non-scaling-stroke; transition: stroke .35s, opacity .35s; }
+.connector path[data-state='lit'] { stroke: color-mix(in srgb, var(--mk-lime) 70%, transparent); stroke-dasharray: 100; animation: draw .55s var(--ease-out, ease) both; }
+.connector path[data-state='skipped'] { stroke-dasharray: 3 3; opacity: .5; }
+
+.teams {
+  display: grid;
+  align-self: end;
+  justify-self: end;
+  gap: .35em;
+  width: 17em;
+  padding: .7em .8em;
+  border-radius: var(--mk-radius-lg);
+  background: var(--mk-raised);
+  border: 1px solid color-mix(in srgb, var(--mk-amber) 30%, transparent);
+  box-shadow: 0 .6em 1.2em -.6em rgba(0, 0, 0, .8);
+  opacity: 0;
+  transform: translateY(.5em);
+  transition: opacity .45s, transform .45s var(--ease-out, ease);
+}
+.teams[data-shown='true'] { opacity: 1; transform: none; }
+.teamsHead { display: flex; align-items: center; gap: .4em; color: var(--mk-text-3); font: 600 .52em/1 var(--font-body, sans-serif); }
+.teamsHead svg { width: 1.2em; height: 1.2em; color: var(--mk-text-2); }
+.teams b { color: var(--mk-text); font: 600 .64em/1.2 var(--font-body, sans-serif); }
+.teams span:not(.teamsHead) { color: var(--mk-text-2); font: 500 .56em/1.3 var(--font-body, sans-serif); }
+.teams small { color: var(--mk-amber); font: 600 .52em/1 var(--font-body, sans-serif); }
+
+/* Audit ledger: newest at the bottom, each row chained to the hash of the row before it. */
+.ledger { grid-area: ledger; min-width: 0; padding: .8em .9em .7em; border-radius: var(--mk-radius-lg); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)); border: 1px solid var(--mk-line); }
+.ledgerBox { position: relative; height: 5.9em; }
+.rows {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: .25em;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000000 1.3em);
+  mask-image: linear-gradient(180deg, transparent, #000000 1.3em);
+}
+.rows li {
+  --tone: var(--mk-lime);
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 4em 6.6em 5.2em 5em minmax(0, 1fr) 6.2em 7em;
+  align-items: center;
+  gap: .6em;
+  padding: .45em .55em;
+  border-radius: var(--mk-radius-sm);
+  color: var(--mk-text-3);
+  font: 500 .56em/1 var(--font-mono, monospace);
+  white-space: nowrap;
+  animation: arrive .45s var(--ease-out, cubic-bezier(.22, 1, .36, 1)) both;
+}
+.rows li[data-decision='held'] { --tone: var(--mk-amber); }
+.rows li[data-newest='true'] { background: rgba(255, 255, 255, .04); }
+.rows li[data-decision='held'][data-newest='true'] { background: color-mix(in srgb, var(--mk-amber) 8%, transparent); }
+.rows time { color: var(--mk-text-3); }
+.rows b { color: var(--mk-text); font-weight: 600; }
+.seq { color: var(--mk-text-3); }
+.decision { color: var(--tone); font-weight: 700; }
+.evidence { overflow: hidden; color: var(--mk-text-2); font-family: var(--font-body, sans-serif); text-overflow: ellipsis; }
+.rows li[data-decision='held'] .evidence { color: var(--mk-amber); }
+.hash { color: var(--mk-text-2); transition: color .35s; }
+.hash[data-linked='true'] { color: var(--mk-lime); }
+.prev { display: inline-flex; align-items: center; gap: .3em; color: var(--mk-text-3); transition: color .35s; }
+.prev svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+.prev[data-link='true'] { color: var(--mk-lime); }
+
+@keyframes arrive { from { opacity: 0; transform: translateY(-.4em); } }
+@keyframes run { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* Narrow stages: the flow alone as a column (branches side by side), and the ledger's essentials. */
+@container (max-width: 480px) {
+  .body { grid-template-columns: minmax(0, 1fr); grid-template-areas: "canvas" "ledger"; }
+  .stream, .teams, .connector, .modes { display: none; }
+  .flow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: "trigger trigger" "aml kyc" "condition condition" "release hold" "audit audit";
+    gap: .5em;
+  }
+  .rows li { grid-template-columns: 6.6em 5.2em 5em minmax(0, 1fr); }
+  .seq, .evidence, .prev { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .events li, .rows li, .nodeBar, .connector path[data-state='lit'] { animation: none; }
+  .node, .nodeIcon, .connector path, .teams, .hash, .prev, .eventIcon, .eventStatus, .sectionHead span { transition: none; }
+}

@@ -1,0 +1,85 @@
+.frame {
+  --gold: #f2c811;
+  --ink: #f3f2eb;
+  --muted: #a5aaa7;
+  width: 100%;
+  max-width: 440px;
+  min-width: 0;
+  margin: 0;
+  padding: 20px;
+  color: var(--ink);
+  background: linear-gradient(145deg, #141715, #0b0e0d 65%);
+  border: 1px solid #393a28;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.title { margin-bottom: 18px; font-family: var(--font-display); font-size: 13px; font-weight: 600; line-height: 1.5; }
+.canvas { display: block; width: 100%; height: auto; overflow: hidden; border-radius: 8px; background: #0b0e0d; }
+.canvas text { font-family: var(--font-body); }
+.rule { stroke: #282d29; stroke-width: 1; }
+.grid { stroke: #222723; stroke-width: .75; }
+.label { fill: #c8cdc6; font-size: 12px; }
+.micro { fill: var(--muted); font-size: 9px; }
+.canvas .primary { fill: var(--ink); font-family: var(--font-display); font-size: 43px; font-weight: 500; letter-spacing: -1.5px; font-variant-numeric: tabular-nums; }
+.percent { fill: var(--gold); font-size: 23px; letter-spacing: 0; }
+.metric { fill: var(--ink); font-size: 21px; font-weight: 500; letter-spacing: -.6px; }
+.trend { stroke: var(--gold); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; animation: draw 8s cubic-bezier(.22, 1, .36, 1) infinite; }
+.trendArea { animation: area 8s ease infinite; }
+.endpointRing { stroke: var(--gold); stroke-opacity: .3; fill: #151b0f; }
+.endpoint { fill: var(--gold); animation: settle 8s ease infinite; }
+.bar { fill: #c0b65e; transform-box: fill-box; transform-origin: bottom; animation: bars 8s cubic-bezier(.22, 1, .36, 1) infinite; animation-delay: var(--delay); }
+.bar:nth-last-of-type(1) { fill: var(--gold); }
+.waterfallLink { stroke: #797b58; stroke-width: .6; stroke-dasharray: 2 2; }
+.latency { stroke: #b9d894; stroke-width: 1.4; animation-delay: .7s; }
+.donutTrack { stroke: #495044; stroke-width: 3; }
+.donut { stroke: var(--gold); stroke-width: 3; stroke-dasharray: 50 100; transform: rotate(-90deg); transform-origin: 278px 165px; animation: donut 8s ease infinite; }
+.legend, .legendMuted { fill: #d2d7c8; font-size: 8px; }
+.legendMuted { fill: var(--muted); }
+.statusDot { fill: #b9d894; }
+.contextBar { fill: #333d36; }
+.insightBar { fill: #565c3d; }
+.scanner { animation: scan 8s cubic-bezier(.4, 0, .2, 1) infinite; }
+.insightLine { stroke: var(--gold); stroke-width: 1.5; stroke-dasharray: 100; animation: reasoningLine 8s ease infinite; }
+.finding { animation: finding 8s ease infinite; }
+.annotation { stroke: #8e8542; stroke-dasharray: 2 3; }
+.insight { animation: insight 8s cubic-bezier(.22, 1, .36, 1) infinite; }
+.insightSurface { fill: #191e15; stroke: #444a2b; stroke-width: .8; }
+.spark { fill: var(--gold); }
+.insightLabel { fill: #bac3ac; font-size: 10px; }
+.insightText { fill: var(--ink); font-size: 17px; font-weight: 500; letter-spacing: -.3px; }
+.insightNumber { fill: #d6e7a8; }
+.check { stroke: #c4d895; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.connection { stroke: #40483a; stroke-width: 1; }
+.packet { stroke: var(--gold); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 12 100; stroke-dashoffset: 12; opacity: 0; animation: packet 8s ease infinite; animation-delay: var(--delay); }
+.dimension { animation: dimension 8s ease infinite; animation-delay: var(--delay); }
+.tableSurface { fill: #151b17; stroke: #414a3c; stroke-width: .8; }
+.tableName { fill: #e0e5da; font-size: 11px; font-weight: 500; }
+.canvas .field { fill: #a5afa1; font-family: var(--font-mono); font-size: 8px; }
+.cardinality { fill: #b6bf9d; font-size: 8px; text-anchor: middle; }
+.hubOuter { fill: #25291a; stroke: #605d30; stroke-width: .6; animation: hub 8s ease infinite; }
+.hub { fill: #1c2218; stroke: #ada34e; stroke-width: .8; }
+.tableIcon { stroke: var(--gold); stroke-width: .9; }
+.factName { fill: var(--ink); font-size: 11px; font-weight: 600; }
+.canvas .factType { fill: #bac5a6; font-family: var(--font-mono); font-size: 8px; }
+.canvas .lakeLabel { fill: #bdb574; font-family: var(--font-mono); font-size: 8px; letter-spacing: 1px; }
+.frame[data-running='false'] *, .frame[data-visible='false'] * { animation-play-state: paused !important; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes draw { 0%, 7% { stroke-dashoffset: 100; } 37%, 87% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .25; } }
+@keyframes area { 0%, 12% { opacity: 0; } 40%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes settle { 0%, 25% { opacity: .25; } 40%, 90% { opacity: 1; } 100% { opacity: .25; } }
+@keyframes bars { 0%, 8% { transform: scaleY(.15); opacity: .4; } 33%, 88% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(.15); opacity: .4; } }
+@keyframes donut { 0%, 15% { stroke-dasharray: 0 100; } 40%, 88% { stroke-dasharray: 50 100; } 100% { stroke-dasharray: 0 100; } }
+@keyframes scan { 0% { transform: translateX(-48px); opacity: 0; } 6% { opacity: 1; } 32% { transform: translateX(296px); opacity: 1; } 37%, 100% { transform: translateX(296px); opacity: 0; } }
+@keyframes reasoningLine { 0%, 8% { stroke-dashoffset: 100; opacity: .2; } 36%, 89% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .2; } }
+@keyframes finding { 0%, 28% { opacity: .15; } 40%, 87% { opacity: 1; } 100% { opacity: .15; } }
+@keyframes insight { 0%, 29% { opacity: .2; transform: translateY(5px); } 43%, 87% { opacity: 1; transform: translateY(0); } 100% { opacity: .2; transform: translateY(5px); } }
+@keyframes packet { 0%, 13% { stroke-dashoffset: 12; opacity: 0; } 18% { opacity: 1; } 42% { stroke-dashoffset: -100; opacity: 1; } 45%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+@keyframes dimension { 0%, 8% { opacity: .45; } 20%, 85% { opacity: 1; } 100% { opacity: .45; } }
+@keyframes hub { 0%, 28% { stroke: #605d30; } 48%, 80% { stroke: #f2c811; } 100% { stroke: #605d30; } }
+
+@media (max-width: 480px) { .frame { padding: 14px; } .title { font-size: 12px; margin-bottom: 12px; } }
+@media (prefers-reduced-motion: reduce) {
+  .frame * { animation: none !important; }
+  .scanner, .packet { display: none; }
+}

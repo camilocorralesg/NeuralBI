@@ -1,0 +1,231 @@
+/* Hallmark · pre-emit critique: P5 H4 E4 S5 R5 V4
+ * Original 2D concepts: reasoning network, accelerated delivery, UI assembly.
+ */
+.graphic {
+  --graphic-accent: var(--color-accent, #c6ff34);
+  --graphic-ink: var(--color-ink, #fff);
+  --graphic-secondary: #999fae;
+  --graphic-soft: #737e90;
+  --graphic-line: #333b49;
+  --graphic-grid: #171e2a;
+  --graphic-source: #a3a2fa;
+  --graphic-cyan: #8acbe0;
+  --graphic-surface: #0b101b;
+  --graphic-surface-light: #172030;
+  --graphic-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --graphic-duration: 7.2s;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0;
+}
+.visual { position: absolute; inset: 0; overflow: clip; }
+.heading { position: absolute; top: 12px; left: 15px; right: 15px; display: flex; align-items: center; gap: 7px; color: var(--graphic-secondary); font: 500 10px var(--font-display); white-space: nowrap; }
+.heading > i { width: 4px; height: 4px; flex-shrink: 0; border-radius: 50%; background: var(--graphic-source); }
+.speed .heading > i { background: var(--graphic-accent); }
+.adoption .heading > i { background: var(--graphic-cyan); }
+.headingRule { height: 1px; flex: 1; background: var(--graphic-grid); }
+.canvas { position: absolute; width: calc(100% - 12px); max-width: 300px; height: 136px; left: 50%; top: 28px; transform: translateX(-50%); overflow: visible; }
+.caption { position: absolute; bottom: 11px; left: 8px; right: 8px; height: 14px; color: var(--graphic-secondary); text-align: center; font: 500 10px/14px var(--font-body); }
+.caption > span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.before { animation: beforeState var(--graphic-duration) ease infinite; }
+.after { color: var(--graphic-accent); opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
+.after > i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+.grid { stroke: var(--graphic-grid); stroke-width: 0.7; }
+.microLabel { fill: var(--graphic-soft); font: 500 9px var(--font-mono); letter-spacing: 0.35px; }
+
+/* AI: Data ingress → autonomous reasoning → business impact */
+.connection { stroke: #182030; stroke-width: 1; }
+.packet { stroke: #818cf8; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; opacity: 0; animation: ingress var(--graphic-duration) ease infinite; }
+.outgoing { stroke: var(--graphic-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; opacity: 0; animation: discharge var(--graphic-duration) ease infinite; }
+
+.shieldLine { stroke: #1f2a3d; stroke-width: 0.7; stroke-dasharray: 2 4; opacity: 0.5; }
+
+
+.sourceCapsule { stroke: var(--graphic-line); stroke-width: 0.8; animation: capsuleBorder var(--graphic-duration) ease infinite; }
+.capsuleLed { fill: #3b82f6; opacity: 0.5; animation: ledBlink var(--graphic-duration) ease infinite; }
+.capsuleLines { stroke: var(--graphic-line); stroke-width: 1; stroke-linecap: round; }
+.portDot { fill: #4f46e5; stroke: #080c14; stroke-width: 1; }
+.nodeLabel { fill: var(--graphic-secondary); font: 600 8px var(--font-mono); letter-spacing: 0.8px; }
+
+
+.coreHalo { opacity: 0; animation: halo var(--graphic-duration) ease infinite; }
+.dialTicks { stroke: #1f2a3d; stroke-width: 0.8; stroke-linecap: round; }
+.coreOrbit { fill: none; stroke: #312e81; stroke-width: 0.8; stroke-dasharray: 3 5; animation: orbit var(--graphic-duration) linear infinite; }
+.coreChassis { fill: #060a12; stroke: #2d3854; stroke-width: 1; animation: chassis var(--graphic-duration) ease infinite; }
+.reasoningHex { fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; stroke-width: 0.8; animation: hex var(--graphic-duration) ease infinite; }
+.coreDot { fill: #6366f1; opacity: 0.4; animation: photon var(--graphic-duration) ease infinite; }
+
+
+.impactHalo { opacity: 0.22; animation: impactHalo var(--graphic-duration) ease infinite; }
+.impactRipple { fill: none; stroke: var(--graphic-accent); stroke-width: 1.2; opacity: 0; animation: ripple var(--graphic-duration) var(--graphic-ease) infinite; }
+.sealOuterRing { fill: #060a12; stroke: rgba(198, 255, 52, 0.35); stroke-width: 1; animation: sealRing var(--graphic-duration) ease infinite; }
+.sealBody { stroke: #152030; stroke-width: 0.7; }
+.sealInnerRim { fill: none; stroke: rgba(255, 255, 255, 0.07); stroke-width: 0.6; }
+.impactDollar { fill: rgba(198, 255, 52, 0.5); font: 800 20px var(--font-display); letter-spacing: -0.02em; animation: dollar var(--graphic-duration) var(--graphic-ease) infinite; }
+
+.ai .before { animation-name: impactOff; }
+.ai .after { animation-name: impactOn; }
+
+/* Speed: keep both curves. Crossfading avoids snapping between incompatible paths. */
+.timeGuide { stroke: var(--graphic-line); stroke-opacity: 0.65; stroke-width: 0.65; stroke-dasharray: 2 4; }
+.timeColumn { animation: compressTime var(--graphic-duration) var(--graphic-ease) infinite; }
+.quarterLabel { animation: beforeState var(--graphic-duration) ease infinite; }
+.weekLabel { fill: var(--graphic-accent); opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
+.baseline { stroke: var(--graphic-secondary); stroke-opacity: 0.4; stroke-width: 1; stroke-dasharray: 3 3; animation: baselineFade var(--graphic-duration) ease infinite; }
+.slowPoint { fill: var(--graphic-secondary); opacity: 0.5; animation: beforeState var(--graphic-duration) ease infinite; }
+.velocityArea { opacity: 0.16; animation: curveArea var(--graphic-duration) ease infinite; }
+.velocityCurve { stroke: var(--graphic-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; opacity: 0.45; animation: drawCurve var(--graphic-duration) var(--graphic-ease) infinite; }
+.velocityHighlight { stroke: var(--graphic-ink); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 5 100; stroke-dashoffset: 105; opacity: 0; animation: curveHighlight var(--graphic-duration) linear infinite; }
+.deployPoint { opacity: 0.45; animation: finishPoint var(--graphic-duration) ease infinite; }
+.finishRing { fill: var(--graphic-surface); stroke: var(--graphic-accent); stroke-opacity: 0.8; stroke-width: 1; }
+.finishDot { fill: var(--graphic-accent); }
+
+/* Adoption: preserve the four original modules and their magnetic alignment. */
+.assemblyGuide { stroke: var(--graphic-cyan); stroke-width: 0.6; stroke-opacity: 0.25; stroke-dasharray: 2 4; }
+.assemblyCross { stroke: var(--graphic-cyan); stroke-opacity: 0.12; stroke-width: 0.6; }
+.tile { transform-box: fill-box; transform-origin: center; transform: translate(var(--dx), var(--dy)) rotate(var(--angle)); animation: assemble var(--graphic-duration) var(--graphic-ease) infinite; animation-delay: calc(var(--order) * 80ms); }
+.tileSurface { stroke: var(--graphic-line); stroke-width: 0.9; }
+.tileLabel { fill: var(--graphic-secondary); font: 500 8px var(--font-mono); letter-spacing: 0.2px; }
+.meterTrack { stroke: var(--graphic-line); stroke-width: 3; stroke-linecap: round; }
+.meterFill { stroke: var(--graphic-accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 65; animation: fillMeter var(--graphic-duration) var(--graphic-ease) infinite; }
+.tileIndicator { fill: var(--graphic-accent); opacity: 0.4; }
+.bar { fill: var(--graphic-cyan); opacity: 0.65; transform-box: fill-box; transform-origin: bottom; transform: scaleY(0.55); animation: growBars var(--graphic-duration) var(--graphic-ease) infinite; animation-delay: calc(var(--order) * 55ms); }
+.bar:last-child { fill: var(--graphic-accent); opacity: 1; }
+.tableDot { fill: var(--graphic-cyan); opacity: 0.6; }
+.tableLine { stroke: var(--graphic-secondary); stroke-opacity: 0.45; stroke-width: 2; stroke-linecap: round; }
+.syncButton { fill: var(--graphic-surface-light); stroke: var(--graphic-line); stroke-width: 0.6; animation: syncButton var(--graphic-duration) ease infinite; }
+.syncText { fill: var(--graphic-secondary); font: 500 8px var(--font-mono); letter-spacing: 0.2px; }
+.unbound { animation: beforeState var(--graphic-duration) ease infinite; }
+.synced { opacity: 0; animation: afterState var(--graphic-duration) ease infinite; }
+.synced .syncText { fill: var(--graphic-accent); }
+.syncCheck { stroke: var(--graphic-accent); stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes beforeState { 0%, 16%, 98%, 100% { opacity: 1; } 28%, 92% { opacity: 0; } }
+@keyframes afterState { 0%, 32%, 90%, 100% { opacity: 0; } 42%, 80% { opacity: 1; } }
+
+/* AI narrative: 0–15% context · 15–38% traverse · 38–55% result · 55–88% hold · 88–100% reset */
+@keyframes ingress {
+  0%, 12% { stroke-dashoffset: 18; opacity: 0; }
+  16% { opacity: 1; }
+  36% { stroke-dashoffset: -100; opacity: 1; }
+  40%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+@keyframes capsuleBorder {
+  0%, 12%, 42%, 100% { stroke: var(--graphic-line); }
+  18%, 36% { stroke: #4338ca; }
+}
+@keyframes ledBlink {
+  0%, 12%, 42%, 100% { fill: #3b82f6; opacity: 0.5; }
+  18%, 36% { fill: #60a5fa; opacity: 1; }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg); opacity: 0.3; }
+  50% { transform: rotate(180deg); opacity: 0.7; }
+  100% { transform: rotate(360deg); opacity: 0.3; }
+}
+@keyframes chassis {
+  0%, 34%, 92%, 100% { stroke: #2d3854; }
+  42%, 86% { stroke: #818cf8; }
+}
+@keyframes hex {
+  0%, 34%, 100% { transform: rotate(0deg); fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; }
+  42%, 86% { transform: rotate(30deg); fill: rgba(198, 255, 52, 0.1); stroke: var(--graphic-accent); }
+  92% { transform: rotate(60deg); fill: rgba(99, 102, 241, 0.06); stroke: #6366f1; }
+}
+@keyframes photon {
+  0%, 34%, 100% { fill: #6366f1; opacity: 0.4; transform: scale(1); }
+  38%, 40% { fill: #ffffff; opacity: 1; transform: scale(1.5); }
+  44%, 86% { fill: var(--graphic-accent); opacity: 1; transform: scale(1.2); }
+  92% { fill: #6366f1; opacity: 0.4; transform: scale(1); }
+}
+@keyframes halo {
+  0%, 30%, 92%, 100% { opacity: 0; }
+  42%, 86% { opacity: 0.7; }
+}
+
+@keyframes discharge {
+  0%, 44% { stroke-dashoffset: 18; opacity: 0; }
+  48% { opacity: 1; }
+  58% { stroke-dashoffset: -100; opacity: 1; }
+  62%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+@keyframes ripple {
+  0%, 56% { opacity: 0; transform: scale(0.9); }
+  58% { opacity: 0.8; }
+  68% { opacity: 0; transform: scale(1.7); }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+@keyframes impactHalo {
+  0%, 55%, 92%, 100% { opacity: 0.22; }
+  60%, 86% { opacity: 0.85; }
+}
+@keyframes sealRing {
+  0%, 55%, 92%, 100% { stroke: rgba(198, 255, 52, 0.35); }
+  60%, 86% { stroke: var(--graphic-accent); filter: drop-shadow(0 0 5px rgba(198, 255, 52, 0.5)); }
+}
+@keyframes dollar {
+  0%, 55% { fill: rgba(198, 255, 52, 0.5); transform: scale(1); }
+  58% { fill: #ffffff; transform: scale(1.12); }
+  62%, 86% { fill: var(--graphic-accent); transform: scale(1); filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.6)); }
+  92%, 100% { fill: rgba(198, 255, 52, 0.5); transform: scale(1); filter: none; }
+}
+
+@keyframes impactOn { 0%, 56%, 92%, 100% { opacity: 0.25; } 62%, 86% { opacity: 1; } }
+@keyframes impactOff { 0%, 50%, 98%, 100% { opacity: 1; } 56%, 92% { opacity: 0.2; } }
+
+@keyframes compressTime { 0%, 16%, 100% { transform: translateX(0); } 39%, 82% { transform: translateX(var(--shift)); } }
+@keyframes baselineFade { 0%, 16%, 100% { opacity: 0.45; } 35%, 83% { opacity: 0.15; } }
+@keyframes curveArea { 0%, 28%, 95%, 100% { opacity: 0.16; } 55%, 80% { opacity: 0.85; } }
+@keyframes drawCurve {
+  0%, 24% { stroke-dashoffset: 0; opacity: 0.45; }
+  26% { opacity: 0.8; }
+  52%, 84% { stroke-dashoffset: 0; opacity: 1; filter: drop-shadow(0 0 4px rgba(198, 255, 52, 0.4)); }
+  94%, 100% { stroke-dashoffset: 0; opacity: 0.45; filter: none; }
+}
+@keyframes curveHighlight {
+  0%, 28% { stroke-dashoffset: 105; opacity: 0; }
+  32% { opacity: 1; }
+  58% { stroke-dashoffset: 0; opacity: 1; }
+  62%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes finishPoint {
+  0%, 48%, 94%, 100% { opacity: 0.45; transform: scale(0.92); }
+  58%, 84% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 6px rgba(198, 255, 52, 0.5)); }
+}
+@keyframes assemble {
+  0%, 14%, 100% { transform: translate(calc(var(--dx) * 0.35), calc(var(--dy) * 0.35)) rotate(calc(var(--angle) * 0.35)); }
+  37%, 81% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes fillMeter { 0%, 22%, 100% { stroke-dashoffset: 65; } 48%, 80% { stroke-dashoffset: 10; } }
+@keyframes growBars { 0%, 23%, 100% { transform: scaleY(0.55); } 49%, 81% { transform: scaleY(1); } }
+@keyframes syncButton {
+  0%, 26%, 95%, 100% { stroke: var(--graphic-line); }
+  46%, 80% { stroke: var(--graphic-accent); box-shadow: 0 0 6px rgba(198, 255, 52, 0.35); }
+}
+
+/* Pausing the shared CSS clock preserves progress instead of restarting it. */
+.graphic[data-running='false'] *, .graphic[data-page-visible='false'] * { animation-play-state: paused !important; }
+@media (hover: hover) and (pointer: fine) {
+  .graphic[data-emphasis='true'] { --graphic-line: #485467; }
+}
+@media (max-width: 360px) {
+  .heading { left: 11px; right: 11px; font-size: 9px; }
+  .caption { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .graphic * { animation: none !important; transition: none !important; }
+  .before, .quarterLabel, .slowPoint, .unbound, .packet, .velocityHighlight, .impactRipple { opacity: 0 !important; }
+  .after, .weekLabel, .coreDot, .impactHalo, .coreHalo, .velocityArea, .deployPoint, .synced { opacity: 1 !important; }
+  .coreChassis, .reasoningHex, .sealOuterRing, .syncButton { stroke: var(--graphic-accent) !important; }
+  .impactDollar { fill: var(--graphic-accent) !important; opacity: 1 !important; }
+  .velocityCurve { opacity: 1; stroke-dashoffset: 0; }
+  .baseline { opacity: 0.16; }
+  .timeColumn { transform: translateX(var(--shift)); }
+  .tile { transform: none; }
+  .bar { transform: scaleY(1); }
+  .meterFill { stroke-dashoffset: 10; }
+}
