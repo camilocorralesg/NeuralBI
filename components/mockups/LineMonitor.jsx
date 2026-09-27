@@ -6,7 +6,7 @@ import { Card, LiveNumber, Pill, ProductBar } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './LineMonitor.module.css';
 
-/* NeuralBI · Line Monitor — the product behind "IoT Telemetry & OEE Analytics": a Fabric Real-Time Intelligence
+/* NeuralBI · Line Monitor: the product behind "IoT Telemetry & OEE Analytics": a Fabric Real-Time Intelligence
  * dashboard over Line 2 at Polímeros del Norte, Monterrey (the PET preforms of the supply chain story). Sensors stream
  * through Eventstream into Eventhouse; IMM-02's pump bearing starts to vibrate and heat, Data Activator fires its rule,
  * slows the machine to 70%, raises a work order and tells maintenance. OEE gives up three points to save the bearing. */
@@ -205,7 +205,7 @@ export default function LineMonitor({ live, language }) {
           {t.actions.map(([label, time], i) => {
             const Icon = [Gauge, Wrench, MessageSquare][i];
             return <li key={label} data-done={data.actions[i]}>
-              <Icon strokeWidth={2} /><span>{label}</span><time>{data.actions[i] ? time : '—'}</time>
+              <Icon strokeWidth={2} /><span>{label}</span><time>{data.actions[i] ? time : '–'}</time>
             </li>;
           })}
         </ol>

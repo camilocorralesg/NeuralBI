@@ -14,7 +14,7 @@ const FALLBACK_ITEMS = [
   },
   {
     q: 'How does NeuralBI differ from traditional IT consultancies?',
-    a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence'—orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments.",
+    a: "Traditional firms deliver static reports and rigid code. NeuralBI operates on 'Applied Intelligence', orchestrating cognitive layers directly into your Microsoft environment for real-time automation and zero-friction deployments.",
   },
   {
     q: 'What is the average timeline for the Neural Protocol?',

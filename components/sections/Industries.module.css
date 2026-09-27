@@ -77,6 +77,13 @@
   .tabDot { display: none; }
   .panel { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   .visual { position: relative; top: auto; }
+  /* The product lives inside the open answer: the answer drops its rule, and the rule closes the product instead, so
+   * text and product read as one fold of the accordion. The group opts out of scroll anchoring; the component keeps the
+   * tapped row in place itself. */
+  .solutions { overflow-anchor: none; }
+  .solution[data-selected='true']:has(+ .visualSlot:not([hidden])) { border-bottom-color: transparent; }
+  .solution[data-selected='true']:has(+ .visualSlot:not([hidden])) .solutionBody { padding-bottom: 1.25rem; }
+  .visualSlot { padding-bottom: 1.75rem; border-bottom: 1px solid var(--vertical-line); }
   .headline { font-size: clamp(1.8rem, 6vw, 2.5rem); }
   .caption { font-size: .875rem; }
   .footer { flex-direction: column; align-items: flex-start; margin-top: 2rem; }

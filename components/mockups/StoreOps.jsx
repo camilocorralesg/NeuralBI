@@ -6,7 +6,7 @@ import { LiveNumber, Mark, Phone, Tap } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import s from './StoreOps.module.css';
 
-/* NeuralBI Store Ops — the product behind "Store Manager Operations Apps": three Power Apps with PCF controls on the
+/* NeuralBI Store Ops: the product behind "Store Manager Operations Apps": three Power Apps with PCF controls on the
  * store manager's phones at Andina Chapinero, each one standing in front of the paper form it replaces. A delivery is
  * received against its ASN and the missing carton files its own claim; a sick call's shift is offered and accepted;
  * an online order is returned in store and refunded after its policy checks. As each is done, its form slides away. */

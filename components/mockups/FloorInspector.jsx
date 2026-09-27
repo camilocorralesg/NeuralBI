@@ -6,7 +6,7 @@ import { LiveNumber, Mark, Pill, RuggedTablet, Tap } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import r from './FloorInspector.module.css';
 
-/* NeuralBI Inspect — the product behind "Floor Inspector Mobile Apps": a Power Apps canvas app with React/PCF controls on
+/* NeuralBI Inspect: the product behind "Floor Inspector Mobile Apps": a Power Apps canvas app with React/PCF controls on
  * a rugged tablet at Line 2. The inspector scans a sample from IMM-01 cavity 14, the Bluetooth caliper and scale check
  * the neck and the weight, the AI vision control finds a short shot, and a gloved tap raises work order WO-5540 and puts
  * the lot on quality hold. */
@@ -113,9 +113,9 @@ export default function FloorInspector({ live, language }) {
   }, [live, phase]);
 
   const value = i => {
-    if (i === 0) return data.rows[0] === 'pass' ? 'L2-0917' : '—';
-    if (i === 1) return data.rows[1] === 'pending' ? '—' : <LiveNumber value={data.caliper} decimals={2} suffix=" mm" />;
-    if (i === 2) return data.rows[2] === 'pass' ? <LiveNumber value={23.9} suffix=" g" /> : '—';
+    if (i === 0) return data.rows[0] === 'pass' ? 'L2-0917' : '–';
+    if (i === 1) return data.rows[1] === 'pending' ? '–' : <LiveNumber value={data.caliper} decimals={2} suffix=" mm" />;
+    if (i === 2) return data.rows[2] === 'pass' ? <LiveNumber value={23.9} suffix=" g" /> : '–';
     return data.rows[3] === 'fail' ? t.shortShot : data.rows[3] === 'reading' ? '…' : t.waiting;
   };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { memo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShaderButton from '../ShaderButton';
 import LanguageSelector from '../LanguageSelector';
@@ -93,6 +94,22 @@ function Navbar() {
   const [isVisible, setIsVisible] = React.useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const lastScrollY = React.useRef(0);
+  const menuButtonRef = React.useRef(null);
+  const closeButtonRef = React.useRef(null);
+  const menuWasOpen = React.useRef(false);
+  // The portal target exists only in the browser; the server's render and hydration carry no menu.
+  const [portalReady, setPortalReady] = React.useState(false);
+  React.useEffect(() => { setPortalReady(true); }, []);
+
+  React.useEffect(() => {
+    if (isMobileMenuOpen) {
+      menuWasOpen.current = true;
+      closeButtonRef.current?.focus({ preventScroll: true });
+    } else if (menuWasOpen.current) {
+      menuWasOpen.current = false;
+      menuButtonRef.current?.focus({ preventScroll: true });
+    }
+  }, [isMobileMenuOpen]);
 
   React.useEffect(() => {
     if (isMobileMenuOpen) {
@@ -273,114 +290,78 @@ function Navbar() {
 
         {/* Mobile Hamburger Menu */}
         <div className="mobile-only" style={{ display: 'none', alignItems: 'center' }}>
-          <button 
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={ns.menuButton}
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label={nav.openMenu || "Open navigation menu"}
             aria-expanded={isMobileMenuOpen}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#ffffff',
-              cursor: 'pointer',
-              padding: '0.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}
           >
-            <span style={{ width: '24px', height: '2px', background: 'currentColor', borderRadius: '2px' }}></span>
-            <span style={{ width: '24px', height: '2px', background: 'currentColor', borderRadius: '2px' }}></span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
+      {/* Mobile menu: an editorial index of the page. Each label rises out of its own mask, 45 ms after the one above;
+          the language and the call to action sit at the bottom, within reach of the thumb. It is portalled to <body>:
+          the navbar's wrapper is transformed, and a transformed ancestor would pin a fixed overlay to the capsule
+          instead of the screen. */}
+      {portalReady && createPortal(<AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              willChange: 'transform, opacity',
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: '100dvh',
-              backgroundColor: 'rgba(10, 14, 24, 0.95)',
-              backdropFilter: 'blur(24px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-              zIndex: 9999,
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '1.5rem 1rem'
-            }}
+            className={ns.menu}
+            role="dialog"
+            aria-modal="true"
+            aria-label={nav.menuLabel || 'Navigation'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] } }}
+            exit={{ opacity: 0, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] } }}
+            onKeyDown={(event) => { if (event.key === 'Escape') setIsMobileMenuOpen(false); }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-              <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px' }} />
-              <button 
+            <div className={ns.menuHead}>
+              <img src={logoUrl} alt="NeuralBI Logo" className={ns.menuLogo} />
+              <button
+                ref={closeButtonRef}
+                type="button"
+                className={ns.menuClose}
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-label={nav.closeMenu || "Close navigation menu"}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#ffffff',
-                  cursor: 'pointer',
-                  padding: '0.5rem',
-                  fontSize: '2.5rem',
-                  lineHeight: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
               >
-                &times;
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
               </button>
             </div>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'min(1.5rem, 3.5vh)', flex: 1, justifyContent: 'center', alignItems: 'center', overflowY: 'auto', paddingBottom: '2rem' }}>
-              {navLinks.map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.5rem, 5vh, 2rem)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.02em',
-                    color: '#ffffff',
-                    textDecoration: 'none'
-                  }}
-                >
-                  {link.label}
-                </a>
-              ))}
-              
-              <div style={{ width: '100%', maxWidth: '280px', margin: '0.75rem 0' }}>
-                <LanguageSelector variant="segmented" />
-              </div>
 
+            <nav className={ns.menuNav} aria-label={nav.menuLabel || 'Navigation'}>
+              <ol className={ns.menuList}>
+                {navLinks.map((link, index) => (
+                  <li key={link.href} className={ns.menuItem} style={{ '--i': index }}>
+                    <a href={link.href} className={ns.menuLink} onClick={() => setIsMobileMenuOpen(false)}>
+                      <span className={ns.menuIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                      <span className={ns.menuLabel}>{link.label}</span>
+                      <svg className={ns.menuArrow} viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8" /></svg>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+
+            <div className={ns.menuFoot} style={{ '--i': navLinks.length }}>
+              <LanguageSelector variant="segmented" className={ns.menuLanguage} />
               <ShaderButton
                 type="button"
                 onClick={scrollToAudit}
                 aria-label={nav.bookCall || "Book a Call"}
-                style={{
-                  marginTop: '0.75rem',
-                  padding: '1rem 2.5rem',
-                  fontSize: '1.25rem',
-                  fontWeight: 700
-                }}
+                className={ns.menuCta}
               >
                 {nav.bookCall || 'Book a Call'}
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </ShaderButton>
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
 
     </div>
   );

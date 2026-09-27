@@ -6,7 +6,7 @@ import { LiveNumber, Mark, Phone, Tablet, Tap } from './ui/primitives';
 import { useStoryline } from './ui/useStoryline';
 import f from './FieldOps.module.css';
 
-/* NeuralBI Field — the product behind "Custom Apps & Field Operations". Offline-first Power Apps with React/PCF
+/* NeuralBI Field: the product behind "Custom Apps & Field Operations". Offline-first Power Apps with React/PCF
  * components: a receiving tablet scans the pallets of PO #4821 (the order dispatched in the control tower), keeps
  * scanning through a dropped connection, syncs, and the driver confirms dispatch on the phone. */
 const BEATS = [

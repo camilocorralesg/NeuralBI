@@ -7,7 +7,7 @@ import { AgentChat, AgentTurn, Answer, Composer, MessageBubble, PolicyChip, Reas
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './MerchCopilot.module.css';
 
-/* NeuralBI · Merchandising Copilot — the product behind "Merchandising Strategy Copilot": a Copilot Studio agent that
+/* NeuralBI · Merchandising Copilot: the product behind "Merchandising Strategy Copilot": a Copilot Studio agent that
  * Andina Retail's merchandise planner asks for the end-of-season plan. It reads the baskets to find what sells together,
  * optimises a stepped markdown for the summer lines within the margin floor, and drafts, never sends, new terms for
  * Textiles Pacífico as a redline. The season plan beside it fills in, section by section, as each tool returns. */
@@ -141,7 +141,7 @@ export default function MerchCopilot({ live, language }) {
   const answering = data.answer >= 0;
   const answered = data.answer >= count(t.answer);
 
-  const thought = id => data.thoughts[id] >= 0 && <Thought key={id} text={t.thoughts[id]} shown={data.thoughts[id]}>
+  const thought = id => data.thoughts[id] >= 0 && <Thought key={`thought-${id}`} text={t.thoughts[id]} shown={data.thoughts[id]}>
     {id === 'terms' && <PolicyChip shown={data.policyShown}>{t.policy}</PolicyChip>}
   </Thought>;
   const call = id => data.tools[id] && <ToolCall key={`${id}-call`} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}

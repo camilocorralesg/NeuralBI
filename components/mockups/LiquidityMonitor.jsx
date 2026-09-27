@@ -9,7 +9,7 @@ import { Card, Cursor, KpiCard, LiveNumber, Pill, ProductBar, StatusChip } from 
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './LiquidityMonitor.module.css';
 
-/* NeuralBI · Liquidity Monitor — the product behind "Real-Time Liquidity Telemetry": a Power BI report over Direct Lake.
+/* NeuralBI · Liquidity Monitor: the product behind "Real-Time Liquidity Telemetry": a Power BI report over Direct Lake.
  * A LatAm treasury watches cross-border flows, reserves and intraday risk; a EUR → MXN settlement spike eats the
  * headroom, the treasurer cross-filters the report to MXN from the flows visual and runs a USD → MXN sweep from it. */
 const BEATS = [

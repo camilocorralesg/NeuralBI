@@ -7,7 +7,7 @@ import { AgentChat, AgentTurn, Answer, Composer, EventBubble, PolicyChip, Reason
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import c from './LogisticsCopilot.module.css';
 
-/* NeuralBI · Logistics Copilot — the product behind "Autonomous Agents & Fleet Coordination": a Copilot Studio agent
+/* NeuralBI · Logistics Copilot: the product behind "Autonomous Agents & Fleet Coordination": a Copilot Studio agent
  * seen the way an agent works. A port closure arrives as an event; the agent reasons in the open, grounds itself in the
  * warehouse data, asks the carrier and supplier APIs, checks its autonomy policy, reroutes and reassigns the fleet, then
  * answers with its sources. The live context beside it shows what each call touches in the business. */
@@ -121,10 +121,10 @@ export default function LogisticsCopilot({ live, language }) {
   const data = readings(phase, step);
   const answering = data.answer >= 0;
   const answered = data.answer >= count(t.answer);
-  const thought = id => data.thoughts[id] >= 0 && <Thought key={id} text={t.thoughts[id]} shown={data.thoughts[id]}>
+  const thought = id => data.thoughts[id] >= 0 && <Thought key={`thought-${id}`} text={t.thoughts[id]} shown={data.thoughts[id]}>
     {id === 'policy' && <PolicyChip shown={data.thoughts.policy >= count(t.thoughts.policy)}>{t.policyOk}</PolicyChip>}
   </Thought>;
-  const call = id => data.tools[id] && <ToolCall key={id} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
+  const call = id => data.tools[id] && <ToolCall key={`tool-${id}`} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
     rows={id === 'query' ? ROWS.map(([po, truck]) => `${t.po} ${po} · ${truck}`) : undefined} />;
 
   return <div className={c.app} data-phase={phase}>

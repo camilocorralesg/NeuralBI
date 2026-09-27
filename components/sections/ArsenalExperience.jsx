@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, animate, cubicBezier, motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { useLanguage } from '../../context/LanguageContext';
@@ -13,6 +13,8 @@ import { PauSelfHealingFlowAnim, PauEventDrivenMeshAnim, PauResilientDlqMeshAnim
 import { McsGroundedReasoningAnim, McsMultiStepChainAnim, McsZeroHallucinationFieldAnim } from '../graphics/CopilotStudioAnimations';
 import s from './ArsenalExperience.module.css';
 import useReducedMotionSafe from '../useReducedMotionSafe';
+import useTapAnchor from '../useTapAnchor';
+import Reveal from '../Reveal';
 import { lockScroll, scrollToTarget, unlockScroll } from '../../lib/smoothScroll';
 
 const TOOL_CONFIG = [
@@ -74,7 +76,7 @@ const UI = {
     select: 'Select a system to explore its architecture',
     vision: 'The proposition', capabilities: 'Capabilities', differentiators: 'The difference',
     details: 'Explore full architecture',
-    close: 'Close architecture', included: 'Technical foundations',
+    close: 'Close architecture', collapse: 'Close', included: 'Technical foundations',
     modalNav: 'Explore the architecture',
     modalCapabilities: 'Built for the way teams work', modalDifferentiators: 'Engineered to go further',
     book: 'Book an architecture review', bookFor: 'Discuss this architecture',
@@ -84,7 +86,7 @@ const UI = {
     select: 'Seleccione un sistema y explore su arquitectura',
     vision: 'La propuesta', capabilities: 'Capacidades', differentiators: 'La diferencia',
     details: 'Explorar arquitectura completa',
-    close: 'Cerrar arquitectura', included: 'Fundamentos técnicos',
+    close: 'Cerrar arquitectura', collapse: 'Cerrar', included: 'Fundamentos técnicos',
     modalNav: 'Explorar la arquitectura',
     modalCapabilities: 'Diseñado para la forma de trabajar de su equipo', modalDifferentiators: 'Ingeniería que va más lejos',
     book: 'Agendar revisión de arquitectura', bookFor: 'Conversemos sobre esta arquitectura',
@@ -119,6 +121,12 @@ const STORY_STEPS = TOOL_CONFIG.flatMap((tool, toolIndex) => TOUR.map((moment, s
 const momentIndex = (toolIndex, chapter) => toolIndex * TOUR.length + chapter;
 // Keep in sync with the pinned-story media query in ArsenalExperience.module.css.
 const STORY_QUERY = '(min-width: 1024px) and (min-height: 540px) and (prefers-reduced-motion: no-preference)';
+// Below this width the natural flow becomes an accordion of the four products. Keep in sync with the CSS.
+const ACCORDION_QUERY = '(max-width: 1023px)';
+// Where an opened product settles: just under the navbar's capsule.
+const ROW_SETTLE = 88;
+// This component also renders on the server, where useLayoutEffect warns.
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 const storyThreshold = () => Math.min(120, window.innerHeight * 0.2);
 const curtainSpan = () => window.innerHeight * CURTAIN_HALF / 100;
 const pad = (value) => String(value).padStart(2, '0');
@@ -330,36 +338,80 @@ function StoryNarrative({ tool, moment, direction, copy, onJump, onOpen, style, 
   </motion.div>;
 }
 
-function NaturalTool({ tool, toolIndex, total, copy, onOpen, registerMoment, reducedMotion }) {
+/**
+ * One product in the natural flow. On desktop with reduced motion it is the long, open article it always was. Below
+ * 1024px it is a row of an accordion: the product's face (logo, number, name, architecture, promise) is the trigger,
+ * and the whole product (its proposition, capabilities and difference, each with its scene) unfolds under it. The CSS
+ * sets both forms from the server's HTML (closed rows below 1024px), so nothing jumps when the script arrives; the
+ * script only adds the button, the open state and the anchoring.
+ */
+function NaturalTool({ tool, toolIndex, total, copy, onOpen, registerMoment, reducedMotion, compact, open, onToggle, onCollapse, triggerRef }) {
   const chapters = [copy.vision, copy.capabilities, copy.differentiators];
   const reveal = { viewport: { once: true, amount: 0.5 }, transition: { duration: 0.8, ease: EASE_OUT } };
+  // Scenes of a product that was never opened are never built; once built, they stay (so closing never jumps).
+  const [visited, setVisited] = useState(false);
+  useEffect(() => { if (open) setVisited(true); }, [open]);
+  const scenes = !compact || visited;
+  const panelId = `arsenal-natural-${tool.id}-panel`;
+  const triggerId = `arsenal-natural-${tool.id}-trigger`;
+  const collapsed = compact && !open;
   const heading = (chapter) => <h4><span className={s.naturalIndex} aria-hidden="true">{pad(chapter + 1)}</span>{chapters[chapter]}</h4>;
-  return <article id={`arsenal-natural-${tool.id}`} className={s.naturalTool} style={{ '--tool-accent': tool.color }}>
-    <motion.span className={s.naturalToolRule} aria-hidden="true" initial={reducedMotion ? false : { scaleX: 0 }} whileInView={{ scaleX: 1 }} {...reveal} />
-    <motion.header className={s.naturalToolHeader} initial={reducedMotion ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} {...reveal}>
-      <span className={s.productLogo}><img src={tool.logo} alt="" /></span>
-      <div>
-        <p className={s.naturalMeta}><span aria-hidden="true">{`${pad(toolIndex + 1)} / ${pad(total)}`}</span><strong>{tool.tool}</strong><small>{tool.architecture}</small></p>
-        <h3>{tool.title}</h3>
+  const graphic = (chapter) => (scenes ? <LazyGraphic tool={tool} chapter={chapter} /> : <div className={s.naturalGraphic} />);
+  const meta = <><span aria-hidden="true">{`${pad(toolIndex + 1)} / ${pad(total)}`}</span><strong>{tool.tool}</strong><small>{tool.architecture}</small></>;
+  const toggle = <span className={s.rowToggle} aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M8 3v10M3 8h10" /></svg></span>;
+
+  return <Reveal as="article" variant="block" delay={compact ? toolIndex * 80 : 0} amount={0.2} id={`arsenal-natural-${tool.id}`}
+    className={s.naturalTool} data-open={compact ? open : undefined} style={{ '--tool-accent': tool.color }}>
+    {/* In the accordion the rule belongs to the open state (CSS); in the long article it draws itself once in view. */}
+    {compact
+      ? <span className={s.naturalToolRule} aria-hidden="true" />
+      : <motion.span className={s.naturalToolRule} aria-hidden="true" initial={reducedMotion ? false : { scaleX: 0 }} whileInView={{ scaleX: 1 }} {...reveal} />}
+    {compact
+      ? <h3 className={s.rowHeading}>
+          <button ref={triggerRef} id={triggerId} type="button" className={`${s.naturalToolHeader} ${s.rowTrigger}`}
+            aria-expanded={open} aria-controls={panelId} onClick={(event) => onToggle(event, toolIndex)}>
+            <span className={s.productLogo}><img src={tool.logo} alt="" /></span>
+            <span className={s.rowText}><span className={s.naturalMeta}>{meta}</span><span className={s.rowTitle}>{tool.title}</span></span>
+            {toggle}
+          </button>
+        </h3>
+      : <motion.header className={s.naturalToolHeader} initial={reducedMotion ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} {...reveal}>
+          <span className={s.productLogo}><img src={tool.logo} alt="" /></span>
+          <div className={s.rowText}>
+            <p className={s.naturalMeta}>{meta}</p>
+            <h3 className={s.rowTitle}>{tool.title}</h3>
+          </div>
+          {toggle}
+        </motion.header>}
+    <div id={panelId} className={s.rowPanel} role={compact ? 'region' : undefined} aria-labelledby={compact ? triggerId : undefined}
+      aria-hidden={collapsed || undefined} inert={collapsed || undefined}>
+      <div className={s.rowClip}>
+        <div className={s.rowInner}>
+          <section ref={(node) => { registerMoment(momentIndex(toolIndex, 0), node); }} className={s.naturalChapter}>
+            <div className={s.naturalCopy}>{heading(0)}<p>{tool.body}</p>{tool.detail.subheadline !== tool.body && <p>{tool.detail.subheadline}</p>}
+              <p className={s.propositionOutcome}><strong>{tool.detail.roiMetric}</strong><span>{tool.detail.roiLabel}</span></p>
+              <p className={s.specsLine}>{tool.specs?.join(' · ')}</p>
+              <ul className={s.chipGrid}>{tool.pills.map((pill) => <li key={pill.label}>{pill.label}</li>)}</ul>
+            </div>{graphic(0)}
+          </section>
+          {[1, 2].map((chapter) => <section key={chapter} ref={(node) => { registerMoment(momentIndex(toolIndex, chapter), node); }} className={s.naturalChapter}>
+            <div className={s.naturalCopy}>{heading(chapter)}<ol className={s.naturalEntries}>
+              {(chapter === 1 ? tool.detail.capabilities : tool.detail.differentiators).map((entry, item) => <li key={chapter === 1 ? entry.label : entry}>
+                <span className={s.entryIndex} aria-hidden="true">{pad(item + 1)}</span>
+                <div><strong>{chapter === 1 ? entry.label : entry}</strong>{chapter === 1 && <p>{entry.desc}</p>}</div>
+              </li>)}
+            </ol></div>{graphic(chapter)}
+          </section>)}
+          <div className={s.rowFoot}>
+            {compact && <button type="button" className={s.rowClose} onClick={() => onCollapse(toolIndex)}>
+              {`${copy.collapse} ${tool.tool}`}<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 10l4-4 4 4" /></svg>
+            </button>}
+            <ShaderButton type="button" tone={tool.color} className={`${s.detailLink} ${s.naturalCta}`} onClick={() => onOpen(tool.id, 0)}>{copy.details}<ArrowIcon diagonal /></ShaderButton>
+          </div>
+        </div>
       </div>
-    </motion.header>
-    <section ref={(node) => { registerMoment(momentIndex(toolIndex, 0), node); }} className={s.naturalChapter}>
-      <div className={s.naturalCopy}>{heading(0)}<p>{tool.body}</p>{tool.detail.subheadline !== tool.body && <p>{tool.detail.subheadline}</p>}
-        <p className={s.propositionOutcome}><strong>{tool.detail.roiMetric}</strong><span>{tool.detail.roiLabel}</span></p>
-        <p className={s.specsLine}>{tool.specs?.join(' · ')}</p>
-        <ul className={s.chipGrid}>{tool.pills.map((pill) => <li key={pill.label}>{pill.label}</li>)}</ul>
-      </div><LazyGraphic tool={tool} chapter={0} />
-    </section>
-    {[1, 2].map((chapter) => <section key={chapter} ref={(node) => { registerMoment(momentIndex(toolIndex, chapter), node); }} className={s.naturalChapter}>
-      <div className={s.naturalCopy}>{heading(chapter)}<ol className={s.naturalEntries}>
-        {(chapter === 1 ? tool.detail.capabilities : tool.detail.differentiators).map((entry, item) => <li key={chapter === 1 ? entry.label : entry}>
-          <span className={s.entryIndex} aria-hidden="true">{pad(item + 1)}</span>
-          <div><strong>{chapter === 1 ? entry.label : entry}</strong>{chapter === 1 && <p>{entry.desc}</p>}</div>
-        </li>)}
-      </ol></div><LazyGraphic tool={tool} chapter={chapter} />
-    </section>)}
-    <ShaderButton type="button" tone={tool.color} className={`${s.detailLink} ${s.naturalCta}`} onClick={() => onOpen(tool.id, 0)}>{copy.details}<ArrowIcon diagonal /></ShaderButton>
-  </article>;
+    </div>
+  </Reveal>;
 }
 
 // A short label that rolls to its next value inside a mask, the way the curtain's lines move.
@@ -414,6 +466,17 @@ export default function ArsenalExperience({ onOpenModal, isModalOpen = false }) 
   const screenRef = useRef(null);
   const markerRefs = useRef([]);
   const naturalRefs = useRef([]);
+  const triggerRefs = useRef([]);
+  // Below 1024px the natural flow is an accordion. Known after mount; the CSS already shows closed rows before that.
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia?.(ACCORDION_QUERY);
+    if (!media) return undefined;
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
   const { scrollYProgress } = useScroll({ target: storyRef, offset: ['start start', 'end end'] });
   // Arrival runs while the story climbs from the bottom of the viewport to its pin; departure while it scrolls away.
   const { scrollYProgress: arrival } = useScroll({ target: storyRef, offset: ['start end', 'start start'] });
@@ -533,6 +596,38 @@ export default function ArsenalExperience({ onOpenModal, isModalOpen = false }) 
     });
   };
   const jumpNatural = (index) => scrollToTarget(naturalRefs.current[index], { immediate: reducedMotion });
+  // One product open at a time; the tapped row stays under the finger while the one above folds away, then an opened
+  // product settles just under the navbar if it opened in the lower half of the screen.
+  const [openTool, setOpenTool] = useState(null);
+  const holdRow = useTapAnchor(openTool);
+  const settle = useRef(null);
+  const toggleTool = (event, index) => {
+    holdRow(event.currentTarget);
+    settle.current = openTool === index ? null : index;
+    setOpenTool((current) => (current === index ? null : index));
+  };
+  // Closing from the end of a product brings its row back under the navbar instead of leaving the reader in the space
+  // where the product was. The content being read is gone, so the page moves in the same frame the product folds.
+  const returnTo = useRef(null);
+  const collapseTool = (index) => {
+    returnTo.current = index;
+    setOpenTool(null);
+  };
+  useIsoLayoutEffect(() => {
+    const index = returnTo.current;
+    returnTo.current = null;
+    const row = index === null ? null : triggerRefs.current[index];
+    if (!row) return;
+    scrollToTarget(row, { offset: -ROW_SETTLE, immediate: true });
+    // The button that was pressed is gone with the product; focus returns to the row that opens it.
+    row.focus({ preventScroll: true });
+  }, [openTool]);
+  useEffect(() => {
+    const index = settle.current;
+    settle.current = null;
+    const row = index === null ? null : triggerRefs.current[index];
+    if (row && row.getBoundingClientRect().top > window.innerHeight * 0.5) scrollToTarget(row, { offset: -ROW_SETTLE, immediate: reducedMotion });
+  }, [openTool, reducedMotion]);
   // The narrative column already carries each capability and differentiator; the stage caption only adds
   // the proposition headline, and only when it says something the title does not.
   const sceneCaption = chapter === 0 && activeTool.detail.headline !== activeTool.title ? activeTool.detail.headline : null;
@@ -568,11 +663,15 @@ export default function ArsenalExperience({ onOpenModal, isModalOpen = false }) 
       </div>
     </div>
     <div className={`${s.container} ${s.naturalExperience}`}>
-      <nav className={s.naturalToolNav} aria-label={copy.select}>{tools.map((tool, index) => <button key={tool.id} type="button"
+      {!compact && <nav className={s.naturalToolNav} aria-label={copy.select}>{tools.map((tool, index) => <button key={tool.id} type="button"
         className={`${s.glowControl} ${s.naturalToolButton}`} style={{ '--tool-accent': tool.color }}
-        onClick={() => jumpNatural(momentIndex(index, 0))}><span className={s.naturalNavLogo}><img src={tool.logo} alt="" /></span>{tool.tool}<ArrowIcon /></button>)}</nav>
-      {tools.map((tool, index) => <NaturalTool key={tool.id} tool={tool} toolIndex={index} total={tools.length} copy={copy} reducedMotion={reducedMotion}
-        registerMoment={(moment, node) => { naturalRefs.current[moment] = node; }} onOpen={onOpenModal} />)}
+        onClick={() => jumpNatural(momentIndex(index, 0))}><span className={s.naturalNavLogo}><img src={tool.logo} alt="" /></span>{tool.tool}<ArrowIcon /></button>)}</nav>}
+      <div className={s.naturalList}>
+        {tools.map((tool, index) => <NaturalTool key={tool.id} tool={tool} toolIndex={index} total={tools.length} copy={copy} reducedMotion={reducedMotion}
+          registerMoment={(moment, node) => { naturalRefs.current[moment] = node; }} onOpen={onOpenModal}
+          compact={compact} open={openTool === index} onToggle={toggleTool} onCollapse={collapseTool}
+          triggerRef={(node) => { triggerRefs.current[index] = node; }} />)}
+      </div>
     </div>
   </section>;
 }

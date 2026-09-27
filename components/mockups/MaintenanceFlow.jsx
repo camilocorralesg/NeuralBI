@@ -9,7 +9,7 @@ import { LiveNumber, Pill, ProductBar } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './MaintenanceFlow.module.css';
 
-/* NeuralBI Flows · Autonomous maintenance — the product behind "Autonomous Maintenance Flows": the Power Automate flow
+/* NeuralBI Flows · Autonomous maintenance: the product behind "Autonomous Maintenance Flows": the Power Automate flow
  * behind work order WO-5531 of the Line Monitor. IMM-02's pump bearing crosses its wear threshold, Activator fires the
  * flow, and two parallel branches do the rest: one reserves the parts in the storeroom and re-orders the bearing that
  * drops below its minimum, the other finds the one technician qualified and free at 22:00, books her and waits for her

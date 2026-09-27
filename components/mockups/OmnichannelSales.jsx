@@ -6,7 +6,7 @@ import { Card, Cursor, KpiCard, LiveNumber, Pill, ProductBar } from './ui/primit
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import o from './OmnichannelSales.module.css';
 
-/* NeuralBI · Omnichannel Sales — the product behind "Omnichannel Sales Dashboards": a Power BI report over Direct Lake
+/* NeuralBI · Omnichannel Sales: the product behind "Omnichannel Sales Dashboards": a Power BI report over Direct Lake
  * for Andina Retail (38 stores in Colombia and its online store), Saturday at 18:40. Orders land from both channels;
  * the unified model merges online and in-store records of the same people (368k records, 312k customers); the analyst
  * selects the customers who shop both channels, and the LTV cohorts and key influencers show why they matter. */

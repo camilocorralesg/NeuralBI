@@ -2,18 +2,22 @@
 
 /* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V5
  * Component-scope · NeuralBI tokens · architecture explorer */
-import React, { memo, useId, useRef, useState } from 'react';
+import React, { memo, useEffect, useId, useRef, useState } from 'react';
 import { ArrowUpRight, Box, Landmark, Factory, ShoppingBag, Plus, Minus } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import SectionAtmosphere from '../SectionAtmosphere';
 import ShaderButton from '../ShaderButton';
 import IndustryArchitecture from '../graphics/IndustryArchitecture';
+import useTapAnchor from '../useTapAnchor';
 import s from './Industries.module.css';
 import CharacterReveal from '../CharacterReveal';
 import Reveal from '../Reveal';
 import { wordsIn } from '../revealTiming';
 
 const icons = [Box, Landmark, Factory, ShoppingBag];
+// Where the panel is one column (the CSS breakpoint of .panel), the product lives inside the open answer.
+const COMPACT = '(max-width: 900px)';
+const EASE_OUT = 'cubic-bezier(0.16, 1, 0.3, 1)';
 const labels = {
   en: {
     tabs: ['Supply chain', 'Financial services', 'Manufacturing', 'Retail & commerce'],
@@ -34,16 +38,53 @@ function Industries() {
   const copy = labels[language] || labels.en;
   const [active, setActive] = useState(0);
   const [solution, setSolution] = useState(0);
+  // Known after mount, so the server's HTML and hydration keep the desktop order.
+  const [compact, setCompact] = useState(false);
   const tabRefs = useRef([]);
+  const slotRef = useRef(null);
+  // One column: closing an answer above removes its text and its product, and the row just tapped would jump up out of
+  // reach; it is held under the finger instead (the group opts out of scroll anchoring in CSS).
+  const holdRow = useTapAnchor(solution);
   const uid = useId();
   const industries = t.verticals.industries;
   const industry = industries[active];
   const [before, emphasis, after] = t.verticals.sectionTitle.split(/\*([^*]+)\*/);
 
+  useEffect(() => {
+    const media = window.matchMedia?.(COMPACT);
+    if (!media) return undefined;
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
+
   function selectIndustry(index) {
     setActive(index);
     setSolution(0);
   }
+
+  function toggleSolution(event, cardIndex, expanded) {
+    if (compact) holdRow(event.currentTarget);
+    setSolution(expanded ? null : cardIndex);
+  }
+
+  // The product unfolds under the answer that was opened: a short drop through a clip that opens downward, like the
+  // accordion itself. Moving a node does not restart CSS animations, so this runs through the Web Animations API.
+  const opened = useRef(false);
+  useEffect(() => {
+    const slot = slotRef.current;
+    if (!opened.current || !compact || solution === null || !slot?.animate) return;
+    opened.current = false;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    slot.animate(
+      [
+        { opacity: 0, transform: 'translateY(-8px)', clipPath: 'inset(0 0 35% 0)' },
+        { opacity: 1, transform: 'none', clipPath: 'inset(0)' },
+      ],
+      { duration: 460, easing: EASE_OUT },
+    );
+  }, [solution, compact]);
 
   function onTabKey(event, index) {
     const moves = { ArrowRight: 1, ArrowLeft: -1 };
@@ -55,6 +96,42 @@ function Industries() {
     event.preventDefault();
     selectIndustry(next);
     tabRefs.current[next]?.focus({ preventScroll: true });
+  }
+
+  const figure = (
+    <figure className={s.visual}>
+      <IndustryArchitecture industry={industry.id} solution={solution} language={language} />
+      <figcaption className={s.caption}>
+        <span className={s.captionMark} aria-hidden="true">↳</span>
+        <span>{copy.caption}</span>
+      </figcaption>
+    </figure>
+  );
+
+  // The answers, and on one column the product right under the open one (or resting at the end, hidden, when every
+  // answer is closed, so its light keeps its context).
+  function answers(index) {
+    const slot = <div key="visual" ref={slotRef} className={s.visualSlot} hidden={solution === null}>{figure}</div>;
+    const items = [];
+    industry.cards.forEach((card, cardIndex) => {
+      const expanded = solution === cardIndex;
+      items.push(<div className={s.solution} data-selected={expanded} key={card.title}>
+        <h4><button type="button" className={s.solutionButton} aria-expanded={expanded}
+          aria-controls={`${uid}-solution-${index}-${cardIndex}`} id={`${uid}-trigger-${index}-${cardIndex}`}
+          onClick={(event) => { opened.current = !expanded; toggleSolution(event, cardIndex, expanded); }}>
+          <span>{card.title}</span>
+          {expanded ? <Minus size={18} aria-hidden="true" /> : <Plus size={18} aria-hidden="true" />}
+        </button></h4>
+        <div id={`${uid}-solution-${index}-${cardIndex}`} role="region"
+          aria-labelledby={`${uid}-trigger-${index}-${cardIndex}`} hidden={!expanded} className={s.solutionBody}>
+          <span className={s.technology}>{card.tag}</span>
+          <p>{card.body}</p>
+        </div>
+      </div>);
+      if (compact && expanded) items.push(slot);
+    });
+    if (compact && solution === null) items.push(slot);
+    return items;
   }
 
   return (
@@ -103,31 +180,10 @@ function Industries() {
               <h3 className={s.headline}>{industry.headlineTitle}</h3>
               <p className={s.description}>{industry.headlineBody}</p>
               <div className={s.solutions} role="group" aria-label={copy.solutions}>
-                {industry.cards.map((card, cardIndex) => {
-                  const expanded = solution === cardIndex;
-                  return <div className={s.solution} data-selected={expanded} key={card.title}>
-                    <h4><button type="button" className={s.solutionButton} aria-expanded={expanded}
-                      aria-controls={`${uid}-solution-${index}-${cardIndex}`} id={`${uid}-trigger-${index}-${cardIndex}`}
-                      onClick={() => setSolution(expanded ? null : cardIndex)}>
-                      <span>{card.title}</span>
-                      {expanded ? <Minus size={18} aria-hidden="true" /> : <Plus size={18} aria-hidden="true" />}
-                    </button></h4>
-                    <div id={`${uid}-solution-${index}-${cardIndex}`} role="region"
-                      aria-labelledby={`${uid}-trigger-${index}-${cardIndex}`} hidden={!expanded} className={s.solutionBody}>
-                      <span className={s.technology}>{card.tag}</span>
-                      <p>{card.body}</p>
-                    </div>
-                  </div>;
-                })}
+                {answers(index)}
               </div>
             </div>
-            <figure className={s.visual}>
-              <IndustryArchitecture industry={industry.id} solution={solution} language={language} />
-              <figcaption className={s.caption}>
-                <span className={s.captionMark} aria-hidden="true">↳</span>
-                <span>{copy.caption}</span>
-              </figcaption>
-            </figure>
+            {!compact && figure}
           </>}
         </div>)}
         </Reveal>

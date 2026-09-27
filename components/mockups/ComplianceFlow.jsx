@@ -9,7 +9,7 @@ import { LiveNumber, Pill, ProductBar } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './ComplianceFlow.module.css';
 
-/* NeuralBI Flows · AML & KYC screening — the product behind "Automated Compliance Flows": an event-driven Power Automate
+/* NeuralBI Flows · AML & KYC screening: the product behind "Automated Compliance Flows": an event-driven Power Automate
  * flow. Transfers stream in and are released; one from Oriente Trading hits a sanctions list while its beneficial owner
  * can't be verified, so the condition holds it and opens a Teams case, and the audit ledger chains the decision in 38 ms.
  * The flow never stops: the next transfer is released behind it. */

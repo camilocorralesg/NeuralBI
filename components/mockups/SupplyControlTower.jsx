@@ -9,7 +9,7 @@ import { AppShell, Card, Cursor, KpiCard, LiveNumber, StatusChip } from './ui/pr
 import { useStoryline } from './ui/useStoryline';
 import m from './SupplyControlTower.module.css';
 
-/* NeuralBI · Supply Control Tower — the product behind "Advanced Analytics & Real-Time Telemetry".
+/* NeuralBI · Supply Control Tower: the product behind "Advanced Analytics & Real-Time Telemetry".
  * Multi-country inventory over Direct Lake: a COL stockout is forecast, a faster MEX lane is proposed and
  * applied by the operator, and lead time and risk recover. */
 const BEATS = [

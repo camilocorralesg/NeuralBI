@@ -117,9 +117,14 @@
   .link { display: inline-flex; align-items: center; min-height: 44px; }
 }
 
+/* Phones: the documentation reads in two columns, so the whole index fits in about a screen; the legal group spans the
+ * row below with its links side by side. Each link keeps a 40px touch target. */
 @media (max-width: 600px) {
-  .content :global(.footer-links-grid) { grid-template-columns: minmax(0, 1fr) !important; gap: 2rem !important; }
-  .content :global(.footer-link-group) { padding-bottom: 1.75rem; border-bottom: 1px solid var(--footer-rule); }
+  .content :global(.footer-links-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.75rem 1.25rem !important; }
+  .content :global(.footer-link-group) { gap: .5rem; }
+  .content :global(.footer-link-group:last-child) { grid-column: 1 / -1; padding-top: 1.5rem; border-top: 1px solid var(--footer-rule); }
+  .content :global(.footer-link-group:last-child) ul { flex-direction: row; flex-wrap: wrap; column-gap: 1.25rem; }
+  .link { min-height: 40px; padding-block: 6px; line-height: 1.35; }
   .signatureBand { margin-top: 4.5rem; }
 }
 

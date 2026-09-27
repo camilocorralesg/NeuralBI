@@ -6,7 +6,7 @@ import { LiveNumber, Mark, Phone, Pill, Tap, Window } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import c from './CreditDesk.module.css';
 
-/* NeuralBI · Credit Desk — the product behind "Credit Risk & Loan Approval Portals": a model-driven Power Apps app with
+/* NeuralBI · Credit Desk: the product behind "Credit Risk & Loan Approval Portals": a model-driven Power Apps app with
  * React/PCF controls. Andina Retail's $12.5M facility is spread, rated by the risk control, routed to the deal
  * committee with one exception, and approved by the CFO from her phone after an Entra ID MFA check; every step lands
  * in the Dataverse audit trail under a Microsoft 365 sensitivity label. */

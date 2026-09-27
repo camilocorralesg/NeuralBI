@@ -210,3 +210,72 @@ describe('Industries architecture explorer', () => {
     expect(clip()).toEqual(['2', '0', '1']);
   });
 });
+
+describe('Industries on one column (phones and small tablets)', () => {
+  // The one-column layout answers the COMPACT query; reduced motion and the rest keep the shared stub.
+  const onOneColumn = () => {
+    const compact = { matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() };
+    vi.stubGlobal('matchMedia', vi.fn(query => (query.includes('max-width: 900px') ? compact : motion)));
+  };
+  const group = () => screen.getByRole('group', { name: 'Explore the architecture' });
+  const trigger = name => within(group()).getByRole('button', { name });
+  const cards = translations.en.verticals.industries[0].cards;
+
+  it('puts the product right under the open answer, and moves the same node when another answer opens', () => {
+    onOneColumn();
+    mount();
+    const figure = group().querySelector('figure');
+    expect(figure).not.toBeNull();
+    // One product in the panel, and it sits inside the accordion, right after the open answer.
+    expect(screen.getByRole('tabpanel').querySelectorAll('figure')).toHaveLength(1);
+    const slot = figure.parentElement;
+    expect(slot.previousElementSibling.contains(trigger(cards[0].title))).toBe(true);
+    expect(trigger(cards[0].title)).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(trigger(cards[2].title));
+    // Same element: it travelled with the answer instead of remounting, so its light kept its context.
+    expect(group().querySelector('figure')).toBe(figure);
+    expect(slot.previousElementSibling.contains(trigger(cards[2].title))).toBe(true);
+    expect(slot.nextElementSibling.contains(trigger(cards[3].title))).toBe(true);
+    expect(screen.getByRole('tabpanel').querySelector('[data-sector]')).toHaveAttribute('data-solution', '2');
+  });
+
+  it('rests the product hidden at the end, still mounted, when every answer is closed', () => {
+    onOneColumn();
+    mount();
+    const figure = group().querySelector('figure');
+    fireEvent.click(trigger(cards[0].title));
+    expect(trigger(cards[0].title)).toHaveAttribute('aria-expanded', 'false');
+    const slot = figure.parentElement;
+    expect(group().querySelector('figure')).toBe(figure);
+    expect(slot).toHaveAttribute('hidden');
+    expect(slot).toBe(group().lastElementChild);
+    fireEvent.click(trigger(cards[1].title));
+    expect(slot.hasAttribute('hidden')).toBe(false);
+    expect(slot.previousElementSibling.contains(trigger(cards[1].title))).toBe(true);
+  });
+
+  it('keeps the tapped row under the finger when an answer above it closes', () => {
+    onOneColumn();
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    mount();
+    const tapped = trigger(cards[3].title);
+    // Before the tap the row sits 600px down; once the open answer above folds away it would sit at 180px.
+    let measured = 0;
+    const original = Element.prototype.getBoundingClientRect;
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function rect() {
+      if (this === tapped) { measured += 1; return { top: measured === 1 ? 600 : 180, bottom: 0, left: 0, right: 0, width: 0, height: 0 }; }
+      return original.call(this);
+    });
+    fireEvent.click(tapped);
+    expect(scrollTo).toHaveBeenCalledWith({ top: window.scrollY - 420, behavior: 'instant' });
+    vi.restoreAllMocks();
+  });
+
+  it('leaves the desktop layout as it was: the product beside the story, outside the accordion', () => {
+    mount();
+    expect(group().querySelector('figure')).toBeNull();
+    const panel = screen.getByRole('tabpanel');
+    expect([...panel.children].some(child => child.tagName === 'FIGURE')).toBe(true);
+  });
+});

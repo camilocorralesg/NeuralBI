@@ -7,7 +7,7 @@ import { AgentChat, AgentTurn, Answer, Composer, EventBubble, PolicyChip, Reason
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import f from './FraudCopilot.module.css';
 
-/* NeuralBI · Fraud Copilot — the product behind "Cognitive Fraud Copilots": a Copilot Studio agent that reasons in the
+/* NeuralBI · Fraud Copilot: the product behind "Cognitive Fraud Copilots": a Copilot Studio agent that reasons in the
  * open and writes its compliance risk digest as it goes. A velocity alert sets it off; it pulls the hour's transactions,
  * finds a six-account mule ring structuring payments just under $10k to one new beneficiary, scores and flags the three
  * riskiest transfers, stops at its autonomy line (freezing needs a human) and publishes the digest. */
@@ -151,10 +151,10 @@ export default function FraudCopilot({ live, language }) {
   const answering = data.answer >= 0;
   const answered = data.answer >= count(t.answer);
 
-  const thought = id => data.thoughts[id] >= 0 && <Thought key={id} text={t.thoughts[id]} shown={data.thoughts[id]}>
+  const thought = id => data.thoughts[id] >= 0 && <Thought key={`thought-${id}`} text={t.thoughts[id]} shown={data.thoughts[id]}>
     {id === 'policy' && <PolicyChip shown={data.policyShown}>{t.policyOk}</PolicyChip>}
   </Thought>;
-  const call = id => data.tools[id] && <ToolCall key={id} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
+  const call = id => data.tools[id] && <ToolCall key={`tool-${id}`} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
     rows={id === 'link' ? t.linkRows : undefined} />;
 
   return <div className={f.app} data-phase={phase}>

@@ -269,3 +269,94 @@ describe('The Arsenal experience', () => {
     expect(document.documentElement.style.overflow).not.toBe('hidden');
   });
 });
+
+describe('The Arsenal below 1024px: an accordion of the four products', () => {
+  // Phones and tablets: the accordion query matches, the pinned story's does not. Everything observed is in view, so a
+  // product's scenes build as soon as it is opened.
+  beforeEach(() => {
+    vi.stubGlobal('matchMedia', (query) => ({ matches: query.includes('max-width: 1023px'), addEventListener: vi.fn(), removeEventListener: vi.fn() }));
+    vi.stubGlobal('IntersectionObserver', class {
+      constructor(callback) { this.callback = callback; }
+      observe(target) { this.callback([{ isIntersecting: true, intersectionRatio: 1, target }], this); }
+      unobserve() {}
+      disconnect() {}
+    });
+  });
+  const mount = () => render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
+  const natural = (container) => container.querySelector('[class*="naturalExperience"]');
+  const trigger = (container, index) => natural(container).querySelectorAll('button[aria-expanded]')[index];
+  const panel = (container, index) => document.getElementById(trigger(container, index).getAttribute('aria-controls'));
+
+  it('arrives as four closed rows, without the jump pills, and builds no scene until a product is opened', () => {
+    const { container } = mount();
+    const rows = [...natural(container).querySelectorAll('button[aria-expanded]')];
+    expect(rows).toHaveLength(4);
+    expect(rows.map((button) => button.getAttribute('aria-expanded'))).toEqual(['false', 'false', 'false', 'false']);
+    expect(rows.map((button) => button.textContent)).toEqual([
+      expect.stringContaining('Power BI'), expect.stringContaining('Power Apps'),
+      expect.stringContaining('Power Automate'), expect.stringContaining('Copilot Studio'),
+    ]);
+    expect(within(natural(container)).queryByRole('navigation')).toBeNull();
+    rows.forEach((_, index) => {
+      expect(panel(container, index)).toHaveAttribute('inert');
+      expect(panel(container, index)).toHaveAttribute('aria-hidden', 'true');
+    });
+    expect(natural(container).querySelectorAll('figure')).toHaveLength(0);
+  });
+
+  it('opens one product at a time and unfolds all of it: proposition, capabilities, difference and three scenes', () => {
+    const { container } = mount();
+    fireEvent.click(trigger(container, 1));
+    expect(trigger(container, 1)).toHaveAttribute('aria-expanded', 'true');
+    const open = within(natural(container)).getByRole('region', { name: /Power Apps/ });
+    expect(open).not.toHaveAttribute('inert');
+    for (const heading of ['The proposition', 'Capabilities', 'The difference']) {
+      expect(within(open).getByRole('heading', { name: heading })).toBeInTheDocument();
+    }
+    expect(open.querySelectorAll('figure')).toHaveLength(3);
+
+    fireEvent.click(trigger(container, 2));
+    expect(trigger(container, 1)).toHaveAttribute('aria-expanded', 'false');
+    expect(panel(container, 1)).toHaveAttribute('inert');
+    expect(trigger(container, 2)).toHaveAttribute('aria-expanded', 'true');
+    // A product once opened keeps its scenes, so folding it never jumps.
+    expect(panel(container, 1).querySelectorAll('figure')).toHaveLength(3);
+  });
+
+  it('holds the tapped row under the finger while the product above folds away', () => {
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    const { container } = mount();
+    fireEvent.click(trigger(container, 0));
+    const tapped = trigger(container, 2);
+    let measured = 0;
+    // The suite already spies on getBoundingClientRect (scroll markers); chain onto that implementation.
+    const spy = vi.spyOn(Element.prototype, 'getBoundingClientRect');
+    const outer = spy.getMockImplementation();
+    spy.mockImplementation(function rect() {
+      if (this === tapped) { measured += 1; return { top: measured === 1 ? 600 : 140, bottom: 0, left: 0, right: 0, width: 0, height: 0 }; }
+      return outer.call(this);
+    });
+    fireEvent.click(tapped);
+    expect(scrollTo).toHaveBeenCalledWith({ top: window.scrollY - 460, behavior: 'instant' });
+  });
+
+  it('closes from the end of a product: back to its row, under the navbar, with focus on it', () => {
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    const { container } = mount();
+    fireEvent.click(trigger(container, 0));
+    fireEvent.click(within(panel(container, 0)).getByRole('button', { name: 'Close Power BI' }));
+    expect(trigger(container, 0)).toHaveAttribute('aria-expanded', 'false');
+    expect(trigger(container, 0)).toHaveFocus();
+    const top = trigger(container, 0).getBoundingClientRect().top + window.scrollY - 88;
+    expect(scrollTo).toHaveBeenLastCalledWith({ top, behavior: 'instant' });
+  });
+
+  it('speaks Spanish, closing included', () => {
+    window.localStorage.setItem('neuralbi_lang', 'es');
+    const { container } = mount();
+    fireEvent.click(trigger(container, 3));
+    expect(within(panel(container, 3)).getByRole('button', { name: 'Cerrar Copilot Studio' })).toBeInTheDocument();
+    expect(within(panel(container, 3)).getByRole('heading', { name: 'Capacidades' })).toBeInTheDocument();
+    window.localStorage.removeItem('neuralbi_lang');
+  });
+});

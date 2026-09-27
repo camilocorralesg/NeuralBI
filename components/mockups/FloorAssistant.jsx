@@ -7,7 +7,7 @@ import { AgentChat, AgentTurn, Answer, Composer, PolicyChip, ReadAloud, Reasonin
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import f from './FloorAssistant.module.css';
 
-/* NeuralBI · Floor Assistant — the product behind "Factory Floor AI Assistant": a Copilot Studio agent an engineer talks
+/* NeuralBI · Floor Assistant: the product behind "Factory Floor AI Assistant": a Copilot Studio agent an engineer talks
  * to at the machine. At 22:04 Ana Ríos, booked by the maintenance flow, stands at IMM-02 on WO-5531 and asks aloud how to
  * swap the pump bearing. The agent reasons in the open, pulls the service manual, the pump's schematic and the repair log,
  * puts safety first, then answers aloud with its sources. The sources pane shows what each call brought back. */
@@ -135,10 +135,10 @@ export default function FloorAssistant({ live, language }) {
   const answering = data.answer >= 0;
   const spoken = Math.min(Math.max(data.answer, 0), count(t.answer)) / count(t.answer);
 
-  const thought = id => data.thoughts[id] >= 0 && <Thought key={id} text={t.thoughts[id]} shown={data.thoughts[id]}>
+  const thought = id => data.thoughts[id] >= 0 && <Thought key={`thought-${id}`} text={t.thoughts[id]} shown={data.thoughts[id]}>
     {id === 'safety' && <PolicyChip shown={data.safe}>{t.safetyOk}</PolicyChip>}
   </Thought>;
-  const call = id => data.tools[id] && <ToolCall key={id} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
+  const call = id => data.tools[id] && <ToolCall key={`tool-${id}`} {...TOOLS[id]} state={data.tools[id]} result={t.results[id]}
     rows={id === 'log' ? t.logRows : undefined} />;
   // Manual steps: the lockout one once the agent has put safety first, the ones it cites once it answers.
   const mark = i => (i === 0 ? (data.safe ? 'safety' : 'none') : i >= 2 && answering ? 'cited' : 'none');

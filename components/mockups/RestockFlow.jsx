@@ -9,7 +9,7 @@ import { LiveNumber, Pill, ProductBar } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import r from './RestockFlow.module.css';
 
-/* NeuralBI Flows · Automated restocking — the product behind "Automated Restocking Pipelines": a Power Automate flow
+/* NeuralBI Flows · Automated restocking: the product behind "Automated Restocking Pipelines": a Power Automate flow
  * over Andina Chapinero's stock, Sunday at 07:02. A rain alert lifts the forecast for rainwear, so the dynamic safety
  * stock of three SKUs rises past what is on the shelf; the flow sizes the orders, creates one purchase order per
  * supplier and sends each through that supplier's channel (EDI or email). The documents travel out, the confirmations
