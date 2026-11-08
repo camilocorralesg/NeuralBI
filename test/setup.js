@@ -7,7 +7,6 @@ vi.mock('next/font/google', () => ({
   DM_Sans: () => ({ className: 'font-dm-sans', variable: '--font-sans' }),
   Inter: () => ({ className: 'font-inter', variable: '--font-body' }),
   JetBrains_Mono: () => ({ className: 'font-mono', variable: '--font-mono' }),
-  Montserrat: () => ({ className: 'font-montserrat', variable: '--font-ui' }),
 }));
 
 // Cleanup DOM after each test

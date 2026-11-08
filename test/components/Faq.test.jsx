@@ -1,6 +1,6 @@
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import Faq from '../../components/sections/Faq';
 import { LanguageProvider, useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../lib/translations';
@@ -64,23 +64,19 @@ describe('FAQ remix', () => {
     });
   });
 
-  it('opens answers on grid rows, marking the open card, and brings the list in once when it is first seen', () => {
+  it('opens answers on grid rows, marking the open card, with every card in place from the start', () => {
     const { container } = render(<LanguageProvider><Faq activeHero="remix" /></LanguageProvider>);
-    const list = container.querySelector('[data-reveal], [class*="items"]');
+    const list = container.querySelector('[class*="items"]');
     const cards = [...list.children];
     expect(cards).toHaveLength(4);
-    cards.forEach((card, index) => expect(card.style.getPropertyValue('--i')).toBe(String(index)));
 
     fireEvent.click(screen.getByRole('button', { name: translations.en.faq.items[0].q }));
     expect(cards[0]).toHaveAttribute('data-open', 'true');
     expect(cards[1]).toHaveAttribute('data-open', 'false');
 
-    // Off screen at load: armed; well in view: it runs, once.
-    const listObserver = observers.find(observer => observer.targets.includes(list));
-    act(() => listObserver.callback([{ target: list, isIntersecting: false, intersectionRatio: 0 }]));
-    expect(list).toHaveAttribute('data-reveal', 'armed');
-    act(() => listObserver.callback([{ target: list, isIntersecting: true, intersectionRatio: 0.5 }]));
-    expect(list).toHaveAttribute('data-reveal', 'run');
-    expect(listObserver.disconnected).toBe(true);
+    // Nothing arrives on scroll: no reveal state, and nobody watches the list come into view.
+    expect(list.hasAttribute('data-reveal')).toBe(false);
+    cards.forEach((card) => expect(card.style.getPropertyValue('--i')).toBe(''));
+    expect(observers.some((observer) => observer.targets.includes(list))).toBe(false);
   });
 });

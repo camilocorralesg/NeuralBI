@@ -97,7 +97,7 @@ export default function StickyMobileCTA() {
                 fontWeight: 700
               }}
             >
-              {t.stickyCta?.cta || 'Book Audit'}
+              {t.stickyCta?.cta || 'Book a Call'}
               <span style={{
                 color: 'rgba(255, 255, 255, 0.6)',
                 marginLeft: '4px',

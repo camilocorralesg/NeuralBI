@@ -25,5 +25,16 @@ describe('App component (Home screen)', () => {
     expect(document.getElementById('protocol')).not.toBeNull();
     expect(document.getElementById('integrations')).not.toBeNull();
     expect(document.getElementById('contact')).not.toBeNull();
+    // Without ?diag in the URL, no render diagnostics.
+    expect(document.querySelector('[aria-label="Diagnóstico de render"]')).toBeNull();
   });
+
+  it('goes from the Manifesto straight to the Arsenal, with no capabilities marquee between them', () => {
+    render(<App />);
+    const manifesto = document.getElementById('manifesto');
+    expect(manifesto.nextElementSibling).toBe(document.getElementById('arsenal'));
+    expect(document.querySelector('[class*="TrustBar"]')).toBeNull();
+    expect(document.body.textContent).not.toContain('MICROSOFT FABRIC DIRECT LAKE');
+  });
+
 });

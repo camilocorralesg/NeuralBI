@@ -12,7 +12,6 @@ import useTapAnchor from '../useTapAnchor';
 import s from './Industries.module.css';
 import CharacterReveal from '../CharacterReveal';
 import Reveal from '../Reveal';
-import { wordsIn } from '../revealTiming';
 
 const icons = [Box, Landmark, Factory, ShoppingBag];
 // Where the panel is one column (the CSS breakpoint of .panel), the product lives inside the open answer.
@@ -22,14 +21,12 @@ const labels = {
   en: {
     tabs: ['Supply chain', 'Financial services', 'Manufacturing', 'Retail & commerce'],
     choose: 'Explore an industry', solutions: 'Explore the architecture',
-    caption: 'One connected architecture. Built around your industry.',
     cta: 'Design your architecture', note: 'Your industry. Your operating advantage.',
   },
   es: {
     tabs: ['Logística', 'Servicios financieros', 'Manufactura', 'Retail y comercio'],
-    choose: 'Explora un sector', solutions: 'Explora la arquitectura',
-    caption: 'Una arquitectura conectada. Diseñada para tu sector.',
-    cta: 'Diseña tu arquitectura', note: 'Tu sector. Tu ventaja operativa.',
+    choose: 'Explore un sector', solutions: 'Explore la arquitectura',
+    cta: 'Diseñe su arquitectura', note: 'Su sector. Su ventaja operativa.',
   },
 };
 
@@ -48,7 +45,6 @@ function Industries() {
   const uid = useId();
   const industries = t.verticals.industries;
   const industry = industries[active];
-  const [before, emphasis, after] = t.verticals.sectionTitle.split(/\*([^*]+)\*/);
 
   useEffect(() => {
     const media = window.matchMedia?.(COMPACT);
@@ -101,10 +97,6 @@ function Industries() {
   const figure = (
     <figure className={s.visual}>
       <IndustryArchitecture industry={industry.id} solution={solution} language={language} />
-      <figcaption className={s.caption}>
-        <span className={s.captionMark} aria-hidden="true">↳</span>
-        <span>{copy.caption}</span>
-      </figcaption>
     </figure>
   );
 
@@ -140,8 +132,7 @@ function Industries() {
       <div className={s.container}>
         <header className={s.header}>
           <h2 id={`${uid}-heading`} className={s.title}>
-            <CharacterReveal text={`${before}`.trim()} style={{ display: 'block' }} />
-            <CharacterReveal text={`*${emphasis}*${after}`} delay={wordsIn(before)} style={{ display: 'block' }} />
+            <CharacterReveal text={t.verticals.sectionTitle} />
           </h2>
         </header>
 

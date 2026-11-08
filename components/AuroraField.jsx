@@ -11,6 +11,9 @@ const MAX_RENDER_WIDTH = 760;
 const FRAME_INTERVAL = 1000 / 30;
 // Where the reduced-motion still frame rests: the streak lit, the blooms half raised.
 const STILL_TIME = 6.5;
+// The context is made when the field comes within a screen of the viewport and freed when it goes further, so only the
+// fields near the reader hold one (the page never keeps every Aurora's context alive at once).
+const NEAR = '100% 0px';
 
 let grainTile;
 // A 160px film-grain tile, made once per page and blended as `overlay`, so black stays black.
@@ -77,6 +80,9 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
     let renderer = null;
     let lost = false;
     let inView = typeof IntersectionObserver === 'undefined';
+    let near = false;
+    // One attempt per approach: without WebGL the field keeps its still fallback instead of retrying on every report.
+    let attempted = false;
     let frame = 0;
     let last = 0;
     let clock = STILL_TIME;
@@ -101,7 +107,19 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
 
     // Every run gets a fresh canvas: a context lost on unmount (StrictMode remounts, card switches) or evicted by the
     // browser is never reused, which would otherwise leave the field stuck on its static fallback.
+    const release = () => {
+      renderer?.destroy();
+      canvas?.removeEventListener('webglcontextlost', onLost);
+      canvas?.remove();
+      renderer = null;
+      canvas = null;
+      lost = false;
+      attempted = false;
+      element.dataset.webgl = 'false';
+    };
+
     const boot = () => {
+      attempted = true;
       renderer?.destroy();
       canvas?.removeEventListener('webglcontextlost', onLost);
       canvas?.remove();
@@ -135,12 +153,18 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
     function update() {
       // A context the browser took back is rebuilt on a new canvas the next time the field is seen.
       if (lost && inView && !document.hidden) { lost = false; boot(); }
+      // Near the screen: a context (made once per approach); a screen away: none.
+      if (near && !attempted) boot();
+      if (!near && attempted) release();
       element.dataset.running = String(running());
       if (running() && !frame) { last = 0; frame = requestAnimationFrame(tick); }
       if (!running() && frame) { cancelAnimationFrame(frame); frame = 0; }
     }
 
-    boot();
+    // Already near (in view at load): make the context now rather than on the observer's first report.
+    const box = element.getBoundingClientRect();
+    near = typeof IntersectionObserver === 'undefined' || (box.bottom >= -window.innerHeight && box.top <= window.innerHeight * 2);
+    if (near) boot();
     const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(size);
     resize?.observe(element);
     if (clearRef?.current) resize?.observe(clearRef.current);
@@ -150,6 +174,11 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
       update();
     }, { rootMargin: '120px 0px' });
     observer?.observe(element);
+    const approach = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(records => {
+      near = records[records.length - 1].isIntersecting;
+      update();
+    }, { rootMargin: NEAR });
+    approach?.observe(element);
     document.addEventListener('visibilitychange', update);
     update();
 
@@ -157,6 +186,7 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
       cancelAnimationFrame(frame);
       resize?.disconnect();
       observer?.disconnect();
+      approach?.disconnect();
       document.removeEventListener('visibilitychange', update);
       canvas?.removeEventListener('webglcontextlost', onLost);
       renderer?.destroy();

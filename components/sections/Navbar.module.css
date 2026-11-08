@@ -97,12 +97,12 @@
   overscroll-behavior: contain;
   background:
     radial-gradient(120% 50% at 0% 100%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 70%),
-    rgba(2, 3, 2, .97);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+    rgb(2, 3, 2);
+  /* An opaque ground instead of a backdrop blur: the page never ghosts through, and a phone keeps no full-screen
+   * blur layer. */
 }
 .menuHead { display: flex; align-items: center; justify-content: space-between; min-height: 54px; }
-.menuLogo { display: block; height: 24px; }
+.menuLogo { display: block; width: auto; height: 24px; }
 .menuClose {
   display: grid;
   place-items: center;

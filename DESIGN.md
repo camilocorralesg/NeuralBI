@@ -73,7 +73,7 @@ typography:
     lineHeight: 1.6
     letterSpacing: "normal"
   ui:
-    fontFamily: "Montserrat, system-ui, sans-serif"
+    fontFamily: "DM Sans, system-ui, sans-serif"
     fontWeight: 600
     letterSpacing: "normal"
   label:
@@ -144,7 +144,7 @@ Every surface is anchored in absolute black (`#000000`) rather than desaturated 
 - **Physical Inset Bevels:** Multi-layered box shadows with top-edge specular highlights (`inset 0 1px 0 rgba(255, 255, 255, 0.8)`) creating physical depth without visual clutter.
 - **Electric Volt Accents:** Strategic deployment of high-chroma volt lime (`#c6ff34`) reserved exclusively for primary actions, active telemetry states, and core ROI indicators.
 - **Cognitive Secondary Accents:** Neural Indigo (`#6366f1`) for AI reasoning flows and Mesh Cyan (`#38bdf8`) for real-time telemetry and Fabric data connections.
-- **Two Motion Curves, No Overshoot:** Entrances, exits and feedback ease out on `--ease-out` (`cubic-bezier(0.16, 1, 0.3, 1)`); what travels across the screen uses `--ease-in-out` (`cubic-bezier(0.77, 0, 0.175, 1)`). Nothing eases in, nothing bounces, everything pressable answers with `scale(.96)`, loops pause offscreen, the visitor's reduced-motion setting is followed, and every section enters with its own signature rather than one shared fade (see Motion).
+- **Two Motion Curves, No Overshoot:** Entrances, exits and feedback ease out on `--ease-out` (`cubic-bezier(0.16, 1, 0.3, 1)`); what travels across the screen uses `--ease-in-out` (`cubic-bezier(0.77, 0, 0.175, 1)`). Nothing eases in, nothing bounces, everything pressable answers with `scale(.96)`, loops pause offscreen, the visitor's reduced-motion setting is followed, and nothing fades or rises in as the page scrolls: content is in place, and only motion that carries information moves (see Motion).
 - **Tactile Bento Glassmorphism:** Translucent dark container cards (`rgba(10, 10, 10, 0.45)`) with 24px backdrop blur, subtle noise grain, and delicate perimeter glow.
 
 ---
@@ -185,7 +185,7 @@ The NeuralBI palette is a high-contrast dark scheme built on an absolute black c
 
 **The Atmosphere Rule.** The ground stays `#000000` wherever two sections meet. Inside a section, `SectionAtmosphere` may lift the middle band to a tinted obsidian (no lighter than `oklch(0.16 0.02 128)`) with one soft Volt focus and one quieter Mesh Cyan focus, dissolving back to pure black at both edges. It is static by design (one paint, no scroll cost) and never carries content contrast on its own.
 
-**The Aurora Rule.** Motion in a backdrop is reserved for `AuroraField`, the hero's light reprised as a liquid, grained gradient: one Volt streak on the hero's diagonal and two blooms welling up from the lower corners, breathing against each other on an 18 s swell. Most of the band stays black; the light lives at the edges and behind opaque surfaces. At most two Aurora sections per page (Unified Delivery and the ROI instrument), never adjacent to each other or to the hero. It renders in WebGL at half resolution and 30 fps, pauses offscreen and in hidden tabs, ignores the pointer, paints one still frame under reduced motion and falls back to a static CSS gradient without WebGL. Content on top must sit in a clearing (a radial black shade under the copy, a deeper one under any illustration), and text contrast is measured against the brightest moment of the swell, not the average.
+**The Aurora Rule.** Motion in a backdrop is reserved for `AuroraField`, the hero's light reprised as a liquid, grained gradient: one Volt streak on the hero's diagonal and two blooms welling up from the lower corners, breathing against each other on an 18 s swell. Most of the band stays black; the light lives at the edges and behind opaque surfaces. At most two Aurora sections per page (Unified Delivery and the ROI instrument), never adjacent to each other or to the hero. It renders in WebGL at half resolution and 30 fps, pauses offscreen and in hidden tabs, ignores the pointer, paints one still frame under reduced motion and falls back to a static CSS gradient without WebGL. Content on top must sit in a clearing (a radial black shade under the copy, a deeper one under any illustration), and text contrast is measured against the brightest moment of the swell, not the average. An **Aurora stage** is not a section: the light framed inside a bordered panel within the content width (the Industries `MockupStage`, the Manifesto field). Its light never reaches the section band or the page edges, so a stage may sit next to the hero; one stage per section.
 
 **The Quiet Text Floor.** Ink Tertiary (`#71717a`) lands at ~4.4:1 on black, below AA for small text. Labels under 18px that use it must lift to `#85858e` (5.8:1); The Arsenal does this by overriding `--color-ink-3` at section scope, and the product mockups set their tertiary text to `#8f9889` (6.1:1 on the graphite window). Plain Ink Tertiary stays for strokes, dividers and inactive node rings.
 
@@ -197,33 +197,39 @@ The NeuralBI palette is a high-contrast dark scheme built on an absolute black c
 
 ## 3. Typography
 
-The typographic system is aligned with the **NeuralNet** design ecosystem, pairing the modernist, confident geometry of **DM Sans** for display headings with the legibility and human clarity of **Inter** for body text, the structural refinement of **Montserrat** for UI/buttons/navigation, and **JetBrains Mono** for engineering telemetry, labels, and code metrics.
+The typographic system is aligned with the **NeuralNet** design ecosystem, pairing the modernist, confident geometry of **DM Sans** for display headings and for every control (buttons, navigation, tabs) with the legibility and human clarity of **Inter** for body text, and **JetBrains Mono** for engineering telemetry, labels, and code metrics. Montserrat was retired on 2026-11-06 in NeuralBI and NeuralNet: a third sans next to DM Sans and Inter added weight and no contrast.
 
 **Display Font:** DM Sans (Weights: 600, 700, 800; Fallback: `system-ui, sans-serif`)  
 **Editorial Accent Italic:** DM Sans Italic (Weight: 300; Color: `#c6ff34` Volt Lime; Fallback: `sans-serif`)  
 **Body Font:** Inter (Weights: 400, 500; Fallback: `system-ui, sans-serif`)  
-**UI / Button Font:** Montserrat (Weights: 500, 600, 700; Fallback: `system-ui, sans-serif`)  
+**UI / Button Font:** DM Sans (Weights: 500, 600, 700; `--font-ui` and `--font-button` point at the display face; Fallback: `system-ui, sans-serif`)  
 **Monospace Font:** JetBrains Mono (Weights: 400, 500, 600; Fallback: `ui-monospace, SFMono-Regular, monospace`)  
-**Branded Accent Font:** Absolut (`AbsolutMediumReduced.ttf`) for custom brand logotype assets.
+**Branded Accent Font:** Absolut, only for the footer's NeuralBI signature, shipped as the seven letters it sets (`public/assets/fonts/AbsolutMedium-signature.woff2`, about 2 KB, subset from `AbsolutMediumReduced.ttf` with fonttools; re-subset it if the signature's text changes).
 
 **Character:** Modernist, structural, and architectonic. Headings command visual authority with tight tracking (`-0.03em` to `-0.04em`); italic accents inject razor-sharp editorial energy in radiant Volt Lime; prose reads with effortless clarity; monospace telemetry grounds the design in real-time execution.
 
 ### Hierarchy
 
-- **Display 1** (`weight: 700/800`, `clamp(2.5rem, 5vw + 1rem, 5rem)`, `line-height: 1.1`, `letter-spacing: -0.04em`): Reserved for hero headlines ("Intelligence *That Executes*"). Uses tight tracking and maximum visual authority.
+- **Display 1** (`weight: 800`, `clamp(2.4rem, 4.4vw, 4rem)`, `line-height: 1.08`, `letter-spacing: -0.03em`; phones `clamp(2.25rem, 10vw, 3.4rem)`): the hero headline, which names the category and the promise ("Microsoft data & AI consulting / *in production in weeks.*"), never a slogan. Each line wraps balanced. Under the action, one hard fact in quiet body type ("Technical blueprint in 5 business days · Mutual NDA before we see your data"), never a kicker.
 - **Display 2 / Headline** (`weight: 600`, `clamp(2rem, 3vw + 1rem, 3.5rem)`, `line-height: 1.1`, `letter-spacing: -0.03em`): Section headings across the bento grid and methodology phases.
 - **Display 3 / Title** (`weight: 600`, `1.5rem` (24px), `line-height: 1.2`, `letter-spacing: -0.02em`): Bento card titles, feature headers, and modal headings.
 - **Editorial Italic Accent** (`weight: 300`, `font-style: italic`, `color: #c6ff34`, `letter-spacing: -0.03em` to `-0.04em`): Key words and punchlines in titles (`<em>`, `.title-italic`, `.font-editorial`).
 - **Body Large** (`weight: 400`, `clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem)`, `line-height: 1.6`): Subtitles, introductory thesis statements, and hero supporting copy. Maximum line length 65ch.
 - **Body** (`weight: 400`, `1rem` (16px), `line-height: 1.5`): General body copy, feature explanations, and architectural descriptions.
-- **UI / Button** (`weight: 600`, `0.875rem - 1rem`, `font-family: Montserrat`): Interactive controls, CTA buttons, tabs, and navigation links.
+- **UI / Button** (`weight: 600`, `0.875rem - 1rem`, `font-family: DM Sans` via `--font-ui`): Interactive controls, CTA buttons, tabs, and navigation links.
 - **Label / Monospace** (`weight: 500`, `0.75rem` (12px), `line-height: 1.4`, `letter-spacing: 0.05em`, `text-transform: uppercase`): Section kickers (`> METHODOLOGY`), telemetry tags, phase counters (`01`, `02`), and terminal status indicators.
 
 ### Named Rules
 
-**The NeuralNet Font Stack Rule.** Only fonts defined in the official NeuralNet stack (`DM Sans`, `Inter`, `Montserrat`, `JetBrains Mono`, `Absolut`) may be rendered. System defaults like Arial, Times New Roman, or legacy font pairings are forbidden.
+**The NeuralNet Font Stack Rule.** Only fonts defined in the official NeuralNet stack (`DM Sans`, `Inter`, `JetBrains Mono`, `Absolut`) may be rendered. System defaults like Arial, Times New Roman, or legacy font pairings are forbidden.
 
 **The Title Italic Lime Accent Rule.** Every title element formatted in italics (`<em>` or `.title-italic`) must render in `#c6ff34` (Volt Lime) with a lightweight weight of `300` and tight tracking (`-0.03em` to `-0.04em`). This creates a dynamic, high-contrast signature between the solid white bold display typeface and the radiant lime editorial emphasis.
+
+**The Two Italics Rule.** Since 2026-11-08 the Volt italic appears in two titles only: the hero's promise ("in production in weeks.") and the closing call ("Let's put it to work."), the page's opening and its ask. Every section title between them is plain white: an italic word in all eight titles read as a template. A test guards it.
+
+**The Section Title Rule.** Every section title is set at `--type-h2` (`clamp(2rem, 1.2rem + 2.2vw, 3rem)`), always a step under the hero's h1: 48px against 63px at 1440, 42 against 45 at 1024, 32 against 39 on a phone. A section title never outgrows the page's headline (the Arsenal's had reached 95px).
+
+**The Plain Names Rule.** A heading or a navigation label names what the section holds: Why NeuralBI, Power Platform services, How we deliver, Integrations with your systems, Solutions by industry, Results, Frequently asked questions. The navigation follows the page's order (Services, Process, Integrations, Industries, Results). No metaphors (Manifesto, Arsenal, Protocol, Verticals) and no jargon (seamless, cognitive, zero friction, orchestrated, surgically precise, applied intelligence); a test scans both languages for it. Spanish addresses the reader as *usted* everywhere.
 
 **The Light-on-Dark Breathing Rule.** Because light text on pure black visually bleeds slightly, body text (`--color-ink-2`) must always carry a minimum line-height of `1.5` to `1.6` and letter-spacing between `0` and `0.01em` to prevent typographic crowding.
 
@@ -246,20 +252,24 @@ Surfaces do not float aimlessly in space; they behave like precision-machined gl
 
 **The Inset Edge Rule.** Every elevated or clickable surface (buttons, cards, floating pills) must feature an internal 1px specular highlight along its top border (`inset 0 1px 0 rgba(255, 255, 255, 0.1..0.8)`). This provides tangible physical clarity against true black without requiring thick borders.
 
-**The State-Driven Glow Rule.** Ambient neon glow effects must never be statically pinned across every card simultaneously. Glows are reactive: they ignite in response to hover, cursor proximity, or live telemetry streaming. Action buttons are the exception by design: their liquid flows slowly, paused off screen and still under reduced motion (see Shader Button). Two panels may carry a travelling edge light (`EdgeBeam`): the ROI instrument and the closing CTA, a single comet each, resting off screen and under reduced motion.
+**The State-Driven Glow Rule.** Ambient neon glow effects must never be statically pinned across every card simultaneously. Glows are reactive: they ignite in response to hover, cursor proximity, or live telemetry streaming. Action buttons are the exception by design: their liquid flows slowly, paused off screen and still under reduced motion (see Shader Button). Two panels may carry a travelling edge light (`EdgeBeam`): the ROI instrument and the closing CTA, a single comet each, resting off screen and under reduced motion. A selected or static state is drawn with an edge and a tint, never a halo: no coloured `box-shadow` without offset on a selection indicator, a status dot or a bullet (the Arsenal's rail indicator and capability dots, the cookie banner's dot), and no coloured `drop-shadow` on a headline.
 
 **The Opaque Window Rule.** A product mockup window over the Aurora is opaque graphite (`rgba(18, 22, 19, .95)` to `rgba(10, 12, 11, .97)`) with no backdrop blur: blurring a WebGL field re-samples it every frame for an effect nobody can see behind a 95% surface.
+
+**The Visible Glass Rule.** `backdrop-filter` goes only where light or motion actually passes behind the surface: the floating navigation and its language selector over the page, and the ROI and closing CTA panels over their light. Never over plain black (the FAQ cards), where it shows nothing and still costs a compositing layer. A surface that only needs to hide what is behind it (the mobile menu, the cookie banner) gets an opaque ground instead: a 92% ground without blur lets large white headlines ghost through.
 
 ---
 
 ## 5. Components
+
+**The One Container Rule.** Every section after the hero sits in one container: `width: min(100% - 2 * var(--gutter), var(--container))` with `--container: 1320px` and `--gutter: clamp(20px, 3vw, 40px)`. Every section's content starts and ends on the same two lines (60px from the edge at 1440, 20px on a phone); a panel (the ROI, the closing call) sits on those lines and pads its own content. The hero is the one centred exception. Section headings sit on the left line; the FAQ sets its title and line in a left column beside the questions.
 
 Components are engineered as self-contained precision modules. They share rounded pill geometries for controls and rounded 16px corners for bento containers.
 
 ### Buttons
 
 - **Shader Button (every action button; after Framer's Shader Button, `components/ShaderButton.jsx`):**
-  - **Shape:** Full pill (`var(--radius-pill)`), Montserrat 600, white label with a soft dark shadow (`0 1px 10px rgba(0, 0, 0, .55)`).
+  - **Shape:** Full pill (`var(--radius-pill)`), DM Sans 600, white label with a soft dark shadow (`0 1px 10px rgba(0, 0, 0, .55)`).
   - **Material:** A slow liquid glow of the button's tone inside a dark pill, with a visible film grain: a deep olive body, the tone gathering in one soft pool of light that drifts along the lower edge, never stripes. The pool covers about a third of the pill; outside it the liquid settles low in the olive body, so the tone never floods the button (measured: mean brightness 31–44 of 255, down from 47–75 in the first version). Under the label the light is capped at the olive middle of the ramp, so white text clears 7:1 in every frame. Over it, a soft inner glow of the tone in `hard-light` (11px, 40%) and a 2px white edge at 24%.
   - **Tone:** Volt by default; in The Arsenal, the product's own colour (`tone={tool.color}`). The palette is derived from the tone in four steps (a deep olive at 8% of the tone, a dark at 25%, a mid at 60%, the tone). When the tone changes, the liquid eases to the new palette in about half a second instead of jumping.
   - **Motion:** The liquid flows in every visible button (shader time 0.62 per second, 1.6× the first version; the pool of light crosses the pill in about 24 s), paused off screen and in hidden tabs, one still frame under reduced motion. **Hover** (fine pointers only): the liquid and the glow recede to 40% into the dark glass (0.4 s, `cubic-bezier(.4, 0, .6, 1)`), the edge brightens and the arrow slips out to the top right and back. **Press:** `scale(.96)`. **Disabled:** the liquid is dimmed to 25% and still. **Ready** (`data-ready`, a form that can be sent): full liquid and an edge tinted with the tone.
@@ -270,7 +280,7 @@ Components are engineered as self-contained precision modules. They share rounde
 
 - **Bento Glass Card:**
   - **Corner Style:** `border-radius: 16px` (`--radius-lg`).
-  - **Background:** `rgba(10, 10, 10, 0.45)` with `backdrop-filter: blur(24px)`.
+  - **Background:** `rgba(10, 10, 10, 0.45)`, with `backdrop-filter: blur(24px)` only where light passes behind it (see The Visible Glass Rule).
   - **Border:** 1px border `rgba(255, 255, 255, 0.08)`.
   - **Internal Padding:** `24px` to `32px`.
   - **Hover Effect:** Border subtly shifts to `rgba(198, 255, 52, 0.2)` or `rgba(56, 189, 248, 0.3)`.
@@ -283,7 +293,9 @@ Components are engineered as self-contained precision modules. They share rounde
   - **Links:** Muted text (70% white). On hover (fine pointers) or keyboard focus the label rolls: each letter lifts out of its line, 12 ms after the one before it (280 ms, `--ease-out`), while a white copy rises in from below; the other links step back to 45% opacity. The label is read once (a visually hidden copy); the two rolling faces are decorative. A press scales the link to `.96`. No pill, underline or magnetic pull.
   - **Outline and reading progress:** In the capsule the 1px border is a quiet white track (12% at rest, 24% under the pointer). The reading progress is traced on it: two 1.5px Volt strokes with a soft glow leave the bottom centre, climb round both ends and meet at the top centre as the page ends. The shape is measured (the capsule changes width on hover); the progress is a CSS scroll-driven animation (`animation-timeline: scroll(root)`) on `stroke-dashoffset`, with a passive scroll listener where the browser has no scroll timelines.
   - **Capsule morph:** Transitions name their properties (never `all`) and settle in 350 ms on `--ease-out`. It is a sanctioned layout transition (height, padding, the rails' `max-width`): measured on the production build, removing the transitions, the blur or the link hover leaves the hover frames unchanged, because the cost is the state change itself, so a transform (FLIP) version would add text-distortion correction for no gain.
-  - **CTA Integration:** Embedded compact "Book Audit" Shader Button on the right flank.
+  - **CTA Integration:** Embedded compact "Book a Call" Shader Button on the right flank.
+
+**The One Action Rule.** The main action is "Book a Call" ("Agendar Llamada") and reads the same wherever it appears: the navbar, the mobile menu, the hero, the sticky mobile bar, the Arsenal's architecture modal (from the accordion) and the closing form's submit. Secondary links keep their own wording (Industries' "Design your architecture", the ROI's link to an architect).
 
 ### Inputs & Fields
 
@@ -304,12 +316,42 @@ Components are engineered as self-contained precision modules. They share rounde
 - **Purpose:** An animated extension of the hero's light for the one section that should feel like a continuation of it (today: Unified Delivery). Where `SectionAtmosphere` is still air, the Aurora is slow light. Reference: Grainient's minimal luminous masses, reduced to one hue.
 - **Usage:** First child of a `position: relative; isolation: isolate; overflow: hidden` section. Props: `accent` (default `var(--color-accent)`) and `intensity` (0–1).
 - **Material:** A fragment shader warps the light with fbm noise and maps it through one ramp mixed from the accent: black → forest → olive → accent → pale accent. Geometry is measured in units of the section's shorter side, so the diagonal keeps the hero's slope on a phone column. Both seams fade to black inside the shader. A generated film-grain tile sits on top with `mix-blend-mode: overlay` (grain in the light, none in the black) and jitters in steps.
+- **Lifecycle:** A field makes its WebGL context only when it comes within one screen of the viewport (`rootMargin: 100% 0px`, or at once when it is already there) and frees it when it goes further; it draws only while on screen. So only the fields near the reader hold a context, never all four at once. A field without WebGL, or a screen away, shows its still CSS fallback.
 - **Rules:** See the Aurora Rule. The content it sits under provides its own clearing (`IntegrationsHub` shades the header and the scene stage). GLSL ES reserves words such as `half`, `input` and `filter`; a test guards the shader against them, because a compile error silently drops to the CSS fallback.
+
+### Hero lines (`components/FloatingLines.jsx`, `components/linesRenderer.js`)
+
+- **Engine:** One full-screen fragment shader on a bare WebGL renderer (one triangle, uniforms set by name). Until 2026-11-08 it ran on three.js, which the page loaded only for this quad (about 340 KB of JavaScript); three.js, `@react-three/*` and `ogl` are gone from the dependencies, and a test keeps them out.
+- **Portable GLSL:** GLSL ES 1.00, so it compiles in WebGL 1 and 2: every loop counts to a constant (`MAX_LINES`, 32 lines a wave) and stops at its wave's count, and the gradient reads its stops at loop indices, never a computed one.
+- **Lifecycle:** As the Aurora fields: a context within a screen of the viewport, none beyond; drawing pauses as soon as the lines leave the screen, and the shader's clock carries over when a context is remade.
+
+### Loading screen (`app/loading.jsx`, `components/intro/LogoForming.jsx`)
+
+- Every wait shows the NeuralBI logo forming, with the intro's own geometry and order of events: the nodes land, the branches draw, the symbol slides left and the wordmark rises beside it, then the lockup holds, fades and forms again for as long as the wait lasts (a 3.2 s loop). It is CSS alone, so it plays before hydration; under reduced motion the finished logo rests. Never a text loader.
+
+### The Manifesto (`components/sections/Manifesto.jsx`, `components/graphics/ManifestoScenes.jsx`)
+
+- **Purpose:** Why NeuralBI over traditional IT consulting, in three promises read in five seconds. Until 2026-11-08 it was three identical cards (icon, title, a bolded paragraph, a scene with its own title and a before → after caption), about 150 words with a lavender and a cyan card, and looked apart from the rest of the site.
+- **Composition:** A header (the plain title, Why NeuralBI, on the left, one line of subtitle on the right, as in the Arsenal) over one **field**: a black panel (`--radius-lg`, a hairline border that takes a Volt tint and the pointer-lit ring of the site's panels under a fine pointer) holding a single `AuroraField` (intensity .95, Volt) behind the three promises. No cards. Each promise is its isometric scene, a title and one line, no icon and no bold.
+- **Light:** An Aurora stage (see the Aurora Rule), so it may follow the hero. The copy sits in a clearing: on desktop the promises share two rows through subgrid (scenes, copy) and the copy row is the field's measured clearing (`clearRef`, an empty, hidden span laid on the grid lines); a soft radial shade under each block finishes it, so the lines keep at least 4.5:1 at the brightest moment of the swell (measured 5:1).
+- **Scenes:** All three take Volt: one field, one light (Neural Indigo stays with the blueprint graphics). They tell their story without words on screen: their name, the before → after they show and the full description are read to assistive technology only. An 8 s cycle with the resolved state held; every offset is written in seconds of the original 12 s score (`--s`), so beats keep their place at any pace. They pause off screen, rest on their outcome under reduced motion, and a fine pointer over a promise raises its scene 7px and lights it from within (a brighter pool on its floor, a clearer grid, a little more brightness on the drawing), never with a halo and without interrupting its story.
+- **Copy:** At most 65 words for the subtitle, the three titles and the three lines (a test counts them in both languages).
+- **Layout:** Three columns from 1024px; a promise per row (scene beside copy, the copy column as the clearing) on tablets; one column on phones, where the light keeps to the field's edges.
+
+### The Arsenal Console (`components/sections/ArsenalConsole.jsx`)
+
+- **Purpose:** The four Power Platform products on desktop, without walking the visitor through them. Until 2026-11-07 the Arsenal was a pinned scroll story of twelve stops (four products × three chapters, about nine screens); visitors could not skip it. The console fits the section on one 1440 × 900 screen and lets the visitor choose.
+- **Composition:** One dark glass panel (`--radius-lg`, a 1px specular top edge, the film-grain tile, a faint corner light in the product's colour) with the pointer-lit ring of the Manifesto field and the FAQ cards. A rail of the four products (logo tile and name only) on the left, a bar above the product below 1200px. Beside it, the product's title and a segmented chapter control (The proposition · Capabilities · The difference, words only) over the chapter's copy, with the chapter's scene holding the whole right column on a floor of the product's light.
+- **No numbers or subheaders.** No indexes, counters, breadcrumbs, scene captions, specs lines or subtitles inside the console, and no full-architecture button: everything the modal held is in the console's chapters (the modal stays for the accordion).
+- **Colour:** `--tool-accent` is the active product's colour (a registered property, so it eases over 0.6 s): the rail indicator's edge and tint, the chapter thumb, the outcome figure, the chip and claim dots, the ring and the stage light. Selection is an edge and a tint, never a halo.
+- **Behaviour:** An ARIA tab pattern with automatic activation and roving focus: the arrows along the rail move between products, ← → between chapters, Home and End to the ends. The chapter stays when the product changes, so products can be compared chapter by chapter. One indicator glides on the rail and one thumb in the chapter control (springs with a damping ratio above .9).
+- **Stability:** Every title and every chapter panel of every product share one grid cell, so the console keeps the height of the longest and never jumps; inactive ones are `aria-hidden` and `inert`. Only the active scene is mounted; it cross-fades through a 2px blur (420 ms in, 240 ms out).
 
 ### Unified Delivery (`components/sections/IntegrationsHub.jsx`)
 
-- **Layout:** No container card. A centred two-line headline (statement, then the Volt italic promise) and a lede capped at 62ch, above a stage framed by four hairline registration marks, the blueprint's crop marks, around the `UnifiedDeliveryScene`.
-- **Scene:** The 14 s delivery clock and its keyframes are the illustration's own; the section never restyles them.
+- **Layout:** No container card. The section title on the left line (Integrations with your systems) and a lede that names the real sources, capped at 62ch, above a stage framed by four hairline registration marks, the blueprint's crop marks, around the `UnifiedDeliveryScene`. Nothing sits under the picture at rest: the role of a source or a deliverable appears under it only while that node is explored (hover or focus), as its accessible description.
+- **Sources:** SAP ERP, Salesforce CRM, Azure SQL Database, Oracle Database, HubSpot CRM and Microsoft Fabric (OneLake), each with its real brand mark in its own colours (`public/assets/integrations`: CC0 drawings from gilbarbara/logos and Simple Icons, and the Fabric mark supplied by the client). An icon mark (Salesforce, Azure, HubSpot, Fabric) sits in a 19px slot beside the full name, drawn on its whole canvas (never a crop that cuts the mark); a wordmark-only brand (SAP, Oracle) is named by its wordmark, with the brand in its alt text ("[SAP] ERP"). The phone layout's grouped nodes keep plain glyphs: each stands for several systems. The footer states that product names and logos are trademarks of their owners.
+- **Scene:** The 14 s delivery clock and its keyframes are the illustration's own; the section never restyles them. A deliverable waiting for its turn rests at 60% opacity, never lower, so its name (a button) still clears 4.5:1; it lights to full when its delivery lands.
 
 ### Protocol Run (`components/sections/NeuralProtocol.jsx`)
 
@@ -332,11 +374,11 @@ Components are engineered as self-contained precision modules. They share rounde
 
 ### ROI Instrument (`components/sections/Impact.jsx`)
 
-- **Purpose:** "The Math Speaks For Itself." proves its figures instead of listing them. One glass panel: the statement, a lede tied to the three figures and a quiet link to talk to an architect on the left; on the right a ledger of three hairline rows of equal weight (7×, −65%, 25M+). No hero figure: a giant number over small supporting stats is the SaaS hero-metric template.
+- **Purpose:** "Results, in numbers" proves its figures instead of listing them. One glass panel: the statement, a lede tied to the three figures and a quiet link to talk to an architect on the left; on the right a ledger of three hairline rows of equal weight (7×, −65%, 25M+). No hero figure: a giant number over small supporting stats is the SaaS hero-metric template.
 - **Figures:** One size for all three, white display digits in `tabular-nums`; the unit at `.5em`, weight 500, in Volt, the only colour in the number. Real signs, `×` (U+00D7) and `−` (U+2212). The digits are presentational: each row carries its full sentence for screen readers.
 - **Proofs:** Minimal line instruments, one per figure, in a subgrid of figure and detail so every instrument starts on the same axis, and every stroke carries information. They are inline SVG in fixed-ratio boxes, with their labels in HTML (a legend of short strokes, or placed over the box) so text stays legible and translated at any width. One stroke weight (1.25, 1.5 for Volt): graphite for the old way, Volt for NeuralBI, faint white for axes and references; no fills, glows, gradients or stripes. 7×: one traditional cycle arching over the timeline while seven NeuralBI releases hop under it, each landing on a dot. −65%: cost running level, falling to what is kept and running on, a faint line carrying the old level, and a blueprint measure at the end labelled "Saved". 25M+: a 24-hour dial (taller marks every six hours) drawn round from 00 h, beside the rate the figure implies (≈ 290 rows a second). Every drawn stroke has `pathLength="1"` and draws with `stroke-dashoffset` (butt caps, never `vector-effect: non-scaling-stroke`, which breaks the dash). No figure keeps counting after it lands: that would read as live data the page does not have.
 - **Motion:** The figures roll like an odometer (`Counter`): each digit is a reel of 0–9 that spins a few laps fast and slows onto its value on `--ease-out`, the ones digit last. It is pure CSS on the same clock as the proofs, keyed to each row's `data-count`: the server's HTML is resolved; a row off screen at hydration is armed (reels on 0, proofs at their start) and rolls once 60% of it is seen, each row 140 ms after the one above; a row already on screen, and every row under reduced motion, stays resolved. At rest the reel is untransformed, so the digits stay crisp.
-- **Light and edge:** An Aurora section (the Aurora Rule) with the panel as its clearing: the light flows round the panel at full strength and dims beneath the glass, whose text clears 4.5:1 at the brightest moment of the swell. The panel is Bento glass without a drop shadow. One beam (`EdgeBeam`) travels its 1px edge: a Volt comet on `offset-path: inset(0 round var(--radius-lg))`, 12 s a lap at a constant speed, its head echoed by a small, soft glow confined to a 16px band just inside the glass (a lit filament, never a cloud over the content); it rests while the panel is off screen and gives way to a still light at the top left under reduced motion or without motion-path support. A fine pointer also lights the ring where it is. The panel itself never tilts or moves.
+- **Light and edge:** An Aurora section (the Aurora Rule) with the panel as its clearing: the light flows round the panel at full strength and dims beneath the glass, whose text clears 4.5:1 at the brightest moment of the swell. The panel is Bento glass without a drop shadow. One beam (`EdgeBeam`) travels its 1px edge: a Volt comet on the panel's measured outline (`offset-path: path(…)`, set by `EdgeBeam` through a ResizeObserver from `components/edgePath.js`, so it runs in every engine with motion paths, Safari 16+ included; `inset(0 round var(--radius-lg))` only until it is measured), 12 s a lap at a constant speed, its head echoed by a small, soft glow confined to a 16px band just inside the glass (a lit filament, never a cloud over the content); it rests while the panel is off screen and gives way to a still light at the top left under reduced motion or without motion-path support. A fine pointer also lights the ring where it is. The panel itself never tilts or moves.
 
 ### Closing CTA (`components/sections/FooterCTA.jsx`)
 
@@ -354,13 +396,13 @@ Components are engineered as self-contained precision modules. They share rounde
 - **Monospace Micro-Tag:**
   - **Typography:** `JetBrains Mono`, 11px / 0.75rem, uppercase.
   - **Background:** `rgba(15, 17, 26, 0.85)` with 8px blur and 1px border in subtle accent tone.
-  - **Indicator Dot:** 6px circular LED, lit and still. State is shown by color, never by a pulse.
+  - **Indicator Dot:** 6px circular LED, lit and still, without a halo. State is shown by color, never by a pulse.
 
 ---
 
 ## 6. Motion
 
-Motion explains a change or rewards arrival; it is never there to fill the screen. It is a layer of hierarchy: the hero moves most, section titles next, then cards and content, then supporting copy, and decoration barely at all. Anything seen once (a section arriving, the hero, the ROI roll) gets the budget for delight; anything used often (hover, tabs, accordions, presses) is quick and plain. When in doubt, leave it still.
+Motion explains a change; it is never there to fill the screen or to make content arrive. Since 2026-11-06 nothing below the hero fades, rises, staggers or wipes in as it scrolls into view (an anti-slop audit found the same fade-up on every section, which made none of them stand out and the page feel slow). What moves carries information: the hero's lines, the ROI's odometer and proofs, the Protocol's reading line, the delivery clock, the Arsenal's transitions, the product mockups' stories and the NeuralMark. Anything used often (hover, tabs, accordions, presses) is quick and plain. When in doubt, leave it still.
 
 ### Tokens (`app/globals.css`)
 
@@ -368,36 +410,40 @@ Motion explains a change or rewards arrival; it is never there to fill the scree
 |---|---|---|---|
 | Micro | `--dur-press` 120 ms, `--dur-ui` 200 ms | `--ease-out` | Press `scale(.96)`, hover colour and borders, link roll (280 ms + 12 ms a letter) |
 | Component | 200–280 ms | `--ease-out`; `--ease-in-out` for travel | Tabs (240 ms clip), panel swap (220 ms), accordion (280 ms), chapter crossfade |
-| Section | `--dur-reveal` 700 ms (600 text, 720 words, 900 visuals) | `--ease-out` | Headlines, copy, cards, panels, scenes arriving |
+| Section | `--dur-reveal` 700 ms | `--ease-out` | Retired for arrivals (nothing arrives on scroll); kept for the ROI's roll and proofs |
 | Hero | `--dur-enter` 900 ms | `--ease-out` | The hero's lines, a page title |
-| Ambient | seconds (6–42 s) | loops of their own | Aurora, the NeuralMark, the button liquid, the marquee |
+| Ambient | seconds (6–42 s) | loops of their own | Aurora, the NeuralMark, the button liquid, the hero's lines |
 
 - `--ease-out` (`cubic-bezier(0.16, 1, 0.3, 1)`): entrances, exits, feedback. `--ease-in-out` (`cubic-bezier(0.77, 0, 0.175, 1)`): movement across the screen. Nothing eases in, nothing is linear except scroll-linked parallax, nothing overshoots.
-- Staggers: `--stagger-words` 32 ms between the words of a headline, `--stagger-blocks` 80 ms between blocks and cards (a group caps its index, so a set of eight lands as fast as a set of six).
-- Travel: `--reveal-rise` 18px for blocks, `--reveal-rise-text` 10px for copy.
-- Small screens (≤768px) keep the same sequences, contained: 24 ms and 60 ms staggers, 12px and 6px travel, half the hero's parallax.
+- Staggers: `--stagger-blocks` 80 ms orders the hero's entrance and the ROI rows; `--stagger-words` and the `--reveal-rise` travel tokens no longer drive any arrival.
+- Small screens (≤768px) get half the hero's parallax.
 
 ### Technique
 
 - CSS transitions for anything interactive (they can be interrupted mid-way); CSS keyframes or scroll-driven animations for anything predetermined (off the main thread); framer-motion only where the motion is dynamic (layout, scroll-linked values), and there with full `transform` strings rather than `x`/`y` where it can.
-- Arrivals move only `transform`, `opacity` and `clip-path`, so they never shift layout; `will-change` is set only while one runs.
+- What moves moves only `transform`, `opacity`, `clip-path` and SVG strokes, so it never shifts layout; `will-change` is set only while it runs.
 - Every IntersectionObserver reads the **last** record of a batch: a fast scroll delivers several, and the first one is stale.
 - Render output never branches on the reduced-motion setting during hydration (`useReducedMotionSafe`; `MotionConfig` switches to `user` once mounted).
 - No magnetic pull, tilt, bounce or float on anything that carries text or an action.
 
-### Arrivals
+### No arrivals
 
-Everything below the hero arrives once, the first time it is seen, through one state machine (`components/useReveal.js`, on `data-reveal` or `data-count`): absent means resolved (the server's HTML, no JavaScript, and anything already on screen at load stay put, so nothing is ever blank); `armed` means it loaded off screen and waits at its start; `run` means it came into view and its transitions carry it home. After `settle` it returns to absent, so no delays or layers linger, and it never re-animates on the way back up.
-
-- **Headlines (`CharacterReveal`):** each word rises out of its own mask (the clip travels with the word, so its window stays put), one `--stagger-words` step after the word before, 720 ms. No blur. A second line continues the first (`delay={wordsIn(firstLine)}`, `components/revealTiming.js`). `*phrase*` is the Volt italic; punctuation right after it stays upright on the same word.
-- **Supporting copy (`<Reveal>`, `text`):** the paragraph fades up 10px as one block, about 200–300 ms after its title, never word by word.
-- **Blocks (`<Reveal variant="block">`):** a form, a tab row or a panel rises 18px, one step behind the copy.
-- **Visuals (`<Reveal variant="visual">`):** a scene opens upward from its lower edge through a clip while it settles. A wipe, never a zoom.
-- **Collections:** cards rise one block step apart as one composition (Manifesto, FAQ), each card's own contents following one step behind each other.
+Section titles, copy, blocks, scenes and cards are rendered in their finished place and stay there: `<Reveal>` and `<CharacterReveal>` (`components/Reveal.jsx`, `components/CharacterReveal.jsx`) keep their props but no longer animate. `CharacterReveal` still renders a title's `*phrase*` as the Volt italic, with punctuation after it upright. The Manifesto's promises and the FAQ cards no longer rise one after another. `useReveal` (`data-count`) stays for the motion that carries information, such as the ROI roll and its proofs, which still arm off screen and play once when seen.
 
 ### Entrances for what is on screen at load
 
 The hero's copy and the secondary pages (404, thank you, privacy, terms) enter with pure CSS utilities, so the server's HTML animates without waiting for JavaScript: `.enter` (a fade up, 700 ms) and `.enter-mask` (a title opening upward from its baseline, 900 ms), ordered by `--enter` (label 0, title 1, copy 2…) one block step apart. They hold their start only while they wait (`backwards`), and under reduced motion they do not run.
+
+### Same picture in every engine (Safari and Chrome)
+
+Checked on 2026-11-07 after the site looked different in Safari on a Mac.
+
+- **Grain is a tile, never a filter.** Film grain comes from `public/assets/grain.png` (128px, grey, 6% alpha), never an SVG `feTurbulence` data URI: WebKit renders that noise with a different strength and contrast, and computes it on the CPU. The Aurora's own grain is a canvas-made tile too.
+- **One global dither.** Chrome dithers CSS gradients; WebKit does not, so dark gradients band in Safari. `body::after` lays `public/assets/dither.png` (±2 levels of speckle on half the pixels) over the page, fixed and static: it breaks the bands and lifts pure black by about half a level, which no screen shows. WebGL fields dither inside their shaders.
+- **Motion paths are measured.** `EdgeBeam` runs on a `path()` of the panel's measured outline; the beam and its still-light fallbacks are gated on `@supports (offset-path: path(…))`, not on basic shapes in motion paths.
+- **WebGL is opaque.** Every context is created with `alpha: false` and writes alpha 1, so premultiplied-alpha differences between engines cannot change a colour; colours read from CSS are rasterised once to sRGB.
+- **Vendor prefixes.** `backdrop-filter` and `mask` ship with their `-webkit-` twins (written for masks, added by the build for backdrop filters), which Safari 17 and earlier need.
+- **Checking a device.** Open the page with `?diag` (`components/DiagnosticsGate.jsx` loads `components/RenderDiagnostics.jsx` only then): it reports the browser, reduced-motion and reduced-transparency settings, the measured frame rate (Low Power Mode caps it at 30), WebGL and its GPU, the CSS features above, and the state of every live effect (hero lines, Auroras, Shader Buttons, edge beams), with a Copy button. A Mac set to Reduce Motion shows every effect still by design.
 
 ### Smooth scroll (Lenis, `components/SmoothScroll.jsx`)
 
@@ -405,15 +451,14 @@ One Lenis instance (`lerp .1`) for fine pointers only; touch keeps native scroll
 
 ### One signature per section
 
-The arrivals above are the shared language; each section adds at most one gesture of its own.
+Sections share no arrival; each may keep at most one gesture of its own, and only one that carries information.
 
-- **Hero:** the lines of light come on (1.6 s) as the headline rises line by line out of a mask (90 ms apart); the copy follows at 360 ms and the action at 440 ms, all landed in about a second. On scroll the copy holds, then leaves on `--ease-in-out` while the parallax stays linear (half on small screens, none under reduced motion).
+- **Hero:** the lines of light come on (1.6 s) as the headline rises line by line out of a mask (90 ms apart). The headline is one sharp layer at every width: no blurred base and no pointer spotlight, which left it blurred until hovered and on touch tablets; the copy follows at 360 ms and the action at 440 ms, all landed in about a second. On scroll the copy holds, then leaves on `--ease-in-out` while the parallax stays linear (half on small screens, none under reduced motion). The lines bend, shift and ripple only for a mouse or a pen (`components/heroPointer.js`); a finger never moves them, so on a phone or a tablet they keep their own flow and a touch is just a scroll or a tap.
 - **Navbar:** the rolling link labels and the reading progress traced round the capsule's outline.
-- **TrustBar:** a marquee with feathered edges that pauses under a fine pointer and stands still under reduced motion.
-- **Manifesto:** each card rises one step after its neighbour, then its title, body and scene follow one step apart; the card's edge lights in its own accent where the pointer is.
-- **The Arsenal:** chapters and scenes cross-fade through a 2px blur, so two contents melt into one change; the curtain carries tool changes. Below 1024px the four products are an accordion: each row is dark glass in its product's colour (logo tile, number and architecture, name, promise, a + that turns to ×). One opens at a time, unfolding the whole product (proposition, capabilities, difference, each with its scene) on grid rows in 420 ms, its parts one block step apart; it folds away at once. The tapped row stays under the finger, a row opened in the lower half settles under the navbar, and a Close at the end returns to the row with focus on it. A product's scenes are built the first time it opens. Desktop keeps the pinned story, and the long article under reduced motion.
+- **Manifesto:** the promises are in place in their field of light; each scene runs its own 8 s story; a mouse or a pen over a promise raises its scene and lights it without interrupting the story, and the field's edge lights where the pointer is. A finger never does either.
+- **The Arsenal:** on desktop (1024px and up) one product console (see The Arsenal Console); its chapters and scenes cross-fade through a 2px blur, so two contents melt into one change, and the console's light follows the product. Nothing in it moves with the scroll. Below 1024px the four products are an accordion: each row is dark glass in its product's colour (logo tile, number and architecture, name, promise, a + that turns to ×). One opens at a time, unfolding the whole product (proposition, capabilities, difference, each with its scene) on grid rows in 420 ms, its parts one block step apart; it folds away at once. The tapped row stays under the finger, a row opened in the lower half settles under the navbar, and a Close at the end returns to the row with focus on it. A product's scenes are built the first time it opens; the accordion's end opens the full architecture modal.
 - **Protocol:** the phases light as they cross the reading line.
-- **Unified Delivery:** the stage opens upward through its crop marks, then the delivery clock runs.
+- **Unified Delivery:** the delivery clock runs; the stage is in place inside its crop marks.
 - **Industries:** the selected tab is a lit copy of the tab row clipped to one cell; the clip slides (240 ms, `--ease-in-out`) and the colour travels with it. A new sector arrives in 220 ms through a 2px blur. On one column (≤900px) the product lives inside the open answer, right under its text: it unfolds downward through a clip (460 ms) and travels with whichever answer is opened (the same node, so its light keeps its WebGL context), and the row just tapped stays under the finger while the answer above folds away.
 - **ROI:** the odometer roll and the proofs drawing themselves (see ROI Instrument).
 - **FAQ:** answers open on `grid-template-rows`, the chevron turns on `--ease-in-out`, and the card's edge follows the pointer.
@@ -423,7 +468,7 @@ The arrivals above are the shared language; each section adds at most one gestur
 
 ### Named Rules
 
-**The One Signature Rule.** Every section shares the arrival language (masked headline words, copy and blocks one step behind); on top of it a section earns at most one gesture of its own and keeps it. A new section picks from the vocabulary above (a mask, a stagger, a clip, a roll, a draw) or adds to it here.
+**The One Signature Rule.** No section arrives: its title, copy and visuals are in place. A section earns at most one gesture of its own, and only one that carries information (a roll that lands on a figure, a line that shows progress, a scene that tells its story). A new section picks from the vocabulary above or adds to it here.
 
 **The Resolved First Rule.** The server's HTML is always the finished state. Motion only arms what loaded off screen, so a slow script, no script or reduced motion never leaves content hidden.
 
@@ -437,7 +482,9 @@ The arrivals above are the shared language; each section adds at most one gestur
 - **Do** anchor all views in deep obsidian black (`#000000`) to preserve dramatic contrast.
 - **Do** strictly limit Volt Lime (`#c6ff34`) to key interactive conversion triggers, active states, and critical ROI metrics.
 - **Do** use multi-layered inset highlights on buttons and glass cards to maintain a tactile, physical quality.
-- **Do** preserve the exact typography stack: DM Sans for display, Inter for body, Montserrat for UI and buttons, JetBrains Mono for telemetry tags, Absolut only for the logotype.
+- **Do** preserve the exact typography stack: DM Sans for display and controls, Inter for body, JetBrains Mono for telemetry tags, Absolut only for the footer signature.
+- **Do** set running text at 16px or more (section lines, product propositions, answers, phase copy); labels, chips and figures inside mockups may be smaller.
+- **Do** give every image its intrinsic `width` and `height` (unless its class sizes only one side) and `loading="lazy"` below the fold.
 - **Do** ease entrances, exits and feedback on `--ease-out` and on-screen travel on `--ease-in-out`; framer-motion springs keep a damping ratio of at least 0.9 (no overshoot).
 - **Do** animate only `transform`, `opacity`, `clip-path`, SVG strokes and short `filter: blur()` handoffs (4px at most, only while a reveal or a crossfade runs); position moving parts with a transformed layer, never with `top`, `left`, `width` or `height`. The layout transitions allowed are the FAQ answer's `grid-template-rows` (0fr → 1fr), which stays interruptible, and the navbar capsule's morph (see Navigation).
 - **Do** pause every loop offscreen and in hidden tabs, and give every animation a reduced-motion state: CSS rests on the resolved frame, framer-motion follows `MotionConfig reducedMotion="user"`, and WebGL draws one still frame.
@@ -454,7 +501,7 @@ The arrivals above are the shared language; each section adds at most one gestur
 - **Don't** use gradient text (`background-clip: text` over a gradient); headlines are solid white with a Volt italic accent.
 - **Don't** use bounce or elastic easing (`cubic-bezier` with a value above 1, underdamped springs), or ease-in on anything the visitor is waiting for.
 - **Don't** write `transition: all`; name the properties that change.
-- **Don't** give two sections the same entrance: a fade-up everywhere reads as a template.
+- **Don't** fade, rise, stagger or wipe content in as the page scrolls: a fade-up everywhere reads as a template and slows the page.
 - **Don't** add live pulses, blinking indicators or perpetual motion on controls; the one exception is the Shader Button's slow liquid, which pauses off screen and rests under reduced motion.
 - **Don't** float, bob or scale a surface that carries text in a loop; a perpetual transform leaves glyphs at fractional offsets and they read soft.
 - **Don't** create flat, lifeless buttons without hover transitions, inset bevels, or tactile press feedback.

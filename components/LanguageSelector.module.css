@@ -116,7 +116,7 @@
 }
 
 .itemName {
-  font-family: var(--font-ui, 'Montserrat', sans-serif);
+  font-family: var(--font-ui, 'DM Sans', sans-serif);
   font-size: 0.8125rem;
   font-weight: 500;
   color: #ffffff;
@@ -153,7 +153,7 @@
   background: transparent;
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: var(--font-ui, 'Montserrat', sans-serif);
+  font-family: var(--font-ui, 'DM Sans', sans-serif);
   font-size: 0.875rem;
   font-weight: 500;
   transition: color var(--dur-ui) var(--ease-out), background-color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), transform var(--dur-press) var(--ease-out);

@@ -7,7 +7,7 @@ import { AgentChat, AgentTurn, Answer, Composer, EventBubble, PolicyChip, Reason
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import f from './FraudCopilot.module.css';
 
-/* NeuralBI · Fraud Copilot: the product behind "Cognitive Fraud Copilots": a Copilot Studio agent that reasons in the
+/* NeuralBI · Fraud Copilot: the product behind "Fraud Detection Copilots": a Copilot Studio agent that reasons in the
  * open and writes its compliance risk digest as it goes. A velocity alert sets it off; it pulls the hour's transactions,
  * finds a six-account mule ring structuring payments just under $10k to one new beneficiary, scores and flags the three
  * riskiest transfers, stops at its autonomy line (freezing needs a human) and publishes the digest. */

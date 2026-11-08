@@ -1,0 +1,34 @@
+/* The logo forming, on a 3.2 s loop (the intro's 1.75 s of forming, a hold, a fade). Times are fractions of the loop:
+ * nodes 0–14%, branches 8–30%, the slide 30–44%, the wordmark 40–52%, the hold to 86%, the fade to 96%. */
+.screen {
+  --loop: 3.2s;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 2rem;
+  background: var(--color-paper, #000000);
+}
+.logo { width: min(320px, 70vw); height: auto; overflow: visible; animation: fade var(--loop) ease infinite; }
+
+.lockup { animation: lockup var(--loop) var(--ease-in-out, cubic-bezier(.77, 0, .175, 1)) infinite; }
+/* Staggers as in the intro: a node every 28 ms in fours, a branch every 32 ms (set inline as --delay). */
+.node { opacity: 0; animation: node var(--loop) var(--ease-out, cubic-bezier(.16, 1, .3, 1)) var(--delay, 0s) infinite; }
+.edge { stroke-dashoffset: 1; animation: edge var(--loop) var(--ease-out, cubic-bezier(.16, 1, .3, 1)) var(--delay, 0s) infinite; }
+.wordmarkMask { transform: translateY(175px); animation: wordmark var(--loop) var(--ease-out, cubic-bezier(.16, 1, .3, 1)) infinite; }
+.registration { opacity: 0; animation: registration var(--loop) ease infinite; }
+
+@keyframes node { 0% { opacity: 0; } 14%, 100% { opacity: 1; } }
+@keyframes edge { 0%, 8% { stroke-dashoffset: 1; } 30%, 100% { stroke-dashoffset: 0; } }
+@keyframes lockup { 0%, 30% { transform: translateX(323.54px); } 44%, 100% { transform: translateX(0); } }
+@keyframes wordmark { 0%, 40% { transform: translateY(175px); } 52%, 100% { transform: translateY(0); } }
+@keyframes registration { 0%, 50% { opacity: 0; } 56%, 100% { opacity: 1; } }
+@keyframes fade { 0%, 86% { opacity: 1; } 96%, 100% { opacity: 0; } }
+
+/* Reduced motion: the finished logo, still. */
+@media (prefers-reduced-motion: reduce) {
+  .lockup, .node, .edge, .wordmarkMask, .registration, .logo { animation: none; }
+  .lockup, .wordmarkMask { transform: none; }
+  .node, .registration { opacity: 1; }
+  .edge { stroke-dashoffset: 0; }
+}

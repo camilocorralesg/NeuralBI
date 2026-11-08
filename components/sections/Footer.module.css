@@ -51,7 +51,7 @@
   82%, 100% { opacity: .35; transform: scale(.94); }
 }
 
-.content { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.content { position: relative; z-index: 1; width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto; }
 .content :global(.footer-links-grid) { gap: clamp(1.5rem, 3vw, 3rem); margin-bottom: clamp(3.5rem, 6vw, 5.5rem); }
 .content :global(.footer-link-group) { display: flex; flex-direction: column; gap: 1rem; }
 .heading { margin: 0; color: #ffffff; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; letter-spacing: -0.01em; }
@@ -70,7 +70,7 @@
 
 .lowerRow { padding-top: 2rem; border-top: 1px solid var(--footer-rule); }
 .brand { display: flex; align-items: center; gap: 1.5rem; }
-.logo { height: 22px; }
+.logo { width: auto; height: 22px; }
 .copyright { color: var(--color-ink-2); font-family: var(--font-body); font-size: 0.8rem; }
 .social { display: flex; justify-content: center; gap: 1.5rem; }
 

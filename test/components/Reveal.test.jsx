@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Reveal from '../../components/Reveal';
@@ -14,40 +14,29 @@ beforeEach(() => {
     unobserve() {}
   });
 });
-afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
+afterEach(() => { vi.unstubAllGlobals(); });
 
 describe('Reveal (blocks below a headline)', () => {
-  it('serves the finished block: no reveal state in the server HTML, its tag, class and delay kept', () => {
-    const html = renderToString(<Reveal as="p" className="lede" delay={280}>Supporting copy</Reveal>);
-    expect(html).toMatch(/^<p class="[^"]*lede"/);
-    expect(html).not.toContain('data-reveal');
-    expect(html).toContain('--reveal-delay:280ms');
-    expect(html).toContain('Supporting copy');
+  it('serves the finished block with its tag, class and children, and nothing of the old arrival', () => {
+    const html = renderToString(<Reveal as="p" className="lede" variant="text" delay={280} amount={0.3}>Supporting copy</Reveal>);
+    expect(html).toBe('<p class="lede">Supporting copy</p>');
   });
 
-  it('arms off screen, runs once when seen, then clears after its own duration and delay', () => {
-    vi.useFakeTimers();
+  it('stays in place once mounted: no reveal state, no delay, and no observer watching it scroll in', () => {
     const { container } = render(<Reveal variant="block" delay={200}>Panel</Reveal>);
     const block = container.firstChild;
-    expect(block.className).toMatch(/block/);
-    act(() => observers[0].callback([{ isIntersecting: false, intersectionRatio: 0 }]));
-    expect(block).toHaveAttribute('data-reveal', 'armed');
-    act(() => observers[0].callback([{ isIntersecting: true, intersectionRatio: 0.5 }]));
-    expect(block).toHaveAttribute('data-reveal', 'run');
-    expect(observers[0].disconnect).toHaveBeenCalled();
-    // A block lands in 700 ms after its 200 ms delay, plus slack.
-    act(() => vi.advanceTimersByTime(699 + 200));
-    expect(block).toHaveAttribute('data-reveal', 'run');
-    act(() => vi.advanceTimersByTime(101));
     expect(block.hasAttribute('data-reveal')).toBe(false);
+    expect(block.getAttribute('style')).toBeNull();
+    expect(observers).toHaveLength(0);
   });
 
-  it('leaves a block already on screen at load where it is, and shares its element with the caller', () => {
+  it('shares its element with the caller and passes other attributes through', () => {
     const ref = createRef();
-    const { container } = render(<Reveal ref={ref} variant="visual">Stage</Reveal>);
+    const { container } = render(<Reveal ref={ref} variant="visual" id="stage" aria-label="Stage">Stage</Reveal>);
     expect(ref.current).toBe(container.firstChild);
-    act(() => observers[0].callback([{ isIntersecting: true, intersectionRatio: 1 }]));
-    expect(container.firstChild.hasAttribute('data-reveal')).toBe(false);
+    expect(container.firstChild).toHaveAttribute('id', 'stage');
+    expect(container.firstChild).toHaveAttribute('aria-label', 'Stage');
+    expect(container.firstChild.hasAttribute('variant')).toBe(false);
   });
 });
 

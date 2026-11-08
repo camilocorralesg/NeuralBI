@@ -53,15 +53,21 @@ describe('Industries architecture explorer', () => {
       expect(within(panel).queryByRole('region')).toBeNull();
   });
 
-  it('keeps the title alone with its emphasis in italics, in both languages', () => {
+  it('names the section plainly, without an italic flourish, in both languages', () => {
     mount();
-    const italics = () => [...screen.getByRole('heading', { level: 2 }).querySelectorAll('em')].map(em => em.textContent).join(' ');
-    expect(screen.getByRole('heading', { level: 2, name: 'Applied Intelligence Across Verticals' })).toBeInTheDocument();
-    expect(italics()).toBe('Across Verticals');
+    const heading = () => screen.getByRole('heading', { level: 2 });
+    expect(heading()).toHaveAccessibleName('Solutions by industry');
+    expect(heading().querySelector('em')).toBeNull();
     expect(screen.queryByText(/Tailored enterprise architectures/)).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Español' }));
-    expect(italics()).toBe('por Sectores');
+    expect(heading()).toHaveAccessibleName('Soluciones por industria');
     expect(screen.queryByText(/Arquitecturas empresariales a medida/)).toBeNull();
+  });
+
+  it('draws no caption under the product', () => {
+    const { container } = mount();
+    expect(container.querySelector('figure figcaption')).toBeNull();
+    expect(screen.queryByText(/One connected architecture/)).toBeNull();
   });
 
   it('shows every solution of every sector as a NeuralBI product mockup, without a legend underneath', () => {
@@ -166,7 +172,7 @@ describe('Industries architecture explorer', () => {
       expect(screen.getByText(sector.headlineBody)).toBeVisible();
       sector.cards.forEach(card => expect(screen.getByRole('button', { name: card.title })).toBeInTheDocument());
     });
-    expect(screen.getByRole('link', { name: 'Diseña tu arquitectura' })).toHaveAttribute('href', '#contact');
+    expect(screen.getByRole('link', { name: 'Diseñe su arquitectura' })).toHaveAttribute('href', '#contact');
   });
 
   it('pauses offscreen, in hidden tabs and under reduced motion; cleans up listeners', () => {

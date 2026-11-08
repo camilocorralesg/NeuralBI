@@ -7,7 +7,6 @@ const copy = {
   en: {
     label: 'Unified delivery: from enterprise data to working products',
     description: 'Enterprise records and documents converge in NeuralBI, align into a shared model, and build a Power BI chart, a Power Apps workflow and a grounded Copilot response.',
-    hint: 'Explore a source or a deliverable to see its role in the system.',
     phases: ['Connect', 'Unify', 'Deliver'],
     model: '', chart: 'Performance', app: 'Operations', agent: 'Knowledge',
     trend: 'Trend identified', record: 'New record', assigned: 'Assigned', approved: 'Approved',
@@ -17,7 +16,6 @@ const copy = {
   es: {
     label: 'Entrega unificada: de datos empresariales a productos funcionales',
     description: 'Los registros y documentos convergen en NeuralBI, se alinean en un modelo compartido y construyen un gráfico de Power BI, un flujo de Power Apps y una respuesta de Copilot con fuentes.',
-    hint: 'Explora una fuente o un entregable para conocer su función en el sistema.',
     phases: ['Conectar', 'Unificar', 'Entregar'],
     model: '', chart: 'Rendimiento', app: 'Operaciones', agent: 'Conocimiento',
     trend: 'Tendencia identificada', record: 'Nuevo registro', assigned: 'Asignado', approved: 'Aprobado',
@@ -144,8 +142,8 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
   return <figure ref={ref} className={`${s.scene} ${compact ? s.mobile : s.desktop}`} data-running="false" aria-label={words.label} aria-describedby={`${id}-description`}>
     <p id={`${id}-description`} className={s.srOnly}>{words.description}</p>
     <div className={s.canvas} style={{ aspectRatio: `${layout.width} / ${layout.height}` }}>
-      <div className={s.inputLabel}>{inputsHeader.replace(/[[\]]/g, '').trim()}</div>
-      {!compact && <div className={s.inputLabelRight}>{inputsHeader.replace(/[[\]]/g, '').trim()}</div>}
+      <div className={s.inputLabel}>{inputsHeader}</div>
+      {!compact && <div className={s.inputLabelRight}>{inputsHeader}</div>}
       <svg viewBox={`0 0 ${layout.width} ${layout.height}`} fill="none" aria-hidden="true" className={s.connections}>
         <defs>
           <radialGradient id={`${id}-wash`}><stop stopColor="#c6ff34" stopOpacity=".07" /><stop offset="1" stopColor="#c6ff34" stopOpacity="0" /></radialGradient>
@@ -167,7 +165,11 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
 
       {sources.map((node, i) => <div key={node.id} className={`${s.sourcePosition} ${s[`source${i % 3}`]}`} style={position(layout.inputs[i])}>
         <button type="button" className={s.source} data-active={active === node.id} {...events(node)}>
-          <span className={s.sourceIcon} aria-hidden="true">{icons[node.iconKey]}</span><span className={s.sourceName}>{node.name}</span><span className={s.status} aria-hidden="true" />
+          {node.wordmark
+            // A brand whose only mark is its wordmark (SAP, Oracle) is named by the mark itself: "[SAP] ERP".
+            ? <span className={s.sourceName}><img className={s.wordmark} src={node.wordmark.src} alt={node.wordmark.alt} width={node.wordmark.width} height={node.wordmark.height} loading="lazy" decoding="async" /> {node.wordmark.rest}</span>
+            : <><span className={s.sourceIcon} aria-hidden="true">{icons[node.iconKey]}</span><span className={s.sourceName}>{node.name}</span></>}
+          <span className={s.status} aria-hidden="true" />
         </button>
       </div>)}
 
@@ -191,10 +193,10 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
           <ProductPreview index={i} words={words} />
         </button>
       </div>)}
-      <div className={s.deliverablesLabel}>{deliverablesHeader.replace(/[[\]]/g, '').trim()}</div>
+      <div className={s.deliverablesLabel}>{deliverablesHeader}</div>
     </div>
     <div className={s.sequence} aria-hidden="true">{words.phases.map((phase, i) => <span key={phase} className={s[`phase${i}`]}><i>{`0${i + 1}`}</i>{phase}</span>)}</div>
-    <figcaption id={`${id}-detail`} className={s.detail}>{activeNode ? <><strong>{activeNode.name}</strong><span>{activeNode.desc}</span></> : <span>{words.hint}</span>}</figcaption>
+    <figcaption id={`${id}-detail`} className={s.detail} data-empty={activeNode ? undefined : ''}>{activeNode && <><strong>{activeNode.name}</strong><span>{activeNode.desc}</span></>}</figcaption>
   </figure>;
 }
 

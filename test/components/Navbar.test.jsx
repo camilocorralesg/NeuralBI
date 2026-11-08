@@ -26,13 +26,19 @@ describe('Component: Navbar', () => {
 
     expect(screen.getAllByAltText('NeuralBI Logo')[0]).toBeInTheDocument();
 
-    const expectedSections = ['Manifesto', 'Arsenal', 'Integrations', 'Verticals', 'Protocol'];
+    // In page order, each named after what its section holds.
+    const expectedSections = [
+      { name: 'Services', href: '#arsenal' },
+      { name: 'Process', href: '#protocol' },
+      { name: 'Integrations', href: '#integrations' },
+      { name: 'Industries', href: '#verticals' },
+      { name: 'Results', href: '#results' },
+    ];
     for (const section of expectedSections) {
-      expect(screen.getByRole('link', { name: new RegExp(section, 'i') })).toHaveAttribute(
-        'href',
-        `#${section.toLowerCase()}`
-      );
+      expect(screen.getByRole('link', { name: section.name })).toHaveAttribute('href', section.href);
     }
+    const desktop = screen.getAllByRole('link').filter((link) => expectedSections.some((section) => link.getAttribute('href') === section.href));
+    expect(desktop.slice(0, 5).map((link) => link.getAttribute('href'))).toEqual(expectedSections.map((section) => section.href));
 
     expect(screen.getByRole('button', { name: /Select language/i })).toBeInTheDocument();
   });
@@ -45,11 +51,11 @@ describe('Component: Navbar', () => {
     );
 
     const spanishSections = [
-      { name: 'Manifiesto', href: '#manifesto' },
-      { name: 'Arsenal', href: '#arsenal' },
+      { name: 'Servicios', href: '#arsenal' },
+      { name: 'Proceso', href: '#protocol' },
       { name: 'Integraciones', href: '#integrations' },
-      { name: 'Sectores', href: '#verticals' },
-      { name: 'Metodología', href: '#protocol' },
+      { name: 'Industrias', href: '#verticals' },
+      { name: 'Resultados', href: '#results' },
     ];
 
     for (const section of spanishSections) {
@@ -99,7 +105,7 @@ describe('Component: Navbar', () => {
     expect(document.body.style.overflow).toBe('hidden');
 
     // Find links inside mobile overlay
-    const mobileLinks = screen.getAllByRole('link', { name: /Manifesto/i });
+    const mobileLinks = screen.getAllByRole('link', { name: /Services/i });
     // The second one is inside the mobile drawer
     fireEvent.click(mobileLinks[mobileLinks.length - 1]);
 
@@ -183,7 +189,7 @@ describe('Component: Navbar', () => {
     // No glass pill travels between the links any more.
     expect(container.querySelector('[class*="hoverPill"]')).toBeNull();
 
-    for (const label of ['Manifesto', 'Arsenal', 'Integrations', 'Verticals', 'Protocol']) {
+    for (const label of ['Services', 'Process', 'Integrations', 'Industries', 'Results']) {
       const link = screen.getByRole('link', { name: label });
       const roll = link.querySelector('[aria-hidden="true"]');
       const faces = [...roll.children];

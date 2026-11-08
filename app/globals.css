@@ -12,11 +12,14 @@ html {
   scroll-padding-top: 100px;
 }
 
+/* Absolut sets only the footer's NeuralBI signature, so it ships as those seven letters in WOFF2 (about 2 KB, from the
+ * 24 KB TTF; the full family stays in public/assets/fonts). Re-subset it if the signature's text ever changes. */
 @font-face {
   font-family: 'Absolut';
-  src: url('/NeuralBI/assets/fonts/AbsolutMediumReduced.ttf') format('truetype');
+  src: url('/NeuralBI/assets/fonts/AbsolutMedium-signature.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
@@ -43,8 +46,9 @@ html {
   /* Typography - NeuralNet Stack */
   --font-sans: var(--font-sans, 'DM Sans', sans-serif);
   --font-body: var(--font-body, 'Inter', system-ui, sans-serif);
-  --font-ui: var(--font-ui, 'Montserrat', system-ui, sans-serif);
-  --font-button: var(--font-ui, 'Montserrat', system-ui, sans-serif);
+  /* Controls (buttons, navigation, tabs) speak in the display face: no third sans. */
+  --font-ui: var(--font-sans, 'DM Sans', system-ui, sans-serif);
+  --font-button: var(--font-ui, 'DM Sans', system-ui, sans-serif);
   --font-serif: var(--font-sans, 'DM Sans', sans-serif);
   --font-display: var(--font-sans, 'DM Sans', sans-serif);
   --font-tech: var(--font-mono, 'JetBrains Mono', monospace);
@@ -66,6 +70,13 @@ html {
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
+  /* Section titles: one size, always a step under the hero's h1 (clamp(2.4rem, 4.4vw, 4rem); 2.25-3.4rem on phones):
+   * 48px against 63px at 1440, 42 against 45 at 1024, 32 against 39 on a phone. */
+  --type-h2: clamp(2rem, 1.2rem + 2.2vw, 3rem);
+  /* One container for every section after the hero: 1320px of content inside one gutter, so every section's
+   * left and right edges fall on the same two lines (60px from the edge at 1440, 20px on a phone). */
+  --container: 1320px;
+  --gutter: clamp(20px, 3vw, 40px);
   --radius-pill: 9999px;
   
   /* Transitions */
@@ -252,12 +263,30 @@ h1 em, h2 em, h3 em, h4 em,
   pointer-events: none;
   transform: translateZ(0);
   will-change: transform;
-  /* SVG Noise */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  /* A very faint gradient at the bottom to ensure text readability without making the whole screen dark */
+  /* Film grain from a fixed tile (public/assets/grain.png), not an SVG feTurbulence filter: WebKit draws that noise
+   * with a different strength and contrast than Chrome, and computes it on the CPU. The tile looks the same in every
+   * engine. A very faint gradient at the bottom keeps the text readable without darkening the whole screen. */
   background-color: transparent;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E"), linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%);
+  background-image: url('/NeuralBI/assets/grain.png'), linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%);
+  background-repeat: repeat, no-repeat;
+  background-size: 128px 128px, 100% 100%;
+}
+
+/* A global, near-invisible dither: ±2 levels of speckle over the whole viewport (public/assets/dither.png). Chrome
+ * dithers CSS gradients itself; WebKit does not, so dark gradients (the section atmospheres, the CTA lights, the
+ * footer horizon) show 1-level bands in Safari. The speckle breaks them; over pure black it lifts the average by
+ * about half a level, which no screen shows. Static, so it costs one composited layer and no repaint. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  background: url('/NeuralBI/assets/dither.png') repeat;
+  background-size: 128px 128px;
+}
+@media print {
+  body::after { display: none; }
 }
 
 /* =========================================================
@@ -512,19 +541,21 @@ h1 em, h2 em, h3 em, h4 em,
   transform: translateX(150%);
 }
 
-/* ─── SuiHeroTitle Spotlight Effect ─── */
+/* ─── SuiHeroTitle: one sharp headline ─── */
 .sui-hero-title-container {
-  /* Default variables if no mouse move */
-  --mouse-x: 50%;
-  --mouse-y: 50%;
+  position: relative;
+  display: block;
+  width: 100%;
   padding: 0 1rem;
 }
 
 .sui-hero-text {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  /* The headline names the category ("Microsoft data & AI consulting"), so it is set a step smaller than a slogan
+   * would be: each line fits the 1120px measure at 1440 and wraps balanced below it. */
+  font-size: clamp(2.4rem, 4.4vw, 4rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-6);
   /* Completely white text base */
@@ -543,48 +574,19 @@ h1 em, h2 em, h3 em, h4 em,
   display: inline;
 }
 
-.sui-hero-text.blur-layer {
-  filter: blur(6px);
-  opacity: 0.6;
-  color: #ffffff;
-}
-
-.sui-hero-text.blur-layer em {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  text-shadow: none;
-}
-
-.sui-hero-text.sharp-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: #ffffff;
-  -webkit-mask-image: radial-gradient(
-    circle 220px at var(--mouse-x) var(--mouse-y),
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,0.85) 45%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    circle 220px at var(--mouse-x) var(--mouse-y),
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,0.85) 45%,
-    transparent 100%
-  );
-}
-
-.sui-hero-text.sharp-layer em {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
 /* The headline rises line by line out of a mask, 90 ms apart. The clip travels with the line, so the window stays put
  * while the words come up through it, and it exists only while the animation runs (fill: backwards): once landed,
- * nothing cuts the blur halo or the italic overhang. */
-.sui-hero-line { display: block; }
+ * nothing cuts the italic overhang. */
+.sui-hero-line { display: block; text-wrap: balance; }
+
+/* The hero's one hard fact, under its action: quiet, plain sentence case, never a kicker. */
+.hero-fact {
+  margin: 1.25rem 0 0;
+  max-width: 60ch;
+  color: rgba(255, 255, 255, 0.72);
+  font: 400 0.875rem/1.5 var(--font-body);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
 .sui-hero-text .sui-hero-line-inner {
   display: inline-block;
   animation: heroLineRise 900ms var(--ease-out) backwards;
@@ -989,17 +991,6 @@ html.lenis, html.lenis body { height: auto; }
   transform: translateY(-4px) translateZ(0);
 }
 
-/* MOBILE OPTIMIZATIONS (HERO BLUR FIX) */
-@media (max-width: 768px) {
-  .sui-hero-text.blur-layer {
-    filter: none !important;
-    opacity: 1 !important;
-  }
-  .sui-hero-text.sharp-layer {
-    display: none !important;
-  }
-}
-
 /* MOBILE VISIBILITY CLASSES */
 @media (max-width: 768px) {
   .desktop-only { display: none !important; }
@@ -1018,15 +1009,15 @@ html.lenis, html.lenis body { height: auto; }
     padding: 0 !important;
   }
   .sui-hero-text {
-    font-size: clamp(3.1rem, 13.5vw, 4.85rem) !important;
-    line-height: 0.96 !important;
+    font-size: clamp(2.25rem, 10vw, 3.4rem) !important;
+    line-height: 1 !important;
     letter-spacing: -0.04em !important;
     font-weight: 850 !important;
     margin-bottom: 1.15rem !important;
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     background: none !important;
-    filter: drop-shadow(0 4px 30px rgba(198, 255, 52, 0.16)) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.8)) !important;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.8)) !important;
   }
   .sui-hero-text em {
     font-family: var(--font-display) !important;

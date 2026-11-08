@@ -8,7 +8,7 @@ function ConsumerComponent() {
   return (
     <div>
       <span data-testid="lang-val">{language}</span>
-      <span data-testid="t-manifesto">{t.nav.manifesto}</span>
+      <span data-testid="t-manifesto">{t.nav.arsenal}</span>
       <button data-testid="btn-to-es" onClick={() => setLanguage('es')}>Set ES</button>
       <button data-testid="btn-to-en" onClick={() => setLanguage('en')}>Set EN</button>
     </div>
@@ -36,7 +36,7 @@ describe('Context: LanguageContext', () => {
     );
 
     expect(screen.getByTestId('lang-val').textContent).toBe('en');
-    expect(screen.getByTestId('t-manifesto').textContent).toBe('Manifesto');
+    expect(screen.getByTestId('t-manifesto').textContent).toBe('Services');
   });
 
   it('updates language and translates strings when setLanguage is called', () => {
@@ -49,13 +49,13 @@ describe('Context: LanguageContext', () => {
     fireEvent.click(screen.getByTestId('btn-to-es'));
 
     expect(screen.getByTestId('lang-val').textContent).toBe('es');
-    expect(screen.getByTestId('t-manifesto').textContent).toBe('Manifiesto');
+    expect(screen.getByTestId('t-manifesto').textContent).toBe('Servicios');
     expect(localStorage.getItem('neuralbi_lang')).toBe('es');
     expect(document.documentElement.lang).toBe('es');
 
     fireEvent.click(screen.getByTestId('btn-to-en'));
     expect(screen.getByTestId('lang-val').textContent).toBe('en');
-    expect(screen.getByTestId('t-manifesto').textContent).toBe('Manifesto');
+    expect(screen.getByTestId('t-manifesto').textContent).toBe('Services');
     expect(localStorage.getItem('neuralbi_lang')).toBe('en');
   });
 
@@ -69,7 +69,7 @@ describe('Context: LanguageContext', () => {
     );
 
     expect(screen.getByTestId('lang-val').textContent).toBe('es');
-    expect(screen.getByTestId('t-manifesto').textContent).toBe('Manifiesto');
+    expect(screen.getByTestId('t-manifesto').textContent).toBe('Servicios');
   });
 
   it('detects spanish browser language when localStorage is empty', () => {

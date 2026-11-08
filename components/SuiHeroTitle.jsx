@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useRef, useCallback, memo } from 'react';
+import React, { memo } from 'react';
 
-// Each line rises out of its own mask, 90 ms after the one above it. Both layers (the soft one and the spotlight one)
-// carry the same lines, so they rise in lockstep. A space between the line blocks keeps the heading's text a sentence
-// ("Intelligence That Executes") for search and assistive technology; it collapses on screen.
+// Each line rises out of its own mask, 90 ms after the one above it. A space between the line blocks keeps the
+// heading's text a sentence ("Intelligence That Executes") for search and assistive technology; it collapses on screen.
 function Lines({ lines }) {
   return lines.map((line, i) => {
     const Tag = line.em ? 'em' : 'span';
@@ -19,30 +18,12 @@ function Lines({ lines }) {
   });
 }
 
+// The headline is drawn once and sharp at every width: no blurred base layer, no pointer spotlight.
 const SuiHeroTitle = memo(function SuiHeroTitle({ lines, font }) {
-  const containerRef = useRef(null);
-
-  const handleMouseMove = useCallback((e) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    containerRef.current.style.setProperty('--mouse-x', `${x}px`);
-    containerRef.current.style.setProperty('--mouse-y', `${y}px`);
-  }, []);
-
   const fontStyle = font ? { fontFamily: font } : {};
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="sui-hero-title-container"
-      style={{ position: 'relative', display: 'block', width: '100%' }}
-    >
-      <h1 className="sui-hero-text blur-layer" style={fontStyle}>
-        <Lines lines={lines} />
-      </h1>
-      <h1 className="sui-hero-text sharp-layer" style={fontStyle} aria-hidden="true">
+    <div className="sui-hero-title-container">
+      <h1 className="sui-hero-text" style={fontStyle}>
         <Lines lines={lines} />
       </h1>
     </div>

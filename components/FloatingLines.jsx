@@ -1,31 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import {
-  Clock,
-  Mesh,
-  OrthographicCamera,
-  PlaneGeometry,
-  Scene,
-  ShaderMaterial,
-  Vector2,
-  Vector3,
-  WebGLRenderer
-} from 'three';
+import { answersPointer } from './heroPointer';
+import { createLinesRenderer } from './linesRenderer';
 
 // Shader time of the still frame drawn under reduced motion.
 const STILL_TIME = 6;
 
-const vertexShader = `
-precision highp float;
-
-void main() {
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-`;
-
 const fragmentShader = `
 precision highp float;
+
+// GLSL ES 1.00 (WebGL 1) loops need a constant bound: each wave counts to MAX_LINES and stops at its own count.
+#define MAX_LINES 32
 
 uniform float iTime;
 uniform vec3  iResolution;
@@ -96,10 +82,16 @@ vec3 getLineColor(float t, vec3 baseColor) {
     float scaled = clampedT * float(lineGradientCount - 1);
     int idx = int(floor(scaled));
     float f = fract(scaled);
-    int idx2 = min(idx + 1, lineGradientCount - 1);
+    int last = lineGradientCount - 1;
+    int idx2 = idx + 1 < last ? idx + 1 : last;
 
-    vec3 c1 = lineGradient[idx];
-    vec3 c2 = lineGradient[idx2];
+    // GLSL ES 1.00 reads a uniform array only at a constant or loop index: walk the stops and keep the two needed.
+    vec3 c1 = lineGradient[0];
+    vec3 c2 = lineGradient[0];
+    for (int i = 0; i < 8; ++i) {
+      if (i == idx) c1 = lineGradient[i];
+      if (i == idx2) c2 = lineGradient[i];
+    }
     
     gradientColor = mix(c1, c2, f);
   }
@@ -163,7 +155,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
   
   if (enableBottom) {
-    for (int i = 0; i < bottomLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= bottomLineCount) break;
       float fi = float(i);
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -181,7 +174,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
 
   if (enableMiddle) {
-    for (int i = 0; i < middleLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= middleLineCount) break;
       float fi = float(i);
       float t = fi / max(float(middleLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -199,7 +193,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
 
   if (enableTop) {
-    for (int i = 0; i < topLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= topLineCount) break;
       float fi = float(i);
       float t = fi / max(float(topLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -228,6 +223,11 @@ void main() {
 `;
 
 const MAX_GRADIENT_STOPS = 8;
+// The shader's own bound on lines per wave (MAX_LINES).
+const MAX_LINES = 32;
+// The context is made when the lines come within a screen of the viewport and freed when they go further, so the hero
+// holds no WebGL context while the visitor reads the rest of the page.
+const NEAR = '100% 0px';
 
 function hexToVec3(hex) {
   let value = hex.trim();
@@ -250,7 +250,7 @@ function hexToVec3(hex) {
     b = parseInt(value.slice(4, 6), 16);
   }
 
-  return new Vector3(r / 255, g / 255, b / 255);
+  return [r / 255, g / 255, b / 255];
 }
 
 export default function FloatingLines({
@@ -274,13 +274,13 @@ export default function FloatingLines({
   mixBlendMode = 'screen'
 }) {
   const containerRef = useRef(null);
-  const targetMouseRef = useRef(new Vector2(-1000, -1000));
-  const currentMouseRef = useRef(new Vector2(-1000, -1000));
+  const targetMouseRef = useRef([-1000, -1000]);
+  const currentMouseRef = useRef([-1000, -1000]);
   const targetInfluenceRef = useRef(0);
   const currentInfluenceRef = useRef(0);
-  const targetParallaxRef = useRef(new Vector2(0, 0));
-  const currentParallaxRef = useRef(new Vector2(0, 0));
-  const rippleCenterRef = useRef(new Vector2(-1000, -1000));
+  const targetParallaxRef = useRef([0, 0]);
+  const currentParallaxRef = useRef([0, 0]);
+  const rippleCenterRef = useRef([-1000, -1000]);
   const rippleProgressRef = useRef(-1.0);
 
   const getLineCount = waveType => {
@@ -297,9 +297,9 @@ export default function FloatingLines({
     return lineDistance[index] ?? 0.1;
   };
 
-  const topLineCount = enabledWaves.includes('top') ? getLineCount('top') : 0;
-  const middleLineCount = enabledWaves.includes('middle') ? getLineCount('middle') : 0;
-  const bottomLineCount = enabledWaves.includes('bottom') ? getLineCount('bottom') : 0;
+  const topLineCount = enabledWaves.includes('top') ? Math.min(getLineCount('top'), MAX_LINES) : 0;
+  const middleLineCount = enabledWaves.includes('middle') ? Math.min(getLineCount('middle'), MAX_LINES) : 0;
+  const bottomLineCount = enabledWaves.includes('bottom') ? Math.min(getLineCount('bottom'), MAX_LINES) : 0;
 
   const topLineDistance = enabledWaves.includes('top') ? getLineDistance('top') * 0.01 : 0.01;
   const middleLineDistance = enabledWaves.includes('middle') ? getLineDistance('middle') * 0.01 : 0.01;
@@ -313,166 +313,141 @@ export default function FloatingLines({
     let isIntersecting = true;
     // Reduced motion: one still frame of the lines, redrawn only when the canvas resizes; the pointer moves nothing.
     const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const ratio = () => Math.min(window.devicePixelRatio || 1, 1.5);
+    const lerp = (current, target, amount) => { current[0] += (target[0] - current[0]) * amount; current[1] += (target[1] - current[1]) * amount; };
 
-    // Without WebGL (disabled, blocked or lost) the lines give way to a still CSS light instead of taking the page down.
-    let renderer;
-    try {
-      // Probe first, so a browser without WebGL does not even log three.js's context errors.
-      const probe = document.createElement('canvas');
-      if (!probe.getContext('webgl2') && !probe.getContext('webgl')) throw new Error('FloatingLines: WebGL unavailable');
-      renderer = new WebGLRenderer({ antialias: true, alpha: false });
-    } catch (error) {
-      if (process.env.NODE_ENV !== 'production') console.warn(error);
-      container.dataset.webgl = 'false';
-      return undefined;
-    }
-    container.dataset.webgl = 'true';
-
-    const observer = typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver(records => {
-          // The last record of a batch is the current state (a fast scroll delivers several).
-          isIntersecting = records[records.length - 1].isIntersecting;
-        }, { threshold: 0 })
-      : null;
-
-    if (observer) {
-      observer.observe(container);
-    }
-
-    const scene = new Scene();
-
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    camera.position.z = 1;
-
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    container.appendChild(renderer.domElement);
-
-    const uniforms = {
-      iTime: { value: 0 },
-      iResolution: { value: new Vector3(1, 1, 1) },
-      animationSpeed: { value: animationSpeed },
-
-      enableTop: { value: enabledWaves.includes('top') },
-      enableMiddle: { value: enabledWaves.includes('middle') },
-      enableBottom: { value: enabledWaves.includes('bottom') },
-
-      topLineCount: { value: topLineCount },
-      middleLineCount: { value: middleLineCount },
-      bottomLineCount: { value: bottomLineCount },
-
-      topLineDistance: { value: topLineDistance },
-      middleLineDistance: { value: middleLineDistance },
-      bottomLineDistance: { value: bottomLineDistance },
-
-      topWavePosition: {
-        value: new Vector3(topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4)
-      },
-      middleWavePosition: {
-        value: new Vector3(
-          middleWavePosition?.x ?? 5.0,
-          middleWavePosition?.y ?? 0.0,
-          middleWavePosition?.rotate ?? 0.2
-        )
-      },
-      bottomWavePosition: {
-        value: new Vector3(
-          bottomWavePosition?.x ?? 2.0,
-          bottomWavePosition?.y ?? -0.7,
-          bottomWavePosition?.rotate ?? 0.4
-        )
-      },
-
-      iMouse: { value: new Vector2(-1000, -1000) },
-      interactive: { value: interactive },
-      bendRadius: { value: bendRadius },
-      bendStrength: { value: bendStrength },
-      bendInfluence: { value: 0 },
-
-      parallax: { value: parallax },
-      parallaxStrength: { value: parallaxStrength },
-      parallaxOffset: { value: new Vector2(0, 0) },
-
-      lineGradient: {
-        value: Array.from({ length: MAX_GRADIENT_STOPS }, () => new Vector3(1, 1, 1))
-      },
-      lineGradientCount: { value: 0 },
-
-      u_rippleProgress: { value: -1.0 },
-      u_rippleCenter: { value: new Vector2(-1000, -1000) }
+    // The fixed uniforms: the waves, their lines and the gradient.
+    const stops = (linesGradient || [gradientStart, gradientMid, gradientEnd].filter(Boolean)).slice(0, MAX_GRADIENT_STOPS);
+    const gradient = new Float32Array(MAX_GRADIENT_STOPS * 3).fill(1);
+    stops.forEach((hex, i) => gradient.set(hexToVec3(hex), i * 3));
+    const fixed = {
+      animationSpeed,
+      enableTop: enabledWaves.includes('top'), enableMiddle: enabledWaves.includes('middle'), enableBottom: enabledWaves.includes('bottom'),
+      topLineCount, middleLineCount, bottomLineCount,
+      topLineDistance, middleLineDistance, bottomLineDistance,
+      topWavePosition: [topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4],
+      middleWavePosition: [middleWavePosition?.x ?? 5.0, middleWavePosition?.y ?? 0.0, middleWavePosition?.rotate ?? 0.2],
+      bottomWavePosition: [bottomWavePosition?.x ?? 2.0, bottomWavePosition?.y ?? -0.7, bottomWavePosition?.rotate ?? 0.4],
+      interactive, bendRadius, bendStrength, parallax, parallaxStrength,
+      lineGradient: gradient, lineGradientCount: stops.length,
     };
 
-    let stops = linesGradient;
-    if (!stops && (gradientStart || gradientMid || gradientEnd)) {
-      stops = [];
-      if (gradientStart) stops.push(gradientStart);
-      if (gradientMid) stops.push(gradientMid);
-      if (gradientEnd) stops.push(gradientEnd);
-    }
-
-    if (stops && stops.length > 0) {
-      const stopsArr = stops.slice(0, MAX_GRADIENT_STOPS);
-      uniforms.lineGradientCount.value = stopsArr.length;
-
-      stopsArr.forEach((hex, i) => {
-        const color = hexToVec3(hex);
-        uniforms.lineGradient.value[i].set(color.x, color.y, color.z);
-      });
-    }
-
-    const material = new ShaderMaterial({
-      uniforms,
-      vertexShader,
-      fragmentShader
-    });
-
-    const geometry = new PlaneGeometry(2, 2);
-    const mesh = new Mesh(geometry, material);
-    scene.add(mesh);
-
-    const clock = new Clock();
+    let canvas = null;
+    let renderer = null;
+    let raf = 0;
+    // Shader time carries across a freed and remade context, so the lines resume where they were.
+    let elapsed = 0;
+    let last = 0;
 
     const setSize = () => {
-      if (!active) return;
-      const width = container.clientWidth || 1;
-      const height = container.clientHeight || 1;
-
-      renderer.setSize(width, height, false);
-
-      const canvasWidth = renderer.domElement.width;
-      const canvasHeight = renderer.domElement.height;
-      uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
-      if (still) renderer.render(scene, camera);
+      if (!renderer) return;
+      const width = Math.max(1, Math.round((container.clientWidth || 1) * ratio()));
+      const height = Math.max(1, Math.round((container.clientHeight || 1) * ratio()));
+      renderer.resize(width, height);
+      renderer.set('iResolution', [width, height, 1]);
+      if (still) draw();
     };
 
-    setSize();
+    const draw = () => {
+      renderer.set('iTime', still ? STILL_TIME : elapsed);
+      renderer.set('iMouse', currentMouseRef.current);
+      renderer.set('bendInfluence', currentInfluenceRef.current);
+      renderer.set('parallaxOffset', currentParallaxRef.current);
+      renderer.set('u_rippleProgress', rippleProgressRef.current);
+      renderer.set('u_rippleCenter', rippleCenterRef.current);
+      renderer.render();
+    };
 
-    const ro =
-      typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(() => {
-            if (!active) return;
-            setSize();
-          })
-        : null;
+    const renderLoop = (now) => {
+      raf = 0;
+      if (!active || !renderer) return;
+      raf = requestAnimationFrame(renderLoop);
+      const step = last ? Math.min(now - last, 100) / 1000 : 0;
+      last = now;
+      if (!isIntersecting) return;
+      elapsed += step;
 
-    if (ro) ro.observe(container);
+      if (interactive) {
+        lerp(currentMouseRef.current, targetMouseRef.current, mouseDamping);
+        currentInfluenceRef.current += (targetInfluenceRef.current - currentInfluenceRef.current) * mouseDamping;
+      }
+      if (parallax) lerp(currentParallaxRef.current, targetParallaxRef.current, mouseDamping);
+      if (rippleProgressRef.current >= 0.0 && rippleProgressRef.current < 1.5) rippleProgressRef.current += 0.025 * animationSpeed;
+      else rippleProgressRef.current = -1.0;
+      draw();
+    };
 
+    const onLost = (event) => { event.preventDefault(); teardown(); container.dataset.webgl = 'false'; };
+
+    // Without WebGL (disabled, blocked or lost) the lines give way to a still CSS light instead of taking the page down.
+    const boot = () => {
+      if (renderer || !active) return;
+      canvas = document.createElement('canvas');
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.addEventListener('webglcontextlost', onLost);
+      try {
+        renderer = createLinesRenderer(canvas, fragmentShader);
+        if (!renderer) throw new Error('FloatingLines: WebGL unavailable');
+      } catch (error) {
+        if (process.env.NODE_ENV !== 'production') console.warn(error);
+        renderer = null;
+        canvas = null;
+        container.dataset.webgl = 'false';
+        return;
+      }
+      container.appendChild(canvas);
+      container.dataset.webgl = 'true';
+      Object.entries(fixed).forEach(([name, value]) => renderer.set(name, value));
+      setSize();
+      last = 0;
+      if (still) draw();
+      else raf = requestAnimationFrame(renderLoop);
+    };
+
+    function teardown() {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      if (canvas) {
+        canvas.removeEventListener('webglcontextlost', onLost);
+        canvas.remove();
+      }
+      renderer?.destroy();
+      renderer = null;
+      canvas = null;
+    }
+
+    // Two distances: drawing pauses as soon as the lines leave the screen; the context goes when they are a screen away.
+    const visible = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(records => { isIntersecting = records[records.length - 1].isIntersecting; }, { threshold: 0 })
+      : null;
+    const near = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(records => { if (records[records.length - 1].isIntersecting) boot(); else teardown(); }, { rootMargin: NEAR })
+      : null;
+    // Already near (the hero at load): make the context now rather than on the observer's first report.
+    const box = container.getBoundingClientRect();
+    if (!near || (box.bottom >= -window.innerHeight && box.top <= window.innerHeight * 2)) boot();
+    visible?.observe(container);
+    near?.observe(container);
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => { if (active) setSize(); }) : null;
+    ro?.observe(container);
+
+    // Touch never bends, ripples or shifts the lines (see heroPointer.js); a mouse or a pen still does.
     const handlePointerMove = event => {
-      const rect = renderer.domElement.getBoundingClientRect();
+      if (!canvas || !answersPointer(event)) return;
+      const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      const dpr = renderer.getPixelRatio();
+      const dpr = ratio();
 
-      targetMouseRef.current.set(x * dpr, (rect.height - y) * dpr);
+      targetMouseRef.current = [x * dpr, (rect.height - y) * dpr];
       targetInfluenceRef.current = 1.0;
 
       if (parallax) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const offsetX = (x - centerX) / rect.width;
-        const offsetY = -(y - centerY) / rect.height;
-        targetParallaxRef.current.set(offsetX * parallaxStrength, offsetY * parallaxStrength);
+        const offsetX = (x - rect.width / 2) / rect.width;
+        const offsetY = -(y - rect.height / 2) / rect.height;
+        targetParallaxRef.current = [offsetX * parallaxStrength, offsetY * parallaxStrength];
       }
     };
 
@@ -481,83 +456,35 @@ export default function FloatingLines({
     };
 
     const handlePointerDown = event => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const dpr = renderer.getPixelRatio();
-
-      rippleCenterRef.current.set(x * dpr, (rect.height - y) * dpr);
+      if (!canvas || !answersPointer(event)) return;
+      const rect = canvas.getBoundingClientRect();
+      const dpr = ratio();
+      rippleCenterRef.current = [(event.clientX - rect.left) * dpr, (rect.height - (event.clientY - rect.top)) * dpr];
       rippleProgressRef.current = 0.0;
     };
 
-    // Use window listener for robustness instead of domElement to avoid overlay pointer-event blocks!
+    // Window listeners, so overlays above the canvas never block the pointer.
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerdown', handlePointerDown);
-    if (interactive) {
-      renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
-    }
-
-    let raf = 0;
-    const renderLoop = () => {
-      if (!active) return;
-      if (!isIntersecting) {
-        raf = requestAnimationFrame(renderLoop);
-        return;
-      }
-
-      uniforms.iTime.value = still ? STILL_TIME : clock.getElapsedTime();
-
-      if (interactive) {
-        currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
-        uniforms.iMouse.value.copy(currentMouseRef.current);
-
-        currentInfluenceRef.current += (targetInfluenceRef.current - currentInfluenceRef.current) * mouseDamping;
-        uniforms.bendInfluence.value = currentInfluenceRef.current;
-      }
-
-      if (parallax) {
-        currentParallaxRef.current.lerp(targetParallaxRef.current, mouseDamping);
-        uniforms.parallaxOffset.value.copy(currentParallaxRef.current);
-      }
-
-      if (rippleProgressRef.current >= 0.0 && rippleProgressRef.current < 1.5) {
-        rippleProgressRef.current += 0.025 * animationSpeed;
-        uniforms.u_rippleProgress.value = rippleProgressRef.current;
-        uniforms.u_rippleCenter.value.copy(rippleCenterRef.current);
-      } else {
-        rippleProgressRef.current = -1.0;
-        uniforms.u_rippleProgress.value = -1.0;
-      }
-
-      renderer.render(scene, camera);
-      if (still) return;
-      raf = requestAnimationFrame(renderLoop);
-    };
-    renderLoop();
+    if (interactive) container.addEventListener('pointerleave', handlePointerLeave);
 
     return () => {
       active = false;
-
-      cancelAnimationFrame(raf);
-
-      if (observer) observer.disconnect();
-      if (ro) ro.disconnect();
-
+      visible?.disconnect();
+      near?.disconnect();
+      ro?.disconnect();
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerdown', handlePointerDown);
-      if (interactive) {
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
-      }
-
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
-      renderer.forceContextLoss();
-      if (renderer.domElement.parentElement) {
-        renderer.domElement.parentElement.removeChild(renderer.domElement);
-      }
+      if (interactive) container.removeEventListener('pointerleave', handlePointerLeave);
+      teardown();
     };
   }, [
+    topLineCount,
+    middleLineCount,
+    bottomLineCount,
+    topLineDistance,
+    middleLineDistance,
+    bottomLineDistance,
     linesGradient,
     gradientStart,
     gradientMid,

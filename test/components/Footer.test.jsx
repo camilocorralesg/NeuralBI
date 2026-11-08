@@ -45,10 +45,15 @@ describe('Footer remix', () => {
       expect([...footer.querySelectorAll('.footer-link-group a')].map((link) => link.getAttribute('href')))
         .toEqual(expectedHrefs);
       expect(footer).toHaveTextContent(translations[locale].footer.copyright);
+      // The brands named on the page (Unified Delivery's logos) are their owners' marks.
+      expect(footer).toHaveTextContent(translations[locale].footer.trademarks);
       expect(footer.querySelector('img[alt="NeuralBI Logo"]')).toHaveAttribute('src', '/NeuralBI/assets/Neuralbi logo.svg');
-      expect(footer.querySelectorAll('.footer-lower-row a')).toHaveLength(2);
-      expect(footer).toHaveTextContent('LinkedIn');
-      expect(footer).toHaveTextContent('YouTube');
+      const social = [...footer.querySelectorAll('.footer-lower-row a')];
+      expect(social).toHaveLength(1);
+      expect(social[0]).toHaveTextContent('LinkedIn');
+      expect(social[0]).toHaveAttribute('href', 'https://www.linkedin.com/company/neuralnet/');
+      expect(social[0]).toHaveAttribute('target', '_blank');
+      expect(footer).not.toHaveTextContent('YouTube');
     };
 
     assertContent('en');

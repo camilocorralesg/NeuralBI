@@ -3,16 +3,17 @@
   --color-ink-3: #85858e;
   --arsenal-line: var(--color-border);
   --arsenal-muted: var(--color-ink-2);
-  --arsenal-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  /* Film grain from a fixed tile: an SVG feTurbulence filter renders differently in WebKit and costs CPU. */
+  --arsenal-grain: url('/NeuralBI/assets/grain.png');
   position: relative;
   isolation: isolate;
   padding: clamp(88px, 10vw, 152px) 0 clamp(96px, 12vw, 176px);
   background: var(--color-paper);
   color: var(--color-ink);
 }
-.container { width: min(100% - 80px, 1440px); margin-inline: auto; }
+.container { width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto; }
 .sectionHeader { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .82fr); align-items: end; gap: 48px; margin-bottom: clamp(52px, 6vw, 88px); }
-.sectionHeader h2 { font: 700 clamp(3.2rem, 6.6vw, 6rem)/.98 var(--font-display); letter-spacing: -.04em; text-wrap: balance; }
+.sectionHeader h2 { font: 700 var(--type-h2)/1.06 var(--font-display); letter-spacing: -.04em; text-wrap: balance; }
 .sectionHeader h2 em { color: var(--color-accent); font-weight: 300; }
 .sectionHeader > p { max-width: 610px; color: var(--arsenal-muted); font: 400 clamp(1.05rem, 1.45vw, 1.28rem)/1.6 var(--font-body); text-wrap: pretty; }
 .layout { display: grid; grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr); align-items: start; gap: clamp(32px, 4.2vw, 68px); }
@@ -126,7 +127,6 @@
 
 @media (max-width: 1150px) {
   .layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 30px; }
-  .container { width: min(100% - 56px, 1440px); }
   .productContent { padding-left: 12px; }
 }
 
@@ -145,10 +145,8 @@
 
 @media (max-width: 600px) {
   .section { padding: 80px 0 100px; }
-  .container { width: min(100% - 36px, 1440px); }
   .sectionHeader { margin-bottom: 37px; }
-  .sectionHeader h2 { font-size: clamp(3.15rem, 13vw, 4.7rem); }
-  .sectionHeader > p { font-size: 15px; }
+  .sectionHeader > p { font-size: 16px; }
   .layout { gap: 20px; }
   .productToggle { min-height: 76px; }
   .productContent { padding: 3px 1px 26px; }
@@ -180,9 +178,13 @@
   .modalScroll { scroll-behavior: auto; }
 }
 
-/* Scroll-led Arsenal. The header stays in document flow; only the editorial spread pins. */
-.scrollStory { display: none; }
+/* Desktop (1024px and up) shows the product console (ArsenalConsole); the accordion below it is for tablets and phones. */
 .naturalExperience { display: block; }
+@media (min-width: 1024px) {
+  .naturalExperience { display: none; }
+  /* The console sits close under the title, so the section reads on one screen. */
+  .sectionHeader { margin-bottom: clamp(36px, 3.2vw, 48px); }
+}
 .glowControl {
   --arsenal-ring-angle: 45deg;
   position: relative;
@@ -218,9 +220,6 @@
   outline: 2px solid var(--tool-accent); outline-offset: 3px;
 }
 .glowControl:active { transform: translateY(0); }
-.naturalToolNav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
-.naturalToolButton { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 18px; }
-.naturalToolButton svg { width: 17px; height: 17px; }
 .naturalTool { position: relative; padding: 45px 0 78px; border-top: 1px solid var(--color-border); }
 .naturalToolRule { position: absolute; top: -1px; right: 0; left: 0; height: 1px; background: linear-gradient(90deg, var(--tool-accent), transparent 70%); transform-origin: left; }
 .naturalToolHeader { display: flex; align-items: flex-start; gap: 18px; max-width: 840px; margin-bottom: 34px; }
@@ -228,7 +227,7 @@
 .naturalToolHeader h3 { font: 650 clamp(2rem, 4vw, 3.4rem)/1.08 var(--font-display); letter-spacing: -.035em; text-wrap: balance; }
 .naturalChapter { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 18px 40px; padding: 40px 0; border-top: 1px solid var(--color-border); scroll-margin-top: 100px; }
 .naturalCopy h4 { font: 600 clamp(1.35rem, 2vw, 1.8rem)/1.2 var(--font-display); margin-bottom: 15px; }
-.naturalCopy > p { color: var(--color-ink-2); font: 400 15px/1.58 var(--font-body); margin-bottom: 14px; }
+.naturalCopy > p { color: var(--color-ink-2); font: 400 16px/1.6 var(--font-body); margin-bottom: 14px; }
 .naturalCopy .outcome { color: var(--color-ink); }
 .naturalCopy .outcome strong, .proposition .outcome strong { color: var(--tool-accent); }
 .naturalCopy .pillList { margin-top: 16px; }
@@ -255,7 +254,7 @@
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 5%, transparent);
   font: 500 13px/1.4 var(--font-ui); transition: border-color .24s;
 }
-.chipGrid li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--tool-accent); box-shadow: 0 0 10px var(--tool-accent); }
+.chipGrid li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--tool-accent); }
 .entryIndex { color: var(--color-ink-3); font: 500 11px/1.3 var(--font-mono); letter-spacing: .06em; }
 
 /* Natural flow: the same editorial language as the pinned story, laid out for touch and narrow screens. */
@@ -269,223 +268,17 @@
 .naturalCta { margin-top: 36px; }
 /* On a phone the story already reads in full here; the detailed architecture stays a desktop and tablet affordance. */
 @media (max-width: 767px) { .naturalCta { display: none; } }
-.naturalNavLogo { display: grid; flex: 0 0 26px; width: 26px; height: 26px; place-items: center; padding: 5px; background: color-mix(in srgb, var(--tool-accent) 10%, var(--color-paper-3)); border-radius: 50%; }
-.naturalNavLogo img { width: 100%; height: 100%; object-fit: contain; }
-.naturalToolButton { justify-content: flex-start; gap: 10px; padding: 8px 14px 8px 8px; }
-.naturalToolButton svg { margin-left: auto; }
 @media (max-width: 480px) { .chipGrid { grid-template-columns: 1fr; } }
 
-/* Pinned story. Keep the query in sync with STORY_QUERY in ArsenalExperience.jsx. */
-@media (min-width: 1024px) and (min-height: 540px) and (prefers-reduced-motion: no-preference) {
-  .section { padding-bottom: 0; }
-  .sectionHeader { margin-bottom: 48px; }
-  .scrollStory { --story-top: 88px; --story-height: calc(100svh - 104px); display: block; position: relative; }
-  .naturalExperience { display: none; }
-  .stickyScreen {
-    --rail-width: 180px;
-    --rail-gap: clamp(16px, 1.8vw, 32px);
-    position: sticky; top: var(--story-top); z-index: 2;
-    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-    gap: clamp(24px, 3.5vw, 64px);
-    width: min(100% - 64px, 1440px); height: var(--story-height);
-    margin-inline: auto; padding: clamp(10px, 2.2svh, 24px) 0 0;
-    background: var(--color-paper);
-  }
-  .stickyScreen, .narrative, .stage { transition: --tool-accent .6s var(--ease-out); }
-  .stickyScreen::before { content: ""; position: absolute; z-index: -1; inset: 0; background-image: var(--arsenal-grain); opacity: .5; pointer-events: none; }
-  .scrollMarkers { position: relative; margin-top: calc(-1 * var(--story-height)); padding-bottom: var(--story-height); pointer-events: none; }
-  .scrollMarker { width: 1px; }
-
-  /* Tool rail */
-  .storyLeft { display: grid; grid-template-columns: var(--rail-width) minmax(0, 1fr); gap: var(--rail-gap); min-height: 0; }
-  .toolNav { position: relative; z-index: 4; display: flex; flex-direction: column; align-self: start; gap: 8px; padding-top: 4px; }
-  .toolButton { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 50px; padding: 6px 14px 6px 7px; text-align: left; white-space: nowrap; font-size: 12px; }
-  .toolButton:not([data-active="true"]) { color: var(--color-ink-2); }
-  .toolButton:not([data-active="true"]):hover { color: var(--tool-accent); }
-  .toolButton .productLogo { flex: 0 0 34px; width: 34px; height: 34px; padding: 7px; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--tool-accent) 9%, var(--color-paper-3)); }
-  .toolLabel { overflow: hidden; text-overflow: ellipsis; }
-  .stickyScreen[data-curtain="true"] .toolNav { pointer-events: none; }
-  .railIndicator {
-    position: absolute; z-index: -1; inset: -1px; border: 1px solid var(--tool-accent); border-radius: inherit; pointer-events: none;
-    background: color-mix(in srgb, var(--tool-accent) 8%, transparent);
-    box-shadow: 0 0 8px -2px color-mix(in srgb, var(--tool-accent) 45%, transparent);
-  }
-
-  /* Narrative column */
-  .narrative { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; container-type: inline-size; }
-  .narrativeIntro { min-height: 0; }
-  .narrativeIntro h3 { font: 650 clamp(1.4rem, min(2.5vw, 5svh), 3rem)/1.08 var(--font-display); letter-spacing: -.035em; text-wrap: balance; }
-  .narrativeBody { max-width: 60ch; margin-top: 10px; color: var(--color-ink-2); font: 400 clamp(13px, min(1.05vw, 2svh), 15px)/1.55 var(--font-body); text-wrap: pretty; }
-
-  /* Chapters: a single segmented track with a sliding thumb. */
-  .chapterNav {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; flex: 0 0 auto;
-    margin: clamp(12px, 2.4svh, 22px) 0 clamp(10px, 2svh, 18px); padding: 4px;
-    background: color-mix(in srgb, var(--color-paper-2) 72%, transparent);
-    border: 1px solid var(--color-border); border-radius: var(--radius-pill);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 6%, transparent);
-  }
-  .chapterNav .chapterTab {
-    position: relative; isolation: isolate; display: flex; align-items: center; justify-content: center; gap: 8px;
-    min-width: 0; min-height: 38px; padding: 6px 10px; color: var(--color-ink-2); border: 0; border-radius: var(--radius-pill);
-    font: 600 12.5px/1.2 var(--font-ui); white-space: nowrap; transition: color .24s;
-  }
-  .chapterNav .chapterTab:hover, .chapterNav .chapterTab[data-active="true"] { color: var(--color-ink); }
-  .chapterNav .chapterTab:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: 2px; }
-  .chapterIndex { color: var(--color-ink-3); font: 500 10.5px/1 var(--font-mono); letter-spacing: .06em; transition: color .24s; }
-  .chapterTab[data-active="true"] .chapterIndex { color: var(--tool-accent); }
-  .chapterThumb {
-    position: absolute; z-index: -1; inset: 0; border-radius: inherit;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--tool-accent) 15%, var(--color-paper-3)), color-mix(in srgb, var(--tool-accent) 6%, var(--color-paper-2)));
-    border: 1px solid color-mix(in srgb, var(--tool-accent) 45%, transparent);
-    box-shadow: 0 2px 6px -2px color-mix(in srgb, var(--tool-accent) 40%, transparent), inset 0 1px 0 color-mix(in srgb, var(--color-ink) 12%, transparent);
-  }
-  @container (max-width: 470px) { .chapterIndex { display: none; } }
-
-  .narrativeFrame { flex: 0 1 auto; min-height: 0; }
-
-  /* Proposition */
-  .propositionLead { margin-bottom: 14px; color: var(--color-ink-2); font: 400 14px/1.55 var(--font-body); text-wrap: pretty; }
-  .propositionOutcome { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; padding: clamp(8px, 1.6svh, 12px) 0; border-block: 1px solid var(--color-border); }
-  .propositionOutcome strong { flex: 0 0 auto; color: var(--tool-accent); font: 700 clamp(1.45rem, min(2.2vw, 4.4svh), 2.1rem)/1 var(--font-display); letter-spacing: -.035em; }
-  .propositionOutcome span { color: var(--color-ink); font: 500 13px/1.4 var(--font-ui); }
-  .proposition .specsLine { margin-bottom: 12px; color: var(--color-ink-3); font: 500 11px/1.5 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
-  .chipGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
-  .chipGrid li {
-    display: flex; align-items: flex-start; gap: 9px; padding: clamp(8px, 1.5svh, 11px) 12px;
-    color: var(--color-ink); background: color-mix(in srgb, var(--color-paper-2) 80%, transparent);
-    border: 1px solid var(--color-border); border-radius: var(--radius-md);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 5%, transparent);
-    font: 500 clamp(12px, 1.4svh, 14px)/1.4 var(--font-ui); transition: border-color .24s;
-  }
-  .chipGrid li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 5px; border-radius: 50%; background: var(--tool-accent); box-shadow: 0 0 10px var(--tool-accent); }
-  .chipGrid li:hover { border-color: color-mix(in srgb, var(--tool-accent) 40%, var(--color-border)); }
-
-  /* Capabilities and differentiators: an editorial index rather than boxed inputs. */
-  .storyEntries { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); }
-  .storyEntry {
-    position: relative; isolation: isolate; display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: start; width: 100%;
-    padding: clamp(9px, 1.8svh, 18px) 12px clamp(9px, 1.8svh, 18px) 14px; color: var(--color-ink-2); text-align: left;
-    border-bottom: 1px solid var(--color-border); transition: background .3s, color .3s;
-  }
-  .storyEntry:hover { color: var(--color-ink); background: color-mix(in srgb, var(--color-ink) 3%, transparent); }
-  .storyEntry:focus-visible { outline: 2px solid var(--tool-accent); outline-offset: -2px; }
-  .storyEntry[data-state="active"] { color: var(--color-ink); }
-  /* One indicator travels between entries (layoutId), so the active wash slides instead of snapping. */
-  .entryIndicator {
-    position: absolute; z-index: -1; inset: 0; pointer-events: none;
-    background: linear-gradient(90deg, color-mix(in srgb, var(--tool-accent) 11%, transparent), transparent 78%);
-    box-shadow: inset 2px 0 0 var(--tool-accent);
-  }
-  .entryIndex { padding-top: 3px; color: var(--color-ink-3); font: 500 11px/1.3 var(--font-mono); letter-spacing: .06em; transition: color .3s; }
-  .storyEntry[data-state="active"] .entryIndex, .storyEntry[data-state="active"] strong { color: var(--tool-accent); }
-  .entryText { display: flex; flex-direction: column; min-width: 0; }
-  .entryText strong { font: 600 clamp(13.5px, 1.6svh, 16px)/1.4 var(--font-display); letter-spacing: -.005em; }
-  .entryDetail { display: block; padding-top: 5px; color: var(--color-ink-2); font: 400 clamp(12.5px, 1.45svh, 14.5px)/1.5 var(--font-body); }
-
-  /* Actions */
-  .narrativeActions { display: flex; align-items: center; gap: 22px; margin-top: clamp(14px, 2.6svh, 26px); }
-  .narrativeActions .detailLink { flex: 0 0 auto; margin: 0; }
-  /* The cue stays for the whole story; in a narrow column its label wraps beside the line instead of dropping out. */
-  .scrollCue { display: inline-flex; align-items: center; gap: 10px; min-width: 0; color: var(--color-ink-3); font: 500 11px/1.35 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
-  .cueLabel { min-width: 0; text-wrap: balance; }
-  @container (max-width: 520px) { .narrativeActions { gap: 14px; } .scrollCue { letter-spacing: .08em; } }
-  /* A still track whose fill is driven by scroll: no perpetual loop, only feedback while the reader moves. */
-  .cueTrack { position: relative; flex: 0 0 2px; width: 2px; height: 26px; overflow: hidden; background: var(--color-border); }
-  .cueFill { position: absolute; inset: 0; background: var(--tool-accent); transform-origin: top; }
-
-  /* Stage: the scene scales to the height it is given. */
-  .storyRight { position: relative; min-width: 0; min-height: 0; }
-  .storyRight .stage { position: relative; top: auto; height: 100%; min-height: 0; }
-  .storyRight .stageWell { position: relative; isolation: isolate; min-height: 0; container-type: size; }
-  .stickyScreen[data-running="false"] .stageWell::before { animation-play-state: paused; }
-  .storyRight .stageWell::before {
-    content: ""; position: absolute; z-index: -1; inset: 8% 6%; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(closest-side, color-mix(in srgb, var(--tool-accent) 16%, transparent), transparent);
-    animation: arsenalBreathe 7s ease-in-out infinite;
-  }
-  .storyRight .graphic { grid-area: 1 / 1; height: 100%; }
-  .storyRight .graphic > figure { width: min(100%, 620px, 100cqh * .98); max-width: none; }
-  .storyRight .stageCaption { position: relative; min-height: 0; padding: clamp(10px, 2svh, 18px) 0 clamp(16px, 3svh, 26px); }
-  .storyRight .stageCaption p { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: clamp(14px, min(1.3vw, 2.4svh), 18px); }
-  .scrollProgress { position: absolute; right: 0; bottom: 0; left: 0; display: flex; gap: 6px; height: 2px; transform-origin: left; }
-  .progressSegment { flex: 1; overflow: hidden; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--segment-accent) 16%, var(--color-border)); }
-  .progressSegment i { display: block; height: 100%; background: var(--segment-accent); transform-origin: left; }
-
-  /* Tool-to-tool curtain. Scroll drives it through a single motion value; only clip-path, transform and opacity animate. */
-  .curtain { position: absolute; z-index: 3; inset: 6px 0 8px; overflow: clip; pointer-events: none; }
-  .curtain[data-visible="false"] { visibility: hidden; }
-  .curtainLead {
-    position: absolute; inset: 0; border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, var(--curtain-accent), color-mix(in srgb, var(--curtain-accent) 55%, var(--color-paper-2)));
-    box-shadow: 0 0 60px color-mix(in srgb, var(--curtain-accent) 35%, transparent);
-    will-change: clip-path;
-  }
-  .curtainPanel {
-    position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-lg);
-    background: var(--arsenal-grain),
-      radial-gradient(circle at 80% 48%, color-mix(in srgb, var(--curtain-accent) 26%, transparent), transparent 52%),
-      linear-gradient(160deg, color-mix(in srgb, var(--curtain-accent) 12%, var(--color-paper-2)), color-mix(in srgb, var(--curtain-accent) 4%, var(--color-paper)));
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 10%, transparent);
-    will-change: clip-path;
-  }
-  .curtainMark { position: absolute; top: 50%; right: clamp(40px, 7vw, 120px); width: clamp(140px, min(19vw, 38svh), 300px); height: auto; opacity: .92; }
-  .curtainContent {
-    position: absolute; right: clamp(24px, 4vw, 64px); bottom: clamp(28px, 7svh, 72px);
-    left: clamp(28px, 5vw, 88px);
-    display: flex; flex-direction: column; gap: 12px; transform-origin: left bottom;
-  }
-  .curtainMask { display: block; overflow: hidden; padding-block: .08em; margin-block: -.08em; }
-  .curtainMask > span { display: block; }
-  .curtainCount { color: var(--curtain-accent); font: 500 13px/1.2 var(--font-mono); letter-spacing: .2em; }
-  .curtainTitle { color: var(--color-ink); font: 700 clamp(3rem, min(7vw, 15svh), 8rem)/.92 var(--font-display); letter-spacing: -.05em; white-space: nowrap; }
-  .curtainMeta { color: var(--color-ink-2); font: 600 clamp(12px, .95vw, 14px)/1.4 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; }
-}
-
-/* Narrower desktops: the rail collapses to logos; names stay available to assistive tech. */
-@media (min-width: 1024px) and (max-width: 1279px) and (min-height: 540px) and (prefers-reduced-motion: no-preference) {
-  .stickyScreen { --rail-width: 50px; }
-  .toolButton { justify-content: center; padding: 6px; }
-  .toolLabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .toolButton::after {
-    content: attr(data-label); position: absolute; top: 50%; left: calc(100% + 10px); z-index: 1;
-    padding: 7px 11px; color: var(--color-ink); background: var(--color-paper-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);
-    font: 600 12px/1 var(--font-ui); white-space: nowrap;
-    opacity: 0; pointer-events: none; transform: translate(-4px, -50%); transition: opacity .2s, transform .2s var(--ease-out);
-  }
-  .toolButton:hover::after, .toolButton:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
-}
-
-/* Shorter screens (laptops, scaled 1080p): tighten rhythm and drop the lowest-priority lines. */
-@media (min-width: 1024px) and (min-height: 540px) and (max-height: 800px) and (prefers-reduced-motion: no-preference) {
-  .narrativeBody { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-  .proposition .specsLine { display: none; }
-  .toolButton { min-height: 44px; }
-  .toolButton .productLogo { flex-basis: 30px; width: 30px; height: 30px; padding: 6px; }
-  .chapterNav .chapterTab { min-height: 34px; }
-}
-@media (min-width: 1024px) and (min-height: 540px) and (max-height: 680px) and (prefers-reduced-motion: no-preference) {
-  .scrollStory { --story-top: 80px; --story-height: calc(100svh - 88px); }
-  .narrativeBody { -webkit-line-clamp: 2; }
-  .propositionLead { display: none; }
-  .toolNav { gap: 6px; }
-  .toolButton { min-height: 40px; }
-  .entryDetail { font-size: 12px; }
-  .storyRight .stageCaption p { -webkit-line-clamp: 2; }
-}
-@keyframes arsenalBreathe { 50% { opacity: .55; transform: scale(.94); } }
 
 @media (max-width: 800px) {
   .naturalChapter { grid-template-columns: 1fr; }
   .naturalGraphic { min-height: 240px; }
-  .naturalToolNav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 801px) and (max-width: 1023px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
   .naturalChapter .naturalGraphic { position: sticky; top: 108px; align-self: start; max-height: calc(100svh - 130px); }
 }
 @media (max-width: 600px) {
-  .naturalToolNav { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .naturalToolButton { padding: 7px 10px 7px 7px; font-size: 12px; }
   .naturalTool { padding: 30px 0 56px; }
   .naturalToolHeader { gap: 12px; }
   .naturalToolHeader h3 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
@@ -502,7 +295,6 @@
  * Set from the server's HTML (closed rows), so nothing jumps when the script arrives. Keep the query in sync with
  * ACCORDION_QUERY in ArsenalExperience.jsx. */
 @media (max-width: 1023px) {
-  .naturalToolNav { display: none; }
   .naturalList { display: grid; gap: 12px; overflow-anchor: none; }
 
   /* The row: dark glass in the product's colour, a light rising behind its logo, the system's 1px top highlight. */

@@ -18,17 +18,54 @@ vi.mock('../../components/auroraRenderer', () => ({ createAuroraRenderer: vi.fn(
 afterEach(() => { vi.unstubAllGlobals(); window.localStorage.removeItem('neuralbi_lang'); });
 
 describe('IntegrationsHub', () => {
-  it('sets the headline as two lines with the volt emphasis, and localizes it with the scene', () => {
+  it('names the section plainly, lists the real sources in its line, and localizes it with the scene', () => {
     const { container } = render(<LanguageProvider><LanguageSwitch /><IntegrationsHub /></LanguageProvider>);
 
-    const heading = screen.getByRole('heading', { level: 2, name: /^Seamless Connectivity\.\s*Unified Delivery\.$/ });
-    expect([...heading.querySelectorAll('em')].map((em) => em.textContent).join(' ')).toBe('Unified Delivery.');
+    const heading = screen.getByRole('heading', { level: 2, name: 'Integrations with your systems' });
+    expect(heading.querySelector('em')).toBeNull();
     expect(container.querySelector('.text-gradient-premium')).toBeNull();
+    expect(screen.getByText(/We connect SAP, Salesforce, Oracle, Azure SQL, HubSpot and Microsoft Fabric/)).toBeInTheDocument();
+    expect(container.textContent).not.toMatch(/zero (processing )?friction|cognitive|high-throughput/i);
     expect(screen.getAllByRole('figure', { name: /Unified delivery/ })).toHaveLength(2);
 
     fireEvent.click(screen.getByRole('button', { name: 'Español' }));
-    expect(screen.getByRole('heading', { level: 2, name: /^Conectividad sin fisuras\.\s*Entrega unificada\.$/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Integraciones con sus sistemas' })).toBeInTheDocument();
     expect(screen.getAllByRole('figure', { name: /Entrega unificada/ })).toHaveLength(2);
+  });
+
+  it('names each source with its real brand mark, and keeps plain glyphs for the grouped phone nodes', () => {
+    const { container } = render(<LanguageProvider><IntegrationsHub /></LanguageProvider>);
+    const desktop = container.querySelectorAll('figure')[0];
+    const source = (name) => [...desktop.querySelectorAll('button')].find((button) => button.textContent.replace(/\s+/g, ' ').trim() === name
+      || button.querySelector('img[alt]') && `${button.querySelector('img[alt]').alt} ${button.textContent.trim()}` === name);
+
+    // Icon marks: decorative, beside the full name.
+    for (const [name, file] of [['Salesforce CRM', 'salesforce.svg'], ['Azure SQL Database', 'azure.svg'], ['HubSpot CRM', 'hubspot.svg'], ['Microsoft Fabric', 'fabric.svg']]) {
+      const img = source(name).querySelector('img');
+      expect(img.getAttribute('src')).toBe(`/NeuralBI/assets/integrations/${file}`);
+      expect(img.getAttribute('alt')).toBe('');
+    }
+    // Wordmarks stand in for the brand's name, which their alt text keeps: "SAP ERP", "Oracle Database".
+    for (const [brand, rest, file] of [['SAP', 'ERP', 'sap.svg'], ['Oracle', 'Database', 'oracle.svg']]) {
+      const img = desktop.querySelector(`img[alt="${brand}"]`);
+      expect(img.getAttribute('src')).toBe(`/NeuralBI/assets/integrations/${file}`);
+      expect(img.closest('button').textContent.trim()).toBe(rest);
+    }
+    // No source is left on a generic glyph.
+    [...desktop.querySelectorAll('button')].slice(0, 6).forEach((button) => expect(button.querySelector('img')).not.toBeNull());
+    // The phone layout's grouped nodes stand for several systems at once: glyphs, never one brand's mark.
+    const phone = container.querySelectorAll('figure')[1];
+    [...phone.querySelectorAll('button')].slice(0, 3).forEach((button) => expect(button.querySelector('img')).toBeNull());
+  });
+
+  it('ships every brand mark it names as a local, script-free file', () => {
+    for (const file of ['sap.svg', 'salesforce.svg', 'oracle.svg', 'hubspot.svg', 'azure.svg', 'fabric.svg']) {
+      const svg = readFileSync(resolve(__dirname, '../../public/assets/integrations', file), 'utf8');
+      expect(svg.startsWith('<svg')).toBe(true);
+      expect(svg).not.toMatch(/<script|foreignObject|javascript:|href="http/i);
+    }
+    // HubSpot's sprocket is drawn on Simple Icons' full 24-unit canvas, never a crop that cuts its arms off.
+    expect(readFileSync(resolve(__dirname, '../../public/assets/integrations/hubspot.svg'), 'utf8')).toContain('viewBox="0 0 24 24"');
   });
 
   it('draws the light field behind the content, hidden from assistive technology', () => {

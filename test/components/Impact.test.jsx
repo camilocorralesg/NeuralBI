@@ -166,6 +166,8 @@ describe('Impact: the ROI instrument', () => {
     expect(beam).toHaveAttribute('data-live', 'true');
     see(beamObserver(), [[beam, 0]]);
     expect(beam).toHaveAttribute('data-live', 'false');
+    // Its track is the panel's measured outline as a path(), which every engine with motion paths (Safari 16+) runs.
+    expect(beam.style.getPropertyValue('--beam-path')).toMatch(/^path\('M /);
   });
 
   it('draws the proofs as line instruments: one cycle against seven releases, the cost falling to what is kept, a 24-hour dial', () => {

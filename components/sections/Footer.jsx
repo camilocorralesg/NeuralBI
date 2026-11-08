@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import NeuralMark from '../NeuralMark';
 import { useLanguage } from '../../context/LanguageContext';
@@ -20,6 +21,7 @@ function Footer() {
   const [signature, setSignature] = useState(undefined);
 
   const copyrightText = t?.footer?.copyright || '© 2026 Copyright NeuralBI. All rights reserved.';
+  const trademarksText = t?.footer?.trademarks || 'Product names and logos are trademarks of their respective owners.';
 
   const links = useMemo(() => {
     const footerCols = t?.footer?.columns || {};
@@ -104,7 +106,10 @@ function Footer() {
               <ul className={styles.list}>
                 {links[category].map(link => (
                   <li key={link.href}>
-                    <a href={link.href} target={link.target || '_self'} rel="noopener noreferrer" className={styles.link}>{link.name}</a>
+                    {/* Pages of this zone go through Link, which adds the /NeuralBI base path; a bare /privacy left it. */}
+                    {link.href.startsWith('/')
+                      ? <Link href={link.href} className={styles.link}>{link.name}</Link>
+                      : <a href={link.href} target={link.target || '_self'} rel="noopener noreferrer" className={styles.link}>{link.name}</a>}
                   </li>
                 ))}
               </ul>
@@ -114,12 +119,12 @@ function Footer() {
 
         <div className={`footer-lower-row ${styles.lowerRow}`}>
           <div className={`footer-brand-col ${styles.brand}`}>
-            <img src={logoUrl} alt="NeuralBI Logo" className={styles.logo} />
+            <img src={logoUrl} alt="NeuralBI Logo" className={styles.logo} width="810" height="170" loading="lazy" decoding="async" />
             <span className={styles.copyright}>{copyrightText}</span>
+            <span className={styles.copyright}>{trademarksText}</span>
           </div>
           <div className={styles.social}>
-            <a href="#" target="_blank" rel="noopener noreferrer" className={styles.link}>LinkedIn</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className={styles.link}>YouTube</a>
+            <a href="https://www.linkedin.com/company/neuralnet/" target="_blank" rel="noopener noreferrer" className={styles.link}>LinkedIn</a>
           </div>
         </div>
       </div>

@@ -17,6 +17,9 @@
 .sourceName { font-size: clamp(10px,1.05vw,13px); font-weight: 500; line-height: 1.35; }
 .sourceIcon { display: flex; flex-shrink: 0; color: #aebda0; }
 .sourceIcon svg { width: 19px; height: 19px; stroke-width: 1.5; }
+/* A wordmark (SAP, Oracle) stands in for the brand's name, in its own colours. */
+.wordmark { display: inline-block; width: auto; height: 1.15em; margin-right: .1em; vertical-align: -.2em; }
+.wordmark[alt='Oracle'] { height: .8em; vertical-align: -.05em; }
 .status { margin-left: auto; width: 4px; height: 4px; flex-shrink: 0; border-radius: 50%; background: #c6ff34; }
 .source[data-active='true'], .product[data-active='true'] { border-color: #9dc14d; }
 .source:focus-visible, .product:focus-visible { outline: 2px solid #c6ff34; outline-offset: 4px; }
@@ -106,9 +109,9 @@
 @keyframes tokenA { 0%,48% { offset-distance: 0%; opacity: 0; } 49%,56% { opacity: 1; } 58%,100% { offset-distance: 100%; opacity: 0; } }
 @keyframes tokenB { 0%,52% { offset-distance: 0%; opacity: 0; } 53%,60% { opacity: 1; } 62%,100% { offset-distance: 100%; opacity: 0; } }
 @keyframes tokenC { 0%,56% { offset-distance: 0%; opacity: 0; } 57%,64% { opacity: 1; } 66%,100% { offset-distance: 100%; opacity: 0; } }
-@keyframes frameA { 0%,54%,100% { opacity: .38; } 59%,91% { opacity: 1; } }
-@keyframes frameB { 0%,58%,100% { opacity: .38; } 63%,91% { opacity: 1; } }
-@keyframes frameC { 0%,62%,100% { opacity: .38; } 67%,91% { opacity: 1; } }
+@keyframes frameA { 0%,54%,100% { opacity: .6; } 59%,91% { opacity: 1; } }
+@keyframes frameB { 0%,58%,100% { opacity: .6; } 63%,91% { opacity: 1; } }
+@keyframes frameC { 0%,62%,100% { opacity: .6; } 67%,91% { opacity: 1; } }
 @keyframes contentA { 0%,57%,100% { opacity: 0; transform: translateY(4px); } 65%,91% { opacity: 1; transform: none; } }
 @keyframes contentB { 0%,61%,100% { opacity: 0; transform: translateY(4px); } 69%,91% { opacity: 1; transform: none; } }
 @keyframes contentC { 0%,65%,100% { opacity: 0; transform: translateY(4px); } 73%,91% { opacity: 1; transform: none; } }

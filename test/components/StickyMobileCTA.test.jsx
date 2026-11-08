@@ -29,7 +29,7 @@ describe('Component: StickyMobileCTA', () => {
   it('is hidden by default when scroll position is near the top (scrollY <= 350)', () => {
     render(<StickyMobileCTA />);
 
-    expect(screen.queryByText(/Book Audit/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Book a Call/i)).not.toBeInTheDocument();
   });
 
   it('becomes visible after user scrolls past the threshold (scrollY > 350)', () => {
@@ -40,7 +40,7 @@ describe('Component: StickyMobileCTA', () => {
       window.dispatchEvent(new Event('scroll'));
     });
 
-    expect(screen.getByText(/Book Audit/i)).toBeInTheDocument();
+    expect(screen.getByText(/Book a Call/i)).toBeInTheDocument();
     expect(screen.getByText(/Ready to transform data\?/i)).toBeInTheDocument();
     expect(screen.queryByText(/Live Engineering/i)).not.toBeInTheDocument();
   });
@@ -67,10 +67,10 @@ describe('Component: StickyMobileCTA', () => {
     });
 
     // Should be hidden because contact section is within view
-    expect(screen.queryByText(/Book Audit/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Book a Call/i)).not.toBeInTheDocument();
   });
 
-  it('triggers smooth scroll and focuses form input when Book Audit is clicked', () => {
+  it('triggers smooth scroll and focuses form input when Book a Call is clicked', () => {
     const contactSection = document.createElement('div');
     contactSection.id = 'audit';
     const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
@@ -96,7 +96,7 @@ describe('Component: StickyMobileCTA', () => {
       window.dispatchEvent(new Event('scroll'));
     });
 
-    const button = screen.getByRole('button', { name: /Book Audit/i });
+    const button = screen.getByRole('button', { name: /Book a Call/i });
     fireEvent.click(button);
 
     // Through the shared smooth-scroll helper: natively here (Lenis runs only for a fine pointer), to the section's top.
