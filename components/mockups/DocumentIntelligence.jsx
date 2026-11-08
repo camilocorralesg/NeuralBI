@@ -9,7 +9,7 @@ import { LiveNumber, Mark, Pill, ProductBar } from './ui/primitives';
 import { useBeatSteps, useStoryline } from './ui/useStoryline';
 import m from './DocumentIntelligence.module.css';
 
-/* NeuralBI Flows: the product behind "Cognitive Automation & Documents": a Power Automate flow, seen in its designer
+/* NeuralBI Flows: the product behind "Document Automation": a Power Automate flow, seen in its designer
  * while it runs. The email of PO #4821 triggers it, a headless RPA bot fetches the customs declaration from the broker
  * portal, AI extracts every document, the matching engine finds a declared-value gap, the condition corrects it within
  * tolerance and the entry is posted to Dynamics 365. The run details pane shows what each step does to the business. */

@@ -11,7 +11,7 @@ const EASE = [.22, 1, .36, 1];
 
 /** The NeuralBI mark, as every product shows it. */
 export function Mark({ className = '' }) {
-  return <img src={LOGO} alt="" className={className} />;
+  return <img src={LOGO} alt="" className={className} loading="lazy" decoding="async" />;
 }
 
 /** A NeuralBI product window: icon rail with the mark, a header (title, context, search, a period or run pill, user) and the page. */

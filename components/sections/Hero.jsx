@@ -39,11 +39,12 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
 
   const currentContent = {
     lines: [
-      { text: heroCopy.h1Line1 || 'Intelligence' },
-      { text: heroCopy.h1Line2 || 'That Executes', em: true }
+      { text: heroCopy.h1Line1 || 'Microsoft data & AI consulting' },
+      { text: heroCopy.h1Line2 || 'in production in weeks.', em: true }
     ],
     sub: heroCopy.sub || "We engineer enterprise data architectures, pro/low-code apps, and autonomous AI agents. We transform complex data into beautiful, actionable business intelligence.",
-    cta: <>{heroCopy.cta || 'Book an Architecture Audit'} <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', height: '14px', lineHeight: 1 }}>↵</span></>,
+    cta: <>{heroCopy.cta || 'Book a Call'} <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '8px', paddingLeft: '8px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', height: '14px', lineHeight: 1 }}>↵</span></>,
+    fact: heroCopy.fact || 'Technical blueprint in 5 business days · Mutual NDA before we see your data',
     align: "center",
     textAlign: "center",
     h1Font: "var(--font-display)",
@@ -128,7 +129,8 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
         }}
       >
         <div style={{
-          maxWidth: '850px',
+          // The headline names the category in a full line, so it gets the wider measure; the copy keeps its own.
+          maxWidth: '1120px',
           pointerEvents: 'auto',
           textAlign: currentContent.textAlign,
           display: 'flex',
@@ -160,7 +162,7 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
             <ShaderButton
               type="button"
               onClick={scrollToAudit}
-              aria-label={heroCopy.cta || "Book an Architecture Audit"}
+              aria-label={heroCopy.cta || "Book a Call"}
               style={{
                 padding: '1rem 2.5rem',
                 fontFamily: 'var(--font-button)',
@@ -170,6 +172,9 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
               {currentContent.cta}
             </ShaderButton>
           </div>
+
+          {/* One hard fact under the action: what the first step delivers, and when. */}
+          <p className="hero-fact enter" style={{ '--enter': 5 }}>{currentContent.fact}</p>
         </div>
       </motion.div>
 

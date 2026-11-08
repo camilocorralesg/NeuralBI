@@ -45,7 +45,7 @@ function SuccessState({ onReset }) {
 /**
  * The closing call to action ("You already have the data. Now, make it think."): one glass panel whose edge carries
  * the travelling beam, over a still Volt atmosphere. On the left the promise; on the right the lead form, sent to
- * /api/lead, with its Fluid Glass submit lit once the form can be sent.
+ * /NeuralBI/api/lead, with its Fluid Glass submit lit once the form can be sent.
  */
 function FooterCTA() {
   const router = useRouter();
@@ -56,7 +56,7 @@ function FooterCTA() {
   useEdgeSpotlight(panel);
 
   const headlinePart1 = cta.headlinePart1 || 'You already have the data.';
-  const headlinePart2 = cta.headlinePart2 || '*Now, make it think.*';
+  const headlinePart2 = cta.headlinePart2 || "*Let's put it to work.*";
   const subtitleText = cta.subtitle || 'Stop relying on gut feelings and legacy IT. Partner with NeuralBI and transform your Microsoft ecosystem into a cognitive engine today.';
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -95,7 +95,9 @@ function FooterCTA() {
     setIsSubmitting(true);
     setErrorMessage(null);
     try {
-      const res = await fetch('/api/lead', {
+      // fetch does not add the basePath (next.config.mjs) the way Link and the router do: without it the post reached
+      // the host site's /api/lead, a 404, and no lead got to the CRM.
+      const res = await fetch('/NeuralBI/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -184,7 +186,7 @@ function FooterCTA() {
                 >
                   {isSubmitting ? (cta.submittingBtn || 'Transmitting...') : (
                     <>
-                      {cta.submitBtn || 'Book an Architecture Audit'}
+                      {cta.submitBtn || 'Book a Call'}
                       <span className={s.enter} aria-hidden="true">↵</span>
                     </>
                   )}

@@ -52,13 +52,13 @@ export default function CookieBanner() {
             zIndex: 900,
             maxWidth: '440px',
             width: 'calc(100vw - 3rem)',
-            background: 'rgba(5, 7, 3, 0.92)',
-            backdropFilter: 'blur(24px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+            // An opaque ground instead of a backdrop blur: nothing behind ghosts through, and the hero's WebGL is not
+            // re-sampled every frame.
+            background: 'rgb(5, 7, 3)',
             border: '1px solid rgba(198, 255, 52, 0.25)',
             borderRadius: '16px',
             padding: '1.25rem 1.35rem',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(198, 255, 52, 0.08)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.7)',
             fontFamily: 'var(--font-body)',
             color: '#ffffff'
           }}
@@ -79,8 +79,7 @@ export default function CookieBanner() {
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: '#c6ff34',
-                boxShadow: '0 0 8px #c6ff34'
+                background: '#c6ff34'
               }} />
               {cb.badge || 'Privacy & Telemetry'}
             </div>
@@ -91,7 +90,7 @@ export default function CookieBanner() {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: 'rgba(255, 255, 255, 0.4)',
+                color: 'rgba(255, 255, 255, 0.7)',
                 cursor: 'pointer',
                 fontSize: '1.2rem',
                 lineHeight: 1,

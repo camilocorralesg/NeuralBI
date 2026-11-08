@@ -30,8 +30,8 @@ describe('The Neural Protocol', () => {
   it('presents the protocol as an ordered sequence with every phase, its copy and its scene', () => {
     const { container } = renderProtocol();
     const copy = translations.en.methodology;
-    const heading = screen.getByRole('heading', { level: 2, name: 'The Neural Protocol.' });
-    expect(heading.querySelector('em')).toHaveTextContent('Protocol.');
+    const heading = screen.getByRole('heading', { level: 2, name: 'How we deliver, in three phases' });
+    expect(heading.querySelector('em')).toBeNull();
     expect(screen.getByText(copy.sectionSubtitle)).toBeInTheDocument();
 
     const items = within(phaseList(container)).getAllByRole('listitem');
@@ -87,7 +87,7 @@ describe('The Neural Protocol', () => {
     localStorage.setItem('neuralbi_lang', 'es');
     renderProtocol();
     const copy = translations.es.methodology;
-    expect(await screen.findByRole('heading', { level: 2, name: 'El Protocolo Neural.' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 2, name: 'Cómo entregamos, en tres fases' })).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: copy.indexLabel })).toBeInTheDocument();
     for (const phase of copy.phases) {
       expect(screen.getByRole('heading', { level: 3, name: phase.title })).toBeInTheDocument();

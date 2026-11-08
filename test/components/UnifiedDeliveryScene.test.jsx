@@ -3,7 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { UnifiedDeliveryScene } from '../../components/graphics/UnifiedDeliveryScene';
 
-const names = ['SAP ERP', 'Salesforce CRM', 'Azure SQL Database', 'Oracle Database', 'HubSpot CRM', 'SharePoint Portal', 'Power BI Reports', 'Power Apps', 'AI Copilot Agents'];
+const names = ['SAP ERP', 'Salesforce CRM', 'Azure SQL Database', 'Oracle Database', 'HubSpot CRM', 'Microsoft Fabric', 'Power BI Reports', 'Power Apps', 'AI Copilot Agents'];
 const nodes = names.map((name, i) => ({ id: `node-${i}`, name, iconKey: 'data', desc: `Description for ${name}.` }));
 const props = { nodes, mobileInputNodes: nodes.slice(0, 3), icons: { data: <svg /> }, inputsHeader: '[ Data Inputs ]', deliverablesHeader: '[ Business Deliverables ]' };
 

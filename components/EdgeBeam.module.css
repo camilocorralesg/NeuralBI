@@ -18,7 +18,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  offset-path: inset(0 round var(--radius-lg));
+  /* The panel's measured outline (EdgeBeam.jsx); the basic shape only until it is measured. */
+  offset-path: var(--beam-path, inset(0 round var(--radius-lg)));
   animation: travel 12s linear infinite;
 }
 .comet {
@@ -36,7 +37,7 @@
 .beam[data-live='false'] :is(.comet, .glow) { animation-play-state: paused; }
 @keyframes travel { to { offset-distance: 100%; } }
 
-@supports not (offset-path: inset(0 round 1px)) {
+@supports not (offset-path: path('M 0 0 H 1')) {
   .beam { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -19,16 +19,20 @@
 
 .inner {
   position: relative;
-  max-width: 920px;
-  margin-inline: auto;
-  padding-inline: 24px;
+  width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: clamp(28px, 4vw, 64px);
 }
 
+.header { display: grid; gap: 1rem; }
+.subtitle { max-width: 34ch; margin: 0; color: var(--color-ink-2); font: 400 1rem/1.6 var(--font-body); text-wrap: pretty; }
+
 .title {
-  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
-  text-align: center;
+  margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-size: var(--type-h2);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.03em;
@@ -54,9 +58,8 @@
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
+  /* No backdrop blur: the section behind the cards is plain black, so a blur would cost a layer and show nothing. */
   background: rgba(16, 18, 15, 0.62);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   transition: background-color 200ms ease, border-color 200ms ease;
 }
 /* The edge lights where a fine pointer is. */
@@ -72,17 +75,6 @@
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-}
-/* The list arrives once: each card rises one block step after the one above (--stagger-blocks), the step capped at
- * the sixth card so a long list lands as one composition. The staged transitions exist only while it runs. */
-.items[data-reveal='armed'] .card { opacity: 0; transform: translateY(var(--reveal-rise)); transition: none; }
-.items[data-reveal='run'] .card {
-  --at: calc(min(var(--i), 5) * var(--stagger-blocks));
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    opacity 600ms var(--ease-out) var(--at),
-    transform 700ms var(--ease-out) var(--at);
 }
 
 .card::before {
@@ -170,14 +162,15 @@
   .trigger:hover .chevron { color: var(--color-accent); border-color: rgba(198, 255, 52, 0.4); }
 }
 
+@media (max-width: 899px) {
+  .inner { grid-template-columns: minmax(0, 1fr); }
+}
+
 @media (max-width: 480px) {
-  .inner { padding-inline: 16px; }
   .trigger { gap: 16px; }
   .chevron { flex-basis: 32px; height: 32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card, .card::before, .trigger, .chevron, .chevron svg, .answer { transition: none; }
-  .items[data-reveal='armed'] .card { transform: none; }
-  .card { transition: opacity 400ms ease; }
 }

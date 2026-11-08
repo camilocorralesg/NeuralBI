@@ -5,18 +5,17 @@ import { AnimatePresence, MotionConfig } from 'framer-motion';
 import Navbar from './sections/Navbar';
 import Hero from './sections/Hero';
 import Manifesto from './sections/Manifesto';
-import TrustBar from './sections/TrustBar';
 import ArsenalExperience, { ArsenalDetailModal } from './sections/ArsenalExperience';
 import NeuralProtocol from './sections/NeuralProtocol';
 import IntegrationsHub from './sections/IntegrationsHub';
 import Industries from './sections/Industries';
 import Impact from './sections/Impact';
-import CaseStudy from './sections/CaseStudy';
 import Faq from './sections/Faq';
 import FooterCTA from './sections/FooterCTA';
 import Footer from './sections/Footer';
 import StickyMobileCTA from './StickyMobileCTA';
 import SmoothScroll from './SmoothScroll';
+import DiagnosticsGate from './DiagnosticsGate';
 
 export default function App() {
   const activeHero = 'remix';
@@ -60,12 +59,8 @@ export default function App() {
                 <Manifesto />
               </div>
 
-              <div>
-                <TrustBar activeHero={activeHero} />
-              </div>
-
               <div id="arsenal">
-                <ArsenalExperience isModalOpen={Boolean(selectedTool)} onOpenModal={(toolId, chapter) => setSelectedTool({ toolId, chapter })} />
+                <ArsenalExperience onOpenModal={(toolId, chapter) => setSelectedTool({ toolId, chapter })} />
               </div>
 
               <div id="protocol">
@@ -79,13 +74,9 @@ export default function App() {
               <div id="verticals">
                 <Industries activeHero={activeHero} />
               </div>
-              <div>
+              <div id="results">
                 <Impact activeHero={activeHero} />
               </div>
-              {/* 
-            <div>
-              <CaseStudy activeHero={activeHero} />
-            </div> */}
               <div>
                 <Faq activeHero={activeHero} />
               </div>
@@ -103,6 +94,8 @@ export default function App() {
           </AnimatePresence>
         </main>
       </div>
+      {/* Render diagnostics, only with ?diag in the URL. */}
+      <DiagnosticsGate />
     </MotionConfig>
   );
 }

@@ -26,7 +26,7 @@ describe('Component: FooterCTA Form Integration', () => {
     expect(screen.getByLabelText(/^Work Email$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/What do you want to explore\?/i)).toBeInTheDocument();
 
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
     expect(submitBtn).toBeInTheDocument();
     expect(submitBtn).toBeDisabled();
   });
@@ -58,7 +58,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
 
     expect(submitBtn).toBeDisabled();
 
@@ -80,7 +80,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -89,7 +89,7 @@ describe('Component: FooterCTA Form Integration', () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith('/api/lead', {
+      expect(global.fetch).toHaveBeenCalledWith('/NeuralBI/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -113,7 +113,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -135,7 +135,7 @@ describe('Component: FooterCTA Form Integration', () => {
     const nameInput = screen.getByLabelText(/^Name$/i);
     const emailInput = screen.getByLabelText(/^Work Email$/i);
     const messageInput = screen.getByLabelText(/What do you want to explore\?/i);
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
 
     fireEvent.change(nameInput, { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(emailInput, { target: { name: 'email', value: 'alex@enterprise.com' } });
@@ -151,7 +151,7 @@ describe('Component: FooterCTA Form Integration', () => {
   it('carries the travelling beam on its panel and lights the submit once the form can be sent', () => {
     const { container } = render(<FooterCTA activeHero="remix" />);
     expect(container.querySelector('[data-live]')).toHaveAttribute('aria-hidden', 'true');
-    const submitBtn = screen.getByRole('button', { name: /Book an Architecture Audit/i });
+    const submitBtn = screen.getByRole('button', { name: /Book a Call/i });
     expect(submitBtn).not.toHaveAttribute('data-ready');
     fireEvent.change(screen.getByLabelText(/^Name$/i), { target: { name: 'name', value: 'Alex Morgan' } });
     fireEvent.change(screen.getByLabelText(/^Work Email$/i), { target: { name: 'email', value: 'alex@enterprise.com' } });

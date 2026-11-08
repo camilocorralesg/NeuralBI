@@ -11,6 +11,9 @@ const plane = (x, y, width, depth, z = 0) => [point(x, y, z), point(x + width, y
 const route = (coordinates) => coordinates.map((p, i) => `${i ? 'L' : 'M'}${point(...p)}`).join(' ');
 const surface = (x, y, z) => { const [px, py] = project(x, y, z); return `matrix(.8660254 .5 -.8660254 .5 ${px} ${py})`; };
 const upright = (x, y, z) => { const [px, py] = project(x, y, z); return `matrix(.8660254 .5 0 1 ${px} ${py})`; };
+// The stories were scored in seconds of a 12 s cycle; offsets are written in that score (`--s` is one of its seconds),
+// so they keep their place in the story at whatever pace `--cycle` sets.
+const score = (seconds) => `calc(var(--s) * ${seconds})`;
 
 function Slab({ x, y, width, depth, z = 0, thickness = 6, material = 'dark', id }) {
   return <g className={styles.slab}>
@@ -23,10 +26,13 @@ function Slab({ x, y, width, depth, z = 0, thickness = 6, material = 'dark', id 
 function Track({ coordinates, delay = 0 }) {
   return <g>
     <path d={route(coordinates)} className={styles.track} />
-    <path d={route(coordinates)} pathLength="100" className={styles.packet} style={{ animationDelay: `${delay}s` }} />
+    <path d={route(coordinates)} pathLength="100" className={styles.packet} style={{ animationDelay: score(delay) }} />
   </g>;
 }
 
+// A scene tells its story without words: its name and the before → after it shows are read to assistive technology,
+// with the full description. Hovering it (a fine pointer, through `hovered`) raises it and lights its floor; the story
+// keeps running where it was.
 function Scene({ kind, hovered, children }) {
   const id = useId().replaceAll(':', '');
   const ref = useRef(null);
@@ -49,7 +55,6 @@ function Scene({ kind, hovered, children }) {
 
   return <figure ref={ref} className={styles.scene} data-kind={kind} data-running="false" data-emphasis={String(hovered)} aria-label={`${copy.title}: ${copy.before} → ${copy.after}`}
     aria-describedby={description ? `${id}-desc` : undefined}>
-    <div className={styles.sceneTitle}>{copy.title}</div>
     <svg viewBox="0 0 420 300" fill="none" aria-hidden="true" className={styles.canvas}>
       <defs>
         <linearGradient id={`${id}-dark`} x1="0" y1="0" x2="1" y2="1">
@@ -67,8 +72,12 @@ function Scene({ kind, hovered, children }) {
         <radialGradient id={`${id}-light`}>
           <stop stopColor="var(--scene-accent)" stopOpacity=".14" /><stop offset="1" stopColor="var(--scene-accent)" stopOpacity="0" />
         </radialGradient>
+        <radialGradient id={`${id}-glow`}>
+          <stop stopColor="var(--scene-accent)" stopOpacity=".42" /><stop offset=".55" stopColor="var(--scene-accent)" stopOpacity=".15" /><stop offset="1" stopColor="var(--scene-accent)" stopOpacity="0" />
+        </radialGradient>
       </defs>
       <ellipse cx="210" cy="198" rx="190" ry="89" fill={`url(#${id}-light)`} />
+      <ellipse cx="210" cy="198" rx="176" ry="82" fill={`url(#${id}-glow)`} className={styles.glow} />
       <g className={styles.world}>
         <polygon points={plane(-102, -88, 204, 176, -15)} className={styles.ground} />
         {[-68, -34, 0, 34, 68].map((n) => <g key={n} className={styles.grid}>
@@ -77,7 +86,6 @@ function Scene({ kind, hovered, children }) {
         {children(id, copy)}
       </g>
     </svg>
-    <figcaption className={styles.caption}><span>{copy.before}</span><span className={styles.captionArrow} aria-hidden="true">↗</span><span>{copy.after}</span></figcaption>
     {description && <span id={`${id}-desc`} className={styles.srOnly}>{description}</span>}
   </figure>;
 }
@@ -100,7 +108,7 @@ function DataCube({ coordinates, beat, tone = 'reason', delay = 0, size = 7 }) {
   const h = size / 2;
   return <g className={`${styles.cube} ${beat} ${tone === 'act' ? styles.cubeAct : ''}`} style={{
     '--x0': `${start[0]}px`, '--y0': `${start[1]}px`, '--x1': `${middle[0]}px`, '--y1': `${middle[1]}px`,
-    '--x2': `${end[0]}px`, '--y2': `${end[1]}px`, animationDelay: `${delay}s`,
+    '--x2': `${end[0]}px`, '--y2': `${end[1]}px`, animationDelay: score(delay),
   }}>
     <polygon points={face([-h, h, size], [h, h, size], [h, h, 0], [-h, h, 0])} className={styles.cubeFront} />
     <polygon points={face([h, -h, size], [h, h, size], [h, h, 0], [h, -h, 0])} className={styles.cubeSide} />
@@ -132,7 +140,7 @@ const ROUTES = {
 
 /*
  * Results-driven autonomous AI: one causal chain on a 12s clock, narrated by the caption.
- *  8–24  ingress   internal records and documents travel into the agent as indigo data
+ *  8–24  ingress   internal records and documents travel into the agent as data
  * 24–40  reason    the core lifts, its circuit traces draw and a scan crosses the chip
  * 40–56  contain   a cube heading for the public model breaks on the tenant wall; the lock closes
  * 54–68  execute   the agent emits volt work: the invoice is stamped, a supplier route is chosen
@@ -236,7 +244,7 @@ export const WarpSpeedScene = memo(function WarpSpeedScene({ hovered = false }) 
     <Track coordinates={[[-69, 26, -6], [-20, 26, -6], [-20, -1, -6], [55, -1, -6], [55, -36, -6]]} />
     <Slab id={id} x={-92} y={4} width={49} depth={46} z={3} thickness={8} />
     <g className={styles.parts}>
-      {[[0, 0], [22, 0], [0, 21], [22, 21]].map(([x, y], index) => <g key={index} className={styles.module} style={{ '--delay': `${index * .23}s` }}>
+      {[[0, 0], [22, 0], [0, 21], [22, 21]].map(([x, y], index) => <g key={index} className={styles.module} style={{ '--delay': score(index * .23) }}>
         <Slab id={id} x={-88 + x} y={8 + y} width={18} depth={17} z={21} material={index === 3 ? 'accent' : 'paper'} thickness={5} />
         <path d={route([[-85 + x, 13 + y, 21], [-74 + x, 13 + y, 21]])} className={styles.darkLine} />
       </g>)}
@@ -287,7 +295,7 @@ export const ZeroFrictionScene = memo(function ZeroFrictionScene({ hovered = fal
       <g className={`${styles.interfaceModule} ${styles.action}`}><rect x="65" y="83" width="33" height="10" rx="3" className={styles.printAccent} /><path d="M75 88L78 91L84 85" className={styles.darkLine} /></g>
       <path d="M92 72L92 89L97 84L103 84Z" className={styles.cursor} />
     </g>
-    {[[-64, 61], [0, 77], [66, 61]].map(([x, y], index) => <g key={x} className={styles.teammate} style={{ '--delay': `${index * .5}s` }}>
+    {[[-64, 61], [0, 77], [66, 61]].map(([x, y], index) => <g key={x} className={styles.teammate} style={{ '--delay': score(index * .5) }}>
       <Slab id={id} x={x - 16} y={y - 14} width={32} depth={28} z={2} thickness={5} />
       <g transform={`translate(${project(x, y, 26).join(' ')})`}>
         <circle cy="-7" r="6" className={styles.person} /><path d="M-11 13V7A11 11 0 0 1 11 7V13Z" className={styles.person} />

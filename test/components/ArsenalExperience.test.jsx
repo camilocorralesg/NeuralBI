@@ -1,205 +1,137 @@
 import React, { useState } from 'react';
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MotionGlobalConfig, motionValue } from 'framer-motion';
+import { MotionGlobalConfig } from 'framer-motion';
 import { LanguageProvider } from '../../context/LanguageContext';
 import ArsenalExperience, { ArsenalDetailModal } from '../../components/sections/ArsenalExperience';
 import { translations } from '../../lib/translations';
 
-const scroll = vi.hoisted(() => ({ value: null }));
-// The story is read while pinned: its arrival has finished and its departure has not begun.
-vi.mock('framer-motion', async (importOriginal) => {
-  const actual = await importOriginal();
-  const scrollFor = ({ offset } = {}) => {
-    if (offset?.[0] === 'start end') return actual.motionValue(1);
-    if (offset?.[0] === 'end end') return actual.motionValue(0);
-    return scroll.value;
-  };
-  return { ...actual, useScroll: (options) => ({ scrollYProgress: scrollFor(options) }) };
-});
-
-let scrollMoment = 0;
 // Animations resolve instantly: these tests assert state, and happy-dom rejects interrupted WAAPI animations.
 beforeAll(() => { MotionGlobalConfig.skipAnimations = true; });
 afterAll(() => { MotionGlobalConfig.skipAnimations = false; });
 beforeEach(() => {
-  scroll.value = motionValue(0);
-  scrollMoment = 0;
   vi.stubGlobal('matchMedia', (query) => ({ matches: query.includes('min-width: 1024px'), addEventListener: vi.fn(), removeEventListener: vi.fn() }));
   vi.spyOn(Element.prototype, 'scrollIntoView').mockImplementation(() => {});
   const original = Element.prototype.getBoundingClientRect;
-  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function rect() {
-    if (this.dataset.moment !== undefined) return { top: (Number(this.dataset.moment) - scrollMoment) * 300, bottom: 0, left: 0, right: 0, width: 1, height: 1 };
-    return original.call(this);
-  });
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function rect() { return original.call(this); });
 });
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
-function advanceTo(index) {
-  scrollMoment = index;
-  act(() => scroll.value.set((index + 1) / 40));
-}
-// Scroll-linked styles are written on the next animation frame.
-const nextFrame = () => act(() => new Promise((resolve) => { requestAnimationFrame(() => resolve()); }));
+const EN = translations.en.arsenal;
+const tool = (id, key, name, color) => ({ id, name, color, ...EN.tools[key], detail: EN.modalDetails[id] });
+const TOOLS = [
+  tool('power-bi', 'powerBi', 'Power BI', '#f2c811'),
+  tool('power-apps', 'powerApps', 'Power Apps', '#e7a2cd'),
+  tool('power-automate', 'powerAutomate', 'Power Automate', '#9bc5ec'),
+  tool('copilot-studio', 'copilotStudio', 'Copilot Studio', '#a2d8c1'),
+];
 
-describe('The Arsenal experience', () => {
-  it('jumps to tools and chapters while scroll remains the source of the active state', async () => {
-    const onOpenModal = vi.fn();
-    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={onOpenModal} /></LanguageProvider>);
-    const toolNav = screen.getByRole('navigation', { name: 'Arsenal' });
-    const marker = (index) => container.querySelector(`[data-moment="${index}"]`);
-    // One scroll moment per chapter: the entries inside a chapter never add scroll.
-    expect(container.querySelectorAll('[data-moment]')).toHaveLength(12);
-    expect(marker(0)).toHaveStyle({ height: '60svh' });
-    expect(marker(1)).toHaveStyle({ height: '60svh' });
-    // The moments around each tool boundary carry the extra scroll the curtain needs.
-    expect(marker(2)).toHaveStyle({ height: '94svh' });
-    expect(marker(3)).toHaveStyle({ height: '94svh' });
-    expect(marker(11)).toHaveStyle({ height: '60svh' });
-
-    // Crossing tools closes a single curtain, then lands just past the incoming tool's curtain window.
-    const apps = within(toolNav).getByRole('button', { name: 'Power Apps' });
-    fireEvent.click(apps);
-    const curtain = container.querySelector('[data-tool]');
-    expect(curtain).toHaveAttribute('data-tool', 'power-apps');
-    expect(curtain).toHaveAttribute('data-visible', 'true');
-    expect(marker(3).scrollIntoView).not.toHaveBeenCalled();
-    const landing = 3 * 300 - Math.min(120, window.innerHeight * 0.2) + window.innerHeight * 34 / 100 + 2;
-    await vi.waitFor(() => expect(scrollTo).toHaveBeenCalledWith({ top: landing, behavior: 'instant' }), { timeout: 3000 });
-    expect(apps).not.toHaveAttribute('aria-current');
-    advanceTo(3);
-    expect(apps).toHaveAttribute('aria-current', 'step');
-
-    const chapterNav = screen.getByRole('navigation', { name: 'Power Apps: Explore the architecture' });
-    fireEvent.click(within(chapterNav).getByRole('button', { name: 'Capabilities' }));
-    // Through the shared smooth-scroll helper (natively here, as Lenis runs only for a fine pointer): to the chapter's top.
-    expect(scrollTo).toHaveBeenLastCalledWith({ top: marker(4).getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
-    advanceTo(4);
-    expect(within(chapterNav).getByRole('button', { name: 'Capabilities' })).toHaveAttribute('aria-current', 'step');
-    const pinned = container.querySelector('[class*="stickyScreen"]');
-    expect(within(pinned).getByText('React & PCF Controls')).toBeInTheDocument();
-    // Picking an entry opens it in place; it never moves the page.
-    const scrolls = scrollTo.mock.calls.length;
-    fireEvent.click(within(pinned).getByRole('button', { name: /Dataverse & API Engine/i }));
-    expect(within(pinned).getByRole('button', { name: /Dataverse & API Engine/i })).toHaveAttribute('aria-expanded', 'true');
-    expect(within(pinned).getByText(/Relational Dataverse schemas/)).toBeInTheDocument();
-    expect(scrollTo).toHaveBeenCalledTimes(scrolls);
-    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
-    fireEvent.click(within(pinned).getByRole('button', { name: 'Explore full architecture' }));
-    expect(onOpenModal).toHaveBeenCalledWith('power-apps', 1);
-  });
-
-  it('scrolls chapter by chapter while the entries inside a chapter are picked by hand', async () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    const pinned = container.querySelector('[class*="stickyScreen"]');
-    const chapterNav = screen.getByRole('navigation', { name: 'Power BI: Explore the architecture' });
-    advanceTo(1);
-    expect(within(chapterNav).getByRole('button', { name: 'Capabilities' })).toHaveAttribute('aria-current', 'step');
-    expect(within(pinned).getByText('AI narrative')).toBeInTheDocument();
-    // The first capability opens on arrival; the rest wait for a click.
-    expect(within(pinned).getByRole('button', { name: /AI Narrative Engine/i })).toHaveAttribute('aria-expanded', 'true');
-    expect(within(pinned).getByRole('button', { name: /Persona-Based UX/i })).toHaveAttribute('aria-expanded', 'false');
-    fireEvent.click(within(pinned).getByRole('button', { name: /Persona-Based UX/i }));
-    expect(within(pinned).getByRole('button', { name: /Persona-Based UX/i })).toHaveAttribute('aria-current', 'true');
-    expect(within(pinned).getByRole('button', { name: /AI Narrative Engine/i })).toHaveAttribute('aria-expanded', 'false');
-    // The active description is read once, in the narrative column, not echoed under the stage.
-    expect(within(pinned).getAllByText('Role-adaptive executive views tailored for CEO, CFO, and Ops leads')).toHaveLength(1);
-    expect(within(pinned).getByText('AI narrative')).toBeInTheDocument();
-
-    // The very next scroll moment is the next chapter, not the next entry.
-    advanceTo(2);
-    expect(within(chapterNav).getByRole('button', { name: 'The difference' })).toHaveAttribute('aria-current', 'step');
-    expect(within(pinned).getByText('Semantic architecture')).toBeInTheDocument();
-    expect(within(pinned).getByRole('button', { name: /Semantic decision-support models/i })).toHaveAttribute('aria-current', 'true');
-    // The outgoing chapter leaves the page once its exit has played.
-    await waitFor(() => expect(within(pinned).queryByRole('button', { name: /AI Narrative Engine/i })).not.toBeInTheDocument());
-
-    // Scrolling back up returns to the chapter with its selection reset.
-    advanceTo(1);
-    expect(within(pinned).getByRole('button', { name: /AI Narrative Engine/i })).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.queryByRole('button', { name: /Pause tour|Resume tour/i })).not.toBeInTheDocument();
-  });
-
-  it('answers every scroll between chapters: the progress bar and the cue fill continuously', async () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    const scale = (element) => Number(/scale[XY]\(([\d.]+)\)/.exec(element.style.transform)?.[1] ?? 0);
-    const [powerBi, powerApps] = container.querySelectorAll('[class*="progressSegment"] i');
-    const cue = container.querySelector('[class*="cueFill"]');
-    // 60% of the way from the Capabilities marker to the next one.
-    advanceTo(1.2);
-    await nextFrame();
-    expect(scale(cue)).toBeCloseTo(0.6, 2);
-    expect(scale(powerBi)).toBeCloseTo(1.6 / 3, 2);
-    expect(scale(powerApps)).toBe(0);
-    advanceTo(1.5);
-    await nextFrame();
-    expect(scale(cue)).toBeCloseTo(0.9, 2);
-    // Landing on the next chapter empties the cue for the next stretch.
-    advanceTo(2);
-    await nextFrame();
-    expect(scale(cue)).toBeCloseTo(0.4, 2);
-    expect(scale(powerBi)).toBeCloseTo(2.4 / 3, 2);
-  });
-
-  it('slides a single indicator to the entry that was picked', () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    const pinned = container.querySelector('[class*="stickyScreen"]');
-    advanceTo(1);
-    const entry = (name) => within(pinned).getByRole('button', { name });
-    expect(pinned.querySelectorAll('[class*="entryIndicator"]')).toHaveLength(1);
-    expect(entry(/AI Narrative Engine/i).querySelector('[class*="entryIndicator"]')).not.toBeNull();
-    fireEvent.click(entry(/Direct Lake Speed/i));
-    expect(pinned.querySelectorAll('[class*="entryIndicator"]')).toHaveLength(1);
-    expect(entry(/Direct Lake Speed/i).querySelector('[class*="entryIndicator"]')).not.toBeNull();
-  });
+describe('The Arsenal on desktop: one product console', () => {
+  const mount = () => render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
+  const rail = () => screen.getByRole('tablist', { name: 'Arsenal' });
+  const productTab = (name) => within(rail()).getByRole('tab', { name });
+  const chapterList = () => screen.getByRole('tablist', { name: /: Explore the architecture$/ });
+  const chapterTab = (name) => within(chapterList()).getByRole('tab', { name });
+  const consolePanel = () => document.getElementById('arsenal-console-panel');
+  const activeCopy = () => consolePanel().querySelector('#arsenal-chapter-panel > :not([aria-hidden])');
 
   it('reveals the section title without changing its accessible name', () => {
-    render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    expect(screen.getByRole('heading', { level: 2, name: 'The Arsenal' })).toBeInTheDocument();
+    mount();
+    // Named after what it holds, with no italic flourish.
+    const heading = screen.getByRole('heading', { level: 2, name: 'Power Platform services' });
+    expect(heading.querySelector('em')).toBeNull();
   });
 
-  it('covers the stage with the incoming tool while scrolling across a boundary and clears it on either side', () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    const curtain = container.querySelector('[data-tool]');
-    const pinned = container.querySelector('[class*="stickyScreen"]');
-    expect(curtain).toHaveAttribute('aria-hidden', 'true');
-    expect(curtain).toHaveAttribute('data-visible', 'false');
-    expect(pinned).toHaveAttribute('data-curtain', 'false');
-    advanceTo(2.8);
-    expect(curtain).toHaveAttribute('data-tool', 'power-apps');
-    expect(curtain).toHaveAttribute('data-visible', 'true');
-    // The tool rail steps aside (and stops taking clicks) while the curtain owns the stage.
-    expect(pinned).toHaveAttribute('data-curtain', 'true');
-    expect(within(curtain).getByText('02 / 04')).toBeInTheDocument();
-    expect(within(curtain).getByText('Power Apps')).toBeInTheDocument();
-    advanceTo(4);
-    expect(curtain).toHaveAttribute('data-visible', 'false');
-    advanceTo(5.8);
-    expect(curtain).toHaveAttribute('data-tool', 'power-automate');
-    expect(within(curtain).getByText('03 / 04')).toBeInTheDocument();
-    advanceTo(1);
-    expect(curtain).toHaveAttribute('data-visible', 'false');
+  it('lists the four products in a rail and opens on the first: its title, its proposition and one scene', () => {
+    mount();
+    const tabs = within(rail()).getAllByRole('tab');
+    expect(tabs.map((tab) => tab.textContent)).toEqual(TOOLS.map((entry) => entry.name));
+    expect(tabs.map((tab) => tab.getAttribute('aria-selected'))).toEqual(['true', 'false', 'false', 'false']);
+    // Roving focus: only the selected tab is in the tab order.
+    expect(tabs.map((tab) => tab.tabIndex)).toEqual([0, -1, -1, -1]);
+    expect(screen.getByRole('tabpanel', { name: 'Power BI' })).toBe(consolePanel());
+    // Only the active product's title is read.
+    expect(within(consolePanel()).getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent)).toEqual([TOOLS[0].title]);
+    expect(within(chapterList()).getAllByRole('tab').map((tab) => tab.textContent)).toEqual(['The proposition', 'Capabilities', 'The difference']);
+    expect(activeCopy()).toHaveTextContent(TOOLS[0].body);
+    expect(activeCopy()).toHaveTextContent(TOOLS[0].detail.roiMetric);
+    expect(consolePanel().querySelector('[data-scene]')).toHaveAttribute('data-scene', 'power-bi-0');
+    expect(consolePanel().querySelectorAll('[data-scene] figure')).toHaveLength(1);
   });
 
-  it('keeps the scroll cue on screen for every moment of the story', () => {
-    render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    for (const moment of [0, 1, 4, 11]) {
-      advanceTo(moment);
-      expect(screen.getByText('Scroll to continue')).toBeVisible();
+  it('carries no full-architecture button, no counters and no scroll machinery', () => {
+    const { container } = mount();
+    expect(within(consolePanel()).queryByRole('button', { name: /Explore full architecture/i })).toBeNull();
+    expect(consolePanel().textContent).not.toMatch(/\b\d{2} \/ \d{2}\b/);
+    expect(container.querySelector('[data-moment]')).toBeNull();
+    expect(screen.queryByText(/Scroll to continue/i)).toBeNull();
+    // The rail and the chapter control name things; no index digits in them.
+    expect(rail().textContent).not.toMatch(/\d/);
+    expect(chapterList().textContent).not.toMatch(/\d/);
+  });
+
+  it('switches products and keeps the chapter, so they can be compared', () => {
+    mount();
+    fireEvent.click(chapterTab('Capabilities'));
+    expect(chapterTab('Capabilities')).toHaveAttribute('aria-selected', 'true');
+    for (const capability of TOOLS[0].detail.capabilities) expect(activeCopy()).toHaveTextContent(capability.label);
+    fireEvent.click(productTab('Power Apps'));
+    expect(productTab('Power Apps')).toHaveAttribute('aria-selected', 'true');
+    expect(productTab('Power BI')).toHaveAttribute('aria-selected', 'false');
+    expect(within(consolePanel()).getByRole('heading', { level: 3 })).toHaveTextContent(TOOLS[1].title);
+    expect(chapterTab('Capabilities')).toHaveAttribute('aria-selected', 'true');
+    for (const capability of TOOLS[1].detail.capabilities) {
+      expect(activeCopy()).toHaveTextContent(capability.label);
+      expect(activeCopy()).toHaveTextContent(capability.desc);
     }
+    expect(consolePanel().querySelector('[data-scene]')).toHaveAttribute('data-scene', 'power-apps-1');
+    fireEvent.click(chapterTab('The difference'));
+    for (const claim of TOOLS[1].detail.differentiators) expect(activeCopy()).toHaveTextContent(claim);
   });
 
-  it('announces the active tool to assistive technology', () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
-    const live = container.querySelector('[aria-live="polite"]');
-    expect(live).toHaveTextContent('Power BI');
-    advanceTo(3);
-    expect(live).toHaveTextContent('Power Apps');
+  it('takes the active product colour', () => {
+    mount();
+    const panel = rail().parentElement;
+    expect(panel.style.getPropertyValue('--tool-accent')).toBe(TOOLS[0].color);
+    fireEvent.click(productTab('Copilot Studio'));
+    expect(panel.style.getPropertyValue('--tool-accent')).toBe(TOOLS[3].color);
   });
 
-  it('keeps all four tools and their three chapters readable in the natural-flow fallback', () => {
-    const { container } = render(<LanguageProvider><ArsenalExperience onOpenModal={() => {}} /></LanguageProvider>);
+  it('moves through products and chapters with the keyboard, focus following the selection', () => {
+    mount();
+    productTab('Power BI').focus();
+    fireEvent.keyDown(productTab('Power BI'), { key: 'ArrowDown' });
+    expect(productTab('Power Apps')).toHaveAttribute('aria-selected', 'true');
+    expect(productTab('Power Apps')).toHaveFocus();
+    fireEvent.keyDown(productTab('Power Apps'), { key: 'ArrowRight' });
+    expect(productTab('Power Automate')).toHaveFocus();
+    fireEvent.keyDown(productTab('Power Automate'), { key: 'End' });
+    expect(productTab('Copilot Studio')).toHaveAttribute('aria-selected', 'true');
+    fireEvent.keyDown(productTab('Copilot Studio'), { key: 'ArrowDown' });
+    expect(productTab('Power BI')).toHaveFocus();
+
+    chapterTab('The proposition').focus();
+    fireEvent.keyDown(chapterTab('The proposition'), { key: 'ArrowRight' });
+    expect(chapterTab('Capabilities')).toHaveAttribute('aria-selected', 'true');
+    expect(chapterTab('Capabilities')).toHaveFocus();
+    fireEvent.keyDown(chapterTab('Capabilities'), { key: 'Home' });
+    expect(chapterTab('The proposition')).toHaveFocus();
+    fireEvent.keyDown(chapterTab('The proposition'), { key: 'ArrowLeft' });
+    expect(chapterTab('The difference')).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('keeps every inactive panel and title out of reach: hidden from assistive technology and inert', () => {
+    mount();
+    const panels = [...document.getElementById('arsenal-chapter-panel').children];
+    expect(panels).toHaveLength(12);
+    const hidden = panels.filter((panel) => panel.getAttribute('aria-hidden') === 'true');
+    expect(hidden).toHaveLength(11);
+    hidden.forEach((panel) => expect(panel).toHaveAttribute('inert'));
+    expect(consolePanel().querySelectorAll('h3[aria-hidden="true"]')).toHaveLength(3);
+  });
+
+  it('keeps all four tools and their three chapters readable in the accordion markup', () => {
+    const { container } = mount();
     const natural = container.querySelector('[class*="naturalExperience"]');
     expect(within(natural).getAllByRole('article')).toHaveLength(4);
     expect(within(natural).getAllByRole('heading', { name: 'Capabilities' })).toHaveLength(4);
@@ -207,6 +139,17 @@ describe('The Arsenal experience', () => {
     expect(natural.textContent).not.toMatch(/60 FPS|0\.04ms|AI-Native|React 18|RPA 2\.0/);
   });
 
+  it('speaks Spanish', () => {
+    window.localStorage.setItem('neuralbi_lang', 'es');
+    mount();
+    const chapters = screen.getByRole('tablist', { name: /: Explorar la arquitectura$/ });
+    expect(within(chapters).getAllByRole('tab').map((tab) => tab.textContent)).toEqual(['La propuesta', 'Capacidades', 'La diferencia']);
+    expect(within(consolePanel()).getByRole('heading', { level: 3 })).toHaveTextContent(translations.es.arsenal.tools.powerBi.title);
+    window.localStorage.removeItem('neuralbi_lang');
+  });
+});
+
+describe('The full-architecture modal (opened from the accordion)', () => {
   it.each(['power-bi', 'power-apps', 'power-automate', 'copilot-studio'])('preserves all detail content and three graphics for %s', (toolId) => {
     vi.stubGlobal('IntersectionObserver', undefined);
     const details = translations.en.arsenal.modalDetails[toolId];
@@ -250,17 +193,7 @@ describe('The Arsenal experience', () => {
     expect(opener).toHaveFocus();
   });
 
-  it('locks document scrolling while the modal is open without un-pinning the story behind it', () => {
-    const { unmount } = render(<LanguageProvider><ArsenalDetailModal toolId="power-bi" onClose={() => {}} /></LanguageProvider>);
-    expect(document.documentElement.style.overflow).toBe('hidden');
-    // A locked <body> becomes a scroll container and releases the pinned story, so the pinned layout leaves it alone.
-    expect(document.body.style.overflow).not.toBe('hidden');
-    unmount();
-    expect(document.documentElement.style.overflow).not.toBe('hidden');
-  });
-
-  it('also locks the body on touch layouts and restores both on close', () => {
-    vi.stubGlobal('matchMedia', () => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
+  it('locks the body and the document while open (it opens from the accordion) and restores both on close', () => {
     const { unmount } = render(<LanguageProvider><ArsenalDetailModal toolId="power-bi" onClose={() => {}} /></LanguageProvider>);
     expect(document.body.style.overflow).toBe('hidden');
     expect(document.documentElement.style.overflow).toBe('hidden');
@@ -271,8 +204,8 @@ describe('The Arsenal experience', () => {
 });
 
 describe('The Arsenal below 1024px: an accordion of the four products', () => {
-  // Phones and tablets: the accordion query matches, the pinned story's does not. Everything observed is in view, so a
-  // product's scenes build as soon as it is opened.
+  // Phones and tablets: the accordion query matches. Everything observed is in view, so a product's scenes build as
+  // soon as it is opened.
   beforeEach(() => {
     vi.stubGlobal('matchMedia', (query) => ({ matches: query.includes('max-width: 1023px'), addEventListener: vi.fn(), removeEventListener: vi.fn() }));
     vi.stubGlobal('IntersectionObserver', class {
@@ -329,7 +262,7 @@ describe('The Arsenal below 1024px: an accordion of the four products', () => {
     fireEvent.click(trigger(container, 0));
     const tapped = trigger(container, 2);
     let measured = 0;
-    // The suite already spies on getBoundingClientRect (scroll markers); chain onto that implementation.
+    // The suite already spies on getBoundingClientRect (a pass-through); chain onto that implementation.
     const spy = vi.spyOn(Element.prototype, 'getBoundingClientRect');
     const outer = spy.getMockImplementation();
     spy.mockImplementation(function rect() {

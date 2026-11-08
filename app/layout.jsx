@@ -1,5 +1,5 @@
 import './globals.css';
-import { DM_Sans, Inter, JetBrains_Mono, Montserrat } from 'next/font/google';
+import { DM_Sans, Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import CookieBanner from '../components/CookieBanner';
 import NeuralBIIntro from '../components/intro/NeuralBIIntro';
@@ -24,19 +24,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-ui',
-  display: 'swap',
-});
-
 export const metadata = {
   metadataBase: new URL('https://neuralbi.com'),
   title: {
-    default: 'NeuralBI - Make your data think. | Business Intelligence & Power Platform Architecture',
+    default: 'NeuralBI | Microsoft data & AI consulting: Power BI, Power Platform and Fabric',
     template: '%s | NeuralBI',
   },
-  description: 'We architect high-performance Business Intelligence, Power Platform, and Microsoft Fabric ecosystems. Turn static enterprise data into real-time dashboards and autonomous AI workflows.',
+  description: 'Microsoft data and AI consulting: Business Intelligence with Power BI, business apps and AI agents on Power Platform and Microsoft Fabric, in production in weeks.',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
@@ -46,8 +40,8 @@ export const metadata = {
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
-    title: 'NeuralBI - Make your data think.',
-    description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems. Turn static data into a living, cognitive asset for your enterprise.',
+    title: 'NeuralBI | Microsoft data & AI consulting',
+    description: 'Data platforms, business apps and AI agents on Power Platform and Microsoft Fabric, in production in weeks.',
     url: 'https://neuralbi.com',
     siteName: 'NeuralBI',
     images: [
@@ -63,15 +57,15 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NeuralBI - Make your data think.',
-    description: 'We architect high-performance Business Intelligence, Power Platform, and AI ecosystems.',
+    title: 'NeuralBI | Microsoft data & AI consulting',
+    description: 'Data platforms, business apps and AI agents on Power Platform and Microsoft Fabric.',
     images: ['/og-image.png'],
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} ${montserrat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_BOOTSTRAP }} />
         <link rel="icon" type="image/svg+xml" href="/NeuralBI/favicon.svg" />
@@ -79,7 +73,7 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/NeuralBI/apple-touch-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body>
         <NeuralBIIntro />

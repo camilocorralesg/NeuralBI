@@ -146,12 +146,13 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // In page order, each named after what its section holds.
   const navLinks = [
-    { label: nav.manifesto || 'Manifesto', href: '#manifesto' },
-    { label: nav.arsenal || 'Arsenal', href: '#arsenal' },
+    { label: nav.arsenal || 'Services', href: '#arsenal' },
+    { label: nav.protocol || 'Process', href: '#protocol' },
     { label: nav.integrations || 'Integrations', href: '#integrations' },
-    { label: nav.verticals || 'Verticals', href: '#verticals' },
-    { label: nav.protocol || 'Protocol', href: '#protocol' }
+    { label: nav.verticals || 'Industries', href: '#verticals' },
+    { label: nav.results || 'Results', href: '#results' }
   ];
 
   const scrollToAudit = (e) => {
@@ -225,7 +226,7 @@ function Navbar() {
       >
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <img src={logoUrl} alt="NeuralBI Logo" style={{ height: '24px', display: 'block', cursor: 'pointer' }} />
+          <img src={logoUrl} alt="NeuralBI Logo" width="810" height="170" style={{ width: 'auto', height: '24px', display: 'block', cursor: 'pointer' }} />
         </div>
 
         {/* Links */}
@@ -274,14 +275,14 @@ function Navbar() {
             <ShaderButton
               type="button"
               onClick={scrollToAudit}
-              aria-label={nav.bookAudit || "Book an Architecture Audit"}
+              aria-label={nav.bookCall || "Book a Call"}
               style={{
                 padding: '0.5rem 1.3rem',
                 fontSize: '0.85rem',
                 fontWeight: 700
               }}
             >
-              {nav.bookAudit || 'Book Audit'} <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '6px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', paddingLeft: '6px', height: '12px', lineHeight: 1 }}>↗</span>
+              {nav.bookCall || 'Book a Call'} <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--span-color, rgba(255,255,255,0.5))', marginLeft: '6px', borderLeft: '1px solid var(--span-border, rgba(255,255,255,0.2))', paddingLeft: '6px', height: '12px', lineHeight: 1 }}>↗</span>
             </ShaderButton>
           </div>
         </div>
@@ -321,7 +322,7 @@ function Navbar() {
             onKeyDown={(event) => { if (event.key === 'Escape') setIsMobileMenuOpen(false); }}
           >
             <div className={ns.menuHead}>
-              <img src={logoUrl} alt="NeuralBI Logo" className={ns.menuLogo} />
+              <img src={logoUrl} alt="NeuralBI Logo" className={ns.menuLogo} width="810" height="170" loading="lazy" decoding="async" />
               <button
                 ref={closeButtonRef}
                 type="button"
