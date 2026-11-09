@@ -69,6 +69,12 @@ describe('IntegrationsHub', () => {
   });
 
   it('draws the light field behind the content, hidden from assistive technology', () => {
+    // The field makes its canvas on the approach observer's first report, as a browser sends it right after layout.
+    vi.stubGlobal('IntersectionObserver', class {
+      constructor(callback, options = {}) { Object.assign(this, { callback, options }); }
+      observe(target) { if (this.options.rootMargin === '100% 0px') this.callback([{ target, isIntersecting: true }]); }
+      disconnect() {}
+    });
     const { container } = render(<LanguageProvider><IntegrationsHub /></LanguageProvider>);
     const aurora = container.querySelector('section').firstElementChild;
     expect(aurora).toHaveAttribute('aria-hidden', 'true');
@@ -80,9 +86,14 @@ describe('IntegrationsHub', () => {
 describe('AuroraField', () => {
   const observers = [];
   const renderer = { resize: vi.fn(), setColor: vi.fn(), setClearing: vi.fn(), render: vi.fn(), destroy: vi.fn() };
+  // observers[0] watches the screen (the test decides what it sees); the approach observer reports "near" on observe, as
+  // a browser does right after the first layout for a field near the screen at load: that report makes the context.
   const stubObserver = () => vi.stubGlobal('IntersectionObserver', class {
-    constructor(callback) { this.callback = callback; this.disconnect = vi.fn(); observers.push(this); }
-    observe(element) { this.element = element; }
+    constructor(callback, options = {}) {
+      this.callback = callback; this.options = options; this.disconnect = vi.fn();
+      if (options.rootMargin !== '100% 0px') observers.push(this);
+    }
+    observe(element) { this.element = element; if (this.options.rootMargin === '100% 0px') this.callback([{ isIntersecting: true }]); }
   });
   const stubMotion = (reduce) => vi.stubGlobal('matchMedia', (query) => ({ matches: reduce && query.includes('reduce'), media: query }));
 

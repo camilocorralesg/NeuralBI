@@ -4,7 +4,9 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import CookieBanner from '../../components/CookieBanner';
 import ConsentAnalytics from '../../components/ConsentAnalytics';
 import { LanguageProvider } from '../../context/LanguageContext';
-import { analyticsAllowed, CONSENT_KEY } from '../../lib/consent';
+import { analyticsAllowed, CONSENT_BOOTSTRAP, CONSENT_KEY } from '../../lib/consent';
+import fs from 'fs';
+import path from 'path';
 import { translations } from '../../lib/translations';
 
 // The analytics component, stubbed to hand over the filter it is given.
@@ -34,10 +36,8 @@ describe('Component: CookieBanner', () => {
     expect(screen.queryByText('Cookie-free analytics')).not.toBeInTheDocument();
   });
 
-  it('appears a second into a first visit and says what it measures, plainly', () => {
+  it('is there from the first render of a first visit (no pop-in after hydration) and says what it measures, plainly', () => {
     render(<LanguageProvider><CookieBanner /></LanguageProvider>);
-    expect(screen.queryByText('Cookie-free analytics')).not.toBeInTheDocument();
-    act(() => { vi.advanceTimersByTime(1100); });
 
     const notice = screen.getByRole('region', { name: 'Cookie-free analytics' });
     expect(notice).toHaveTextContent(translations.en.cookieBanner.text);
@@ -71,6 +71,35 @@ describe('Component: CookieBanner', () => {
     open();
     fireEvent.click(screen.getAllByRole('button', { name: 'Close the cookie notice' }).pop());
     expect(localStorage.getItem(CONSENT_KEY)).toBe('essential');
+  });
+});
+
+describe('The notice before the first paint', () => {
+  const root = path.resolve(__dirname, '../..');
+  beforeEach(() => { localStorage.clear(); });
+  afterEach(() => { delete document.documentElement.dataset.consent; localStorage.clear(); vi.restoreAllMocks(); });
+
+  it('flags a visitor who has not chosen, and only them (blocked storage counts as not chosen)', () => {
+    const run = () => new Function(CONSENT_BOOTSTRAP)();
+    run();
+    expect(document.documentElement.dataset.consent).toBe('pending');
+
+    delete document.documentElement.dataset.consent;
+    localStorage.setItem(CONSENT_KEY, 'accepted');
+    run();
+    expect(document.documentElement.dataset.consent).toBeUndefined();
+
+    delete document.documentElement.dataset.consent;
+    vi.stubGlobal('localStorage', { getItem() { throw new Error('blocked'); } });
+    run();
+    vi.unstubAllGlobals();
+    expect(document.documentElement.dataset.consent).toBe('pending');
+  });
+
+  it('runs in <head>, and the notice shows only under the flag', () => {
+    expect(fs.readFileSync(path.join(root, 'app/layout.jsx'), 'utf8')).toMatch(/<head>[\s\S]*__html: CONSENT_BOOTSTRAP[\s\S]*<\/head>/);
+    expect(fs.readFileSync(path.join(root, 'components/CookieBanner.module.css'), 'utf8'))
+      .toMatch(/:global\(html:not\(\[data-consent='pending'\]\)\) \.banner \{ display: none; \}/);
   });
 });
 

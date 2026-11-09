@@ -9,6 +9,9 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   basePath: '/NeuralBI',
   reactStrictMode: true,
+  // No experimental.inlineCss: Next 15 writes the CSS into the HTML twice (a <style> and again in the RSC payload), so
+  // the document grew from 44 KB to 113 KB gzip and Lighthouse's mobile FCP got worse (median 2.7 s against 1.7 s with
+  // the five stylesheets). See DESIGN.md, What loads, and when.
   async redirects() {
     return [
       {

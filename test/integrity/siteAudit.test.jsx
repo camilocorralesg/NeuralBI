@@ -103,7 +103,9 @@ describe('The site audit of 2026-11-08', () => {
   it('makes an Aurora context only near the screen and frees it a screen away', () => {
     const { container } = render(<AuroraField />);
     const field = container.firstElementChild;
-    // In view at load: a canvas at once.
+    // Nothing is measured at mount (that forced a layout mid-hydration): the first "near" report makes the canvas.
+    expect(field.querySelector('canvas')).toBeNull();
+    act(() => approach().callback([{ isIntersecting: true }]));
     expect(field.querySelector('canvas')).not.toBeNull();
     act(() => approach().callback([{ isIntersecting: false }]));
     expect(field.querySelector('canvas')).toBeNull();
@@ -115,6 +117,9 @@ describe('The site audit of 2026-11-08', () => {
   it('frees the hero lines\' context a screen away and makes a new one on the way back', () => {
     const { container } = render(<FloatingLines />);
     const lines = container.querySelector('.floating-lines-container');
+    // The hero at load: its context comes with the observer's first report, right after the first layout.
+    expect(lines.querySelector('canvas')).toBeNull();
+    act(() => approach().callback([{ isIntersecting: true }]));
     expect(lines).toHaveAttribute('data-webgl', 'true');
     expect(lines.querySelector('canvas')).not.toBeNull();
     act(() => approach().callback([{ isIntersecting: false }]));

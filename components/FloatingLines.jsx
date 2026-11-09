@@ -427,9 +427,9 @@ export default function FloatingLines({
     const near = typeof IntersectionObserver !== 'undefined'
       ? new IntersectionObserver(records => { if (records[records.length - 1].isIntersecting) boot(); else teardown(); }, { rootMargin: NEAR })
       : null;
-    // Already near (the hero at load): make the context now rather than on the observer's first report.
-    const box = container.getBoundingClientRect();
-    if (!near || (box.bottom >= -window.innerHeight && box.top <= window.innerHeight * 2)) boot();
+    // The observer's first report (right after the first layout) makes the context for the hero at load. Measuring the
+    // box here instead would force a layout of the whole page in the middle of hydration.
+    if (!near) boot();
     visible?.observe(container);
     near?.observe(container);
 
