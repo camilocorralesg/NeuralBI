@@ -169,6 +169,20 @@ describe('Impact: the ROI instrument', () => {
     expect(beam).toHaveAttribute('data-live', 'true');
     see(beamObserver(), [[beam, 0]]);
     expect(beam).toHaveAttribute('data-live', 'false');
+  });
+
+  it('draws the beam\'s track from the resize observer\'s first report, never by measuring while it mounts', () => {
+    const resizers = [];
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(callback) { this.callback = callback; resizers.push(this); }
+      observe(element) { this.element = element; }
+      disconnect() {}
+    });
+    const { container } = mount();
+    const beam = container.querySelector('[data-live]');
+    // Measuring at mount forced a layout of the whole page during hydration.
+    expect(beam.style.getPropertyValue('--beam-path')).toBe('');
+    act(() => resizers.find((resizer) => resizer.element === beam).callback([]));
     // Its track is the panel's measured outline as a path(), which every engine with motion paths (Safari 16+) runs.
     expect(beam.style.getPropertyValue('--beam-path')).toMatch(/^path\('M /);
   });
