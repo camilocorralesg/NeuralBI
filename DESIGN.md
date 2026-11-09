@@ -496,6 +496,8 @@ Measured on the production build, 2026-11-09: the home page's first load went fr
 
 **The Copy on Demand Rule.** English ships with the page (the server renders it, every component falls back to it, `lib/translations.en.js`). Spanish (`lib/translations.es.js`) is a chunk fetched as the page boots for a visitor who reads Spanish (a saved choice or the browser's language), and on reaching for the language selector for everyone else (`lib/i18n.js`). The page switches only once the copy is there, never half translated. App code never imports `lib/translations.js` (both languages, for tests and tooling); a test guards it.
 
+**The GPU Only Rule.** A WebGL effect (the hero's lines, the auroras, the Shader Buttons' liquid) draws only where a GPU draws it. Without one (Google's PageSpeed and Lighthouse servers, virtual machines, a blocklisted driver) Chrome hands out a context drawn on the CPU (SwiftShader), and a full-screen shader there freezes the page: on the live site, before this rule, PageSpeed Insights gave up with `DEADLINE_EXCEEDED` and a local Lighthouse run took 336 s with 66 s of blocking time. Every renderer gets its context from `hardwareContext` (`components/webglContext.js`), which asks with `failIfMajorPerformanceCaveat` and rejects a CPU renderer by name; the effect then keeps its still CSS fallback, which must always read as finished. A test guards it. Local headless Chrome uses the machine's GPU, so check the CPU path with `--use-angle=swiftshader --enable-unsafe-swiftshader`.
+
 ---
 
 ## 7. Do's and Don'ts
@@ -530,3 +532,4 @@ Measured on the production build, 2026-11-09: the home page's first load went fr
 - **Don't** use monospace fonts for long body paragraphs; restrict monospace strictly to telemetry tags, code blocks, and micro-labels.
 - **Don't** add decorative generic diagrams with fake controls or unstyled placeholders.
 - **Don't** import a below-the-fold drawing, Lenis, the Spanish copy or framer's full `motion` statically; each has its chunk (see What loads, and when).
+- **Don't** call `canvas.getContext('webgl…')` in an effect; ask `hardwareContext`, so a machine without a GPU gets the still fallback instead of a frozen page.

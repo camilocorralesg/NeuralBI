@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ShaderButton from '../../components/ShaderButton';
-import { refreshLiquid, registerLiquid } from '../../components/liquidEngine';
+import { refreshLiquid, registerLiquid, resolveColor } from '../../components/liquidEngine';
 
 // Tones resolve to known channels: Volt, and Power BI's yellow for the product tone.
 const VOLT = [198 / 255, 1, 52 / 255];
@@ -95,6 +95,8 @@ describe('ShaderButton', () => {
     const button = screen.getByRole('button', { name: 'Send' });
     expect(button).not.toHaveAttribute('data-liquid');
     expect(observers).toHaveLength(0);
+    // Nothing to draw, so nothing is read: each read would force the page's style and layout during hydration.
+    expect(resolveColor).not.toHaveBeenCalled();
   });
   it('re-tints when its tone changes (The Arsenal switching products), without leaving the engine', () => {
     const leave = vi.fn();

@@ -1,5 +1,6 @@
 // WebGL renderer for AuroraField: one full-screen triangle and a fragment shader that paints a
 // domain-warped light mass. Kept free of React so the component only owns lifecycle and pacing.
+import { hardwareContext } from './webglContext';
 
 const VERTEX = `
 attribute vec2 position;
@@ -118,7 +119,7 @@ function compile(gl, type, source) {
 
 /** Returns a renderer bound to `canvas`, or null when WebGL is unavailable. */
 export function createAuroraRenderer(canvas) {
-  const gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, premultipliedAlpha: false, powerPreference: 'low-power' });
+  const gl = hardwareContext(canvas, ['webgl'], { alpha: false, antialias: false, depth: false, stencil: false, premultipliedAlpha: false, powerPreference: 'low-power' });
   if (!gl) return null;
 
   const program = gl.createProgram();

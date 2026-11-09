@@ -1,6 +1,7 @@
 // WebGL renderer for the Shader Button's liquid (after Framer's LiquidGradient): one full-screen triangle and a fragment
 // shader that domain-warps the plane, bands it and maps it through a four-step palette. Kept free of React and of the
 // engine's pacing: liquidEngine.js owns the one context every button shares.
+import { hardwareContext } from './webglContext';
 
 const VERTEX = `
 attribute vec2 position;
@@ -102,7 +103,7 @@ export const LIQUID_FRAGMENT = FRAGMENT;
 
 /** Returns a renderer bound to `canvas`, or null when WebGL is unavailable. */
 export function createLiquidRenderer(canvas) {
-  const gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, premultipliedAlpha: false, powerPreference: 'low-power' });
+  const gl = hardwareContext(canvas, ['webgl'], { alpha: false, antialias: false, depth: false, stencil: false, premultipliedAlpha: false, powerPreference: 'low-power' });
   if (!gl) return null;
 
   const program = gl.createProgram();
