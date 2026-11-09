@@ -35,6 +35,9 @@ function Industries() {
   const copy = labels[language] || labels.en;
   const [active, setActive] = useState(0);
   const [solution, setSolution] = useState(0);
+  // The panel's blur-in belongs to a switch of sector. The first sector arrives with the section's own reveal, and a
+  // blur running while the page loads is an animation the browser cannot hand to the compositor.
+  const [switched, setSwitched] = useState(false);
   // Known after mount, so the server's HTML and hydration keep the desktop order.
   const [compact, setCompact] = useState(false);
   const tabRefs = useRef([]);
@@ -58,6 +61,7 @@ function Industries() {
   function selectIndustry(index) {
     setActive(index);
     setSolution(0);
+    setSwitched(true);
   }
 
   function toggleSolution(event, cardIndex, expanded) {
@@ -164,7 +168,7 @@ function Industries() {
 
         <Reveal variant="block" delay={280} amount={0.1}>
         {industries.map((item, index) => <div key={item.id} id={`${uid}-panel-${index}`} role="tabpanel"
-          aria-labelledby={`${uid}-tab-${index}`} hidden={active !== index} tabIndex={0} className={s.panel}>
+          aria-labelledby={`${uid}-tab-${index}`} hidden={active !== index} tabIndex={0} className={s.panel} data-switched={switched || undefined}>
           {active === index && <>
             <div className={s.story} key={industry.id}>
               <p className={s.industryName}>{industry.title}</p>

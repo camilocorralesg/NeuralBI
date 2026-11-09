@@ -33,8 +33,9 @@ export default function EdgeBeam({ className = '' }) {
       const radius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
       el.style.setProperty('--beam-path', `path('${roundedRectPath(el.offsetWidth, el.offsetHeight, radius)}')`);
     };
-    measure();
-    if (typeof ResizeObserver === 'undefined') return undefined;
+    // The observer's first report (sent right after the first layout) draws the track. Measuring here as well forced a
+    // layout of the whole page in the middle of hydration (PageSpeed's "forced reflow").
+    if (typeof ResizeObserver === 'undefined') { measure(); return undefined; }
     const resize = new ResizeObserver(measure);
     resize.observe(el);
     return () => resize.disconnect();

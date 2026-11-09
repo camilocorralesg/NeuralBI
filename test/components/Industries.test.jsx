@@ -1,4 +1,6 @@
 import React from 'react';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import Industries from '../../components/sections/Industries';
@@ -33,6 +35,16 @@ const sceneObserver = () => observers.find(observer => observer.target?.dataset?
 afterEach(() => { vi.unstubAllGlobals(); localStorage.removeItem('neuralbi_lang'); });
 
 describe('Industries architecture explorer', () => {
+  it('blurs a sector in only on a switch, never while the page loads (a blur cannot be composited)', () => {
+    mount();
+    expect(screen.getByRole('tabpanel')).not.toHaveAttribute('data-switched');
+    fireEvent.click(screen.getAllByRole('tab')[2]);
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('data-switched');
+    const css = readFileSync(resolve(__dirname, '../../components/sections/Industries.module.css'), 'utf8');
+    expect(css).toContain('.panel[data-switched] > * { animation: panelIn');
+    expect(css).not.toMatch(/\.panel > \* \{ animation:/);
+  });
+
   it.each([0, 1, 2, 3])('exposes sector %i and its solutions with correct panel relationships', (i) => {
     const { container } = mount();
     const tabs = screen.getAllByRole('tab');

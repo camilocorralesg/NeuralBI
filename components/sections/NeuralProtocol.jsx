@@ -77,7 +77,8 @@ export default function NeuralProtocol() {
       setGeometry({ measured: true, start: first.y, length, thresholds: centers.map((center) => (center.y - first.y) / length) });
     };
     measureRef.current = measure;
-    measure();
+    // The observer's first report (sent right after the first layout) takes the first measure. Measuring here as well
+    // forced a layout of the whole page in the middle of hydration (PageSpeed's "forced reflow", 80 ms).
     const observer = new ResizeObserver(measure);
     observer.observe(run);
     return () => observer.disconnect();
