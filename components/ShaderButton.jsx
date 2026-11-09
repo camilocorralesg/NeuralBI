@@ -58,10 +58,13 @@ const ShaderButton = forwardRef(function ShaderButton({
       target.height = height;
       entry.dirty = true;
     };
-    tint();
-    size();
+    // Without WebGL (or without a GPU) the engine declines and the still CSS liquid stays; the button then reads neither
+    // its colour nor its size, each of which would force the page's style and layout while it hydrates.
     const unregister = registerLiquid(entry);
     if (!unregister) return undefined;
+    tint();
+    size();
+    refreshLiquid();
     entryRef.current = entry;
     entry.tint = tint;
 

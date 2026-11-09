@@ -1,5 +1,6 @@
 // A minimal WebGL renderer for one full-screen fragment shader (the hero's FloatingLines). It replaced three.js, which
 // the hero loaded only to draw this one quad: a WebGLRenderer, a scene, a camera and a mesh for two triangles.
+import { hardwareContext } from './webglContext';
 
 const VERTEX = `
 attribute vec2 position;
@@ -30,7 +31,7 @@ function compile(gl, type, source) {
  */
 export function createLinesRenderer(canvas, fragment) {
   const options = { antialias: true, alpha: false, depth: false, stencil: false, powerPreference: 'low-power' };
-  const gl = canvas.getContext('webgl2', options) || canvas.getContext('webgl', options);
+  const gl = hardwareContext(canvas, ['webgl2', 'webgl'], options);
   if (!gl) return null;
 
   const program = gl.createProgram();
