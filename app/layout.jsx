@@ -1,26 +1,32 @@
 import './globals.css';
 import { DM_Sans, Inter, JetBrains_Mono } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
+import ConsentAnalytics from '../components/ConsentAnalytics';
 import CookieBanner from '../components/CookieBanner';
+import MotionProvider from '../components/MotionProvider';
 import NeuralBIIntro from '../components/intro/NeuralBIIntro';
 import { INTRO_BOOTSTRAP } from '../components/intro/choreography';
 import { LanguageProvider } from '../context/LanguageContext';
 
+// The three families, self-hosted by next/font (no third-party stylesheet, no render-blocking request). Variable
+// files: DM Sans keeps its optical-size axis and its italic, so a 5rem headline draws the 40pt cut and body copy the
+// 14pt cut, exactly as before. app/globals.css maps these variables onto the --font-* tokens.
 const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-sans',
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  variable: '--font-dm-sans',
   display: 'swap',
 });
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-inter',
   display: 'swap',
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-jetbrains-mono',
   display: 'swap',
 });
 
@@ -71,17 +77,16 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/svg+xml" href="/NeuralBI/favicon.svg" />
         <link rel="icon" type="image/png" href="/NeuralBI/favicon.png" />
         <link rel="apple-touch-icon" href="/NeuralBI/apple-touch-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body>
         <NeuralBIIntro />
         <LanguageProvider>
-          {children}
-          <CookieBanner />
+          <MotionProvider>
+            {children}
+            <CookieBanner />
+          </MotionProvider>
         </LanguageProvider>
-        <Analytics />
+        <ConsentAnalytics />
       </body>
     </html>
   );

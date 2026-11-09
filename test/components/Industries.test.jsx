@@ -1,7 +1,8 @@
 import React from 'react';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import Industries from '../../components/sections/Industries';
+import { preloadMockups } from '../../components/graphics/industryMockups';
 import { LanguageProvider, useLanguage } from '../../context/LanguageContext';
 import { translations } from '../../lib/translations';
 
@@ -12,6 +13,10 @@ function LanguageSwitch() {
   return <button onClick={() => setLanguage('es')}>Español</button>;
 }
 function mount() { return render(<LanguageProvider><LanguageSwitch /><Industries /></LanguageProvider>); }
+
+// The products are their own chunks (test/components/IndustryMockupsLazy.test.jsx covers that); here they are in
+// place, the way they are once the reader reaches the section.
+beforeAll(() => preloadMockups());
 
 beforeEach(() => {
   localStorage.removeItem('neuralbi_lang');

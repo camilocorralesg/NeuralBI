@@ -325,6 +325,16 @@ Components are engineered as self-contained precision modules. They share rounde
 - **Portable GLSL:** GLSL ES 1.00, so it compiles in WebGL 1 and 2: every loop counts to a constant (`MAX_LINES`, 32 lines a wave) and stops at its wave's count, and the gradient reads its stops at loop indices, never a computed one.
 - **Lifecycle:** As the Aurora fields: a context within a screen of the viewport, none beyond; drawing pauses as soon as the lines leave the screen, and the shader's clock carries over when a context is remade.
 
+### Cookie notice (`components/CookieBanner.jsx`, `components/ConsentAnalytics.jsx`, `lib/consent.js`)
+
+- **Honest:** The site sets no cookies of its own (Vercel Web Analytics is cookieless; the language and the choice live in localStorage), so the notice is titled "Cookie-free analytics" and says in one sentence what is measured and what is not (no advertising, no cross-site tracking), with the privacy policy link.
+- **Honoured:** Declining (the button or the ×) drops every analytics event from then on: `ConsentAnalytics` filters through `beforeSend`, reading the choice at send time. A test guards it.
+- **Composition:** An opaque card bottom left (across the bottom inside the gutter on phones), a plain title (no eyebrow), the sentence, and two buttons of equal size, Accept and Decline: declining is as easy as accepting. It sits above the phone's sticky call to action while it is open (z-index 1000 against 990), so the bar never covers its buttons.
+
+### Mobile navigation
+
+- The menu is a plain list of the five sections, no numbers. Validated on a touch phone (390×844): every link opens its section with the heading clear of the bar, closes the menu and gives the page its scroll back; the hero's and the sticky bar's Book a Call reach the form; the Arsenal row tapped stays under the finger.
+
 ### Loading screen (`app/loading.jsx`, `components/intro/LogoForming.jsx`)
 
 - Every wait shows the NeuralBI logo forming, with the intro's own geometry and order of events: the nodes land, the branches draw, the symbol slides left and the wordmark rises beside it, then the lockup holds, fades and forms again for as long as the wait lasts (a 3.2 s loop). It is CSS alone, so it plays before hydration; under reduced motion the finished logo rests. Never a text loader.
@@ -447,7 +457,7 @@ Checked on 2026-11-07 after the site looked different in Safari on a Mac.
 
 ### Smooth scroll (Lenis, `components/SmoothScroll.jsx`)
 
-One Lenis instance (`lerp .1`) for fine pointers only; touch keeps native scrolling and reduced motion turns it off. Every programmatic scroll goes through `lib/smoothScroll.js` (`scrollToTarget`, `lockScroll`, `unlockScroll`), which falls back to native scrolling when Lenis is not running. Scrollers inside modals carry `data-lenis-prevent`. framer-motion's `useScroll` keeps reading the native position, so pinned stories and scroll-linked values stay exact.
+One Lenis instance (`lerp .1`) for fine pointers only; touch keeps native scrolling and reduced motion turns it off. Lenis is a chunk of its own, imported after the page is up and only where it will run: a phone never downloads it. Every programmatic scroll goes through `lib/smoothScroll.js` (`scrollToTarget`, `lockScroll`, `unlockScroll`), which falls back to native scrolling when Lenis is not running. Scrollers inside modals carry `data-lenis-prevent`. framer-motion's `useScroll` keeps reading the native position, so pinned stories and scroll-linked values stay exact.
 
 ### One signature per section
 
@@ -456,7 +466,7 @@ Sections share no arrival; each may keep at most one gesture of its own, and onl
 - **Hero:** the lines of light come on (1.6 s) as the headline rises line by line out of a mask (90 ms apart). The headline is one sharp layer at every width: no blurred base and no pointer spotlight, which left it blurred until hovered and on touch tablets; the copy follows at 360 ms and the action at 440 ms, all landed in about a second. On scroll the copy holds, then leaves on `--ease-in-out` while the parallax stays linear (half on small screens, none under reduced motion). The lines bend, shift and ripple only for a mouse or a pen (`components/heroPointer.js`); a finger never moves them, so on a phone or a tablet they keep their own flow and a touch is just a scroll or a tap.
 - **Navbar:** the rolling link labels and the reading progress traced round the capsule's outline.
 - **Manifesto:** the promises are in place in their field of light; each scene runs its own 8 s story; a mouse or a pen over a promise raises its scene and lights it without interrupting the story, and the field's edge lights where the pointer is. A finger never does either.
-- **The Arsenal:** on desktop (1024px and up) one product console (see The Arsenal Console); its chapters and scenes cross-fade through a 2px blur, so two contents melt into one change, and the console's light follows the product. Nothing in it moves with the scroll. Below 1024px the four products are an accordion: each row is dark glass in its product's colour (logo tile, number and architecture, name, promise, a + that turns to ×). One opens at a time, unfolding the whole product (proposition, capabilities, difference, each with its scene) on grid rows in 420 ms, its parts one block step apart; it folds away at once. The tapped row stays under the finger, a row opened in the lower half settles under the navbar, and a Close at the end returns to the row with focus on it. A product's scenes are built the first time it opens; the accordion's end opens the full architecture modal.
+- **The Arsenal:** on desktop (1024px and up) one product console (see The Arsenal Console); its chapters and scenes cross-fade through a 2px blur, so two contents melt into one change, and the console's light follows the product. Nothing in it moves with the scroll. Below 1024px the four products are an accordion: each row is dark glass in its product's colour (logo tile, name, promise, a + that turns to ×), with no eyebrow, counter, chapter or entry numbers and no specs line: the proposition says the promise once, as the console does, and the long version stays in the full-architecture modal. One opens at a time, unfolding the whole product (proposition, capabilities, difference, each with its scene) on grid rows in 420 ms, its parts one block step apart; it folds away at once. The tapped row stays under the finger, a row opened in the lower half settles under the navbar, and a Close at the end returns to the row with focus on it. A product's scenes are built the first time it opens; the accordion's end opens the full architecture modal.
 - **Protocol:** the phases light as they cross the reading line.
 - **Unified Delivery:** the delivery clock runs; the stage is in place inside its crop marks.
 - **Industries:** the selected tab is a lit copy of the tab row clipped to one cell; the clip slides (240 ms, `--ease-in-out`) and the colour travels with it. A new sector arrives in 220 ms through a 2px blur. On one column (≤900px) the product lives inside the open answer, right under its text: it unfolds downward through a clip (460 ms) and travels with whichever answer is opened (the same node, so its light keeps its WebGL context), and the row just tapped stays under the finger while the answer above folds away.
@@ -473,6 +483,18 @@ Sections share no arrival; each may keep at most one gesture of its own, and onl
 **The Resolved First Rule.** The server's HTML is always the finished state. Motion only arms what loaded off screen, so a slow script, no script or reduced motion never leaves content hidden.
 
 **The Legibility Rule.** Paragraphs arrive as blocks, never word by word; no scramble, rotation or bounce on text; legal and long-form documents stay still below their heading.
+
+### What loads, and when (performance)
+
+Measured on the production build, 2026-11-09: the home page's first load went from 329 kB to 199 kB of JavaScript (gzip, as `next build` reports it), its own bundle from 150 kB to 56 kB. Keep it there with these rules.
+
+**The One Font Source Rule.** The three families come from `next/font` only (self-hosted, no third-party stylesheet, nothing render-blocking): DM Sans as one variable file with its optical-size axis and its italic, so a 5rem headline draws the 40pt cut and body copy the 14pt cut; Inter and JetBrains Mono as variable files. `app/globals.css` maps `--font-dm-sans`, `--font-inter` and `--font-jetbrains-mono` onto the `--font-*` tokens, and a token never refers to itself (`--font-sans: var(--font-sans, …)` turns the whole chain invalid and silently drops to whatever else is loaded). A test guards both.
+
+**The Lazy Drawing Rule.** A drawing below the first two screens is a chunk of its own, fetched when its section comes within a screen of the viewport (`useNear` and `lazyModule` in `components/lazyModule.js`): the Arsenal's twelve scenes (the console asks on approach, the accordion and the modal when they open), the three "How we deliver" scenes and the sixteen Industries products (the open sector first, the rest when the browser is idle). What loads together is one chunk (`webpackChunkName`): the Arsenal scenes, the Protocol scenes, one per Industries sector, so shared code ships once per set. The copy, the headings and the stage are always in the server's HTML; the stage keeps its full size before the drawing arrives, so nothing moves and an anchor jump lands where it aims; a figure that carries a name keeps it (and its description) for a screen reader before the drawing arrives. This is the one exception to the Resolved First Rule, and it applies to drawings, never to copy. A drawing whose stage takes its height from its content (the Integrations diagram) stays in the bundle, and so do the Manifesto scenes, one screen under the hero.
+
+**The Light Motion Rule.** Components render framer-motion's `m`, never `motion`; `components/MotionProvider.jsx` (`LazyMotion`, `strict`) loads the features (animation, gestures, in-view, exit, layout) as a chunk right after hydration. Until then an element holds the state the server drew, so nothing the first screen needs for legibility may depend on a framer entrance (the hero's text enters through CSS). A test fails on any `motion` import.
+
+**The Copy on Demand Rule.** English ships with the page (the server renders it, every component falls back to it, `lib/translations.en.js`). Spanish (`lib/translations.es.js`) is a chunk fetched as the page boots for a visitor who reads Spanish (a saved choice or the browser's language), and on reaching for the language selector for everyone else (`lib/i18n.js`). The page switches only once the copy is there, never half translated. App code never imports `lib/translations.js` (both languages, for tests and tooling); a test guards it.
 
 ---
 
@@ -507,3 +529,4 @@ Sections share no arrival; each may keep at most one gesture of its own, and onl
 - **Don't** create flat, lifeless buttons without hover transitions, inset bevels, or tactile press feedback.
 - **Don't** use monospace fonts for long body paragraphs; restrict monospace strictly to telemetry tags, code blocks, and micro-labels.
 - **Don't** add decorative generic diagrams with fake controls or unstyled placeholders.
+- **Don't** import a below-the-fold drawing, Lenis, the Spanish copy or framer's full `motion` statically; each has its chunk (see What loads, and when).

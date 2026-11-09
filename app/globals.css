@@ -43,16 +43,17 @@ html {
   --glass-border: rgba(255, 255, 255, 0.08);
   --layer-intro: 99999;
 
-  /* Typography - NeuralNet Stack */
-  --font-sans: var(--font-sans, 'DM Sans', sans-serif);
-  --font-body: var(--font-body, 'Inter', system-ui, sans-serif);
+  /* Typography - NeuralNet Stack. The families come from next/font (app/layout.jsx sets --font-dm-sans, --font-inter
+   * and --font-jetbrains-mono on <html>); a token never refers to itself, or the whole chain turns invalid. */
+  --font-sans: var(--font-dm-sans, 'DM Sans'), system-ui, sans-serif;
+  --font-body: var(--font-inter, 'Inter'), system-ui, sans-serif;
   /* Controls (buttons, navigation, tabs) speak in the display face: no third sans. */
-  --font-ui: var(--font-sans, 'DM Sans', system-ui, sans-serif);
-  --font-button: var(--font-ui, 'DM Sans', system-ui, sans-serif);
-  --font-serif: var(--font-sans, 'DM Sans', sans-serif);
-  --font-display: var(--font-sans, 'DM Sans', sans-serif);
-  --font-tech: var(--font-mono, 'JetBrains Mono', monospace);
-  --font-mono: var(--font-mono, 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  --font-ui: var(--font-sans);
+  --font-button: var(--font-sans);
+  --font-serif: var(--font-sans);
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-tech: var(--font-mono);
   
   /* Spacing (4pt system) */
   --space-1: 0.25rem;

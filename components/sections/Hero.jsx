@@ -1,7 +1,7 @@
 'use client';
 
 import React, { memo, useEffect, useState } from 'react';
-import { cubicBezier, motion, useScroll, useTransform } from 'framer-motion';
+import { cubicBezier, m, useScroll, useTransform } from 'framer-motion';
 import FloatingLines from '../FloatingLines';
 import ShaderButton from '../ShaderButton';
 import SuiHeroTitle from '../SuiHeroTitle';
@@ -93,10 +93,10 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
       backgroundColor: 'var(--color-paper)',
       overflow: 'hidden'
     }}>
-      <motion.div style={{ position: 'absolute', inset: 0, zIndex: 0, y: bgY, scale: bgScale, willChange: 'transform' }}>
+      <m.div style={{ position: 'absolute', inset: 0, zIndex: 0, y: bgY, scale: bgScale, willChange: 'transform' }}>
         {renderBackground()}
         <style>{`.bg-fallback { position: absolute; inset: 0; background-color: var(--color-paper); } .bg-video { width: 100%; height: 100%; object-fit: cover; }`}</style>
-      </motion.div>
+      </m.div>
 
       <div className="grain-overlay" />
 
@@ -108,7 +108,7 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
         pointerEvents: 'none'
       }} />
 
-      <motion.div
+      <m.div
         className="hero-content-wrapper"
         style={{
           position: 'relative',
@@ -176,7 +176,7 @@ function Hero({ activeHero: _activeHero = 'remix' }) {
           {/* One hard fact under the action: what the first step delivers, and when. */}
           <p className="hero-fact enter" style={{ '--enter': 5 }}>{currentContent.fact}</p>
         </div>
-      </motion.div>
+      </m.div>
 
       <div style={{
         position: 'absolute',

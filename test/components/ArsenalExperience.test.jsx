@@ -5,7 +5,11 @@ import { MotionGlobalConfig } from 'framer-motion';
 import { LanguageProvider } from '../../context/LanguageContext';
 import ArsenalExperience, { ArsenalDetailModal } from '../../components/sections/ArsenalExperience';
 import { translations } from '../../lib/translations';
+import { arsenalScenes } from '../../components/graphics/arsenalScenes';
 
+// The scenes are a chunk of their own (test/components/SceneChunks.test.jsx covers that); here they are in place, the
+// way they are once the reader reaches the section.
+beforeAll(() => arsenalScenes.load());
 // Animations resolve instantly: these tests assert state, and happy-dom rejects interrupted WAAPI animations.
 beforeAll(() => { MotionGlobalConfig.skipAnimations = true; });
 afterAll(() => { MotionGlobalConfig.skipAnimations = false; });
@@ -137,6 +141,23 @@ describe('The Arsenal on desktop: one product console', () => {
     expect(within(natural).getAllByRole('heading', { name: 'Capabilities' })).toHaveLength(4);
     expect(within(natural).getAllByRole('heading', { name: 'The difference' })).toHaveLength(4);
     expect(natural.textContent).not.toMatch(/60 FPS|0\.04ms|AI-Native|React 18|RPA 2\.0/);
+  });
+
+  it('carries no eyebrows, counters, indexes or specs lines in the accordion: a product is its name, promise and chapters', () => {
+    const { container } = mount();
+    const natural = container.querySelector('[class*="naturalExperience"]');
+    expect(natural.textContent).not.toMatch(/\d{2} \/ \d{2}/);
+    // Each row's face is the product's name and its promise, nothing above them.
+    const faces = [...natural.querySelectorAll('[class*="rowText"]')].map((face) => face.textContent);
+    expect(faces).toEqual(TOOLS.map((entry) => `${entry.name}${entry.title}`));
+    TOOLS.forEach((entry) => {
+      expect(natural.textContent).not.toContain(entry.specs.join(' · '));
+      // The proposition says the promise once, as on the console; the long version stays in the modal.
+      expect(natural.textContent).not.toContain(entry.detail.subheadline);
+    });
+    // Chapter titles and list entries read without numbers.
+    within(natural).getAllByRole('heading', { level: 4 }).forEach((heading) => expect(heading.textContent).not.toMatch(/^\d/));
+    expect(natural.querySelectorAll('ol')).toHaveLength(0);
   });
 
   it('speaks Spanish', () => {

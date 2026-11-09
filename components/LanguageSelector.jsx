@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Globe, ChevronDown, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { preloadLanguage } from '../lib/i18n';
 import styles from './LanguageSelector.module.css';
 
 const languages = [
@@ -17,6 +18,9 @@ export default function LanguageSelector({ variant = 'dropdown', className = '' 
   const triggerRef = useRef(null);
 
   const currentLang = languages.find((l) => l.code === language) || languages[0];
+  // The other language's copy is a chunk of its own: reaching for the selector (pointer over it, focus, a touch)
+  // starts it downloading, so the switch is ready by the time it is chosen.
+  const warm = { onPointerEnter: () => preloadLanguage('es').catch(() => {}), onFocus: () => preloadLanguage('es').catch(() => {}), onTouchStart: () => preloadLanguage('es').catch(() => {}) };
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
@@ -74,6 +78,7 @@ export default function LanguageSelector({ variant = 'dropdown', className = '' 
         className={`${styles.segmentedControl} ${className}`.trim()}
         role="radiogroup"
         aria-label={t?.nav?.selectLanguage || 'Select language'}
+        {...warm}
       >
         {languages.map((item) => {
           const isActive = language === item.code;
@@ -100,6 +105,7 @@ export default function LanguageSelector({ variant = 'dropdown', className = '' 
       ref={dropdownRef}
       className={`${styles.wrapper} ${className}`.trim()}
       onKeyDown={handleKeyDown}
+      {...warm}
     >
       <button
         ref={triggerRef}

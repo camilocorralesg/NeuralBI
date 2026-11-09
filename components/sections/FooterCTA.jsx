@@ -1,7 +1,7 @@
 'use client';
 import React, { memo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Lock } from 'lucide-react';
 import CharacterReveal from '../CharacterReveal';
 import EdgeBeam from '../EdgeBeam';
@@ -24,7 +24,7 @@ function SuccessState({ onReset }) {
   };
 
   return (
-    <motion.div
+    <m.div
       className={s.success}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
@@ -32,13 +32,13 @@ function SuccessState({ onReset }) {
     >
       <span className={s.check} aria-hidden="true">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <motion.path d="M20 6L9 17L4 12" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
+          <m.path d="M20 6L9 17L4 12" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
         </svg>
       </span>
       <h3 className={s.successTitle}>{successData.headline}</h3>
       <p className={s.successBody}>{successData.body}</p>
       <ShaderButton type="button" onClick={onReset}>{successData.resetBtn}</ShaderButton>
-    </motion.div>
+    </m.div>
   );
 }
 

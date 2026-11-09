@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import ShaderButton from './ShaderButton';
 import { scrollToTarget } from '../lib/smoothScroll';
@@ -53,7 +53,7 @@ export default function StickyMobileCTA() {
     <div className="mobile-cta-wrapper">
       <AnimatePresence>
         {isVisible && (
-          <motion.div
+          <m.div
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 80, opacity: 0 }}
@@ -108,7 +108,7 @@ export default function StickyMobileCTA() {
                 ↵
               </span>
             </ShaderButton>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

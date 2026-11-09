@@ -1,20 +1,18 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
-import { AuditBlueprintScene } from '../graphics/AuditBlueprintScene';
-import { ArchitectBuildScene } from '../graphics/ArchitectBuildScene';
-import { DeployScaleScene } from '../graphics/DeployScaleScene';
+import React, { useEffect, useId, useRef, useState } from 'react';
+import { m, useInView, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useLazyModule, useNear } from '../lazyModule';
+import { protocolScenes } from '../graphics/protocolScenes';
 import SectionAtmosphere from '../SectionAtmosphere';
 import { useLanguage } from '../../context/LanguageContext';
-import { translations } from '../../lib/translations';
+import ENGLISH from '../../lib/translations.en';
 import s from './NeuralProtocol.module.css';
 import useReducedMotionSafe from '../useReducedMotionSafe';
 import { scrollToTarget } from '../../lib/smoothScroll';
 import CharacterReveal from '../CharacterReveal';
 import Reveal from '../Reveal';
 
-const SCENES = [AuditBlueprintScene, ArchitectBuildScene, DeployScaleScene];
 // The signal follows a fixed reading line: a phase lights the moment its node crosses it.
 const READING_LINE = 0.58;
 
@@ -24,7 +22,7 @@ const countLit = (progress, thresholds) => (progress <= 0 ? 0 : thresholds.filte
 
 export default function NeuralProtocol() {
   const { t } = useLanguage();
-  const copy = t?.methodology || translations.en.methodology;
+  const copy = t?.methodology || ENGLISH.methodology;
   const phases = copy.phases;
   const reducedMotion = useReducedMotionSafe();
   const sectionRef = useRef(null);
@@ -35,6 +33,9 @@ export default function NeuralProtocol() {
   const [lit, setLit] = useState(0);
   const fill = useMotionValue(0);
   const active = useInView(sectionRef, { margin: '200px 0px' });
+  // The phase scenes are a chunk of their own (../graphics/protocolScenes.js), here as the section comes within a screen.
+  const scenes = useLazyModule(protocolScenes, useNear(sectionRef));
+  const sceneId = useId();
 
   // Any scroll while the run is on screen re-evaluates the fill against the reading line.
   const { scrollYProgress } = useScroll({ target: runRef, offset: ['start end', 'end start'] });
@@ -97,11 +98,11 @@ export default function NeuralProtocol() {
 
   return <section ref={sectionRef} className={s.section} data-active={active} aria-labelledby="protocol-heading">
     <SectionAtmosphere focus="28% 34%" secondaryFocus="84% 80%" />
-    <motion.div className={s.layout} style={{ '--progress': reducedMotion ? 1 : fill }}>
+    <m.div className={s.layout} style={{ '--progress': reducedMotion ? 1 : fill }}>
       <header className={s.intro}>
         <h2 id="protocol-heading"><CharacterReveal text={copy.sectionTitle} /></h2>
         <Reveal as="p" className={s.lede} delay={200}>{copy.sectionSubtitle}</Reveal>
-        <nav className={s.index} aria-label={copy.indexLabel || translations.en.methodology.indexLabel}>
+        <nav className={s.index} aria-label={copy.indexLabel || ENGLISH.methodology.indexLabel}>
           <ol>
             {phases.map((phase, index) => <li key={phase.num}>
               <button type="button" className={s.indexItem} data-lit={index < litCount} aria-current={index === current ? 'step' : undefined}
@@ -120,7 +121,7 @@ export default function NeuralProtocol() {
         </div>
         <ol className={s.phases}>
           {phases.map((phase, index) => {
-            const Scene = SCENES[index];
+            const Scene = scenes?.[index];
             return <li key={phase.num} className={s.phase} data-lit={index < litCount}>
               {/* Copy leads, scene follows: a phase lights as its heading reaches the reading line, so its scene arrives lit. */}
               <div className={s.copy}>
@@ -130,12 +131,15 @@ export default function NeuralProtocol() {
                 <p className={s.phaseBody}>{phase.desc}</p>
               </div>
               <div className={s.stage}>
-                {Scene && <Scene label={phase.sceneLabel} description={phase.sceneDescription} />}
+                {Scene
+                  ? <Scene label={phase.sceneLabel} description={phase.sceneDescription} />
+                  // Until it arrives, the scene's name and description are already there for a screen reader.
+                  : <figure aria-label={phase.sceneLabel} aria-describedby={`${sceneId}-${index}-desc`}><span id={`${sceneId}-${index}-desc`} className={s.srOnly}>{phase.sceneDescription}</span></figure>}
               </div>
             </li>;
           })}
         </ol>
       </div>
-    </motion.div>
+    </m.div>
   </section>;
 }

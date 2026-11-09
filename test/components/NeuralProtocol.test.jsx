@@ -4,6 +4,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { MotionGlobalConfig, motionValue } from 'framer-motion';
 import { LanguageProvider } from '../../context/LanguageContext';
 import NeuralProtocol from '../../components/sections/NeuralProtocol';
+import { protocolScenes } from '../../components/graphics/protocolScenes';
 import { translations } from '../../lib/translations';
 
 const motion = vi.hoisted(() => ({ progress: null, reduced: false }));
@@ -12,6 +13,8 @@ vi.mock('framer-motion', async (importOriginal) => {
   return { ...actual, useScroll: () => ({ scrollYProgress: motion.progress }), useReducedMotion: () => motion.reduced };
 });
 
+// The scenes are a chunk of their own (test/components/SceneChunks.test.jsx covers that); here they are in place.
+beforeAll(() => protocolScenes.load());
 beforeAll(() => { MotionGlobalConfig.skipAnimations = true; });
 afterAll(() => { MotionGlobalConfig.skipAnimations = false; });
 beforeEach(() => {

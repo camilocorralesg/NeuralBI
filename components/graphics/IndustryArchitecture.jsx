@@ -2,58 +2,21 @@
 
 import React, { memo, useEffect, useRef, useState } from 'react';
 import MockupStage from '../mockups/MockupStage';
-import SupplyControlTower from '../mockups/SupplyControlTower';
-import FieldOps from '../mockups/FieldOps';
-import DocumentIntelligence from '../mockups/DocumentIntelligence';
-import LogisticsCopilot from '../mockups/LogisticsCopilot';
-import LiquidityMonitor from '../mockups/LiquidityMonitor';
-import CreditDesk from '../mockups/CreditDesk';
-import ComplianceFlow from '../mockups/ComplianceFlow';
-import FraudCopilot from '../mockups/FraudCopilot';
-import LineMonitor from '../mockups/LineMonitor';
-import FloorInspector from '../mockups/FloorInspector';
-import MaintenanceFlow from '../mockups/MaintenanceFlow';
-import FloorAssistant from '../mockups/FloorAssistant';
-import OmnichannelSales from '../mockups/OmnichannelSales';
-import StoreOps from '../mockups/StoreOps';
-import RestockFlow from '../mockups/RestockFlow';
-import MerchCopilot from '../mockups/MerchCopilot';
+import { useLazyModule, useNear, whenIdle } from '../lazyModule';
+import { loadSector, mockups, preloadMockups } from './industryMockups';
 import s from './IndustryArchitecture.module.css';
 
-// Every solution is shown as the NeuralBI product it ships, by sector and card (`frame` 'window' or 'devices').
-const mockups = {
-  'supply-chain': [
-    { Mockup: SupplyControlTower, frame: 'window' },
-    { Mockup: FieldOps, frame: 'devices' },
-    { Mockup: DocumentIntelligence, frame: 'window' },
-    { Mockup: LogisticsCopilot, frame: 'window' },
-  ],
-  fintech: [
-    { Mockup: LiquidityMonitor, frame: 'window' },
-    { Mockup: CreditDesk, frame: 'devices' },
-    { Mockup: ComplianceFlow, frame: 'window' },
-    { Mockup: FraudCopilot, frame: 'window' },
-  ],
-  manufacturing: [
-    { Mockup: LineMonitor, frame: 'window' },
-    { Mockup: FloorInspector, frame: 'devices' },
-    { Mockup: MaintenanceFlow, frame: 'window' },
-    { Mockup: FloorAssistant, frame: 'window' },
-  ],
-  retail: [
-    { Mockup: OmnichannelSales, frame: 'window' },
-    { Mockup: StoreOps, frame: 'devices' },
-    { Mockup: RestockFlow, frame: 'window' },
-    { Mockup: MerchCopilot, frame: 'window' },
-  ],
-};
+const ignore = () => {};
 
+// The product of the open solution, in its stage. The products are chunks (./industryMockups.js): they arrive when the
+// section comes within a screen of the viewport (the open sector first, the rest once the browser is idle); until then
+// the stage and its light already stand in place, at their full size.
 function IndustryArchitecture({ industry, solution, language }) {
   const root = useRef(null);
   const [running, setRunning] = useState(false);
   const live = running;
   const card = solution ?? 0;
-  const mockup = mockups[industry]?.[card];
+  const item = mockups[industry]?.[card];
 
   useEffect(() => {
     let inView = false;
@@ -70,8 +33,19 @@ function IndustryArchitecture({ industry, solution, language }) {
     };
   }, []);
 
+  const near = useNear(root);
+  // The product on screen as soon as its chunk lands (a click can get ahead of the idle preload)...
+  const Mockup = useLazyModule(item?.chunk, near)?.default;
+  // ...the rest of the open sector next, then the other twelve while the browser is idle.
+  useEffect(() => {
+    if (!near) return undefined;
+    let alive = true;
+    loadSector(industry).then(() => alive && whenIdle(() => { preloadMockups().catch(ignore); }), ignore);
+    return () => { alive = false; };
+  }, [near, industry]);
+
   return <div ref={root} className={s.scene} data-running={live} data-sector={industry} data-solution={solution} aria-hidden="true">
-    {mockup && <MockupStage id={`${industry}-${card}`} frame={mockup.frame} live={live}><mockup.Mockup live={live} language={language} /></MockupStage>}
+    {item && <MockupStage id={`${industry}-${card}`} frame={item.frame} live={live}>{Mockup && <Mockup live={live} language={language} />}</MockupStage>}
   </div>;
 }
 

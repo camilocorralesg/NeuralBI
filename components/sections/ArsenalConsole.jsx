@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import useEdgeSpotlight from '../useEdgeSpotlight';
+import ArsenalScene from '../graphics/ArsenalScene';
+import { useNear } from '../lazyModule';
 import s from './ArsenalConsole.module.css';
 
 const EASE_OUT = [0.16, 1, 0.3, 1];
@@ -52,6 +54,8 @@ export default function ArsenalConsole({ tools, copy, className = '' }) {
   const toolTabs = useRef([]);
   const chapterTabs = useRef([]);
   useEdgeSpotlight(consoleRef);
+  // The scenes arrive as the console comes within a screen (never below 1024px, where the console is not displayed).
+  const near = useNear(consoleRef);
   const tool = tools[toolIndex];
   const chapters = [copy.vision, copy.capabilities, copy.differentiators];
 
@@ -77,7 +81,7 @@ export default function ArsenalConsole({ tools, copy, className = '' }) {
         return <button key={entry.id} ref={(node) => { toolTabs.current[index] = node; }} type="button" role="tab"
           id={`arsenal-tool-${entry.id}`} aria-controls="arsenal-console-panel" aria-selected={selected} tabIndex={selected ? 0 : -1}
           className={s.railTab} style={{ '--own-accent': entry.color }} onClick={() => setToolIndex(index)}>
-          {selected && <motion.span layoutId="arsenal-console-rail" className={s.railIndicator} transition={INDICATOR_SPRING} aria-hidden="true" />}
+          {selected && <m.span layoutId="arsenal-console-rail" className={s.railIndicator} transition={INDICATOR_SPRING} aria-hidden="true" />}
           <span className={s.railLogo}><img src={entry.logo} alt="" width="96" height="96" loading="lazy" decoding="async" /></span>
           <span className={s.railName}>{entry.tool}</span>
         </button>;
@@ -99,7 +103,7 @@ export default function ArsenalConsole({ tools, copy, className = '' }) {
             return <button key={label} ref={(node) => { chapterTabs.current[index] = node; }} type="button" role="tab"
               id={`arsenal-chapter-${index}`} aria-controls="arsenal-chapter-panel" aria-selected={selected} tabIndex={selected ? 0 : -1}
               className={s.chapterTab} onClick={() => setChapter(index)}>
-              {selected && <motion.span layoutId="arsenal-console-chapter" className={s.chapterThumb} transition={INDICATOR_SPRING} aria-hidden="true" />}
+              {selected && <m.span layoutId="arsenal-console-chapter" className={s.chapterThumb} transition={INDICATOR_SPRING} aria-hidden="true" />}
               {label}
             </button>;
           })}
@@ -117,9 +121,9 @@ export default function ArsenalConsole({ tools, copy, className = '' }) {
       </div>
       <div className={s.stage} data-scene={`${tool.id}-${chapter}`}>
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.div key={`${tool.id}-${chapter}`} className={s.scene} variants={sceneVariants} initial="enter" animate="center" exit="exit">
-            {React.createElement(tool.scenes[chapter])}
-          </motion.div>
+          <m.div key={`${tool.id}-${chapter}`} className={s.scene} variants={sceneVariants} initial="enter" animate="center" exit="exit">
+            <ArsenalScene toolId={tool.id} chapter={chapter} wanted={near} />
+          </m.div>
         </AnimatePresence>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import React, { memo } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import ShaderButton from '../ShaderButton';
 import LanguageSelector from '../LanguageSelector';
 import { useLanguage } from '../../context/LanguageContext';
@@ -311,7 +311,7 @@ function Navbar() {
           instead of the screen. */}
       {portalReady && createPortal(<AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
+          <m.div
             className={ns.menu}
             role="dialog"
             aria-modal="true"
@@ -339,7 +339,6 @@ function Navbar() {
                 {navLinks.map((link, index) => (
                   <li key={link.href} className={ns.menuItem} style={{ '--i': index }}>
                     <a href={link.href} className={ns.menuLink} onClick={() => setIsMobileMenuOpen(false)}>
-                      <span className={ns.menuIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                       <span className={ns.menuLabel}>{link.label}</span>
                       <svg className={ns.menuArrow} viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8" /></svg>
                     </a>
@@ -360,7 +359,7 @@ function Navbar() {
                 <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </ShaderButton>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>, document.body)}
 
