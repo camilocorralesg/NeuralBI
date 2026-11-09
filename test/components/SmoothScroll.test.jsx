@@ -1,5 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import fs from 'fs';
+import path from 'path';
+import { render, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SmoothScroll from '../../components/SmoothScroll';
 import { getLenis, lockScroll, scrollToTarget, unlockScroll } from '../../lib/smoothScroll';
@@ -53,10 +55,16 @@ describe('Programmatic scrolling (lib/smoothScroll)', () => {
 });
 
 describe('SmoothScroll (Lenis)', () => {
-  it('runs for a fine pointer and carries every programmatic scroll, lock and release', () => {
+  it('stays out of the first load: Lenis is a dynamic import', () => {
+    const source = fs.readFileSync(path.resolve(__dirname, '../../components/SmoothScroll.jsx'), 'utf8');
+    expect(source).not.toMatch(/^import .* from 'lenis'/m);
+    expect(source).toMatch(/import\('lenis'\)/);
+  });
+
+  it('runs for a fine pointer and carries every programmatic scroll, lock and release', async () => {
     stubPointer();
     const { unmount } = render(<SmoothScroll />);
-    expect(lenis.instances).toHaveLength(1);
+    await waitFor(() => expect(lenis.instances).toHaveLength(1));
     const instance = lenis.instances[0];
     expect(instance.options).toMatchObject({ lerp: 0.1, smoothWheel: true, syncTouch: false, anchors: { offset: -24 } });
     expect(getLenis()).toBe(instance);
@@ -78,9 +86,19 @@ describe('SmoothScroll (Lenis)', () => {
   it.each([
     ['touch', { fine: false }],
     ['reduced motion', { reduce: true }],
-  ])('leaves the browser its own scrolling under %s', (_label, pointer) => {
+  ])('leaves the browser its own scrolling under %s', async (_label, pointer) => {
     stubPointer(pointer);
     render(<SmoothScroll />);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(lenis.instances).toHaveLength(0);
+    expect(getLenis()).toBeNull();
+  });
+
+  it('never starts when the page leaves before Lenis arrives', async () => {
+    stubPointer();
+    const { unmount } = render(<SmoothScroll />);
+    unmount();
+    await new Promise((resolve) => setTimeout(resolve, 50));
     expect(lenis.instances).toHaveLength(0);
     expect(getLenis()).toBeNull();
   });

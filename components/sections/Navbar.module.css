@@ -137,14 +137,6 @@
 }
 .menuLink:active { background-color: rgba(255, 255, 255, .05); }
 .menuLink:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; border-radius: var(--radius-sm); }
-.menuIndex {
-  flex: 0 0 1.75rem;
-  color: var(--color-accent);
-  font: 500 11px/1 var(--font-mono);
-  letter-spacing: .08em;
-  animation: menuFade 420ms var(--ease-out) backwards;
-  animation-delay: calc(120ms + var(--i) * 45ms);
-}
 /* Each label rises out of its own mask (the clip travels with it), like the site's headlines. */
 .menuLabel {
   flex: 1;
@@ -187,6 +179,6 @@
   .link:hover, .link:focus-visible { color: #ffffff; }
   .link:active { transform: none; }
   .outline { animation: none; }
-  .menuIndex, .menuLabel, .menuArrow, .menuFoot, .menuClose svg { animation: none; }
+  .menuLabel, .menuArrow, .menuFoot, .menuClose svg { animation: none; }
   .menuButton:active, .menuClose:active { transform: none; }
 }

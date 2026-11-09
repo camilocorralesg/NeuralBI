@@ -338,6 +338,8 @@ export default function FloatingLines({
     // Shader time carries across a freed and remade context, so the lines resume where they were.
     let elapsed = 0;
     let last = 0;
+    // Without WebGL the still CSS light stays; the lines do not retry on every approach.
+    let unavailable = false;
 
     const setSize = () => {
       if (!renderer) return;
@@ -381,7 +383,7 @@ export default function FloatingLines({
 
     // Without WebGL (disabled, blocked or lost) the lines give way to a still CSS light instead of taking the page down.
     const boot = () => {
-      if (renderer || !active) return;
+      if (renderer || !active || unavailable) return;
       canvas = document.createElement('canvas');
       canvas.style.width = '100%';
       canvas.style.height = '100%';
@@ -393,6 +395,7 @@ export default function FloatingLines({
         if (process.env.NODE_ENV !== 'production') console.warn(error);
         renderer = null;
         canvas = null;
+        unavailable = true;
         container.dataset.webgl = 'false';
         return;
       }
