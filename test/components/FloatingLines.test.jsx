@@ -1,9 +1,18 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import FloatingLines from '../../components/FloatingLines';
 
-afterEach(() => { vi.restoreAllMocks(); });
+// The lines make their context on the near observer's first report, which a browser sends right after the first layout
+// (the hero is near at load); measuring the box at mount instead forced a layout of the whole page during hydration.
+beforeEach(() => {
+  vi.stubGlobal('IntersectionObserver', class {
+    constructor(callback, options = {}) { Object.assign(this, { callback, options }); }
+    observe(target) { if (this.options.rootMargin === '100% 0px') this.callback([{ target, isIntersecting: true }]); }
+    disconnect() {}
+  });
+});
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('FloatingLines without WebGL', () => {
   it('gives way to the still CSS light instead of throwing when the browser has no WebGL', () => {

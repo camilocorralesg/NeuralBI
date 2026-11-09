@@ -150,6 +150,9 @@ describe('Impact: the ROI instrument', () => {
     const section = container.querySelector('section');
     const aurora = section.firstElementChild;
     expect(aurora).toHaveAttribute('aria-hidden', 'true');
+    // Its canvas comes with the approach observer's first report ("near"), not from a measurement at mount.
+    const approach = observers.find(observer => observer.options.rootMargin === '100% 0px' && observer.targets.includes(aurora));
+    see(approach, [[aurora, 1]]);
     expect(aurora.querySelector('canvas')).toBeInTheDocument();
     // The Aurora sizes its clearing to the panel (the one that carries the beam).
     expect(observed).toContain(container.querySelector('[data-live]').parentElement);

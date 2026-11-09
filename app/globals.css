@@ -264,11 +264,11 @@ h1 em, h2 em, h3 em, h4 em,
   pointer-events: none;
   transform: translateZ(0);
   will-change: transform;
-  /* Film grain from a fixed tile (public/assets/grain.png), not an SVG feTurbulence filter: WebKit draws that noise
+  /* Film grain from a fixed tile (public/assets/grain.webp), not an SVG feTurbulence filter: WebKit draws that noise
    * with a different strength and contrast than Chrome, and computes it on the CPU. The tile looks the same in every
    * engine. A very faint gradient at the bottom keeps the text readable without darkening the whole screen. */
   background-color: transparent;
-  background-image: url('/NeuralBI/assets/grain.png'), linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%);
+  background-image: url('/NeuralBI/assets/grain.webp'), linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%);
   background-repeat: repeat, no-repeat;
   background-size: 128px 128px, 100% 100%;
 }

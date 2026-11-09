@@ -40,7 +40,8 @@ describe('Footer remix', () => {
 
     const footer = container.querySelector('footer');
     const assertContent = (locale) => {
-      expect([...footer.querySelectorAll('.footer-link-group h4')].map((heading) => heading.textContent))
+      // h2 under the contact section's h2: heading levels never skip (Lighthouse heading-order).
+      expect([...footer.querySelectorAll('.footer-link-group h2')].map((heading) => heading.textContent))
         .toEqual(Object.values(translations[locale].footer.columns));
       expect([...footer.querySelectorAll('.footer-link-group a')].map((link) => link.getAttribute('href')))
         .toEqual(expectedHrefs);

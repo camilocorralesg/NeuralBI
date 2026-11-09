@@ -14,8 +14,12 @@
   visibility: visible;
 }
 
+/* A veil, not a curtain: the page shows through, dimmed, while the logo forms over it, and the aperture then opens it
+ * to full light. The visitor sees the site from the first frame (PageSpeed's Speed Index counts a black screen as
+ * nothing shown), and the logo keeps its contrast over the dark hero. */
 .background {
   fill: var(--color-paper, #000000);
+  fill-opacity: 0.84;
 }
 
 /* Changing the OS preference immediately suppresses spatial motion, even

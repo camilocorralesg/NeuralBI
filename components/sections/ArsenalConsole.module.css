@@ -24,7 +24,7 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background-image: var(--arsenal-grain, url('/NeuralBI/assets/grain.png'));
+  background-image: var(--arsenal-grain, url('/NeuralBI/assets/grain.webp'));
   opacity: 0.35;
   pointer-events: none;
 }

@@ -31,19 +31,22 @@ const desktop = {
   incoming: ['M270 107C355 107 375 157 440 183', 'M250 213H432', 'M270 319C355 319 375 269 440 243', 'M730 107C645 107 625 157 560 183', 'M750 213H568', 'M730 319C645 319 625 269 560 243'],
   outgoing: ['M472 272C472 340 260 325 260 402', 'M500 281V421', 'M528 272C528 340 740 325 740 402'],
 };
+// The phone stacks every card on one spine. Each route is its own stretch of it, the gap below a card to the next
+// one (a few units tucked under each card, whose height varies with the phone's width): the stretches never overlap,
+// so each lights on its own, and a packet crosses its whole gap in view instead of hiding behind the cards above.
 const mobile = {
   width: 340, height: 1090, hub: [170, 360],
   inputs: [[170, 75], [170, 150], [170, 225]],
   outputs: [[170, 550], [170, 750], [170, 950]],
   incoming: [
-    'M170 75V295',
-    'M170 150V295',
-    'M170 225V295',
+    'M170 92V133',
+    'M170 167V208',
+    'M170 242V296',
   ],
   outgoing: [
-    'M170 430V500',
-    'M170 430V700',
-    'M170 430V900',
+    'M170 430V470',
+    'M170 625V675',
+    'M170 825V875',
   ],
 };
 
@@ -117,6 +120,14 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
   const outputs = nodes.slice(6, 9);
   const activeNode = [...sources, ...outputs].find(n => n.id === active);
 
+  // The phone opens a node's detail under the node itself; a tap anywhere else closes it.
+  useEffect(() => {
+    if (!compact || !selected) return undefined;
+    const close = event => { if (!event.target.closest?.(`[data-node="${selected}"]`)) setSelected(null); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [compact, selected]);
+
   useEffect(() => {
     const element = ref.current;
     const visibility = () => { element.dataset.visible = String(!document.hidden); };
@@ -131,19 +142,31 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
   }, []);
 
   const position = ([x, y]) => ({ left: `${x / layout.width * 100}%`, top: `${y / layout.height * 100}%` });
+  // On the phone a tap fires a mouse enter and focuses the button, so only a real mouse hovers and only a keyboard
+  // focus (focus-visible) opens a detail; the tap itself pins it.
+  const keyboardFocus = event => { try { return event.target.matches(':focus-visible'); } catch { return true; } };
   const events = node => ({
-    onMouseEnter: () => setHovered(node.id), onMouseLeave: () => setHovered(null),
-    onFocus: () => setFocused(node.id), onBlur: () => setFocused(null),
+    ...(compact
+      ? { onPointerEnter: event => { if (event.pointerType === 'mouse') setHovered(node.id); }, onPointerLeave: () => setHovered(null) }
+      : { onMouseEnter: () => setHovered(node.id), onMouseLeave: () => setHovered(null) }),
+    onFocus: event => { if (!compact || keyboardFocus(event)) setFocused(node.id); }, onBlur: () => setFocused(null),
     onClick: () => setSelected(current => current === node.id ? null : node.id),
     onKeyDown: event => { if (event.key === 'Escape') { setSelected(null); setFocused(null); setHovered(null); } },
     'aria-pressed': selected === node.id, 'aria-describedby': active === node.id ? `${id}-detail` : undefined,
   });
+  // The phone's detail: a small panel under the node it explains (the bottom caption sat a screen and a half away).
+  const callout = node => compact && active === node.id
+    ? <div id={`${id}-detail`} className={s.callout}><strong>{node.name}</strong><span>{node.desc}</span></div>
+    : null;
+  const phaseTag = (i, place) => <span className={`${s.phaseTag} ${s[place]} ${s[`phase${i}`]}`} aria-hidden="true"><i>{`0${i + 1}`}</i>{words.phases[i]}</span>;
 
   return <figure ref={ref} className={`${s.scene} ${compact ? s.mobile : s.desktop}`} data-running="false" aria-label={words.label} aria-describedby={`${id}-description`}>
     <p id={`${id}-description`} className={s.srOnly}>{words.description}</p>
     <div className={s.canvas} style={{ aspectRatio: `${layout.width} / ${layout.height}` }}>
       <div className={s.inputLabel}>{inputsHeader}</div>
       {!compact && <div className={s.inputLabelRight}>{inputsHeader}</div>}
+      {/* The phone names each phase where it happens; the desktop keeps its sequence under the picture. */}
+      {compact && <>{phaseTag(0, 'phaseTop')}{phaseTag(1, 'phaseHub')}{phaseTag(2, 'phaseBottom')}</>}
       <svg viewBox={`0 0 ${layout.width} ${layout.height}`} fill="none" aria-hidden="true" className={s.connections}>
         <defs>
           <radialGradient id={`${id}-wash`}><stop stopColor="#c6ff34" stopOpacity=".07" /><stop offset="1" stopColor="#c6ff34" stopOpacity="0" /></radialGradient>
@@ -163,7 +186,7 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
         </g>)}
       </svg>
 
-      {sources.map((node, i) => <div key={node.id} className={`${s.sourcePosition} ${s[`source${i % 3}`]}`} style={position(layout.inputs[i])}>
+      {sources.map((node, i) => <div key={node.id} className={`${s.sourcePosition} ${s[`source${i % 3}`]}`} style={position(layout.inputs[i])} data-node={node.id} data-open={compact && active === node.id ? '' : undefined}>
         <button type="button" className={s.source} data-active={active === node.id} {...events(node)}>
           {node.wordmark
             // A brand whose only mark is its wordmark (SAP, Oracle) is named by the mark itself: "[SAP] ERP".
@@ -171,6 +194,7 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
             : <><span className={s.sourceIcon} aria-hidden="true">{icons[node.iconKey]}</span><span className={s.sourceName}>{node.name}</span></>}
           <span className={s.status} aria-hidden="true" />
         </button>
+        {callout(node)}
       </div>)}
 
       <div className={s.hubPosition} style={position(layout.hub)} aria-hidden="true">
@@ -187,16 +211,19 @@ function DeliveryCanvas({ compact, nodes, mobileInputNodes, icons, inputsHeader,
         <span className={s.modelLabel}>{words.model}</span>
       </div>
 
-      {outputs.map((node, i) => <div key={node.id} className={`${s.productPosition} ${s[`output${i}`]}`} style={position(layout.outputs[i])}>
+      {outputs.map((node, i) => <div key={node.id} className={`${s.productPosition} ${s[`output${i}`]}`} style={position(layout.outputs[i])} data-node={node.id} data-open={compact && active === node.id ? '' : undefined}>
         <button type="button" className={s.product} data-active={active === node.id} {...events(node)}>
           <span className={s.productHeader}><span aria-hidden="true">{icons[node.iconKey]}</span><span>{node.name}</span><span className={s.productLight} aria-hidden="true" /></span>
           <ProductPreview index={i} words={words} />
         </button>
+        {callout(node)}
       </div>)}
       <div className={s.deliverablesLabel}>{deliverablesHeader}</div>
     </div>
-    <div className={s.sequence} aria-hidden="true">{words.phases.map((phase, i) => <span key={phase} className={s[`phase${i}`]}><i>{`0${i + 1}`}</i>{phase}</span>)}</div>
-    <figcaption id={`${id}-detail`} className={s.detail} data-empty={activeNode ? undefined : ''}>{activeNode && <><strong>{activeNode.name}</strong><span>{activeNode.desc}</span></>}</figcaption>
+    {!compact && <>
+      <div className={s.sequence} aria-hidden="true">{words.phases.map((phase, i) => <span key={phase} className={s[`phase${i}`]}><i>{`0${i + 1}`}</i>{phase}</span>)}</div>
+      <figcaption id={`${id}-detail`} className={s.detail} data-empty={activeNode ? undefined : ''}>{activeNode && <><strong>{activeNode.name}</strong><span>{activeNode.desc}</span></>}</figcaption>
+    </>}
   </figure>;
 }
 

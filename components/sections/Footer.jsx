@@ -102,7 +102,8 @@ function Footer() {
         <div className="footer-links-grid">
           {Object.keys(links).map(category => (
             <div key={category} className="footer-link-group">
-              <h4 className={styles.heading}>{category}</h4>
+              {/* h2: the footer's columns follow the contact section's h2, so a lower level would skip one. */}
+              <h2 className={styles.heading}>{category}</h2>
               <ul className={styles.list}>
                 {links[category].map(link => (
                   <li key={link.href}>

@@ -161,9 +161,9 @@ export default function AuroraField({ accent = 'var(--color-accent)', intensity 
       if (!running() && frame) { cancelAnimationFrame(frame); frame = 0; }
     }
 
-    // Already near (in view at load): make the context now rather than on the observer's first report.
-    const box = element.getBoundingClientRect();
-    near = typeof IntersectionObserver === 'undefined' || (box.bottom >= -window.innerHeight && box.top <= window.innerHeight * 2);
+    // The approach observer's first report (right after the first layout) makes the context when the field is near at
+    // load. Measuring the box here instead would force a layout of the whole page in the middle of hydration.
+    near = typeof IntersectionObserver === 'undefined';
     if (near) boot();
     const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(size);
     resize?.observe(element);

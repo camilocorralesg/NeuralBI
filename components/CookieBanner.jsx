@@ -10,20 +10,22 @@ import s from './CookieBanner.module.css';
 
 /**
  * The cookie notice. It says what the site measures, in one sentence, and the choice is honoured: declining stops the
- * anonymous analytics at once (components/ConsentAnalytics.jsx). Shown a second after a first visit; closing it with
- * the × counts as declining.
+ * anonymous analytics at once (components/ConsentAnalytics.jsx). Closing it with the × counts as declining.
+ *
+ * The server draws it for everyone and CSS shows it only on `html[data-consent='pending']`, which CONSENT_BOOTSTRAP
+ * (lib/consent.js) sets before the first paint for a visitor who has not chosen. So it is on screen from the first
+ * frame, rising in through CSS, instead of popping in after hydration; once hydrated, a visitor who already chose
+ * drops it from the page.
  */
 export default function CookieBanner() {
   const { t } = useLanguage();
   const copy = t?.cookieBanner || {};
   const reduced = useReducedMotion();
   const titleId = useId();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
-    if (readConsent()) return undefined;
-    const timer = setTimeout(() => setIsOpen(true), 1000);
-    return () => clearTimeout(timer);
+    if (readConsent()) setIsOpen(false);
   }, []);
 
   const choose = (value) => {
@@ -37,7 +39,8 @@ export default function CookieBanner() {
         <m.section
           className={s.banner}
           aria-labelledby={titleId}
-          initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+          // The entrance is CSS (it plays before hydration); framer only takes the notice away.
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           exit={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}

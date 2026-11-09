@@ -5,6 +5,7 @@ import CookieBanner from '../components/CookieBanner';
 import MotionProvider from '../components/MotionProvider';
 import NeuralBIIntro from '../components/intro/NeuralBIIntro';
 import { INTRO_BOOTSTRAP } from '../components/intro/choreography';
+import { CONSENT_BOOTSTRAP } from '../lib/consent';
 import { LanguageProvider } from '../context/LanguageContext';
 
 // The three families, self-hosted by next/font (no third-party stylesheet, no render-blocking request). Variable
@@ -24,10 +25,13 @@ const inter = Inter({
   display: 'swap',
 });
 
+// The mono only labels drawings below the hero, so it is not preloaded: its 40 KB would compete with the first
+// screen's CSS and faces on a slow connection.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
+  preload: false,
 });
 
 export const metadata = {
@@ -74,6 +78,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_BOOTSTRAP }} />
+        <script dangerouslySetInnerHTML={{ __html: CONSENT_BOOTSTRAP }} />
         <link rel="icon" type="image/svg+xml" href="/NeuralBI/favicon.svg" />
         <link rel="icon" type="image/png" href="/NeuralBI/favicon.png" />
         <link rel="apple-touch-icon" href="/NeuralBI/apple-touch-icon.png" />
